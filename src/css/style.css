@@ -37,7 +37,7 @@
 }
 .navbar__item {
   font-size: 20px;
-  transition: all 700ms ease;
+  transition: all 750ms ease;
 }
 .navbar__item:hover {
   text-decoration: underline;
@@ -158,7 +158,6 @@
   width: 60%;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   color: #FFFFFF;
 }
 .footer__text--title {
@@ -169,6 +168,7 @@
 .footer__text--p {
   font-family: "Hind", sans-serif;
   font-size: 18px;
+  color: #7c7b7b;
 }
 .footer__p {
   width: 100%;
@@ -176,5 +176,41 @@
   background-color: #00121a;
   text-align: center;
   padding: 5px;
-  font-family: "Hind", sans-serif;
+  font-family: "Monserrat", sans-serif;
+}
+
+@media only screen and (max-width: 1200px) {
+  .navbar__list {
+    width: 30%;
+    margin-right: 25px;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .navbar__list {
+    width: 40%;
+    margin-right: 10px;
+  }
+  .footer__container {
+    width: 100%;
+    padding: 5px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .navbar__list {
+    width: 50%;
+    margin-right: 10px;
+  }
+  .info__container {
+    width: 100%;
+  }
+  .info__elements {
+    flex-direction: column;
+  }
+  .info__text {
+    width: 100%;
+    padding: 10px;
+  }
+  .info__image {
+    width: 100%;
+  }
 }/*# sourceMappingURL=style.css.map */
