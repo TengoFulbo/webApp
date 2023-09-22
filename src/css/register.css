@@ -18,6 +18,15 @@ body{
 	overflow: hidden;
 }
 
+.topButtons{
+	display: flex;
+	flex-direction: row;
+}
+
+.topText{
+	margin-left: 10px;
+}
+
 .return{
 	display: flex;
 	flex-direction: row;
@@ -247,6 +256,7 @@ input {
 body{
 	height: 100%;
 	overflow: scroll;
+	padding: 10px;
 }
 
 .return{
@@ -419,6 +429,7 @@ input {
 	overflow: hidden;
 	transition: transform 0.6s ease-in-out;
 	z-index: 100;
+	/* padding-bottom: 20px; */
 }
 
 .container.right-panel-active .overlay-container{
