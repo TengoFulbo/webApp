@@ -87,12 +87,41 @@
 @media only screen and (max-width: 992px) {
   .header .header__wrap {
     width: 90%;
-    height: 20%;
+    height: 25%;
   }
   .header .header__frase {
     font-size: 24px;
   }
   .header .header__frase--owner {
     font-size: 18px;
+  }
+}
+
+.cards {
+  width: 100%;
+  padding: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 3%;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.cards__card {
+  width: 30%;
+  height: 100%;
+  flex: 1 1 300px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+}
+.cards__img {
+  aspect-ratio: 16/12;
+}
+.cards__title {
+  font-family: "Monserrat", sans-serif;
+}
+
+@media only screen and (max-width: 992px) {
+  .cards {
+    padding: 20px;
   }
 }/*# sourceMappingURL=style.css.map */

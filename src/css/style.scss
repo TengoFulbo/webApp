@@ -125,7 +125,7 @@ $DancingStrip: "Dancing Script", cursive;
 
       &__wrap{
         width: 90%;
-        height: 20%;
+        height: 25%;
       }
       &__frase{
         font-size: 24px;
@@ -135,5 +135,36 @@ $DancingStrip: "Dancing Script", cursive;
         font-size: 18px;
       }
     }
+  }
+}
+// TARJETAS
+
+.cards{
+  width: 100%;
+  padding: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 3%;
+  align-items: center;
+  flex-wrap: wrap;
+  
+  &__card{
+    width: 30%;
+    height: 100%;
+    flex: 1 1 300px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
+      rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+  }
+  &__img{
+    aspect-ratio: 16/12;
+  }
+  &__title{
+    font-family: $montserrat;
+  }
+}
+@media only screen and (max-width: 992px){
+  .cards{
+    padding: 20px;
   }
 }
