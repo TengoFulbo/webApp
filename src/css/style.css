@@ -186,6 +186,105 @@
   color: #7c7b7b;
 }
 
+@media only screen and (max-width: 992px) {
+  .viajes {
+    padding: 0px;
+  }
+  .viajes__wrap {
+    width: 95%;
+  }
+}
+.thirdParallax {
+  max-height: 50vh;
+  overflow: hidden;
+  -webkit-clip-path: polygon(0% 30%, 100% 50%, 100% 20%, 0% 0%);
+          clip-path: polygon(0% 30%, 100% 50%, 100% 20%, 0% 0%);
+}
+
+.carrusel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.carrusel__text {
+  width: 90%;
+  padding: 20px;
+}
+.carrusel__title {
+  font-family: "Monserrat", sans-serif;
+  font-size: 48px;
+  font-weight: bold;
+  color: #002333;
+}
+.carrusel__text {
+  font-family: "Hind", sans-serif;
+  color: #7c7b7b;
+}
+.carrusel__main {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  width: 100% !important;
+  height: 600px !important;
+  margin-top: -100px;
+}
+.carrusel__item {
+  width: 80% !important;
+  height: 300px !important;
+  display: flex;
+  min-height: -moz-fit-content !important;
+  min-height: fit-content !important;
+}
+.carrusel__item--wrap {
+  display: flex;
+  flex-direction: row;
+  gap: 5%;
+  padding: 20px;
+  background-color: #deefe7;
+  border-radius: 200px !important;
+}
+.carrusel__item--img {
+  border-radius: 200px;
+  background-color: #ffffff;
+}
+.carrusel__item--uname {
+  font-family: "Monserrat", sans-serif;
+  font-size: 48px;
+  font-weight: bold;
+  color: #002333;
+}
+.carrusel__item--umsj {
+  font-family: "Hind", sans-serif;
+  color: #2f2f2f;
+}
+
+@media only screen and (max-width: 992px) {
+  .carrusel__item {
+    height: 250px !important;
+  }
+  .carrusel__item--wrap {
+    border-radius: 20px !important;
+  }
+  .carrusel__item--img {
+    height: 100px;
+    aspect-ratio: 1/1;
+    align-self: center;
+  }
+  .carrusel__item--uname {
+    font-size: 20px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .carrusel__item {
+    height: 300px !important;
+  }
+}
+.thirdParallax .parallax-container .parallax img {
+  bottom: 20%;
+}
+
 .footer {
   display: flex;
   flex-direction: column;
