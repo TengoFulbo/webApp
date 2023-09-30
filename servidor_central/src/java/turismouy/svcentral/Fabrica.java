@@ -1,12 +1,14 @@
 package turismouy.svcentral;
 
 import turismouy.svcentral.controladores.ActividadController;
+import turismouy.svcentral.controladores.CategoriaController;
 import turismouy.svcentral.controladores.DepartamentoController;
 import turismouy.svcentral.controladores.InscripcionController;
 import turismouy.svcentral.controladores.PaqueteController;
 import turismouy.svcentral.controladores.SalidaController;
 import turismouy.svcentral.controladores.UsuarioController;
 import turismouy.svcentral.interfaces.IActividadController;
+import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.interfaces.IDepartamentoController;
 import turismouy.svcentral.interfaces.IInscripcionController;
 import turismouy.svcentral.interfaces.IPaqueteController;
@@ -48,5 +50,9 @@ public class Fabrica {
    
     public IInscripcionController getIInscripcionController() {
     	return new InscripcionController();
+    }
+
+    public ICategoriaController getICategoriaController() {
+        return new CategoriaController();
     }
 }

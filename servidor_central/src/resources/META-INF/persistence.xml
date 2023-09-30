@@ -15,6 +15,7 @@
 		<class>turismouy.svcentral.entidades.turista</class>
 		<class>turismouy.svcentral.entidades.usuario</class>
 		<class>turismouy.svcentral.entidades.inscripcion</class>
+		<class>turismouy.svcentral.entidades.categoria</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
