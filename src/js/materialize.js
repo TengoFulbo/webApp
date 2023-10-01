@@ -1,6 +1,18 @@
-document.addEventListener("DOMContentLoaded", function () {
-  var elems = document.querySelectorAll(".sidenav");
-  var instances = M.Sidenav.init(elems);
+document.addEventListener('DOMContentLoaded', function() {
+  var elemsRight = document.querySelectorAll('#mobile-demo');
+  var instancesRight = M.Sidenav.init(elemsRight, {
+    edge: 'right'
+  });
+
+  var elemsLeft = document.querySelectorAll('#slide-out');
+  var instancesLeft = M.Sidenav.init(elemsLeft, {
+    edge: 'left'
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  var elems = document.querySelectorAll('.dropdown-trigger');
+  var instances = M.Dropdown.init(elems);
 });
 
 document.addEventListener("DOMContentLoaded", function () {
