@@ -27,7 +27,7 @@
       <div class="navbar__leftwrap">
         <div class="brand-logo">
           <img src="src/img/kombi.png" alt="Imagen de una combi" class="navbar__logo--img" />
-          <a href="index.html">TurismoUY</a>
+          <a href="./index.html">TurismoUY</a>
         </div>
       </div>
       <ul class="right aside_trigger">
@@ -74,26 +74,16 @@
   <!-- MAIN -->
   <div class="main">
     <div class="mainWrap">
-      <div class="mainWrap__pagination">
-        <ul class="pagination">
-          <li class="active"><a href="./homeSalidas.html">Salidas</a></li>
-          <li class="waves-effect"><a href="./homeActividad.html">Actividades</a></li>
-          <li class="waves-effect"><a href="./homePaquete.html">Paquetes</a></li>
-        </ul>
-
-        <ul id="dropdown1" class="dropdown-content">
-          <li><a href="#!">Caminata</a></li>
-          <li><a href="#!">Camping</a></li>
-          <li><a href="#!">Ruta</a></li>
-          <li><a href="#!">Trecking</a></li>
-          <li><a href="#!">Historia</a></li>
-        </ul>
+      <div class="main__createBtn">
+        <div class="main__createBtn--wrap">
+          <a class="waves-effect waves-light modal-trigger btn main__createBtn--btn" href="#modalNuevaSalida">Crear
+            Saldia</a>
+        </div>
       </div>
-
       <!-- VIAJES -->
       <section class="viajes">
         <div class="viajes__texto">
-          <h1 class="viajes__title">Salidas</h1>
+          <h1 class="viajes__title">Mis Salidas</h1>
           <p class="viajes__p">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Qui
             incidunt numquam tempora dolorem vel, facere necessitatibus ullam
@@ -173,8 +163,6 @@
                   </p>
                   <div class="viajes__card--btns">
                     <a class="waves-effect waves-light modal-trigger btn viajes__card--btn"
-                      href="#modalInscribirse">Inscribirse</a>
-                    <a class="waves-effect waves-light modal-trigger btn viajes__card--btn"
                       href="#modalConsulta">Consultar</a>
                   </div>
                 </div>
@@ -197,33 +185,6 @@
                     amet, nulla consequuntur, repudiandae magnam nisi!
                   </p>
                   <div class="viajes__card--btns">
-                    <a class="waves-effect waves-light modal-trigger btn viajes__card--btn"
-                      href="#modalInscribirse">Inscribirse</a>
-                    <a class="waves-effect waves-light modal-trigger btn viajes__card--btn"
-                      href="#modalConsulta">Consultar</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col s12 m6 viajes__card">
-              <div class="card">
-                <div class="card-image">
-                  <img src="src/img/uru3.jpg" class="viajes__card--img" />
-                  <span class="card-title viajes__card--title">Salida a Montevideo</span>
-                </div>
-                <div class="card-content viajes__card--contenido">
-                  <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Atque officiis vero dolor commodi fugiat, quaerat optio
-                    mollitia omnis aliquid nemo est tenetur nesciunt libero
-                    sunt sit dolore iusto! Reprehenderit, consectetur.
-                  </p>
-                  <div class="viajes__card--btns">
-                    <a class="waves-effect waves-light modal-trigger btn viajes__card--btn"
-                      href="#modalInscribirse">Inscribirse</a>
                     <a class="waves-effect waves-light modal-trigger btn viajes__card--btn"
                       href="#modalConsulta">Consultar</a>
                   </div>
@@ -248,8 +209,6 @@
                     voluptatum. Maiores, unde.
                   </p>
                   <div class="viajes__card--btns">
-                    <a class="waves-effect waves-light modal-trigger btn viajes__card--btn"
-                      href="#modalInscribirse">Inscribirse</a>
                     <a class="waves-effect waves-light modal-trigger btn viajes__card--btn"
                       href="#modalConsulta">Consultar</a>
                   </div>
@@ -336,6 +295,63 @@
       <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
     </div>
   </div>
+
+  <div id="modalNuevaSalida" class="modal">
+    <div class="modal-content">
+      <h4>Crear Salida</h4>
+      <form>
+        <div class="input-field col s12">
+          <select>
+            <option value="" disabled selected>Elije una Actividad</option>
+            <option value="1">Actividad 1</option>
+            <option value="2">Actividad 2</option>
+            <option value="3">Actividad 3</option>
+
+          </select>
+          <label>Actividad</label>
+        </div>
+        <div class="input-field col s12">
+          <select>
+            <option value="" disabled selected>Elije un Departamento</option>
+            <option value="1">Departamento 1</option>
+            <option value="2">Departamento 2</option>
+            <option value="3">Departamento 3</option>
+
+          </select>
+          <label>Departamento</label>
+        </div>
+        <div class="input-field">
+          <input id="nombre" type="text" class="validate" value="">
+          <label for="nombre" class="active">Nombre</label>
+        </div>
+        <div class="input-field">
+          <input id="cant" type="number" class="validate" value="">
+          <label for="cant" class="active">Cantidad de lugares</label>
+        </div>
+        <div class="input-field">
+          <input id="dateSalida" type="text" class="datepicker" value="">
+          <label for="dateSalida" class="active">Fecha de salida</label>
+        </div>
+        <div class="input-field">
+          <input id="dateAlta" type="text" class="datepicker" value="">
+          <label for="dateAlta" class="active">Fecha de alta</label>
+        </div>
+        <div class="input-field">
+          <input id="lugarSalida" type="text" class="validate" value="">
+          <label for="lugarSalida" class="active">Lugar de Salida</label>
+        </div>
+        <div class="divider"></div>
+        <button class="btn waves-effect waves-light modal__inscribirse--submit" type="submit" name="action">
+          Enviar
+          <i class="material-icons right">send</i>
+        </button>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+    </div>
+  </div>
+
 
 
   <!-- FOOTER -->

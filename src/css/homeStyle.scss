@@ -1,0 +1,252 @@
+// IMPORTO OTROS CSS FILES
+@import url(./reset.css);
+
+// DEFINO COLORES
+
+$colorGris1: #ececec;
+$colorVerde: #159a9c;
+$colorOscuro: #002333;
+$colorCrema: #deefe7;
+$colorBlanco: #ffffff;
+
+$Crevasse-1-rgba: rgba(180, 190, 201, 0.3);
+$Crevasse-2-rgba: rgba(21, 154, 156, 0.5);
+$Crevasse-3-rgba: rgba(0, 35, 51, 0.3);
+$Crevasse-4-rgba: rgba(222, 239, 231, 0.5);
+$Crevasse-5-rgba: rgba(255, 255, 255, 0.4);
+
+// DEFINO FUENTES
+$montserrat: "Monserrat", sans-serif;
+$hind: "Hind", sans-serif;
+$DancingStrip: "Dancing Script", cursive;
+
+// NAVBAR
+.navbar {
+  padding-left: 300px;
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  background-color: $colorOscuro;
+  position: unset;
+  z-index: 900;
+}
+
+.navbar__wrap {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.navbar__leftwrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+nav a.sidenav-trigger {
+  display: block;
+}
+
+.responsive__btn {
+  display: none;
+}
+
+.brand-logo {
+  position: unset !important;
+
+}
+
+.navbar__sideopen {
+  z-index: 500;
+  display: block !important;
+}
+
+.brand-logo {
+  display: flex !important;
+}
+
+.navbar__logo--img {
+  max-height: 50px;
+  align-self: center;
+  justify-self: center;
+}
+
+.aside_trigger {
+  display: none;
+}
+
+
+@media only screen and (max-width: 992px) {
+  .navbar {
+    padding-left: 0px;
+  }
+
+  .aside_trigger {
+    display: block;
+  }
+
+  .navbar__wrap {
+    width: 95%;
+  }
+
+  nav .brand-logo {
+    transform: translateX(0%) !important;
+  }
+
+  .responsive__btn {
+    display: block;
+  }
+}
+
+.main{
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-left: 300px;
+
+  &__wrap{
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    width: 80%;
+  }
+
+  &__text{
+    display: flex;
+    flex-direction: row;
+
+  }
+
+  &__title{
+    font-family: $montserrat;
+    font-weight: bold;
+    color: $colorOscuro;
+
+  }
+
+  &__p{
+    font-family: $hind;
+  }
+
+  &__image{
+    aspect-ratio: 1/1;
+    width: 50%;
+    align-self: center;
+    justify-self: center;
+  }
+
+  &__content{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    gap: 30px;
+  }
+
+  &__content--container{
+    flex: 1 1 300px;
+    background-color: $colorGris1;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  &__content--title{
+    margin: 0px;
+    font-family: $montserrat;
+  }
+
+  &__content--number{
+    font-family: $hind;
+    margin-top: 20px;
+    font-size: 30px;
+    color: $colorBlanco;
+    background-color: $colorOscuro;
+    width: 40px;
+    height: 40px;
+    border-radius: 200px;
+    text-align: center;
+
+  }
+}
+
+// FOOTER
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: $colorBlanco;
+  background-color: $colorOscuro;
+  color: $colorBlanco;
+  padding-left: 300px;
+
+  &__container {
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    justify-content: space-between;
+  }
+
+  &__text {
+    display: flex;
+    width: 60%;
+    flex-direction: column;
+    justify-content: center;
+    // align-items: center;
+    color: $colorBlanco;
+  }
+
+  &__text--title {
+    font-family: $montserrat;
+    font-weight: bold;
+    font-size: 25px;
+  }
+
+  &__text--p {
+    font-family: $hind;
+    font-size: 18px;
+    color: #7c7b7b;
+  }
+
+  &__p {
+    width: 100%;
+    height: 100%;
+    background-color: #00121a;
+    text-align: center;
+    padding: 5px;
+    font-family: $montserrat;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .main{
+    padding-left: 0px;
+  }
+  .footer {
+    padding: 0px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .main__text{
+    flex-direction: column;
+  }
+  .footer__container {
+    width: 100%;
+    padding: 5px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+
+  .footer__text--p {
+    font-size: 13px;
+  }
+
+}

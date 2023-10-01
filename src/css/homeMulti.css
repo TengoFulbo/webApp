@@ -1,0 +1,275 @@
+@import url(./reset.css);
+.navbar {
+  padding-left: 300px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #002333;
+  position: unset;
+  z-index: 900;
+}
+
+.navbar__wrap {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.navbar__leftwrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+nav a.sidenav-trigger {
+  display: block;
+}
+
+.responsive__btn {
+  display: none;
+}
+
+.brand-logo {
+  position: unset !important;
+}
+
+.navbar__sideopen {
+  z-index: 500;
+  display: block !important;
+}
+
+.brand-logo {
+  display: flex !important;
+}
+
+.navbar__logo--img {
+  max-height: 50px;
+  align-self: center;
+  justify-self: center;
+}
+
+.aside_trigger {
+  display: none;
+}
+
+@media only screen and (max-width: 992px) {
+  .navbar {
+    padding-left: 0px;
+  }
+  .aside_trigger {
+    display: block;
+  }
+  .navbar__wrap {
+    width: 95%;
+  }
+  nav .brand-logo {
+    transform: translateX(0%) !important;
+  }
+  .responsive__btn {
+    display: block;
+  }
+}
+.side {
+  width: 300px !important;
+  height: 100vh !important;
+}
+
+.main {
+  padding-left: 300px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+.main__createBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+}
+.main__createBtn--wrap {
+  width: 50%;
+}
+.main__createBtn--btn {
+  width: 100%;
+  border-radius: 200px !important;
+}
+.mainWrap {
+  display: flex;
+  flex-direction: column;
+}
+.mainWrap__pagination {
+  padding: 20px;
+  align-self: center;
+}
+
+@media only screen and (max-width: 992px) {
+  .main {
+    padding-left: 0px;
+  }
+}
+.pagination .active {
+  background-color: #159a9c !important;
+}
+
+.pagination li a {
+  color: #444;
+  display: inline-block;
+  font-size: 1.2rem !important;
+  padding: 0 10px;
+  line-height: 30px;
+}
+
+.viajes {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.viajes__filter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px;
+  width: 80%;
+}
+.viajes__filter--title {
+  font-family: "Monserrat", sans-serif;
+  font-size: 24px;
+  color: #b4bec9;
+}
+.viajes__filter--list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.viajes__texto {
+  width: 90%;
+  padding: 20px;
+}
+.viajes__title {
+  font-family: "Monserrat", sans-serif;
+  font-size: 48px;
+  font-weight: bold;
+  color: #002333;
+}
+.viajes__p {
+  font-family: "Hind", sans-serif;
+  color: #7c7b7b;
+}
+.viajes__wrap {
+  width: 80%;
+}
+.viajes__card {
+  width: 100% !important;
+}
+.viajes__card .card {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 10px 30px -12px, rgba(0, 0, 0, 0.3) 0px 8px 16px -18px;
+}
+.viajes__card--img {
+  max-height: 200px;
+  aspect-ratio: 16/9;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.viajes__card--title {
+  font-family: "Monserrat", sans-serif;
+  font-weight: bold;
+}
+.viajes__card--contenido {
+  font-family: "Hind", sans-serif;
+  color: #7c7b7b;
+  display: flex;
+  flex-direction: column;
+}
+.viajes__card--btns {
+  align-self: flex-end;
+  padding-top: 20px;
+}
+
+@media only screen and (max-width: 992px) {
+  .viajes {
+    padding: 0px;
+  }
+  .viajes__wrap {
+    width: 95%;
+  }
+}
+.modal__inscribirse {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  background-color: transparent !important;
+}
+
+.modal__inscribirse--submit {
+  width: 50%;
+  margin-top: 20px;
+  align-self: center;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  background-color: #002333;
+  color: #ffffff;
+  padding-left: 300px;
+}
+.footer__container {
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+  justify-content: space-between;
+}
+.footer__text {
+  display: flex;
+  width: 60%;
+  flex-direction: column;
+  justify-content: center;
+  color: #ffffff;
+}
+.footer__text--title {
+  font-family: "Monserrat", sans-serif;
+  font-weight: bold;
+  font-size: 25px;
+}
+.footer__text--p {
+  font-family: "Hind", sans-serif;
+  font-size: 18px;
+  color: #7c7b7b;
+}
+.footer__p {
+  width: 100%;
+  height: 100%;
+  background-color: #00121a;
+  text-align: center;
+  padding: 5px;
+  font-family: "Monserrat", sans-serif;
+}
+
+@media only screen and (max-width: 992px) {
+  .footer {
+    padding: 0px;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .footer__container {
+    width: 100%;
+    padding: 5px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .footer__text--p {
+    font-size: 13px;
+  }
+}/*# sourceMappingURL=homeMulti.css.map */
