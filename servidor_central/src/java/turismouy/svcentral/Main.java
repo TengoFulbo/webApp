@@ -8,7 +8,11 @@ public class Main {
         Fabrica fabrica = Fabrica.getInstance();
         ICategoriaController ICC = fabrica.getICategoriaController();
 
-        ICC.crearCategoria("Aventura");
+        try {
+            ICC.crearCategoria("Aventura");            
+        } catch (Exception e) {
+            log.error(e.toString());
+        }
         log.info("Hola");
     }
 }
