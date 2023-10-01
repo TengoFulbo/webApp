@@ -20,7 +20,7 @@ public class CategoriaController implements ICategoriaController {
         
         if (c != null) {
             log.error("La categoria: '" + c.getNombre() + "' ya existe.");
-            throw new YaExisteExcepcion("La categoria: '" + nombre + "' ya existe.");
+            throw new YaExisteExcepcion("La categoria: '" + c.getNombre() + "' ya existe.");
         }
 
         categoria categoria = new categoria(nombre);

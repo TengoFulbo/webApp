@@ -5,6 +5,8 @@ import javax.persistence.*;
 @Entity
 public class categoria {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    long id;
     private String nombre;
 
     // Constructor vacio pedido por JPA.

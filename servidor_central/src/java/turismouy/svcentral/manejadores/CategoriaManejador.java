@@ -29,7 +29,6 @@ public class CategoriaManejador {
 	    EntityTransaction tx = em.getTransaction();
 
         String nombre = categoria.getNombre();
-
         try {
             tx.begin();
 
@@ -53,10 +52,11 @@ public class CategoriaManejador {
 
     public categoria getCategoria(String nombre) {
 	    EntityManager em = factory.createEntityManager();
+        nombre = nombre.toLowerCase();
+
         categoria categoria = null;
-        
         try {
-            categoria = em.createQuery("SELECT c from categoria c WHERE c.nombre = :nombre", categoria.class)
+            categoria = em.createQuery("SELECT c from categoria c WHERE LOWER(c.nombre) = :nombre", categoria.class)
                         .setParameter("nombre", nombre)
                         .getSingleResult();     
         } catch (Exception e) {
