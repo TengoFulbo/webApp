@@ -1,5 +1,6 @@
 @import url(./reset.css);
 .navbar {
+  padding-left: 300px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -48,7 +49,17 @@ nav a.sidenav-trigger {
   justify-self: center;
 }
 
+.aside_trigger {
+  display: none;
+}
+
 @media only screen and (max-width: 992px) {
+  .navbar {
+    padding-left: 0px;
+  }
+  .aside_trigger {
+    display: block;
+  }
   .navbar__wrap {
     width: 95%;
   }
@@ -61,8 +72,18 @@ nav a.sidenav-trigger {
 }
 .main {
   min-height: 100vh;
+  display: flex;
+  flex-direction: row;
 }
 
+.side {
+  width: 300px !important;
+  height: 100vh !important;
+}
+
+.main {
+  padding-left: 300px;
+}
 .mainWrap {
   display: flex;
   flex-direction: column;
@@ -72,6 +93,11 @@ nav a.sidenav-trigger {
   align-self: center;
 }
 
+@media only screen and (max-width: 992px) {
+  .main {
+    padding-left: 0px;
+  }
+}
 .active {
   background-color: #159a9c !important;
 }
@@ -90,6 +116,26 @@ nav a.sidenav-trigger {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.viajes__filter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px;
+  width: 80%;
+}
+.viajes__filter--title {
+  font-family: "Monserrat", sans-serif;
+  font-size: 24px;
+  color: #b4bec9;
+}
+.viajes__filter--list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 .viajes__texto {
   width: 90%;
@@ -124,8 +170,12 @@ nav a.sidenav-trigger {
   font-family: "Monserrat", sans-serif;
   font-weight: bold;
 }
+.viajes__card--icons {
+  display: flex;
+  gap: 300px !important;
+}
 .viajes__card--icon {
-  background-color: #002333 !important;
+  background-color: #159a9c !important;
   z-index: 20;
 }
 .viajes__card--contenido {
@@ -192,4 +242,4 @@ nav a.sidenav-trigger {
   .footer__text--p {
     font-size: 13px;
   }
-}/*# sourceMappingURL=homestyle.css.map */
+}/*# sourceMappingURL=homeSalidastyle.css.map */

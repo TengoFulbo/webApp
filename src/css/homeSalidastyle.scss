@@ -22,6 +22,7 @@ $DancingStrip: "Dancing Script", cursive;
 
 // NAVBAR
 .navbar{
+  padding-left: 300px;
   display: flex;
   flex-direction: row;
 
@@ -72,8 +73,18 @@ nav a.sidenav-trigger{
   justify-self: center;
 }
 
+.aside_trigger{
+  display: none;
+}
+
 
 @media only screen and (max-width: 992px){
+  .navbar{
+    padding-left: 0px;
+  }
+  .aside_trigger{
+    display: block;
+  }
   .navbar__wrap{
     width: 95%;
   }
@@ -87,12 +98,20 @@ nav a.sidenav-trigger{
 
 .main{
  min-height: 100vh;
+ display: flex;
+ flex-direction: row;
 }
 
+
+
 // PAGINATION
+.side{
+  width: 300px !important;
+  height: 100vh !important;
+}
 
 .main{
-
+  padding-left: 300px;
     &Wrap{
         display: flex;
         flex-direction: column;
@@ -101,6 +120,13 @@ nav a.sidenav-trigger{
             align-self: center;
         }
     }
+}
+
+
+@media only screen and (max-width: 992px){
+  .main{
+    padding-left: 0px;
+  }
 }
     .active{
         background-color: $colorVerde !important;
@@ -113,6 +139,8 @@ nav a.sidenav-trigger{
         padding: 0 10px;
         line-height: 30px;
     }
+
+
 // VIAJES
 .viajes{
     width: 100%;
@@ -120,6 +148,29 @@ nav a.sidenav-trigger{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    &__filter{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
+      padding: 20px;
+      width: 80%;
+
+      &--title{
+        font-family: $montserrat;
+        font-size: 24px;
+        color: $colorGris1;
+      }
+
+      &--list{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+      }
+    }
   
     &__texto{
       width: 90%;
@@ -160,9 +211,15 @@ nav a.sidenav-trigger{
       font-family: $montserrat;
       font-weight: bold;
     }
+
+    &__card--icons{
+      display: flex;
+      gap: 300px !important;
+    }
+
   
     &__card--icon{
-      background-color: $colorOscuro !important;
+      background-color: $colorVerde !important;
       z-index: 20;
     }
   

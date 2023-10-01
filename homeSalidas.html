@@ -6,7 +6,7 @@
     <title>TursistaUY</title>
 
     <!-- LINKS DE CSS -->
-    <link rel="stylesheet" href="./src/css/homestyle.css" />
+    <link rel="stylesheet" href="./src/css/homeSalidastyle.css" />
 
     <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -28,13 +28,6 @@
     <nav class="navbar">
       <div class="nav-wrapper navbar__wrap">
         <div class="navbar__leftwrap">
-          <!-- <a
-            href="#"
-            data-target="slide-out"
-            class="sidenav-trigger navbar__sideopen"
-            ><i class="material-icons">arrow_forward</i></a
-          > -->
-
           <div class="brand-logo">
             <img
               src="src/img/kombi.png"
@@ -44,13 +37,7 @@
             <a href="#!">TurismoUY</a>
           </div>
         </div>
-        <!-- <a
-          href="#"
-          data-target="mobile-demo"
-          class="sidenav-trigger responsive__btn"
-          ><i class="material-icons">menu</i></a
-        > -->
-        <ul class="right">
+        <ul class="right aside_trigger">
           <li>
             <a
               href="#"
@@ -59,25 +46,15 @@
               ><i class="material-icons">arrow_forward</i></a
             >
           </li>
-          <!-- <li><a class="waves-effect waves-light" href="#2">Actividades</a></li>
-          <li>
-            <a class="waves-effect waves-light" href="#3">Cerrar Sesion</a>
-          </li> -->
         </ul>
       </div>
     </nav>
-
-    <!-- <ul class="sidenav" id="mobile-demo">
-      <li><a class="waves-effect waves-light" href="#1">Viajes</a></li>
-      <li><a class="waves-effect waves-light" href="#2">Actividades</a></li>
-      <li><a class="waves-effect waves-light" href="#3">Cerrar Sesion</a></li>
-    </ul> -->
     <!-- SIDENAV -->
-    <ul id="slide-out" class="sidenav home_side">
+    <ul id="slide-out" class="sidenav home_side sidenav-fixed">
       <li>
         <div class="user-view">
           <div class="background">
-            <img src="src/img/explora.jpg" />
+            <img src="src/img/blurry-gradient.svg" />
           </div>
           <a href="#user"><img class="circle" src="src/img/avatar1.png" /></a>
           <a href="#name"><span class="white-text name">John Doe</span></a>
@@ -98,7 +75,7 @@
         >
       </li>
       <li>
-        <a class="waves-effect" href="#!"
+        <a class="waves-effect" href="./index.html"
           ><i class="material-icons">exit_to_app</i>Cerrar Sesion</a
         >
       </li>
@@ -110,14 +87,6 @@
         <div class="mainWrap__pagination">
           <ul class="pagination">
             <li class="active"><a href="#!">Salidas</a></li>
-            <li>
-              <a
-                class="dropdown-trigger waves-effect"
-                href="#"
-                data-target="dropdown1"
-                >Categorias</a
-              >
-            </li>
             <li class="waves-effect"><a href="#!">Actividades</a></li>
             <li class="waves-effect"><a href="#!">Paquetes</a></li>
           </ul>
@@ -141,6 +110,77 @@
               ratione laudantium in, eaque assumenda omnis. Cum vitae eaque hic
               minus corrupti tenetur?
             </p>
+          </div>
+          <div class="viajes__filter">
+            <h3 class="viajes__filter--title">Filtros:</h3>
+            <ul class="pagination viajes__filter--list">
+              <!-- <li>
+                <a
+                  class="dropdown-trigger waves-effect"
+                  href="#"
+                  data-target="dropdown1"
+                  >Categorias</a
+                >
+              </li> -->
+              <li>
+                <div class="input-field col s12">
+                  <select>
+                    <option value="" disabled selected>
+                      Elige una Categoria
+                    </option>
+                    <option value="1">Escalada</option>
+                    <option value="2">Turismo</option>
+                    <option value="3">Caminata</option>
+                  </select>
+                  <label>Categorias</label>
+                </div>
+              </li>
+              <li>
+                <div class="input-field col s12">
+                  <select>
+                    <option value="" disabled selected>
+                      Elige un Departamento
+                    </option>
+                    <option value="1">Artigas</option>
+                    <option value="2">Canelones</option>
+                    <option value="3">Cerro Largo</option>
+                    <option value="4">Colonia</option>
+                    <option value="5">Durazno</option>
+                    <option value="6">Flores</option>
+                    <option value="7">Florida</option>
+                    <option value="8">Lavalleja</option>
+                    <option value="9">Maldonado</option>
+                    <option value="10">Montevideo</option>
+                    <option value="11">Paysandú</option>
+                    <option value="12">Río Negro</option>
+                    <option value="13">Rivera</option>
+                    <option value="14">Rocha</option>
+                    <option value="15">Salto</option>
+                    <option value="16">San José</option>
+                    <option value="17">Soriano</option>
+                    <option value="18">Tacuarembó</option>
+                    <option value="19">Treinta y Tres</option>
+                  </select>
+                  <label>Departamentos</label>
+                </div>
+              </li>
+              <li>
+                <h1>---</h1>
+              </li>
+              <li>
+                <div class="input-field col s12">
+                  <select>
+                    <option value="" disabled selected>
+                      Elige una Actividad
+                    </option>
+                    <option value="1">Escalada</option>
+                    <option value="2">Turismo</option>
+                    <option value="3">Caminata</option>
+                  </select>
+                  <label>Actividades</label>
+                </div>
+              </li>
+            </ul>
           </div>
           <div class="viajes__wrap">
             <div class="row">
