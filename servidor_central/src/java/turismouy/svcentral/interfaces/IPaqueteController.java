@@ -12,8 +12,8 @@ import turismouy.svcentral.excepciones.YaExisteExcepcion;
 
 public interface IPaqueteController {
     public abstract void crearPaquete(String nombre, String descripcion, int periodoVal, int descuento, LocalDate fechaAlta) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion;
-    public abstract dataPaquete mostrarInfo(String nombre)throws UsuarioNoExisteExcepcion;
+    public abstract dataPaquete mostrarInfo(String nombre) throws UsuarioNoExisteExcepcion;
     public abstract List<dataPaquete> listarPaquetes();
-    public abstract void agregarActividadPaquete(String nombrePaquete, String nombreActividad)throws NoExisteExcepcion, YaExisteExcepcion;
+    public abstract void agregarActividadPaquete(String nombrePaquete, String nombreActividad) throws NoExisteExcepcion, YaExisteExcepcion;
     public abstract List<String> obtenerNombresPaquetes();
 }
