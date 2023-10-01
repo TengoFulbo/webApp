@@ -1,26 +1,26 @@
 package turismouy.svcentral.controladores;
 
 import turismouy.svcentral.entidades.categoria;
+import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
+import turismouy.svcentral.excepciones.YaExisteExcepcion;
 import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.manejadores.CategoriaManejador;
 import turismouy.svcentral.utilidades.log;
 
 public class CategoriaController implements ICategoriaController {
     
-    public void crearCategoria(String nombre) {
+    public void crearCategoria(String nombre) throws YaExisteExcepcion, ParametrosInvalidosExcepcion {
         if (!validarTexto(nombre, 1)) {
             log.error("[crearCategoria] Parametros invalidos.");
-            // TODO: ⚠️Cambiar por excepcion.
-            return;
+            throw new ParametrosInvalidosExcepcion();
         }
-
+        
         CategoriaManejador cm = CategoriaManejador.getInstance();
         categoria c = cm.getCategoria(nombre);
-
+        
         if (c != null) {
             log.error("La categoria: '" + c.getNombre() + "' ya existe.");
-            // TODO: ⚠️ Aplicar excepcion.
-            return;
+            throw new YaExisteExcepcion("La categoria: '" + nombre + "' ya existe.");
         }
 
         categoria categoria = new categoria(nombre);
