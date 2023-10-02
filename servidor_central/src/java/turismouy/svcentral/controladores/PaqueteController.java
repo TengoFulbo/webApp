@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import turismouy.svcentral.datatypes.dataActividad;
 import turismouy.svcentral.datatypes.dataPaquete;
 import turismouy.svcentral.entidades.actividad;
 import turismouy.svcentral.entidades.paquete;
