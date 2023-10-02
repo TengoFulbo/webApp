@@ -86,7 +86,7 @@ public class PaqueteController implements IPaqueteController {
         
         boolean yaExiste = false;
         for (actividad actividadAux : paquete.getActividades()) {
-            log.warning(actividadAux.getNombre());
+            // log.warning(actividadAux.getNombre());
             if (actividadAux.getNombre().equals(nombreActividad)) {
                 yaExiste = true;
                 break;
@@ -94,7 +94,7 @@ public class PaqueteController implements IPaqueteController {
         }
 
         if (yaExiste) {
-            throw new YaExisteExcepcion("La actividad ya existe dentro de paquete");
+            throw new YaExisteExcepcion("La actividad: '" + nombreActividad + "' ya existe dentro de paquete: '" + nombrePaquete + "'");
         }
 
         paquete.addActividad(actividad);
