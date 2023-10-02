@@ -10,7 +10,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
 import turismouy.svcentral.EMFactory;
-import turismouy.svcentral.entidades.actividad;
 import turismouy.svcentral.entidades.paquete;
 import turismouy.svcentral.utilidades.log;
 
@@ -88,7 +87,8 @@ public class PaqueteManejador {
         } catch (Exception e) {
             paquete = null;
         }
-
+        
+        em.close();
         return paquete;
     }
 
