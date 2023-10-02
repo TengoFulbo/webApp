@@ -21,8 +21,8 @@ public class paquete {
 
     @JoinTable(
 		name = "paquete_actividad",
-        joinColumns = @JoinColumn(name = "fk_actividad"),
-        inverseJoinColumns = @JoinColumn(name = "fk_paquete")
+        joinColumns = @JoinColumn(name = "fk_paquete"),
+        inverseJoinColumns = @JoinColumn(name = "fk_actividad")
 		)
 	@ManyToMany()
 	private List<actividad> actividades;
