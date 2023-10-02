@@ -29,7 +29,6 @@ public class PaqueteController implements IPaqueteController {
             {
             log.error("[PaqueteController] Error con los parametros String");
         	throw new ParametrosInvalidosExcepcion();
-            // TODO: ⚠️ Aplicar excepciones.
         }
         PaqueteManejador pm = PaqueteManejador.getinstance();
         paquete paquete = pm.getPaquete(nombre);
