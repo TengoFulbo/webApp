@@ -121,6 +121,7 @@ nav a.sidenav-trigger {
     width: 100%;
     &--wrap {
       width: 50%;
+      
     }
 
     &--btn {
@@ -132,7 +133,11 @@ nav a.sidenav-trigger {
   &Wrap {
     display: flex;
     flex-direction: column;
-
+    // background-image: url("../img/w.svg");
+    // background-repeat: no-repeat;
+    // background-size: cover;
+    // backdrop-filter: blur(8px);
+    
     &__pagination {
       padding: 20px;
       align-self: center;
