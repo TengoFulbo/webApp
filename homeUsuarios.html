@@ -75,11 +75,26 @@
   <!-- MAIN -->
   <div class="main">
     <div class="mainWrap">
+      <div class="mainWrap__pagination">
+        <ul class="pagination">
+          <li class="active"><a href="./homeSalidas.html">Salidas</a></li>
+          <li class="waves-effect"><a href="./homeActividad.html">Actividades</a></li>
+          <li class="waves-effect"><a href="./homePaquete.html">Paquetes</a></li>
+        </ul>
+
+        <ul id="dropdown1" class="dropdown-content">
+          <li><a href="#!">Caminata</a></li>
+          <li><a href="#!">Camping</a></li>
+          <li><a href="#!">Ruta</a></li>
+          <li><a href="#!">Trecking</a></li>
+          <li><a href="#!">Historia</a></li>
+        </ul>
+      </div>
 
       <!-- VIAJES -->
       <section class="viajes">
         <div class="viajes__texto">
-          <h1 class="viajes__title">Mis Paquetes</h1>
+          <h1 class="viajes__title">Salidas</h1>
           <p class="viajes__p">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Qui
             incidunt numquam tempora dolorem vel, facere necessitatibus ullam
@@ -128,6 +143,18 @@
                 <label>Departamentos</label>
               </div>
             </li>
+
+            <li>
+              <div class="input-field col s12">
+                <select>
+                  <option value="" disabled selected></option>
+                  <option value="1">Escalada</option>
+                  <option value="2">Turismo</option>
+                  <option value="3">Caminata</option>
+                </select>
+                <label>Actividades</label>
+              </div>
+            </li>
           </ul>
         </div>
         <div class="viajes__wrap">
@@ -135,8 +162,8 @@
             <div class="col s12 m6 viajes__card">
               <div class="card">
                 <div class="card-image">
-                  <img src="src/img/blurry-gradient1.svg" class="viajes__card--img" />
-                  <span class="card-title viajes__card--title">Paquete</span>
+                  <img src="src/img/uru1.jpg" class="viajes__card--img" />
+                  <span class="card-title viajes__card--title">Salida a Colonia</span>
                 </div>
                 <div class="card-content viajes__card--contenido">
                   <p>
@@ -147,6 +174,8 @@
                   </p>
                   <div class="viajes__card--btns">
                     <a class="waves-effect waves-light modal-trigger btn viajes__card--btn"
+                      href="#modalInscribirse">Inscribirse</a>
+                    <a class="waves-effect waves-light modal-trigger btn viajes__card--btn"
                       href="#modalConsulta">Consultar</a>
                   </div>
                 </div>
@@ -158,8 +187,8 @@
             <div class="col s12 m6 viajes__card">
               <div class="card">
                 <div class="card-image">
-                  <img src="src/img/blurry-gradient1.svg" class="viajes__card--img" />
-                  <span class="card-title viajes__card--title">Paquete</span>
+                  <img src="src/img/uru2.jpg" class="viajes__card--img" />
+                  <span class="card-title viajes__card--title">Salida a Cabo Polonio</span>
                 </div>
                 <div class="card-content viajes__card--contenido">
                   <p>
@@ -170,28 +199,7 @@
                   </p>
                   <div class="viajes__card--btns">
                     <a class="waves-effect waves-light modal-trigger btn viajes__card--btn"
-                      href="#modalConsulta">Consultar</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col s12 m6 viajes__card">
-              <div class="card">
-                <div class="card-image">
-                  <img src="src/img/blurry-gradient1.svg" class="viajes__card--img" />
-                  <span class="card-title viajes__card--title">Paquete</span>
-                </div>
-                <div class="card-content viajes__card--contenido">
-                  <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Atque officiis vero dolor commodi fugiat, quaerat optio
-                    mollitia omnis aliquid nemo est tenetur nesciunt libero
-                    sunt sit dolore iusto! Reprehenderit, consectetur.
-                  </p>
-                  <div class="viajes__card--btns">
+                      href="#modalInscribirse">Inscribirse</a>
                     <a class="waves-effect waves-light modal-trigger btn viajes__card--btn"
                       href="#modalConsulta">Consultar</a>
                   </div>
@@ -204,8 +212,33 @@
             <div class="col s12 m6 viajes__card">
               <div class="card">
                 <div class="card-image">
-                  <img src="src/img/blurry-gradient1.svg" class="viajes__card--img" />
-                  <span class="card-title viajes__card--title">Paquete</span>
+                  <img src="src/img/uru3.jpg" class="viajes__card--img" />
+                  <span class="card-title viajes__card--title">Salida a Montevideo</span>
+                </div>
+                <div class="card-content viajes__card--contenido">
+                  <p>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    Atque officiis vero dolor commodi fugiat, quaerat optio
+                    mollitia omnis aliquid nemo est tenetur nesciunt libero
+                    sunt sit dolore iusto! Reprehenderit, consectetur.
+                  </p>
+                  <div class="viajes__card--btns">
+                    <a class="waves-effect waves-light modal-trigger btn viajes__card--btn"
+                      href="#modalInscribirse">Inscribirse</a>
+                    <a class="waves-effect waves-light modal-trigger btn viajes__card--btn"
+                      href="#modalConsulta">Consultar</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col s12 m6 viajes__card">
+              <div class="card">
+                <div class="card-image">
+                  <img src="src/img/uru5.jpg" class="viajes__card--img" />
+                  <span class="card-title viajes__card--title">Salida a La Paloma</span>
                 </div>
                 <div class="card-content viajes__card--contenido">
                   <p>
@@ -216,6 +249,8 @@
                     voluptatum. Maiores, unde.
                   </p>
                   <div class="viajes__card--btns">
+                    <a class="waves-effect waves-light modal-trigger btn viajes__card--btn"
+                      href="#modalInscribirse">Inscribirse</a>
                     <a class="waves-effect waves-light modal-trigger btn viajes__card--btn"
                       href="#modalConsulta">Consultar</a>
                   </div>
@@ -228,6 +263,40 @@
     </div>
   </div>
   <!-- MODALS -->
+  <div id="modalInscribirse" class="modal">
+    <div class="modal-content">
+      <h4>Inscripcion</h4>
+      <div class="divider"></div>
+      <form action="#" class="modal__inscribirse">
+        <p>Ingresa la cantidad de personas a inscribirse:</p>
+        <div class="input-field col s6 modal__inscribirse--ninput">
+          <input id="numero" type="number" class="validate" />
+          <label for="numero">Ingresa un número</label>
+        </div>
+        <p>Forma de pago:</p>
+        <p>
+          <label>
+            <input id="formaPago" name="formaPago" value="general" type="radio" checked />
+            <span>General</span>
+          </label>
+        </p>
+        <p>
+          <label>
+            <input id="formaPago" name="formaPago" value="paquete" type="radio" />
+            <span>Paquete</span>
+          </label>
+        </p>
+        <button class="btn waves-effect waves-light modal__inscribirse--submit" type="submit" name="action">
+          Enviar
+          <i class="material-icons right">send</i>
+        </button>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+    </div>
+  </div>
+
   <div id="modalConsulta" class="modal">
     <div class="modal-content">
       <h4>Consulta de Salida</h4>
