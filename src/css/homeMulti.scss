@@ -106,6 +106,7 @@ nav a.sidenav-trigger {
   height: 100vh !important;
 }
 
+
 .main {
   padding-left: 300px;
   min-height: 100vh;
@@ -160,7 +161,7 @@ nav a.sidenav-trigger {
 
 
 // VIAJES
-.viajes {
+.page {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -246,11 +247,11 @@ nav a.sidenav-trigger {
 }
 
 @media only screen and (max-width: 992px) {
-  .viajes {
+  .page {
     padding: 0px;
   }
 
-  .viajes__wrap {
+  .page__wrap {
     width: 95%;
   }
 }
@@ -343,4 +344,38 @@ label {
     font-size: 13px;
   }
 
+}
+
+.userConsultaDrop{
+  text-align: center !important;
+  z-index: 500 !important;
+}
+
+.userConsultaDrop--li{
+  text-align: center;
+  height: fit-content;
+  padding: 0px !important;
+  margin: 0px !important;
+}
+
+.userConsultaDrop--li a{
+  
+  padding: 0px !important;
+  margin: 0px !important;
+  color: $colorOscuro;
+}
+
+.usuariosCollection{
+  overflow: visible !important;
+}
+
+.imgUserAccount{
+  aspect-ratio: 1/1;
+  height: 200px;
+  background-color: $colorBlanco;
+  border-radius: 200px;
+}
+
+.userWrap{
+  width: 100%;
 }

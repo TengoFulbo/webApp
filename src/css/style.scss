@@ -179,9 +179,9 @@ $DancingStrip: "Dancing Script", cursive;
 .secondParallax .parallax-container .parallax img{
   bottom: 20%;
 }
-// VIAJES
+// page
 
-.viajes{
+.page{
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -244,11 +244,11 @@ $DancingStrip: "Dancing Script", cursive;
   }
 }
 @media only screen and (max-width: 992px){
-  .viajes{
+  .page{
     padding: 0px;
   }
 
-  .viajes__wrap{
+  .page__wrap{
     width: 95%;
   }
 }

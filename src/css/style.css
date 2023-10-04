@@ -132,7 +132,7 @@
   bottom: 20%;
 }
 
-.viajes {
+.page {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -140,57 +140,57 @@
   align-items: center;
   padding: 100px;
 }
-.viajes__texto {
+.page__texto {
   width: 90%;
   padding: 20px;
 }
-.viajes__title {
+.page__title {
   font-family: "Monserrat", sans-serif;
   font-size: 48px;
   font-weight: bold;
   color: #002333;
 }
-.viajes__p {
+.page__p {
   font-family: "Hind", sans-serif;
   color: #7c7b7b;
 }
-.viajes__wrap {
+.page__wrap {
   width: 80%;
   max-height: 640px;
   overflow: scroll;
   padding-left: 50px;
   padding-right: 50px;
 }
-.viajes__card {
+.page__card {
   width: 100% !important;
 }
-.viajes__card .card {
+.page__card .card {
   box-shadow: rgba(50, 50, 93, 0.25) 0px 10px 30px -12px, rgba(0, 0, 0, 0.3) 0px 8px 16px -18px;
 }
-.viajes__card--img {
+.page__card--img {
   max-height: 200px;
   aspect-ratio: 16/9;
   -o-object-fit: cover;
      object-fit: cover;
 }
-.viajes__card--title {
+.page__card--title {
   font-family: "Monserrat", sans-serif;
   font-weight: bold;
 }
-.viajes__card--icon {
+.page__card--icon {
   background-color: #002333 !important;
   z-index: 20;
 }
-.viajes__card--contenido {
+.page__card--contenido {
   font-family: "Hind", sans-serif;
   color: #7c7b7b;
 }
 
 @media only screen and (max-width: 992px) {
-  .viajes {
+  .page {
     padding: 0px;
   }
-  .viajes__wrap {
+  .page__wrap {
     width: 95%;
   }
 }
