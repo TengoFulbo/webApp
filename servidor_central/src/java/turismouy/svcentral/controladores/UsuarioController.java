@@ -15,6 +15,7 @@ import turismouy.svcentral.excepciones.UsuarioYaExisteExcepcion;
 import turismouy.svcentral.interfaces.IUsuarioController;
 import turismouy.svcentral.manejadores.UsuarioManejador;
 import turismouy.svcentral.utilidades.log;
+import turismouy.svcentral.utilidades.utilPassword;
 
 
 public class UsuarioController implements IUsuarioController {
@@ -48,6 +49,37 @@ public class UsuarioController implements IUsuarioController {
         um.addUsuario(user);
     };
 
+    // Registro con contraseña
+    public void registrarTurista(String nickname, String nombre, String apellido, String email, String nacionalidad, LocalDate nacimiento, String password) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion {
+        // Validaciones sobre parametros.
+        if (!validarTexto(nickname, 3) || !validarTexto(nombre, 1) || !validarTexto(apellido, 1) || !validarTexto(email, 2)) {
+            log.error("Parametros invalidos.");
+            throw new ParametrosInvalidosExcepcion();
+        }
+
+        // Trae la instancia del manejador.
+        UsuarioManejador um = UsuarioManejador.getinstance();
+
+        // Valida si el email ya existe.
+        if (um.getEmail(email)){
+            log.error("[Turista] El correo '" + email + "' ya existe.");
+            throw new UsuarioYaExisteExcepcion("El correo '" + email + "' ya existe");
+        }
+
+        usuario user = um.getUsuario(nickname);
+
+        // Valida si el usuario ya existe.
+        if (user != null) {
+            log.error("[Turista] El usuario '" + nickname + "' ya existe.");
+            throw new UsuarioYaExisteExcepcion("El nickname '" + nickname + "' ya existe");
+        }
+
+        String hashedPassword = utilPassword.encriptar(password);
+
+        log.info("[Turista] Registrando al turista.. " + nickname);
+        user = new turista(nickname, nombre, apellido, email, nacionalidad, nacimiento, hashedPassword);
+        um.addUsuario(user);
+    }
 
     public dataUsuario mostrarInfo(String nickname) throws UsuarioNoExisteExcepcion {
         // Trae la instancia del manejador.
@@ -110,6 +142,46 @@ public class UsuarioController implements IUsuarioController {
         user = new proveedor(nickname, nombre, apellido, email, descripcion, url, nacimiento);
         um.addUsuario(user);
     };
+
+    // Registro con contraseña
+    public void registrarProveedor(String nickname, String nombre, String apellido, String email, String descripcion, String url, LocalDate nacimiento, String password) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion {
+        // Validaciones sobre parametros.
+        if (!validarTexto(nickname, 3) ||
+            !validarTexto(nombre, 1) ||
+            !validarTexto(apellido, 1) ||
+            !validarTexto(email, 2) ||
+            !validarTexto(descripcion, 1) ||
+            !validarTexto(url, 1))
+            {
+                log.error("Parametros invalidos.");
+            return;
+        }
+        
+        // Trae la instancia del manejador.
+        UsuarioManejador um = UsuarioManejador.getinstance();
+
+        // Valida si el email ya existe.
+        if (um.getEmail(email)){
+            // log.error("[Proveedor] El correo '" + email + "' ya existe.");
+            // return; // ⚠️ Cambiar por excepción.
+            throw new UsuarioYaExisteExcepcion("El correo '" + email + "' ya existe");
+        }
+
+        usuario user = um.getUsuario(nickname);
+
+        // Valida si el usuario ya existe.
+        if (user != null) {
+            // log.error("[Proveedor] El usuario '" + nickname + "' ya existe.");
+            // return; // ⚠️ Cambiar por excepción.
+            throw new UsuarioYaExisteExcepcion("El nickname '" + nickname + "' ya existe");
+        }
+        
+        String hashedPassword = utilPassword.encriptar(password);
+
+        log.info("[Proveedor] Registrando al proveedor.. " + nickname);
+        user = new proveedor(nickname, nombre, apellido, email, descripcion, url, nacimiento, hashedPassword);
+        um.addUsuario(user);
+    }
 
 
     public void modificarUsuario(String nickname, String nombre, String apellido, LocalDate nacimiento) throws ParametrosInvalidosExcepcion {
@@ -210,6 +282,35 @@ public class UsuarioController implements IUsuarioController {
         return LNicknamesTuristas;
     }
     
+    public boolean login(String usuario, String password) {
+        if (!validarTexto(usuario, 1) || !validarTexto(password, 1)) {
+            log.error("Parametros invalidos.");
+            return false;
+        }
+
+        UsuarioManejador um = UsuarioManejador.getinstance();
+        usuario user = um.getUsuario(usuario);
+
+        if (user != null) {
+            if (utilPassword.checkPassword(password, user.getPassword())) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        user = um.getUsuarioEmail(usuario);
+
+        if (user != null) {
+            if (utilPassword.checkPassword(password, user.getPassword())) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        return false;
+    }
 
     /*
         * Level 1: Textos simples. Valida que no sea vacio, que no empiece o termine con espacio y que al menos tenga 1 letra o número.

@@ -3,11 +3,9 @@ package turismouy.svcentral;
 import java.time.LocalDate;
 
 import turismouy.svcentral.interfaces.IActividadController;
-import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.interfaces.IDepartamentoController;
 import turismouy.svcentral.interfaces.IPaqueteController;
 import turismouy.svcentral.interfaces.IUsuarioController;
-import turismouy.svcentral.utilidades.estadoActividad;
 // import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.utilidades.log;
 
@@ -15,18 +13,32 @@ public class Main {
     public static void main(String[] args) {
         Fabrica fabrica = Fabrica.getInstance();
         // ICategoriaController ICC = fabrica.getICategoriaController();
-        IActividadController IAC = fabrica.getIActividadController();
+        // IActividadController IAC = fabrica.getIActividadController();
+        IUsuarioController IUC = fabrica.getIUsuarioController();
 
-        cargarProveedores();
-        log.warning("########################################################");
-        cargarDepartamentos();
-        log.warning("########################################################");
-        cargarPaquetes();
-        log.warning("########################################################");
-        cargarActividades();
-        log.warning("########################################################");
-        cargarActividadesPaquetes();
-        
+        try {
+            if (IUC.login("eze", "eze")) { log.warning("True to login");
+            } else { log.warning("False to login"); };
+
+            if (IUC.login("eze", "hola123")) { log.warning("True to login");
+            } else { log.warning("False to login"); };
+
+            // if (IUC.login("eze", "eze")) { log.warning("True to login");
+            // } else { log.warning("False to login"); };
+        } catch (Exception e) {
+            log.error(e.toString());
+        }
+
+        // cargarProveedores();
+        // log.warning("########################################################");
+        // cargarDepartamentos();
+        // log.warning("########################################################");
+        // cargarPaquetes();
+        // log.warning("########################################################");
+        // cargarActividades();
+        // log.warning("########################################################");
+        // cargarActividadesPaquetes();
+
         // try {
         //     IAC.modificarEstadoActividad("Tour de Vinos en Bodegas", estadoActividad.RECHAZADA);
         //     IAC.modificarEstadoActividad("Recorrido Cultural por Museos", estadoActividad.RECHAZADA);
@@ -49,6 +61,8 @@ public class Main {
 		Fabrica fabrica = Fabrica.getInstance();
         IUsuarioController IUC = fabrica.getIUsuarioController();
 
+        try { IUC.registrarTurista("eze", "Ezequiel", "Blandin", "exzeblan@gmail.com", "Uruguay",  LocalDate.of(2000, 05, 20), "hola123");
+            } catch (Exception e) { log.error("Error: " + e.toString()); }		
         try { IUC.registrarProveedor("homeSolutions", "Mariana", "Perez", "mariana@homesolutions.com", "Soluciones para el hogar y decoración", "www.homesolutions.com", LocalDate.of(2004, 12, 3));
             } catch (Exception e) { log.error("Error: " + e.toString()); }			
         try { IUC.registrarProveedor("techGadgets", "Manuel", "Ríos", "manuel@techgadgets.com", "Dispositivos tecnológicos y accesorios", "www.techgadgets.com", LocalDate.of(1996, 5, 15));

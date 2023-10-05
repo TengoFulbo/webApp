@@ -19,7 +19,8 @@ public interface IUsuarioController {
      * @param nacionalidad String
      * @param nacimiento LocalDate
      */
-    void registrarTurista(String nickname, String nombre, String apellido, String email, String nacionalidad, LocalDate nacimiento) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion;
+    public abstract void registrarTurista(String nickname, String nombre, String apellido, String email, String nacionalidad, LocalDate nacimiento) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion;
+    public abstract void registrarTurista(String nickname, String nombre, String apellido, String email, String nacionalidad, LocalDate nacimiento, String password) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion;
 
     /**
      * Caso de uso:
@@ -27,7 +28,7 @@ public interface IUsuarioController {
      * @return dataUsuario (DataType)
      * @throws UsuarioNoExisteExcepcion
      */
-    dataUsuario mostrarInfo(String nickname) throws UsuarioNoExisteExcepcion;
+    public abstract dataUsuario mostrarInfo(String nickname) throws UsuarioNoExisteExcepcion;
 
     /**
      * Caso de uso:
@@ -40,7 +41,8 @@ public interface IUsuarioController {
      * @param url String
      * @param nacimiento LocalDate
      */
-    void registrarProveedor(String nickname, String nombre, String apellido, String email, String descripcion, String url, LocalDate nacimiento) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion;
+    public abstract void registrarProveedor(String nickname, String nombre, String apellido, String email, String descripcion, String url, LocalDate nacimiento) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion;
+    public abstract void registrarProveedor(String nickname, String nombre, String apellido, String email, String descripcion, String url, LocalDate nacimiento, String password) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion;
 
     /**
      * Caso de uso:
@@ -50,13 +52,15 @@ public interface IUsuarioController {
      * @param nacimiento LocalDate
      * @throws ParametrosInvalidosExcepcion
      */
-    void modificarUsuario(String nickname, String nombre, String apellido, LocalDate nacimiento) throws ParametrosInvalidosExcepcion;
+    public abstract void modificarUsuario(String nickname, String nombre, String apellido, LocalDate nacimiento) throws ParametrosInvalidosExcepcion;
     
     /**
      * Lista todos los usuarios.
      * @return List de dataUsuario
      */
-    List<dataUsuario> listarUsuarios();
+    public abstract List<dataUsuario> listarUsuarios();
 
-    List<dataUsuario> listarProveedores();
+    public abstract List<dataUsuario> listarProveedores();
+
+    public abstract boolean login(String usuario, String password);
 }

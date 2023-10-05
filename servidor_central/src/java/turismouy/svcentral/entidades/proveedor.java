@@ -27,6 +27,13 @@ public class proveedor extends usuario {
 		this.actividades = new ArrayList<actividad>();
 	}
 
+	public proveedor(String nickname, String nombre, String apellido, String email, String descripcion, String url, LocalDate nacimiento, String password) {
+		super(nickname, nombre, apellido, email, nacimiento, password);
+		this.url = url;
+		this.descripcion = descripcion;
+		this.actividades = new ArrayList<actividad>();
+	}
+
 	// Constructor vacio pedido por JPA.
 	public proveedor(){};
 

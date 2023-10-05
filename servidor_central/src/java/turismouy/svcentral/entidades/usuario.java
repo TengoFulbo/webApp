@@ -2,6 +2,8 @@ package turismouy.svcentral.entidades;
 
 import javax.persistence.*;
 
+import turismouy.svcentral.utilidades.utilPassword;
+
 import java.time.LocalDate;
 
 // @MappedSuperclass
@@ -19,6 +21,7 @@ public class usuario{
 	@Column 
 	protected String email;
 	protected LocalDate nacimiento;
+	protected String password;
 	
 	// Constructor vacio pedido por JPA.
 	public usuario(){};
@@ -29,6 +32,16 @@ public class usuario{
 		this.apellido = apellido;
 		this.email = email;
 		this.nacimiento = nacimiento;
+		this.password = utilPassword.encriptar(nickname);
+	}
+	
+	public usuario(String nickname, String nombre, String apellido, String email, LocalDate nacimiento, String password) {
+		this.nickname = nickname;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.email = email;
+		this.nacimiento = nacimiento;
+		this.password = password;
 	}
 
 	public String getNickname() {
@@ -71,4 +84,11 @@ public class usuario{
 		this.nacimiento = nacimiento;
 	}
 	
+	public String getPassword() {
+		return this.password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 }

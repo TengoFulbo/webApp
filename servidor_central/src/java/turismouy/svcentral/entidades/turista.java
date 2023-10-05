@@ -23,6 +23,12 @@ import turismouy.svcentral.datatypes.dataUsuario;
         this.inscripciones = new ArrayList<inscripcion>();
     }
 
+    public turista(String nickname, String nombre, String apellido, String email, String nacionalidad, LocalDate nacimiento, String password) {
+        super(nickname, nombre, apellido, email, nacimiento, password);
+        this.nacionalidad = nacionalidad;
+        this.inscripciones = new ArrayList<inscripcion>();
+    }
+
     // Constructor vacío pedido por JPA.
     public turista() {}
 

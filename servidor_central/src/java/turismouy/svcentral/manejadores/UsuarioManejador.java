@@ -110,6 +110,27 @@ public class UsuarioManejador {
         return ((usuario) usuariosNickname.get(nickname));
     }
 
+    public usuario getUsuarioEmail(String email) {
+        try {
+            // Para cada función hay que crear un nuevo em y tx.
+	        EntityManager em = factory.createEntityManager();
+
+            usuario usuario = em.createQuery("SELECT u FROM usuario u LEFT JOIN FETCH u.actividades WHERE u.email = :email", usuario.class)
+                                .setParameter("email", email)
+                                .getSingleResult();
+
+            if (usuario == null) {
+                return null;
+            }
+                
+            return usuario;
+        } catch (Exception e) {
+            log.error("Error al getUsuarioEmail. " + e.toString());
+            return null;
+        }
+    }
+
+
     public List<proveedor> getAllProveedor(){
         List<dataUsuario> dataProveedores = new ArrayList<dataUsuario>();
         // Para cada función hay que crear un nuevo em y tx.
