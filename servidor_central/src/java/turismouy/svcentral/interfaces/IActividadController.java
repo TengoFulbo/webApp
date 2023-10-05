@@ -3,9 +3,12 @@ package turismouy.svcentral.interfaces;
 import java.time.LocalDate;
 import java.util.List;
 import turismouy.svcentral.datatypes.dataActividad;
+import turismouy.svcentral.excepciones.NoExisteExcepcion;
 import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
 import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
 import turismouy.svcentral.excepciones.UsuarioYaExisteExcepcion;
+import turismouy.svcentral.excepciones.YaExisteExcepcion;
+import turismouy.svcentral.utilidades.estadoActividad;
 
 public interface IActividadController {
     /**
@@ -43,8 +46,10 @@ public interface IActividadController {
      * @throws UsuarioYaExisteExcepcion
      * @throws UsuarioNoExisteExcepcion
      */
-    public abstract void modificarActividad(String nombre, String desc, int duracion, int costoUni, String ciudad, LocalDate fechaCrea) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion, UsuarioNoExisteExcepcion;
-    
+     public abstract void modificarActividad(String nombre, String desc, int duracion, int costoUni, String ciudad, LocalDate fechaCrea) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion, UsuarioNoExisteExcepcion;
+
+    public abstract void modificarEstadoActividad(String nombre, estadoActividad estado) throws NoExisteExcepcion, ParametrosInvalidosExcepcion, YaExisteExcepcion;;
+
     /**
      * Lista todas las actividades.
      * @return Lista de dataActividad

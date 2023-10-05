@@ -7,6 +7,7 @@ import javax.persistence.NoResultException;
 
 import turismouy.svcentral.EMFactory;
 import turismouy.svcentral.entidades.actividad;
+import turismouy.svcentral.utilidades.estadoActividad;
 import turismouy.svcentral.utilidades.log;
 
 public class ActividadManejador {
@@ -83,7 +84,9 @@ public class ActividadManejador {
     	
         actividad actividad;
         try {
-            actividad = em.createQuery("SELECT a FROM actividad a JOIN FETCH a.salidas WHERE a.nombreA = '" + nombreAct + "'",actividad.class).getSingleResult();
+            actividad = em.createQuery("SELECT a FROM actividad a JOIN FETCH a.salidas WHERE a.nombreA = '" + nombreAct + "' AND a.estado <> :estadoRechazada",actividad.class)
+                .setParameter("estadoRechazada", estadoActividad.RECHAZADA.ordinal())                
+                .getSingleResult();
         } catch (NoResultException  e) {
             actividad = null;
         }

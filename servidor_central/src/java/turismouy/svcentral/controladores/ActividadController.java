@@ -6,13 +6,16 @@ import turismouy.svcentral.entidades.proveedor;
 import turismouy.svcentral.entidades.salida;
 import turismouy.svcentral.entidades.usuario;
 import turismouy.svcentral.entidades.paquete;
+import turismouy.svcentral.excepciones.NoExisteExcepcion;
 import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
 import turismouy.svcentral.excepciones.UsuarioYaExisteExcepcion;
+import turismouy.svcentral.excepciones.YaExisteExcepcion;
 import turismouy.svcentral.interfaces.IActividadController;
 import turismouy.svcentral.manejadores.ActividadManejador;
 import turismouy.svcentral.manejadores.DepartamentoManejador;
 import turismouy.svcentral.manejadores.PaqueteManejador;
 import turismouy.svcentral.manejadores.UsuarioManejador;
+import turismouy.svcentral.utilidades.estadoActividad;
 import turismouy.svcentral.utilidades.log;
 import turismouy.svcentral.datatypes.dataActividad;
 import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
@@ -40,11 +43,21 @@ public class ActividadController implements IActividadController {
         }
         
 		ActividadManejador am = ActividadManejador.getinstance();
-		
-        if(am.getActividad(nombre) != null){
-        	// log.error("La actividad '" + nombre + "' ya existe.");
-        	throw new UsuarioYaExisteExcepcion("La actividad " + nombre + " ya existe");
+
+        actividad actividad = am.getActividad(nombre);
+
+        if(actividad != null) {
+            if (actividad.getEstado() == estadoActividad.AGREGADA || actividad.getEstado() == estadoActividad.CONFIRMADA) {
+                log.error("1 La actividad '" + actividad.getNombre() + "' ya existe.");
+                throw new UsuarioYaExisteExcepcion("La actividad " + nombre + " ya existe");
+            }
+        	log.error("2 La actividad '" + nombre + "' ya existe pero se crea de igual manera, ya que está rechazada.");
         }
+        
+        // if(am.getActividad(nombre) != null){
+        // 	// log.error("La actividad '" + nombre + "' ya existe.");
+        // 	throw new UsuarioYaExisteExcepcion("La actividad " + nombre + " ya existe");
+        // }
         
         UsuarioManejador um = UsuarioManejador.getinstance();
         usuario user = um.getUsuario(nombreProv);
@@ -242,7 +255,28 @@ public class ActividadController implements IActividadController {
         return dtActividades;
     }    
     
-    
+    public void modificarEstadoActividad(String nombre, estadoActividad estado) throws NoExisteExcepcion, ParametrosInvalidosExcepcion, YaExisteExcepcion {
+        if (estado != estadoActividad.CONFIRMADA && estado != estadoActividad.RECHAZADA) {
+            log.error("Parametros invalidos por primero.");
+            throw new ParametrosInvalidosExcepcion();
+        }
+
+        ActividadManejador am = ActividadManejador.getinstance();
+        actividad actividad = am.getActividad(nombre);
+
+		if (actividad == null) {
+        	log.error("La actividad '" + nombre + "' no existe.");
+        	throw new NoExisteExcepcion("La actividad " + nombre + " no existe");
+		}
+
+        if (actividad.getEstado() != (estadoActividad.AGREGADA)){
+            throw new YaExisteExcepcion("La actividad '" + actividad.getNombre() + "' ya tiene un estado de: '" + actividad.getEstado() + "'");
+        }
+
+        log.info("Se modifica el estado de la actividad '" + nombre + "' " + actividad.getEstado() + " a " + estado);
+        actividad.setEstado(estado);
+        am.updateActividad(actividad);
+    } 
 	
     private static boolean validarTexto(String texto, int nivel) {
         switch (nivel) {

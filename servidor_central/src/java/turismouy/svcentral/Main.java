@@ -7,20 +7,35 @@ import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.interfaces.IDepartamentoController;
 import turismouy.svcentral.interfaces.IPaqueteController;
 import turismouy.svcentral.interfaces.IUsuarioController;
-
+import turismouy.svcentral.utilidades.estadoActividad;
 // import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.utilidades.log;
 
 public class Main {
     public static void main(String[] args) {
-        // Fabrica fabrica = Fabrica.getInstance();
+        Fabrica fabrica = Fabrica.getInstance();
         // ICategoriaController ICC = fabrica.getICategoriaController();
+        IActividadController IAC = fabrica.getIActividadController();
 
         cargarProveedores();
+        log.warning("########################################################");
         cargarDepartamentos();
+        log.warning("########################################################");
         cargarPaquetes();
+        log.warning("########################################################");
         cargarActividades();
+        log.warning("########################################################");
         cargarActividadesPaquetes();
+        
+        // try {
+        //     IAC.modificarEstadoActividad("Tour de Vinos en Bodegas", estadoActividad.RECHAZADA);
+        //     IAC.modificarEstadoActividad("Recorrido Cultural por Museos", estadoActividad.RECHAZADA);
+        // } catch (Exception e) {
+        //     log.error(e.getMessage());
+        // }
+        // log.warning("########################################################");
+        // cargarActividades();
+        // cargarActividadesPaquetes();
 
         // try {
         //     ICC.crearCategoria("Aventura");            
