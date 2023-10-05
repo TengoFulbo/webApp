@@ -39,7 +39,7 @@ public class ActividadManejador {
             em.merge(actividad);
 
             tx.commit();       
-            log.info("Se crea la actividad " + actividad.getNombre());
+            log.info("[ActividadManejador] Se crea la actividad " + actividad.getNombre());
             
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {

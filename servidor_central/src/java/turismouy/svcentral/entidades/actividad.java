@@ -6,6 +6,7 @@ import turismouy.svcentral.EMFactory;
 import turismouy.svcentral.datatypes.dataActividad;
 import turismouy.svcentral.datatypes.dataPaquete;
 import turismouy.svcentral.datatypes.dataSalida;
+import turismouy.svcentral.utilidades.estadoActividad;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,7 +14,9 @@ import java.util.List;
 
 @Entity
 public class actividad {
-	@Id @Column
+	@Id // Dice que es PK
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Autoincremental
+	long id;
 	private String nombreA;
 	@Column
 	private String descripcion;
@@ -24,6 +27,7 @@ public class actividad {
 	@Column
 	private String ciudad;
 	private LocalDate fechaCrea;
+	estadoActividad estado;
 	@ManyToOne() // Un proveedor puede tener muchas actividades.
 	private proveedor proveedor;
 	@ManyToOne() // Un departamento puede tener muchas actividades.
@@ -41,7 +45,9 @@ public class actividad {
     private List<salida> salidas;
 
 
-    public actividad(){}; public actividad(String nombre, String descripcion, int duracion, int costeUni, String ciudad, LocalDate fechaCrea) {
+    public actividad(){};
+	
+	public actividad(String nombre, String descripcion, int duracion, int costeUni, String ciudad, LocalDate fechaCrea) {
 		super();
 		this.nombreA = nombre;
 		this.descripcion = descripcion;
@@ -51,6 +57,7 @@ public class actividad {
 		this.fechaCrea = fechaCrea;
 		this.paquetes = new ArrayList<paquete>();
 		this.salidas = new ArrayList<salida>();
+		this.estado = estadoActividad.AGREGADA;
 	}
 
 	public String getNombre() {
@@ -116,6 +123,12 @@ public class actividad {
 	public void setSalidas(List<salida> salidas) {
 		this.salidas = salidas;
 	}
+	public estadoActividad getEstado(){
+		return this.estado;
+	}
+	public void setEstado(estadoActividad estado){
+		this.estado = estado;
+	}
 	public dataActividad toDataType() {
 		
 		List<dataSalida>DtSalidas = this.crearListaSalidaParaDt(this);
@@ -129,6 +142,7 @@ public class actividad {
 			this.costeUni,
 			this.ciudad,
 			this.fechaCrea,
+			this.estado,
 			this.departamento.toDataTypeWithoutActividades(),
 			this.proveedor.toDataTypeWithoutCollections(),
 			DtSalidas,

@@ -63,8 +63,8 @@ public class DepartamentoManejador {
 
             // Se actualiza en la colección.
             departamentoNombre.put(nombre, departamento);
-            log.info("El departamento se actualizó" + nombre + "correctamente");
-            log.info("Departamentos: " + departamentoNombre.size());
+            log.info("El departamento se actualizó '" + nombre + "' correctamente");
+            // log.info("Departamentos: " + departamentoNombre.size());
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {
                 tx.rollback();
