@@ -15,7 +15,6 @@ public class Main {
         // ICategoriaController ICC = fabrica.getICategoriaController();
         // IActividadController IAC = fabrica.getIActividadController();
         IUsuarioController IUC = fabrica.getIUsuarioController();
-
         try {
             if (IUC.login("eze", "eze")) { log.warning("True to login");
             } else { log.warning("False to login"); };
