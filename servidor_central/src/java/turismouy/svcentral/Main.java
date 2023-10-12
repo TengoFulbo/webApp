@@ -14,30 +14,30 @@ public class Main {
         Fabrica fabrica = Fabrica.getInstance();
         // ICategoriaController ICC = fabrica.getICategoriaController();
         // IActividadController IAC = fabrica.getIActividadController();
-        IUsuarioController IUC = fabrica.getIUsuarioController();
+        // IUsuarioController IUC = fabrica.getIUsuarioController();
 
-        try {
-            if (IUC.login("eze", "eze")) { log.warning("True to login");
-            } else { log.warning("False to login"); };
+        // try {
+        //     if (IUC.login("eze", "eze")) { log.warning("True to login");
+        //     } else { log.warning("False to login"); };
 
-            if (IUC.login("eze", "hola123")) { log.warning("True to login");
-            } else { log.warning("False to login"); };
+        //     if (IUC.login("eze", "hola123")) { log.warning("True to login");
+        //     } else { log.warning("False to login"); };
 
-            // if (IUC.login("eze", "eze")) { log.warning("True to login");
-            // } else { log.warning("False to login"); };
-        } catch (Exception e) {
-            log.error(e.toString());
-        }
+        //     // if (IUC.login("eze", "eze")) { log.warning("True to login");
+        //     // } else { log.warning("False to login"); };
+        // } catch (Exception e) {
+        //     log.error(e.toString());
+        // }
 
-        // cargarProveedores();
-        // log.warning("########################################################");
-        // cargarDepartamentos();
-        // log.warning("########################################################");
-        // cargarPaquetes();
-        // log.warning("########################################################");
-        // cargarActividades();
-        // log.warning("########################################################");
-        // cargarActividadesPaquetes();
+        cargarProveedores();
+        log.warning("########################################################");
+        cargarDepartamentos();
+        log.warning("########################################################");
+        cargarPaquetes();
+        log.warning("########################################################");
+        cargarActividades();
+        log.warning("########################################################");
+        cargarActividadesPaquetes();
 
         // try {
         //     IAC.modificarEstadoActividad("Tour de Vinos en Bodegas", estadoActividad.RECHAZADA);

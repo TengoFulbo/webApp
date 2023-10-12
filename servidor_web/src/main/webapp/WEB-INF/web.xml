@@ -1,0 +1,19 @@
+<web-app>
+    <!-- ... otras configuraciones ... -->
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Secure Resources</web-resource-name>
+            <url-pattern>/WEB-INF/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <!-- Configuración de la página de error 404 -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error404</location> <!-- Puedes especificar una página JSP o HTML personalizada -->
+    </error-page>
+</web-app>
