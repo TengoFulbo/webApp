@@ -17,6 +17,6 @@ public class ResultadoServlet extends HttpServlet {
         request.setAttribute("mensaje", mensaje);
 
         // Redirige a la página JSP
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/hola.jsp").forward(request, response);
     }
 }

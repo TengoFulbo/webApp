@@ -1,0 +1,417 @@
+// IMPORTO OTROS CSS FILES
+@import url(./reset.css);
+
+// DEFINO COLORES
+
+$colorGris1: #b4bec9;
+$colorVerde: #159a9c;
+$colorOscuro: #002333;
+$colorCrema: #deefe7;
+$colorBlanco: #ffffff;
+
+$Crevasse-1-rgba: rgba(180, 190, 201, 0.3);
+$Crevasse-2-rgba: rgba(21, 154, 156, 0.5);
+$Crevasse-3-rgba: rgba(0, 35, 51, 0.3);
+$Crevasse-4-rgba: rgba(222, 239, 231, 0.5);
+$Crevasse-5-rgba: rgba(255, 255, 255, 0.4);
+
+$Crevasse-1-hsla: hsla(211, 16, 74, 1);
+$Crevasse-2-hsla: hsla(180, 76, 34, 1);
+$Crevasse-3-hsla: hsla(198, 100, 10, 1);
+$Crevasse-4-hsla: hsla(151, 34, 90, 1);
+$Crevasse-5-hsla: hsla(0, 0, 100, 1);
+
+// DEFINO FUENTES
+$montserrat: "Monserrat", sans-serif;
+$hind: "Hind", sans-serif;
+$DancingStrip: "Dancing Script", cursive;
+
+// NAVBAR
+.navbar{
+  display: flex;
+  justify-content: center;
+  background-color: $colorOscuro;
+  position: fixed;
+  z-index: 900;
+}
+
+.navbar__wrap{
+  width: 80%;
+}
+
+.brand-logo{
+  display: flex !important;
+}
+
+.navbar__logo--img{
+  max-height: 50px;
+  align-self: center;
+  justify-self: center;
+}
+
+
+@media only screen and (max-width: 992px){
+  .navbar__wrap{
+    width: 95%;
+  }
+}
+
+
+// HEADER
+.header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  &__wrap{
+    position: relative;
+    z-index: 20;
+    background-color: $Crevasse-5-rgba;
+    width: 60%;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
+      rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+  }
+
+  &__wrap h1{
+    margin: 0px;
+  }
+
+  &__frase{
+    font-size: 34px;
+    font-family: $DancingStrip;
+    color: $colorOscuro;
+    
+  }
+
+  &__frase--owner{
+    font-size: 20px;
+    align-self: flex-start;
+    color: #37474fa4;
+    font-family: $DancingStrip;
+  }
+
+  &__btn{
+    display: block;
+    position: relative;
+    padding: 10px;
+    width: 20%;
+    height: 150px;
+    border: 2px solid $colorVerde;
+    color: $colorOscuro; 
+    text-align: center;
+    border-radius: 200px;
+    transition: all 300ms ease-in-out;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
+      rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+      margin-top: 2%;
+    font-family: $hind;
+  }
+  &__btn:hover{
+    transform: scale(1.2);
+    border: 2px solid $colorOscuro;
+  }
+
+  @media only screen and (max-width: 992px){
+    .header{
+
+      &__wrap{
+        width: 90%;
+        height: 25%;
+      }
+      &__frase{
+        font-size: 24px;
+      }
+    
+      &__frase--owner{
+        font-size: 18px;
+      }
+    }
+  }
+}
+// TARJETAS
+
+.cards{
+  width: 100%;
+  padding: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 3%;
+  align-items: center;
+  flex-wrap: wrap;
+  
+  &__card{
+    width: 30%;
+    height: 100%;
+    flex: 1 1 300px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
+      rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+  }
+  &__img{
+    aspect-ratio: 16/12;
+  }
+  &__title{
+    font-family: $montserrat;
+  }
+}
+@media only screen and (max-width: 992px){
+  .cards{
+    padding: 20px;
+  }
+}
+
+//   SECOND PARALLAX
+
+.secondParallax {
+  max-height: 50vh;
+  overflow: hidden;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 0% 100%);
+}
+
+.secondParallax .parallax-container .parallax img{
+  bottom: 20%;
+}
+// page
+
+.page{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 100px;
+
+  &__texto{
+    width: 90%;
+    padding: 20px;
+  }
+  &__title{
+    font-family: $montserrat;
+    font-size: 48px;
+    font-weight: bold;
+    color: $colorOscuro;
+  }
+  &__p{
+    font-family: $hind;
+    color: #7c7b7b;
+  }
+
+
+  &__wrap{
+    width: 80%;
+    max-height: 640px;
+    overflow: scroll;
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
+  &__card{
+    width: 100% !important;
+  }
+
+  &__card .card{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 10px 30px -12px,
+      rgba(0, 0, 0, 0.3) 0px 08px 16px -18px;
+  }
+
+  &__card--img{
+    max-height: 200px;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+  }
+
+  &__card--title{
+    font-family: $montserrat;
+    font-weight: bold;
+  }
+
+  &__card--icon{
+    background-color: $colorOscuro !important;
+    z-index: 20;
+  }
+
+  &__card--contenido{
+    font-family: $hind;
+    color: #7c7b7b;
+  }
+}
+@media only screen and (max-width: 992px){
+  .page{
+    padding: 0px;
+  }
+
+  .page__wrap{
+    width: 95%;
+  }
+}
+
+// TERCER PARALLAX
+.thirdParallax {
+  max-height: 50vh;
+  overflow: hidden;
+  clip-path: polygon(0% 30%, 100% 50%, 100% 20%, 0% 0%);
+}
+
+// Carrusel
+.carrusel{
+width: 100%;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+
+  &__text{
+    width: 90%;
+    padding: 20px;
+  }
+  &__title{
+    font-family: $montserrat;
+    font-size: 48px;
+    font-weight: bold;
+    color: $colorOscuro;
+  }
+  &__text{
+    font-family: $hind;
+    color: #7c7b7b;
+  }
+
+  &__main{
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    width: 100% !important;
+    height: 600px !important;
+    margin-top: -100px;
+  }
+  &__item{
+    width: 80% !important;
+    height: 300px !important;
+    display: flex;
+    min-height: fit-content !important;
+  }
+  &__item--wrap{
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+    padding: 20px;
+    background-color: $colorCrema;
+    border-radius: 200px !important;
+  }
+  &__item--img{
+    border-radius: 200px;
+    background-color: $colorBlanco;
+  }
+  // &__item--text{
+    
+  // }
+  &__item--uname{
+    font-family: $montserrat;
+    font-size: 48px;
+    font-weight: bold;
+    color: $colorOscuro;
+  }
+  &__item--umsj{
+    font-family: $hind;
+    color: #2f2f2f;
+  }
+}
+@media only screen and (max-width: 992px){
+  .carrusel{
+    &__item{
+      height: 250px !important;
+    }
+    &__item--wrap{
+      border-radius: 20px !important;
+    }
+    &__item--img{
+      height: 100px;
+      aspect-ratio: 1/1;
+      align-self: center;
+    }
+  
+    &__item--uname{
+      font-size: 20px;
+    }
+  }
+}
+
+@media only screen and (max-width: 500px){
+  .carrusel{
+    &__item{
+      height: 300px !important;
+    }
+  }
+}
+
+.thirdParallax .parallax-container .parallax img{
+  bottom: 20%;
+}
+
+
+// FOOTER
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: $colorBlanco;
+  background-color: $colorOscuro;
+  color: $colorBlanco;
+
+  &__container {
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    justify-content: space-between;
+  }
+  &__text {
+    display: flex;
+    width: 60%;
+    flex-direction: column;
+    justify-content: center;
+    // align-items: center;
+    color: $colorBlanco;
+  }
+  &__text--title {
+    font-family: $montserrat;
+    font-weight: bold;
+    font-size: 25px;
+  }
+  &__text--p {
+    font-family: $hind;
+    font-size: 18px;
+    color: #7c7b7b;
+  }
+  &__p {
+    width: 100%;
+    height: 100%;
+    background-color: #00121a;
+    text-align: center;
+    padding: 5px;
+    font-family: $montserrat;
+  }
+}
+
+
+@media only screen and (max-width: 800px) {
+  .footer__container {
+    width: 100%;
+    padding: 5px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+
+  .footer__text--p {
+    font-size: 13px;
+  }
+
+}
