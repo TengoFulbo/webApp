@@ -10,8 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-// import turismouy.svcentral.interfaces.IUsuarioController;
-// import turismouy.svcentral.Fabrica;
+import turismouy.svcentral.interfaces.IUsuarioController;
+import turismouy.svcentral.Fabrica;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -30,17 +30,17 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        // IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+        IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
 
-        // if (IUC.login(username, password)) {
+        if (IUC.login(username, password)) {
 
-        //     // Creamos la sesión.
-        //     HttpSession session = request.getSession();
-        //     session.setAttribute("username", username);
+            // Creamos la sesión.
+            HttpSession session = request.getSession();
+            session.setAttribute("username", username);
 
-        //     // Redirigimos al home.
-        //     response.sendRedirect(request.getContextPath() + "/home");
-        // }
+            // Redirigimos al home.
+            response.sendRedirect(request.getContextPath() + "/home");
+        }
 
 
         // Validar las credenciales (esto puede ser reemplazado por una lógica más robusta)
