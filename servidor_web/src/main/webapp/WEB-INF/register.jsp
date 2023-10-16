@@ -32,21 +32,22 @@
     <div class="main">
       <div class="container" id="container">
         <div class="form-container sign-up-container">
-          <form action="#">
-            <h1>Proveedor</h1>
+          <form action="./registerProveedor" method="post">
+            <input type="hidden" name="isProveedor" value="true">
+            <h1>Proveedor</h1>s
             <span>Registrate como proveedor</span>
-            <input type="text" placeholder="Nickname" />
-            <input type="text" placeholder="Nombre y Apellido" />
-            <input type="email" placeholder="Email" />
-            <input type="date" placeholder="Fecha de nacimiento" />
-            <input type="text" placeholder="Descripcion" />
-            <input type="text" placeholder="Sitio Web" />
-            <input type="password" placeholder="Password" />
+            <input name="nickname" type="text" placeholder="Nickname" />
+            <input name="nombreyapellido" type="text" placeholder="Nombre y Apellido" />
+            <input name="email" type="email" placeholder="Email" />
+            <input name="fechaN" type="date" placeholder="Fecha de nacimiento" />
+            <input name="desc" type="text" placeholder="Descripcion" />
+            <input name="url" type="text" placeholder="Sitio Web" />
+            <input name="password" type="password" placeholder="Password" />
             <button>Registrarse</button>
           </form>
         </div>
         <div class="form-container sign-in-container">
-          <form action="#">
+          <form action="./registerTurista" method="post">
             <h1>Turista</h1>
             <div class="social-container">
               <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -54,12 +55,12 @@
               <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
             </div>
             <span>Quieres registrarte como turista? hazlo!</span>
-            <input type="text" placeholder="Nickname" />
-            <input type="text" placeholder="Nombre y Apellido" />
-            <input type="email" placeholder="Email" />
-            <input type="date" placeholder="Fecha de nacimiento" />
-            <input type="text" placeholder="Nacionalidad" />
-            <input type="password" placeholder="Password" /> 
+            <input name="nickname" type="text" placeholder="Nickname" />
+            <input name="nombreyapellido" type="text" placeholder="Nombre y Apellido" />
+            <input name="email" type="email" placeholder="Email" />
+            <input name="fechaN" type="date" placeholder="Fecha de nacimiento" />
+            <input name="nacionalidad" type="text" placeholder="Nacionalidad" />
+            <input name="password" type="password" placeholder="Password" /> 
             <button>Registrarse</button>
           </form>
         </div>

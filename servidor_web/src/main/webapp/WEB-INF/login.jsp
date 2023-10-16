@@ -42,6 +42,18 @@
       <div class="container" id="container">
         <div class="form-container sign-in-container">
           <!-- <form action="#"> -->
+            <%
+            String notificacion = (String) request.getSession().getAttribute("errorLogin");
+            if (notificacion != null) {
+        %>
+            <div class="notificacion">
+                <%= notificacion %>
+            </div>
+        <%
+                // Limpia la notificación después de mostrarla
+                request.getSession().removeAttribute("errorLogin");
+            }
+        %>
             <form action="./login" method="post">
             <h1>Ingresar</h1>
             <div class="social-container">

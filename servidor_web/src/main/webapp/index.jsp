@@ -57,7 +57,7 @@
             <li><a class="waves-effect waves-light" href="login">Ingresar</a></li>
             <li><a class="waves-effect waves-light" href="register">Registrarse</a></li>
           <% } else { %>
-            <li><a class="waves-effect waves-light" href="#">Cerrar sesión</a></li>
+            <li><a class="waves-effect waves-light" href="cerrarSesion">Cerrar sesión</a></li>
           <% } %>
         </ul>
       </div>

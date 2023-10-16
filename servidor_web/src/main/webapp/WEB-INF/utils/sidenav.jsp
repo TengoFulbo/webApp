@@ -27,6 +27,6 @@
             <a href="./miCuenta.html" class="waves-effect"><i class="material-icons">person</i>Mi Cuenta</a>
         </li>
         <li>
-            <a class="waves-effect" href="./index.html"><i class="material-icons">exit_to_app</i>Cerrar Sesion</a>
+            <a class="waves-effect" href="./cerrarSesion"><i class="material-icons">exit_to_app</i>Cerrar Sesion</a>
         </li>
     </ul>
