@@ -17,6 +17,7 @@ public class closeSessionServlet extends HttpServlet {
         
         HttpSession session = request.getSession();
         session.removeAttribute("username");
+        session.removeAttribute("dataUsuario");
 
         // Redireciona
         // RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/");

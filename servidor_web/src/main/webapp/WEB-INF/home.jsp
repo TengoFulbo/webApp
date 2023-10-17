@@ -39,6 +39,8 @@
                 </div>
                 <img src="./src/img/kombi.png" alt="" class="main__image">
             </div>
+            <%
+            if (usuario != null) { %>
             <div class="main__content">
                 <div class="main__content--container">
                     <h2 class="main__content--title">Salidas Prog.</h2>
@@ -53,6 +55,8 @@
                     <p class="main__content--number"><%= request.getAttribute("actividades") %></p>
                 </div>
             </div>
+            <%
+            } %>
         </div>
     </div>
 

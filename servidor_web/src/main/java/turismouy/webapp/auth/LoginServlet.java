@@ -44,6 +44,7 @@ public class LoginServlet extends HttpServlet {
             try {
                 dataUsuario usuario = IUC.mostrarInfo(username);
                 session.setAttribute("dataUsuario", usuario);
+                System.out.println(usuario.getNombre());
                 // TODO: ⚠️ Agregar o modificar "mostrarInfo" para que también pueda recibir un correo. 
             } catch (Exception e) {
                 log.error("[LoginServlet] Error con el usuario");
@@ -51,6 +52,7 @@ public class LoginServlet extends HttpServlet {
 
             // Redirigimos al home.
             response.sendRedirect(request.getContextPath() + "/home");
+            // request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
         } else {
 
             session.setAttribute("errorLogin", "El usuario / contraseña no son correctos.");
