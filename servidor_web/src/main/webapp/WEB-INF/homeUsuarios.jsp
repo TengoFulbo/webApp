@@ -107,7 +107,7 @@
                 <span class="title"><%= user.getNombre() %> <%= user.getApellido() %></span>
                 <p>@<%= user.getNickname() %> <br>
                 </p>
-                <a aclass="secondary-content dropdown-trigger" data-target='dropConsultaUser'><i class="material-icons">more_horiz</i></a>
+                <a class="secondary-content dropdown-trigger" data-target='dropConsultaUser'><i class="material-icons">more_horiz</i></a>
                 <!-- <a href="./miCuenta?nickname=<%= user.getNickname() %>" class="secondary-content dropdown-trigger" data-target='dropConsultaUser'><i class="material-icons">more_horiz</i></a>                 -->
                 <ul id='dropConsultaUser' class='dropdown-content userConsultaDrop'>
                     <li class="userConsultaDrop--li"><a href="./miCuenta?nickname=<%= user.getNickname() %>" class="secondary-content">Ver Perfil</a></li>

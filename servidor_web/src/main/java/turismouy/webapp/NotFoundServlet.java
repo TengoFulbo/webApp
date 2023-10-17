@@ -10,10 +10,10 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/error404")
 public class NotFoundServlet extends HttpServlet {
     // ... (código del servlet)
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // Configurar la respuesta HTTP 404
-        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        response.setContentType("text/html");
-        response.getWriter().println("<html><body><h1>404 - Recurso no encontrado</h1></body></html>");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, jakarta.servlet.ServletException {
+    // Configurar la respuesta HTTP 404
+    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+    request.getRequestDispatcher("/WEB-INF/errorNotFound.jsp").forward(request, response);
     }
-}   
+
+}
