@@ -62,7 +62,7 @@ public interface IActividadController {
      * @return Lista de dataActividad
      */
     public abstract List<dataActividad> getAllActividadesDepartamento(String nombreDep);
-
+    public abstract List<dataActividad> getAllActividadesConfirmadasDepartamento(String nombreDep);
     public abstract List<dataActividad> getAllActividadesDepartamentoSinPaquete(String nombreDep, String nombrePaquete);
     public abstract List<String> getNombresSalidasAsociadas(String nombreActividad);
     public abstract List<dataActividad> getActividadesNoPaquete(String nombreDepartamento, String nombrePaquete) throws UsuarioNoExisteExcepcion;

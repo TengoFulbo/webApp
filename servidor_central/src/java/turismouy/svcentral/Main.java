@@ -1,11 +1,20 @@
 package turismouy.svcentral;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import turismouy.svcentral.excepciones.NoExisteExcepcion;
+import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
+import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
+import turismouy.svcentral.excepciones.UsuarioYaExisteExcepcion;
+import turismouy.svcentral.excepciones.YaExisteExcepcion;
 import turismouy.svcentral.interfaces.IActividadController;
+import turismouy.svcentral.interfaces.ICompraController;
 import turismouy.svcentral.interfaces.IDepartamentoController;
 import turismouy.svcentral.interfaces.IPaqueteController;
 import turismouy.svcentral.interfaces.IUsuarioController;
+import turismouy.svcentral.utilidades.estadoActividad;
+import turismouy.svcentral.datatypes.dataActividad;
 // import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.utilidades.log;
 
@@ -15,6 +24,8 @@ public class Main {
         // ICategoriaController ICC = fabrica.getICategoriaController();
         // IActividadController IAC = fabrica.getIActividadController();
         IUsuarioController IUC = fabrica.getIUsuarioController();
+        IActividadController IAC = fabrica.getIActividadController();
+        ICompraController ICoC = fabrica.getICompraController();
         try {
             if (IUC.login("eze", "eze")) { log.warning("True to login");
             } else { log.warning("False to login"); };
@@ -28,15 +39,37 @@ public class Main {
             log.error(e.toString());
         }
 
-        // cargarProveedores();
-        // log.warning("########################################################");
-        // cargarDepartamentos();
-        // log.warning("########################################################");
-        // cargarPaquetes();
-        // log.warning("########################################################");
-        // cargarActividades();
-        // log.warning("########################################################");
-        // cargarActividadesPaquetes();
+        cargarProveedores();
+        log.warning("########################################################");
+        cargarDepartamentos();
+        log.warning("########################################################");
+        cargarPaquetes();
+        log.warning("########################################################");
+        cargarActividades();
+        log.warning("########################################################");
+        cargarActividadesPaquetes();
+        try {
+			IAC.modificarEstadoActividad("Tour de Vinos en Bodegas", estadoActividad.CONFIRMADA);
+		} catch (NoExisteExcepcion | ParametrosInvalidosExcepcion | YaExisteExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        try {
+			IAC.crearActividad("Canelones", "techGadgets", "a", "Experimenta la vida gaucha a caballo en la campiña.", 240, 80, "C", LocalDate.now());
+		} catch (ParametrosInvalidosExcepcion | UsuarioYaExisteExcepcion | UsuarioNoExisteExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        try {
+			ICoC.crearCompra(LocalDate.now(), 2, 3, LocalDate.now(), "Paquete Aventura", "eze");
+		} catch (ParametrosInvalidosExcepcion | UsuarioYaExisteExcepcion | UsuarioNoExisteExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        
 
         // try {
         //     IAC.modificarEstadoActividad("Tour de Vinos en Bodegas", estadoActividad.RECHAZADA);

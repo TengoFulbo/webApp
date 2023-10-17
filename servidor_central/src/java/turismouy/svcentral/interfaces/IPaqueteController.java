@@ -16,4 +16,5 @@ public interface IPaqueteController {
     public abstract List<dataPaquete> listarPaquetes();
     public abstract void agregarActividadPaquete(String nombrePaquete, String nombreActividad) throws NoExisteExcepcion, YaExisteExcepcion;
     public abstract List<String> obtenerNombresPaquetes();
+    //public abstract List<dataPaquete> ListarPaqueteSinComprar();
 }

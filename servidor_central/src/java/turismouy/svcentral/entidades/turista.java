@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 import turismouy.svcentral.datatypes.dataSalida;
 import turismouy.svcentral.datatypes.dataUsuario;
+import turismouy.svcentral.entidades.compra;
 
     @Entity
     @DiscriminatorValue("T")
@@ -16,6 +17,9 @@ import turismouy.svcentral.datatypes.dataUsuario;
 
         @OneToMany(mappedBy = "turista", fetch = FetchType.EAGER)
         private List<inscripcion> inscripciones = new ArrayList<inscripcion>();
+        
+        @OneToMany(mappedBy = "turista")
+        public List<compra> compra = new ArrayList<compra>();
 
     public turista(String nickname, String nombre, String apellido, String email, String nacionalidad, LocalDate nacimiento) {
         super(nickname, nombre, apellido, email, nacimiento);
@@ -77,4 +81,16 @@ import turismouy.svcentral.datatypes.dataUsuario;
 
         return dt;
     }
+
+	public List<compra> getCompra() {
+		return compra;
+	}
+	
+	public void addCompra(compra compra) {
+		this.compra.add(compra);
+	}
+
+	public void setCompra(List<compra> compra) {
+		this.compra = compra;
+	}
 }

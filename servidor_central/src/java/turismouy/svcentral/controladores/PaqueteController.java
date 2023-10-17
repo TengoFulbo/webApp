@@ -132,7 +132,12 @@ public class PaqueteController implements IPaqueteController {
         };
         return dataPaquetes;
     }
-
+    
+ /*   public List<dataPaquete> listarPaqueteSinComprar(){
+    	
+    	
+    }
+*/
     /*
         * Level 1: Textos simples. Valida que no sea vacio, que no empiece o termine con espacio y que al menos tenga 1 letra o número.
         * Level 2: Correos. Valida lo mismo que el nivel 1, además valida que contenga una sola @ para los correos.
