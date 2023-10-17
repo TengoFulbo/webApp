@@ -163,6 +163,7 @@ nav a.sidenav-trigger {
   color: #7c7b7b;
 }
 .page__wrap {
+  margin-top: 20px;
   width: 80%;
 }
 .page__card {
