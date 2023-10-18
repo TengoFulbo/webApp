@@ -14,7 +14,6 @@ public class paquete {
 	private String nombre;
 	@Column
 	private int descuento;
-	@Column
 	private String descripcion;
 	private int validez;
 	private LocalDate fechaAlta;
@@ -27,6 +26,9 @@ public class paquete {
 	@ManyToMany()
 	private List<actividad> actividades;
 	
+	@OneToMany(mappedBy = "paquete")
+    public List<compra> compra;
+	
 	public paquete() {};
 
 	public paquete(String nombre, int descuento, String descripcion, int validez, LocalDate fechaAlta) {
@@ -37,6 +39,7 @@ public class paquete {
 		this.validez = validez;
 		this.fechaAlta = fechaAlta;
 		this.actividades = new ArrayList<actividad>();
+		this.compra = new ArrayList<compra>();
 	}
 	
 	
@@ -79,6 +82,18 @@ public class paquete {
 	public List<actividad> getActividades() {
 		return this.actividades;
 	}
+	public List<compra> getCompra() {
+		return compra;
+	}
+	
+	public void addCompra(compra compra) {
+		this.compra.add(compra);
+	}
+
+	public void setCompra(List<compra> compra) {
+		this.compra = compra;
+	}
+
 	public dataPaquete toDataType() {
 		List<dataActividad> dataActividades = new ArrayList<dataActividad>();
 		for (actividad actividad : this.actividades) {

@@ -9,6 +9,7 @@ import javax.persistence.EntityTransaction;
 
 import turismouy.svcentral.EMFactory;
 import turismouy.svcentral.entidades.categoria;
+import turismouy.svcentral.entidades.departamento;
 import turismouy.svcentral.utilidades.log;
 
 public class CategoriaManejador {
@@ -65,6 +66,7 @@ public class CategoriaManejador {
 
         return categoria;
     }
+    
 
     public List<categoria> getAllCategorias() {
 	    EntityManager em = factory.createEntityManager();

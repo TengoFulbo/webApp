@@ -7,6 +7,7 @@ import turismouy.svcentral.controladores.InscripcionController;
 import turismouy.svcentral.controladores.PaqueteController;
 import turismouy.svcentral.controladores.SalidaController;
 import turismouy.svcentral.controladores.UsuarioController;
+import turismouy.svcentral.controladores.CompraController;
 import turismouy.svcentral.interfaces.IActividadController;
 import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.interfaces.IDepartamentoController;
@@ -14,6 +15,7 @@ import turismouy.svcentral.interfaces.IInscripcionController;
 import turismouy.svcentral.interfaces.IPaqueteController;
 import turismouy.svcentral.interfaces.ISalidaController;
 import turismouy.svcentral.interfaces.IUsuarioController;
+import turismouy.svcentral.interfaces.ICompraController;
 
 public class Fabrica {
     private static Fabrica instancia;
@@ -54,5 +56,9 @@ public class Fabrica {
 
     public ICategoriaController getICategoriaController() {
         return new CategoriaController();
+    }
+    
+    public ICompraController getICompraController() {
+        return new CompraController();
     }
 }

@@ -10,7 +10,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
 import turismouy.svcentral.EMFactory;
+import turismouy.svcentral.entidades.compra;
+import turismouy.svcentral.entidades.inscripcion;
 import turismouy.svcentral.entidades.paquete;
+import turismouy.svcentral.entidades.salida;
+import turismouy.svcentral.entidades.turista;
+import turismouy.svcentral.entidades.usuario;
 import turismouy.svcentral.utilidades.log;
 
 public class PaqueteManejador {
@@ -105,6 +110,7 @@ public class PaqueteManejador {
 	    EntityTransaction tx = em.getTransaction();
         
         String nombre = paquete.getNombre();
+        System.out.println(nombre + " ----------------");
         
         try {
             tx.begin();
@@ -115,6 +121,7 @@ public class PaqueteManejador {
             tx.commit();        
             
             // Se actualiza en la colección.
+            System.out.println(paquete.getNombre() + "++++++++++++++++++++++++++");
             paqueteNombre.put(nombre, paquete);
             log.info("El paquete " + paquete + " se actualizó correctamente");
         } catch (Exception e) {
@@ -126,5 +133,60 @@ public class PaqueteManejador {
         } finally {
             em.close();
         }
+    }
+    
+    public paquete persistirCompraEnPaquete(paquete paquete, compra compra) {
+        try {
+            // Para cada función hay que crear un nuevo em y tx.
+	        EntityManager em = factory.createEntityManager();
+
+            paquete paque = em.createQuery("SELECT p FROM paquete p WHERE p.nombre = '" + paquete.getNombre() + "'", paquete.class)
+                                .getSingleResult();
+            paque.addCompra(compra);
+                
+            return paque;
+        } catch (Exception e) {
+            log.error("Error al persisistir compra en paquete. " + e.toString());
+            return null;
+        }
+    }
+    
+    public boolean paqueteNoComprado(paquete paquete) {
+    	boolean P = false;
+    	EntityManagerFactory factory = EMFactory.getEntityManagerFactory();
+	    EntityManager em = factory.createEntityManager();
+	    EntityTransaction tx = em.getTransaction();
+	    
+	    tx.begin();
+	    
+	    paquete paque = em.createQuery("SELECT p FROM paquete p WHERE p.nombre = '" + paquete.getNombre() + "'",paquete.class).getSingleResult();
+	    if(paque.getCompra().isEmpty() || paque.getCompra().equals(null)) {
+			P = true;
+		}
+		tx.commit();
+		em.close();
+		return P;
+		
+    }
+    
+    public boolean TuristaYaComproPaquete(turista turista,paquete paquete){
+    	EntityManagerFactory factory = EMFactory.getEntityManagerFactory();
+	    EntityManager em = factory.createEntityManager();
+	    EntityTransaction tx = em.getTransaction();
+	    
+	    tx.begin();
+	    
+	    paquete paq = em.createQuery("SELECT p FROM paquete p WHERE p.nombre = '" + paquete.getNombre() + "'",paquete.class).getSingleResult();
+	    
+		for(compra compra : paq.getCompra()) {
+			if(compra.getTurista().getNickname().equals(turista.getNickname())){
+				return true;
+			}
+		}
+		tx.commit();
+		em.close();
+		
+		return false;
+		
     }
 }
