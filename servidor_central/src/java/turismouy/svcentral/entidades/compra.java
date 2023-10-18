@@ -27,6 +27,8 @@ public class compra {
 	@ManyToOne
 	@JoinColumn(name = "turista_Nombre")
 	private turista turista;
+	
+	public compra(){};
 
 	public compra(LocalDate fecha, int cantTotal, int costoTotal, LocalDate vencimiento) {
 		this.fecha = fecha;

@@ -13,6 +13,7 @@ import turismouy.svcentral.interfaces.ICompraController;
 import turismouy.svcentral.manejadores.CompraManejador;
 import turismouy.svcentral.manejadores.PaqueteManejador;
 import turismouy.svcentral.manejadores.UsuarioManejador;
+import turismouy.svcentral.utilidades.log;
 
 public class CompraController implements ICompraController{
 	
@@ -23,9 +24,24 @@ public class CompraController implements ICompraController{
 		CompraManejador cm = CompraManejador.getinstance();
 		
 		paquete paquete = pm.getPaquete(nombrePaquete);
-		System.out.println(paquete.getNombre());
+		
+        if(paquete == null) {
+        	log.error("El paquete " + nombrePaquete + " no existe");
+        	throw new UsuarioNoExisteExcepcion("El paquete " + nombrePaquete + " no existe");
+        }
+        
 		usuario usuario = um.getUsuario(nombreTurista);
 		turista turista = (turista) usuario;
+		
+        if(turista == null) {
+        	log.error("El turista" + nombreTurista + " no existe");
+        	throw new UsuarioNoExisteExcepcion("El turista" + nombreTurista + " no existe");
+        }
+        
+        if(pm.TuristaYaComproPaquete(turista, paquete)) {
+        	log.error("El turista" + nombreTurista + " ya compro el paquete" + paquete.getNombre());
+        	throw new UsuarioYaExisteExcepcion("El turista" + nombreTurista + " ya compro el paquete" + paquete.getNombre());
+        }
 		
 		compra compra =  new compra(fecha,cantTotal,costoTotal,vencimiento);
 		

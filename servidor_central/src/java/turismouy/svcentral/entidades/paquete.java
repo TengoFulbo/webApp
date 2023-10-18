@@ -14,7 +14,6 @@ public class paquete {
 	private String nombre;
 	@Column
 	private int descuento;
-	@Column
 	private String descripcion;
 	private int validez;
 	private LocalDate fechaAlta;
@@ -28,7 +27,7 @@ public class paquete {
 	private List<actividad> actividades;
 	
 	@OneToMany(mappedBy = "paquete")
-    public List<compra> compra = new ArrayList<compra>();
+    public List<compra> compra;
 	
 	public paquete() {};
 
@@ -40,6 +39,7 @@ public class paquete {
 		this.validez = validez;
 		this.fechaAlta = fechaAlta;
 		this.actividades = new ArrayList<actividad>();
+		this.compra = new ArrayList<compra>();
 	}
 	
 	

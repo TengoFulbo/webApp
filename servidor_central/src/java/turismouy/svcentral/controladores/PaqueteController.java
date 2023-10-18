@@ -4,9 +4,19 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+import turismouy.svcentral.EMFactory;
+
 import turismouy.svcentral.datatypes.dataPaquete;
 import turismouy.svcentral.entidades.actividad;
+import turismouy.svcentral.entidades.compra;
+import turismouy.svcentral.entidades.inscripcion;
 import turismouy.svcentral.entidades.paquete;
+import turismouy.svcentral.entidades.turista;
+import turismouy.svcentral.entidades.usuario;
 import turismouy.svcentral.excepciones.YaExisteExcepcion;
 import turismouy.svcentral.excepciones.NoExisteExcepcion;
 import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
@@ -82,6 +92,12 @@ public class PaqueteController implements IPaqueteController {
             throw new NoExisteExcepcion("La actividad: " + nombreActividad + " NO existe.");
         }
         
+        if(pm.paqueteNoComprado(paquete) == false){
+        	log.error("No puede agregar una actividad porque el Paquete ya esta comprado por otro turista");
+            throw new YaExisteExcepcion("No puede agregar una actividad porque el Paquete ya esta comprado por otro turista");
+        	
+        }
+        
         boolean yaExiste = false;
         for (actividad actividadAux : paquete.getActividades()) {
             // log.warning(actividadAux.getNombre());
@@ -94,7 +110,7 @@ public class PaqueteController implements IPaqueteController {
         if (yaExiste) {
             throw new YaExisteExcepcion("La actividad: '" + nombreActividad + "' ya existe dentro de paquete: '" + nombrePaquete + "'");
         }
-
+        	
         paquete.addActividad(actividad);
 
         // Actualizo
@@ -130,6 +146,24 @@ public class PaqueteController implements IPaqueteController {
             dataPaquete dtPaquete = paquete.toDataType();
             dataPaquetes.add(dtPaquete);
         };
+        return dataPaquetes;
+    }
+    
+    public List<dataPaquete> listarPaquetesSinComprar() {
+        PaqueteManejador pm = PaqueteManejador.getinstance();
+
+        List<paquete> paquetes = pm.getAllPaquetes();
+        List<dataPaquete> dataPaquetes = new ArrayList<dataPaquete>(); 
+
+        if (paquetes == null) {
+            return null;
+        }
+        for (paquete paquete : paquetes) {
+        	if(pm.paqueteNoComprado(paquete)) {
+        		dataPaquete dtPaquete = paquete.toDataType();
+        		dataPaquetes.add(dtPaquete);
+        	}
+        }
         return dataPaquetes;
     }
     

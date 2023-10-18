@@ -15,6 +15,7 @@ import turismouy.svcentral.interfaces.IPaqueteController;
 import turismouy.svcentral.interfaces.IUsuarioController;
 import turismouy.svcentral.utilidades.estadoActividad;
 import turismouy.svcentral.datatypes.dataActividad;
+import turismouy.svcentral.datatypes.dataPaquete;
 // import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.utilidades.log;
 
@@ -26,6 +27,7 @@ public class Main {
         IUsuarioController IUC = fabrica.getIUsuarioController();
         IActividadController IAC = fabrica.getIActividadController();
         ICompraController ICoC = fabrica.getICompraController();
+        IPaqueteController IPC = fabrica.getIPaqueteController();
         try {
             if (IUC.login("eze", "eze")) { log.warning("True to login");
             } else { log.warning("False to login"); };
@@ -61,13 +63,28 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
+      
         try {
 			ICoC.crearCompra(LocalDate.now(), 2, 3, LocalDate.now(), "Paquete Aventura", "eze");
 		} catch (ParametrosInvalidosExcepcion | UsuarioYaExisteExcepcion | UsuarioNoExisteExcepcion e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        
+        try {
+			IPC.agregarActividadPaquete("Paquete Aventura", "Tour de Arte Urbano");
+		} catch (NoExisteExcepcion | YaExisteExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    
+        List <dataPaquete> LDtPaquete = IPC.listarPaquetesSinComprar();
+        if(LDtPaquete == null) {
+        	System.out.println("Paquete null");
+        }
+        for(dataPaquete dtPaquete : LDtPaquete) {
+        	System.out.println(dtPaquete.getNombre());
+        }
         
         
 

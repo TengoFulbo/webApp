@@ -25,12 +25,14 @@ import turismouy.svcentral.entidades.compra;
         super(nickname, nombre, apellido, email, nacimiento);
         this.nacionalidad = nacionalidad;
         this.inscripciones = new ArrayList<inscripcion>();
+        this.compra = new ArrayList<compra>();
     }
 
     public turista(String nickname, String nombre, String apellido, String email, String nacionalidad, LocalDate nacimiento, String password) {
         super(nickname, nombre, apellido, email, nacimiento, password);
         this.nacionalidad = nacionalidad;
         this.inscripciones = new ArrayList<inscripcion>();
+        this.compra = new ArrayList<compra>();
     }
 
     // Constructor vacío pedido por JPA.
