@@ -1,26 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
-
-<!DOCTYPE html>
-<html lang="es">
-
+<% List<dataUsuario> usuarios = (List<dataUsuario>) request.getAttribute("usuarios"); %>
 <head>
-  <!-- <meta charset="UTF-8" /> -->
-  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
-  <!-- <title>TursistaUY</title> -->
-<!--  -->
-  <!-- LINKS DE CSS -->
   <link rel="stylesheet" href="./src/css/homeMulti.css" />
-<!--  -->
-  <!-- GOOGLE FONTS -->
-  <!-- <link rel="preconnect" href="https://fonts.googleapis.com" /> -->
-  <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> -->
-  <!-- <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Hind&family=Montserrat&display=swap" -->
-    <!-- rel="stylesheet" /> -->
-<!--  -->
-  <!-- MATERIALIZE -->
-  <!-- <link rel="stylesheet" href="src/css/materialize.css" /> -->
-  <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" /> -->
 </head>
 
 <%@ include file="./utils/head.jsp" %>
@@ -45,39 +27,6 @@
   </nav>
   
   <%@ include file="./utils/sidenav.jsp" %>
-  <!-- SIDENAV -->
-  <!-- <ul id="slide-out" class="sidenav home_side sidenav-fixed trasparent__scroll">
-    <li>
-      <div class="user-view">
-        <div class="background">
-          <img src="src/img/wavesidebg.svg" />
-        </div>
-        <a href="./miCuenta.html"><img class="circle" src="src/img/avatar1.png" /></a>
-        <a href="./miCuenta.html"><span class="white-text name">John Doe</span></a>
-        <a href="./miCuenta.html"><span class="white-text email">jdandturk@gmail.com</span></a>
-      </div>
-    </li> -->
-
-    <!-- <li><a href="./home.html">Inicio</a></li>
-    <li><a href="./homeSalidas.html">Salidas</a></li>
-    <li><a href="./homeActividad.html">Actividades</a></li>
-    <li><a href="./homePaquete.html">Paquetes</a></li>
-    <li><a href="./homeUsuarios.html">Usuarios</a></li>
-    <div class="divider"></div>
-    <li><a href="./misSalidas.html">Mis Salidas</a></li>
-    <li><a href="./misActividades.html">Mis Actividades</a></li>
-    <li><a href="./misPaquetes.html">Mis Paquetes</a></li>
-    <li>
-      <div class="divider"></div>
-    </li>
-    <li><a class="subheader">Cuenta</a></li>
-    <li>
-      <a href="./miCuenta.html" class="waves-effect"><i class="material-icons">person</i>Mi Cuenta</a>
-    </li>
-    <li>
-      <a class="waves-effect" href="./index.html"><i class="material-icons">exit_to_app</i>Cerrar Sesion</a>
-    </li>
-  </ul> -->
 
   <!-- MAIN -->
   <div class="main">
@@ -86,19 +35,19 @@
       <!-- page -->
       <section class="page">
         <div class="page__texto">
-          <h1 class="page__title">Usuarios</h1>
-          <p class="page__p">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Qui
-            incidunt numquam tempora dolorem vel, facere necessitatibus ullam
-            ratione laudantium in, eaque assumenda omnis. Cum vitae eaque hic
-            minus corrupti tenetur?
-          </p>
+            <h1 class="page__title">Usuarios</h1>
+            <p class="page__p">
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem ut iusto ipsam optio tempore nobis a eum minima, repellat maxime autem. Corporis neque consectetur ex possimus sed voluptatum. Iure, porro?
+            </p>
+            <p class="page__p">
+              Cantidad de usuarios: <%= (usuarios != null && usuarios.size() != 0) ? usuarios.size() : "0" %>
+            </p>
+            <!-- <%= (usuario != null && usuario.getNombre() != null) ? usuario.getNombre() : "Visitante" %> -->
         </div>
         <div class="page__wrap">
 
           <ul class="collection usuariosCollection">
             <%
-                List<dataUsuario> usuarios = (List<dataUsuario>) request.getAttribute("usuarios");
                 if (usuarios != null) {
                     for (dataUsuario user : usuarios) {
             %>
@@ -107,16 +56,21 @@
                 <span class="title"><%= user.getNombre() %> <%= user.getApellido() %></span>
                 <p>@<%= user.getNickname() %> <br>
                 </p>
-                <a aclass="secondary-content dropdown-trigger" data-target='dropConsultaUser'><i class="material-icons">more_horiz</i></a>
+                <a href="./miCuenta?nickname=<%= user.getNickname() %>">Ver perfil</a>
+                <!-- <a class="secondary-content dropdown-trigger" data-target='dropConsultaUser'><i class="material-icons">more_horiz</i></a> -->
                 <!-- <a href="./miCuenta?nickname=<%= user.getNickname() %>" class="secondary-content dropdown-trigger" data-target='dropConsultaUser'><i class="material-icons">more_horiz</i></a>                 -->
-                <ul id='dropConsultaUser' class='dropdown-content userConsultaDrop'>
-                    <li class="userConsultaDrop--li"><a href="./miCuenta?nickname=<%= user.getNickname() %>" class="secondary-content">Ver Perfil</a></li>
-                </ul>
-            </li>
-            <%
+                <!-- <ul id='dropConsultaUser' class='dropdown-content userConsultaDrop'> -->
+                  <!-- <li class="userConsultaDrop--li"><a href="./miCuenta?nickname=<%= user.getNickname() %>" class="secondary-content">Ver Perfil</a></li> -->
+                <!-- </ul> -->
+                <%
                     }
+                } else {
+            %>
+                    <p>Parece que no hay nada por aquí</p>
+            <%
                 }
             %>
+        </li>
           
         </div>
       </section>
