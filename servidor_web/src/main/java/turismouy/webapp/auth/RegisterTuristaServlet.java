@@ -30,7 +30,9 @@ public class RegisterTuristaServlet extends HttpServlet {
         String nacionalidad = null; // Requiere turista.
 
         nickname        = request.getParameter("nickname");
-        nombreyapellido = request.getParameter("nombreyapellido");
+        // nombreyapellido = request.getParameter("nombreyapellido");
+        nombre          = request.getParameter("nombre");
+        apellido        = request.getParameter("apellido");
         email           = request.getParameter("email");
         fechaN          = request.getParameter("fechaN");
         nacionalidad    = request.getParameter("nacionalidad");
@@ -44,27 +46,27 @@ public class RegisterTuristaServlet extends HttpServlet {
             System.out.println(e);
         }
 
-        // Validar que el campo contenga un solo espacio como separador
-        if (nombreyapellido != null && nombreyapellido.contains(" ") && nombreyapellido.indexOf(" ") == nombreyapellido.lastIndexOf(" ")) {
-            // Separar el nombre y el apellido
-            String[] partes = nombreyapellido.split(" ");
+        // // Validar que el campo contenga un solo espacio como separador
+        // if (nombreyapellido != null && nombreyapellido.contains(" ") && nombreyapellido.indexOf(" ") == nombreyapellido.lastIndexOf(" ")) {
+        //     // Separar el nombre y el apellido
+        //     String[] partes = nombreyapellido.split(" ");
 
-            if (partes.length == 2) {
-                nombre = partes[0];
-                apellido = partes[1];
-            } else {
-                // El campo no tiene exactamente un espacio como separador
-                // Manejar el error o realizar otra acción
-                // TODO: falta manejar el error.
-            }
-        } else {
-            // No se encontró un espacio o se encontraron múltiples espacios en el campo
-            // Manejar el error o realizar otra acción
-            // TODO: falta manejar el error.
-        }
+        //     if (partes.length == 2) {
+        //         nombre = partes[0];
+        //         apellido = partes[1];
+        //     } else {
+        //         // El campo no tiene exactamente un espacio como separador
+        //         // Manejar el error o realizar otra acción
+        //         // TODO: falta manejar el error.
+        //     }
+        // } else {
+        //     // No se encontró un espacio o se encontraron múltiples espacios en el campo
+        //     // Manejar el error o realizar otra acción
+        //     // TODO: falta manejar el error.
+        // }
 
         System.out.println("Nickname: " + nickname);
-        System.out.println("Nombreyapellido: " + nombreyapellido);
+        // System.out.println("Nombreyapellido: " + nombreyapellido);
         System.out.println("fechaN: " + fechaN);
         System.out.println("Email: " + email);
         System.out.println("password: " + password);

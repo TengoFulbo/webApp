@@ -34,10 +34,11 @@
         <div class="form-container sign-up-container">
           <form action="./registerProveedor" method="post">
             <input type="hidden" name="isProveedor" value="true">
-            <h1>Proveedor</h1>s
+            <h1>Proveedor</h1>
             <span>Registrate como proveedor</span>
             <input name="nickname" type="text" placeholder="Nickname" />
-            <input name="nombreyapellido" type="text" placeholder="Nombre y Apellido" />
+            <input name="nombre" type="text" placeholder="Nombre" />
+            <input name="apellido" type="text" placeholder="Apellido" />
             <input name="email" type="email" placeholder="Email" />
             <input name="fechaN" type="date" placeholder="Fecha de nacimiento" />
             <input name="desc" type="text" placeholder="Descripcion" />
@@ -56,7 +57,8 @@
             </div>
             <span>Quieres registrarte como turista? hazlo!</span>
             <input name="nickname" type="text" placeholder="Nickname" />
-            <input name="nombreyapellido" type="text" placeholder="Nombre y Apellido" />
+            <input name="nombre" type="text" placeholder="Nombre" />
+            <input name="apellido" type="text" placeholder="Apellido" />
             <input name="email" type="email" placeholder="Email" />
             <input name="fechaN" type="date" placeholder="Fecha de nacimiento" />
             <input name="nacionalidad" type="text" placeholder="Nacionalidad" />
