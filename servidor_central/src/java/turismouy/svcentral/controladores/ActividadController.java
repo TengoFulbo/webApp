@@ -158,7 +158,32 @@ public class ActividadController implements IActividadController {
                     List<actividad> LAct = depto.getActividades();
                     if (LAct != null) {
                         for (actividad act : LAct) {
-                            LDtAct.add(act.toDataType());
+                        	LDtAct.add(act.toDataType());
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        if (LDtAct.isEmpty())
+            return null; 
+        return LDtAct;
+    }
+    
+    public List<dataActividad> getAllActividadesConfirmadasDepartamento(String nombreDep) {
+        List<dataActividad> LDtAct = new ArrayList<>();
+           DepartamentoManejador dm = DepartamentoManejador.getinstance();
+        List<departamento> deptos = dm.getAllDepartamento();
+        
+        if (deptos != null) {
+            for (departamento depto : deptos) {
+                if (depto != null && depto.getNombre() != null && depto.getNombre().equals(nombreDep)) {
+                    List<actividad> LAct = depto.getActividades();
+                    if (LAct != null) {
+                        for (actividad act : LAct) {
+                        	if(act.getEstado().equals(estadoActividad.CONFIRMADA)){
+                        		LDtAct.add(act.toDataType());
+                        	}
                         }
                     }
                     break;

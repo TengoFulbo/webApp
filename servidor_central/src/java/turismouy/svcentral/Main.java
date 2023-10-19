@@ -1,33 +1,45 @@
 package turismouy.svcentral;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import turismouy.svcentral.excepciones.NoExisteExcepcion;
+import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
+import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
+import turismouy.svcentral.excepciones.UsuarioYaExisteExcepcion;
+import turismouy.svcentral.excepciones.YaExisteExcepcion;
 import turismouy.svcentral.interfaces.IActividadController;
+import turismouy.svcentral.interfaces.ICompraController;
 import turismouy.svcentral.interfaces.IDepartamentoController;
 import turismouy.svcentral.interfaces.IPaqueteController;
 import turismouy.svcentral.interfaces.IUsuarioController;
+import turismouy.svcentral.utilidades.estadoActividad;
+import turismouy.svcentral.datatypes.dataActividad;
+import turismouy.svcentral.datatypes.dataPaquete;
 // import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.utilidades.log;
 
 public class Main {
     public static void main(String[] args) {
         Fabrica fabrica = Fabrica.getInstance();
-//         ICategoriaController ICC = fabrica.getICategoriaController();
-         IActividadController IAC = fabrica.getIActividadController();
-         IUsuarioController IUC = fabrica.getIUsuarioController();
-
-         try {
-             if (IUC.login("eze", "eze")) { log.warning("True to login");
-             } else { log.warning("False to login"); };
-
-             if (IUC.login("eze", "hola123")) { log.warning("True to login");
-             } else { log.warning("False to login"); };
-
-             // if (IUC.login("eze", "eze")) { log.warning("True to login");
-             // } else { log.warning("False to login"); };
-         } catch (Exception e) {
-             log.error(e.toString());
-         }
+        // ICategoriaController ICC = fabrica.getICategoriaController();
+        // IActividadController IAC = fabrica.getIActividadController();
+        IUsuarioController IUC = fabrica.getIUsuarioController();
+        IActividadController IAC = fabrica.getIActividadController();
+        ICompraController ICoC = fabrica.getICompraController();
+        IPaqueteController IPC = fabrica.getIPaqueteController();
+//        try {
+//            if (IUC.login("eze", "eze")) { log.warning("True to login");
+//            } else { log.warning("False to login"); };
+//
+//        //     if (IUC.login("eze", "hola123")) { log.warning("True to login");
+//        //     } else { log.warning("False to login"); };
+//
+//        //     // if (IUC.login("eze", "eze")) { log.warning("True to login");
+//        //     // } else { log.warning("False to login"); };
+//        // } catch (Exception e) {
+//        //     log.error(e.toString());
+//        // }
 
         cargarProveedores();
         log.warning("########################################################");
@@ -38,6 +50,44 @@ public class Main {
         cargarActividades();
         log.warning("########################################################");
         cargarActividadesPaquetes();
+        try {
+			IAC.modificarEstadoActividad("Tour de Vinos en Bodegas", estadoActividad.CONFIRMADA);
+		} catch (NoExisteExcepcion | ParametrosInvalidosExcepcion | YaExisteExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        try {
+			IAC.crearActividad("Canelones", "techGadgets", "a", "Experimenta la vida gaucha a caballo en la campiña.", 240, 80, "C", LocalDate.now());
+		} catch (ParametrosInvalidosExcepcion | UsuarioYaExisteExcepcion | UsuarioNoExisteExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+      
+        try {
+			ICoC.crearCompra(LocalDate.now(), 2, 3, LocalDate.now(), "Paquete Aventura", "eze");
+		} catch (ParametrosInvalidosExcepcion | UsuarioYaExisteExcepcion | UsuarioNoExisteExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        try {
+			IPC.agregarActividadPaquete("Paquete Aventura", "Tour de Arte Urbano");
+		} catch (NoExisteExcepcion | YaExisteExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    
+//        List <dataPaquete> LDtPaquete = IPC.listarPaquetesSinComprar();
+//        if(LDtPaquete == null) {
+//        	System.out.println("Paquete null");
+//        }else {
+//	        for(dataPaquete dtPaquete : LDtPaquete) {
+//	        	System.out.println(dtPaquete.getNombre());
+//	        }
+//        }
+//        
+        
 
         // try {
         //     IAC.modificarEstadoActividad("Tour de Vinos en Bodegas", estadoActividad.RECHAZADA);

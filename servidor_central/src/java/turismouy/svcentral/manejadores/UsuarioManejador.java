@@ -13,6 +13,7 @@ import turismouy.svcentral.datatypes.dataUsuario;
 import turismouy.svcentral.entidades.proveedor;
 import turismouy.svcentral.entidades.usuario;
 import turismouy.svcentral.utilidades.log;
+import turismouy.svcentral.entidades.compra;
 import turismouy.svcentral.entidades.inscripcion;
 import turismouy.svcentral.entidades.salida;
 import turismouy.svcentral.entidades.turista;
@@ -194,6 +195,24 @@ public class UsuarioManejador {
 		em.close();
 		
 		return turista1;
+    }
+    
+    public turista persistirCompraEnTurista(turista turista, compra compra) {
+            try {
+                // Para cada función hay que crear un nuevo em y tx.
+    	        EntityManager em = factory.createEntityManager();
+
+                usuario usuario = em.createQuery("SELECT u FROM usuario u WHERE u.nickname = '" + turista.getNickname() + "'", usuario.class)
+                                    .getSingleResult();
+                turista turista1 = (turista) usuario;
+                turista1.addCompra(compra);
+                    
+                return turista;
+            } catch (Exception e) {
+                log.error("Error al getUsuarioEmail. " + e.toString());
+                return null;
+            }
+        
     }
     
     public boolean yaEstaInscripto(turista turista,salida salida){
