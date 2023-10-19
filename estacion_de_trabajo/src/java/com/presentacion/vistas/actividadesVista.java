@@ -6,6 +6,7 @@ import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JTree;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
@@ -14,9 +15,11 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.util.List;
@@ -42,18 +45,24 @@ import turismouy.svcentral.interfaces.IDepartamentoController;
 import turismouy.svcentral.interfaces.IUsuarioController;
 import turismouy.svcentral.utilidades.log;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dialog;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -575,7 +584,7 @@ public class actividadesVista extends JPanel {
 		JDialog popupDialog = new JDialog();
 		popupDialog.setResizable(false);
 		popupDialog.setTitle("Actividad");
-		popupDialog.setSize(505, 397);
+		popupDialog.setSize(799, 397);
 		popupDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		popupDialog.setLocationRelativeTo(null);
 		popupDialog.getContentPane().setLayout(null);
@@ -695,6 +704,57 @@ public class actividadesVista extends JPanel {
 		cancelar.setBounds(247, 314, 224, 38);
 		cancelar.putClientProperty("JButton.buttonType", "roundRect");
 		popupPanel.add(cancelar);
+		
+		JPanel treeConteiner = new JPanel();
+		treeConteiner.setBounds(500, 37, 273, 250);
+		popupDialog.getContentPane().add(treeConteiner);
+
+		List<dataDepartamento> listaDeElementos = IDC.listarDepartamentos();
+
+		DefaultTableModel tableModel = new DefaultTableModel() {
+		    @Override
+		    public Class<?> getColumnClass(int columnIndex) {
+		        if (columnIndex == 0) {
+		            return Boolean.class; // Indica que la columna 0 es de tipo booleano
+		        }
+		        return super.getColumnClass(columnIndex);
+		    }
+		};
+		tableModel.addColumn("Seleccionar");
+		tableModel.addColumn("Nombre Departamento");
+
+		for (dataDepartamento dept : listaDeElementos) {
+		    Object[] row = {false, dept.getNombre()};
+		    tableModel.addRow(row);
+		}
+
+		JTable table = new JTable(tableModel) {
+		    @Override
+		    public Class<?> getColumnClass(int column) {
+		        return column == 0 ? Boolean.class : String.class;
+		    }
+		};
+
+		table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
+		    @Override
+		    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+		        JCheckBox checkBox = new JCheckBox();
+		       
+		        checkBox.setSelected((Boolean) value);
+		        checkBox.setHorizontalAlignment(SwingConstants.CENTER);
+		        
+		        if (isSelected) {
+		            checkBox.setBackground(table.getSelectionBackground());
+		        } else {
+		            checkBox.setBackground(table.getBackground());
+		        }
+		        return checkBox;
+		    }
+		});
+
+		table.getTableHeader().setReorderingAllowed(false);
+		treeConteiner.setLayout(new BorderLayout());
+		treeConteiner.add(new JScrollPane(table), BorderLayout.CENTER);
 
 		cancelar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -704,9 +764,23 @@ public class actividadesVista extends JPanel {
 		});
 
 		aceptar.addMouseListener(new MouseAdapter() {
+			
+			List<String> departamentosSeleccionados = new ArrayList<>();
+			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (nombre.getText().isEmpty() || descripcion.getText().isEmpty()) {
+				
+				for (int i = 0; i < table.getRowCount(); i++) {
+		            Boolean seleccionado = (Boolean) table.getValueAt(i, 0);
+		            if (seleccionado != null && seleccionado) {
+		                String nombreDepartamento = (String) table.getValueAt(i, 1);
+		                departamentosSeleccionados.add(nombreDepartamento);
+		                System.out.println(nombreDepartamento);
+		            }
+		        }
+				
+				
+				if (nombre.getText().isEmpty() || descripcion.getText().isEmpty() || departamentosSeleccionados.isEmpty()) {
 					JOptionPane.showMessageDialog(popupDialog, "Todos los campos deben estar llenos",
 							"Campos incompletos", JOptionPane.ERROR_MESSAGE);
 					return;

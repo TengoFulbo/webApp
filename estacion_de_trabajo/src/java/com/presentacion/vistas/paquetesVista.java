@@ -415,7 +415,7 @@ public class paquetesVista extends JPanel {
 		paquete.setBounds(164, 9, 312, 22);
 
 		IPaqueteController IPC = Fabrica.getInstance().getIPaqueteController();
-		List<dataPaquete> paqs = IPC.listarPaquetes();
+		List<dataPaquete> paqs = IPC.listarPaquetesSinComprar();
 
 		if (paqs == null) {
 			JOptionPane.showMessageDialog(popupDialog, "No existen paquetes a los cuales asociar las actividades",
