@@ -20,7 +20,6 @@ public class RegisterProveedorServlet extends HttpServlet {
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         
         String nickname = null;
-        // String nombreyapellido = null;
         String email = null;
         String fechaN = null;
         String password = null;

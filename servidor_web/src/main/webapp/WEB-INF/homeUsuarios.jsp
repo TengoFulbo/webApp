@@ -8,23 +8,7 @@
 <%@ include file="./utils/head.jsp" %>
 
 <body>
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <div class="nav-wrapper navbar__wrap">
-      <div class="navbar__leftwrap">
-        <div class="brand-logo">
-          <img src="src/img/kombi.png" alt="Imagen de una combi" class="navbar__logo--img" />
-          <a href="index.html">TurismoUY</a>
-        </div>
-      </div>
-      <ul class="right aside_trigger">
-        <li>
-          <a href="#" data-target="slide-out" class="sidenav-trigger navbar__sideopen"><i
-              class="material-icons">arrow_forward</i></a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+  <%@ include file="./utils/navbar.jsp" %>
   
   <%@ include file="./utils/sidenav.jsp" %>
 
@@ -53,20 +37,19 @@
             %>
             <li class="collection-item avatar">
                 <img src="src/img/avatar1.png" alt="" class="circle">
-                <span class="title"><%= user.getNombre() %> <%= user.getApellido() %></span>
-                <p>@<%= user.getNickname() %> <br>
+                <span class="title"><%= user.getNombre() %> <%= user.getApellido() %>
+                  <span class="new badge <%= (user.getisProveedor()) ? "pink darken-3" : "indigo darken-3" %>" data-badge-caption=""><%= (user.getisProveedor()) ? "Proveedor" : "Turista" %></span>
+                </span>
+                <p>@<%= user.getNickname() %><br>
                 </p>
-                <a href="./miCuenta?nickname=<%= user.getNickname() %>">Ver perfil</a>
-                <!-- <a class="secondary-content dropdown-trigger" data-target='dropConsultaUser'><i class="material-icons">more_horiz</i></a> -->
-                <!-- <a href="./miCuenta?nickname=<%= user.getNickname() %>" class="secondary-content dropdown-trigger" data-target='dropConsultaUser'><i class="material-icons">more_horiz</i></a>                 -->
-                <!-- <ul id='dropConsultaUser' class='dropdown-content userConsultaDrop'> -->
-                  <!-- <li class="userConsultaDrop--li"><a href="./miCuenta?nickname=<%= user.getNickname() %>" class="secondary-content">Ver Perfil</a></li> -->
-                <!-- </ul> -->
-                <%
+                <div>
+                  <a class="btn right-align" href="./miCuenta?nickname=<%= user.getNickname() %>">Ver perfil</a>
+                </div>
+              <%
                     }
                 } else {
-            %>
-                    <p>Parece que no hay nada por aquí</p>
+              %>
+                  <h2>Parece que no hay nada por aquí</h2>
             <%
                 }
             %>
@@ -77,20 +60,7 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer__container">
-      <img src="./src/img/kombi.png" alt="" class="footer_img" />
-      <div class="footer__text">
-        <h3 class="footer__text--title">TurismoUY</h3>
-        <p class="footer__text--p">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-          nisi ex, tristique et suscipit et, posuere sit amet erat.
-        </p>
-      </div>
-    </div>
-    <div class="footer__p">TengoFulbo &copy; | 2023 - 2023</div>
-  </footer>
+  <%@ include file="./utils/footer.jsp" %>
 
   <!-- MATERIALIZE JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<%@ page import="turismouy.svcentral.datatypes.dataActividad" %>
+<%@ page import="java.util.List" %>
+
 <%@ include file="./utils/head.jsp" %>
 <!-- <%
     dataUsuario user = (dataUsuario) request.getAttribute("user");
@@ -9,23 +12,7 @@
 </head>
 
 <body>
-  <!-- NAVBAR -->
-<nav class="navbar">
-    <div class="nav-wrapper navbar__wrap">
-      <div class="navbar__leftwrap">
-        <div class="brand-logo">
-          <img src="src/img/kombi.png" alt="Imagen de una combi" class="navbar__logo--img" />
-          <a href="index.html">TurismoUY</a>
-        </div>
-      </div>
-      <ul class="right aside_trigger">
-        <li>
-          <a href="#" data-target="slide-out" class="sidenav-trigger navbar__sideopen"><i
-              class="material-icons">arrow_forward</i></a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+  <%@ include file="./utils/navbar.jsp" %>
 
   <%@ include file="./utils/sidenav.jsp" %>
 
@@ -115,6 +102,24 @@
               </form>
             </div>
           </div>
+
+          <h4>Actividades</h4>
+          <ul class="collection">
+          <%
+          if (user != null && !user.getActividades().isEmpty()) {
+            for (dataActividad actividad : user.getActividades()) {
+          %>
+              <!-- <p><%= actividad.getNombre() %></p> -->
+              <li class="collection-item">
+                <div><%= actividad.getNombre() %>
+                  <a href="#!" class="secondary-content"></a>
+                </div>
+              </li>
+          <%
+            }
+          }
+          %>
+        </ul>
 
         </div>
       </section>

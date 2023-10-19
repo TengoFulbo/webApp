@@ -27,6 +27,7 @@ public class MiCuentaServlet extends HttpServlet {
             dataUsuario usuario = null;
             try {
                 usuario = IUC.mostrarInfo(nickname);
+                // usuario.getActividades().isEmpty()
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
             }
