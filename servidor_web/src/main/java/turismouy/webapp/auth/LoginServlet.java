@@ -45,6 +45,7 @@ public class LoginServlet extends HttpServlet {
                 dataUsuario usuario = IUC.mostrarInfo(username);
                 session.setAttribute("dataUsuario", usuario);
                 System.out.println(usuario.getNombre());
+
                 // TODO: ⚠️ Agregar o modificar "mostrarInfo" para que también pueda recibir un correo. 
             } catch (Exception e) {
                 log.error("[LoginServlet] Error con el usuario");

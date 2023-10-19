@@ -1,28 +1,16 @@
-<!DOCTYPE html>
-<html lang="es">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<%@ include file="./utils/head.jsp" %>
+<!-- <%
+    dataUsuario user = (dataUsuario) request.getAttribute("user");
+%> -->
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TursistaUY</title>
-
-  <!-- LINKS DE CSS -->
   <link rel="stylesheet" href="./src/css/homeMulti.css" />
-
-  <!-- GOOGLE FONTS -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Hind&family=Montserrat&display=swap"
-    rel="stylesheet" />
-
-  <!-- MATERIALIZE -->
-  <link rel="stylesheet" href="src/css/materialize.css" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 </head>
 
 <body>
   <!-- NAVBAR -->
-  <nav class="navbar">
+<nav class="navbar">
     <div class="nav-wrapper navbar__wrap">
       <div class="navbar__leftwrap">
         <div class="brand-logo">
@@ -38,39 +26,8 @@
       </ul>
     </div>
   </nav>
-  <!-- SIDENAV -->
-  <ul id="slide-out" class="sidenav home_side sidenav-fixed">
-    <li>
-      <div class="user-view">
-        <div class="background">
-          <img src="src/img/wavesidebg.svg" />
-        </div>
-        <a href="./miCuenta.html"><img class="circle" src="src/img/avatar1.png" /></a>
-        <a href="./miCuenta.html"><span class="white-text name">John Doe</span></a>
-        <a href="./miCuenta.html"><span class="white-text email">jdandturk@gmail.com</span></a>
-      </div>
-    </li>
 
-    <li><a href="./home.html">Inicio</a></li>
-    <li><a href="./homeSalidas.html">Salidas</a></li>
-    <li><a href="./homeActividad.html">Actividades</a></li>
-    <li><a href="./homePaquete.html">Paquetes</a></li>
-    <li><a href="./homeUsuarios.html">Usuarios</a></li>
-    <div class="divider"></div>
-    <li><a href="./misSalidas.html">Mis Salidas</a></li>
-    <li><a href="./misActividades.html">Mis Actividades</a></li>
-    <li><a href="./misPaquetes.html">Mis Paquetes</a></li>
-    <li>
-      <div class="divider"></div>
-    </li>
-    <li><a class="subheader">Cuenta</a></li>
-    <li>
-      <a href="./miCuenta.html" class="waves-effect"><i class="material-icons">person</i>Mi Cuenta</a>
-    </li>
-    <li>
-      <a class="waves-effect" href="./index.html"><i class="material-icons">exit_to_app</i>Cerrar Sesion</a>
-    </li>
-  </ul>
+  <%@ include file="./utils/sidenav.jsp" %>
 
   <!-- MAIN -->
   <div class="main">
@@ -102,48 +59,56 @@
                 </div>
                 <div class="row">
                   <div class="input-field col s6">
-                    <input id="nickname" type="text" class="validate" value="Nickname" readonly>
+                    <input id="nickname" type="text" class="validate" value="<%= (user != null) ? user.getNickname() : "" %>" readonly>
                     <label for="nickname">Nickname</label>
                   </div>
                   <div class="input-field col s6">
-                    <input id="nombre" type="text" class="validate" value="Nombre">
+                    <input id="nombre" type="text" class="validate" value="<%= (user != null) ? user.getNombre() : "" %>">
                     <label for="nombre">Nombre</label>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s6">
-                    <input id="apellido" type="text" class="validate" value="Apellido">
+                    <input id="apellido" type="text" class="validate" value="<%= (user != null) ? user.getApellido() : "" %>">
                     <label for="apellido">Apellido</label>
                   </div>
                   <div class="input-field col s6">
-                    <input id="email" type="email" class="validate" value="user@gmail.com">
+                    <input id="email" type="email" class="validate" value="<%= (user != null) ? user.getEmail() : "" %>">
                     <label for="email">Email</label>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s12">
-                    <input id="nacimiento" type="date" class="validate" value="2023-10-04" readonly>
+                    <input id="nacimiento" type="date" class="validate" value="<%= (user != null) ? user.getNacimiento() : "" %>" readonly>
                     <label for="nacimiento">Fecha de Nacimiento</label>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="input-field col s12">
-                    <textarea id="descripcion" class="materialize-textarea">Descripción</textarea>
-                    <label for="descripcion">Descripción</label>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="input-field col s12">
-                    <input id="url" type="text" class="validate" value="http://url.com">
-                    <label for="url">URL</label>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="input-field col s12">
-                    <input id="nacionalidad" type="text" class="validate" value="Nacionalidad">
-                    <label for="nacionalidad">Nacionalidad</label>
-                  </div>
-                </div>
+                <%
+                if (user != null && user.getisProveedor()) { %>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <textarea id="descripcion" class="materialize-textarea"><%= (user != null && user.getDescripcion() != null) ? user.getDescripcion() : "" %></textarea>
+                        <label for="descripcion">Descripción</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input id="url" type="text" class="validate" value="<%= (user != null && user.getUrl() != null) ? user.getUrl() : "" %>">
+                        <label for="url">URL</label>
+                      </div>
+                    </div>
+                <%
+                } %>
+                <%
+                if (user != null && !user.getisProveedor()) { %>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input id="nacionalidad" type="text" class="validate" value="<%= (user != null && user.getNacionalidad() != null) ? user.getNacionalidad() : "" %>">
+                        <label for="nacionalidad">Nacionalidad</label>
+                      </div>
+                    </div>
+                <%
+                }%>
                 <button class="btn waves-effect waves-light" type="submit" name="action">Guardar
                   <i class="material-icons right">send</i>
                 </button>
@@ -231,21 +196,8 @@
     </div>
   </div>
 
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer__container">
-      <img src="./src/img/kombi.png" alt="" class="footer_img" />
-      <div class="footer__text">
-        <h3 class="footer__text--title">TurismoUY</h3>
-        <p class="footer__text--p">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-          nisi ex, tristique et suscipit et, posuere sit amet erat.
-        </p>
-      </div>
-    </div>
-    <div class="footer__p">TengoFulbo &copy; | 2023 - 2023</div>
-  </footer>
+  
+  <%@ include file="./utils/footer.jsp" %>
 
   <!-- MATERIALIZE JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
