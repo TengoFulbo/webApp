@@ -6,9 +6,9 @@ public class dataDepartamento {
     private String nombre;
     private String descripcion;
     private String url;
-    private List<String> actividades;
+    private List<dataActividad> actividades;
 
-    public dataDepartamento(String nombre, String descripcion, String url, List<String> actividades) {
+    public dataDepartamento(String nombre, String descripcion, String url, List<dataActividad> actividades) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.url = url;
@@ -27,7 +27,7 @@ public class dataDepartamento {
         return this.url;
     }
 
-    public List<String> getActividades(){
+    public List<dataActividad> getActividades(){
         return this.actividades;
     };
 }

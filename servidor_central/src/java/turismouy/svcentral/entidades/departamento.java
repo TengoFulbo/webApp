@@ -2,6 +2,8 @@ package turismouy.svcentral.entidades;
 
 import javax.persistence.*;
 import turismouy.svcentral.datatypes.dataDepartamento;
+import turismouy.svcentral.datatypes.dataActividad;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,11 +72,11 @@ public class departamento {
 		return 0;
 	}
 	public dataDepartamento toDataType() {
-		List<String> dataActividades = new ArrayList<String>();
+		List<dataActividad> dataActividades = new ArrayList<dataActividad>();
 
 		if (this.actividades != null) {
 			for (actividad actividad : this.actividades) {
-				dataActividades.add(actividad.getNombre());
+				dataActividades.add(actividad.toDataType());
 			}
 		} else { dataActividades = null;}
 
