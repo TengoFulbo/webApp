@@ -28,15 +28,13 @@ public class RegisterTuristaServlet extends HttpServlet {
         String apellido = null;
         String nacionalidad = null; // Requiere turista.
 
-        if (nickname == null || 
-            email == null || 
-            fechaN == null
-            password = null ||
-            nombre == null ||
-            apellido == null ||
-            nacionalidad == null) {
+        // if (nickname == null || email == null || fechaN == null ||
+        //     password = null ||
+        //     nombre == null ||
+        //     apellido == null ||
+        //     nacionalidad == null) {
 
-        }
+        // }
 
         nickname        = request.getParameter("nickname");
         nombre          = request.getParameter("nombre");

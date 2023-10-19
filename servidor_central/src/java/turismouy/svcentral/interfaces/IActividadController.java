@@ -25,7 +25,7 @@ public interface IActividadController {
      * @throws UsuarioYaExisteExcepcion
      * @throws UsuarioNoExisteExcepcion
      */
-    public abstract void crearActividad(String nombreDepto, String nombreProv, String nombre, String desc, int duracion, int costoUni, String ciudad, LocalDate fechaCrea) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion, UsuarioNoExisteExcepcion;
+    public abstract void crearActividad(String nombreDepto, String nombreProv, String nombre, String desc, int duracion, int costoUni, String ciudad, LocalDate fechaCrea, List<String> categorias) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion, UsuarioNoExisteExcepcion;
     
     /**
      * Caso de uso:

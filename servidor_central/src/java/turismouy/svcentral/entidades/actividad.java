@@ -44,10 +44,13 @@ public class actividad {
 	@ManyToMany(fetch = FetchType.EAGER)
     private List<salida> salidas;
 
+	@ManyToMany(mappedBy = "actividades")
+	private List<categoria> categorias;
+
 
     public actividad(){};
 	
-	public actividad(String nombre, String descripcion, int duracion, int costeUni, String ciudad, LocalDate fechaCrea) {
+	public actividad(String nombre, String descripcion, int duracion, int costeUni, String ciudad, LocalDate fechaCrea, List<categoria> categorias) {
 		super();
 		this.nombreA = nombre;
 		this.descripcion = descripcion;
@@ -58,6 +61,7 @@ public class actividad {
 		this.paquetes = new ArrayList<paquete>();
 		this.salidas = new ArrayList<salida>();
 		this.estado = estadoActividad.AGREGADA;
+		this.categorias = categorias;
 	}
 
 	public String getNombre() {
@@ -129,12 +133,23 @@ public class actividad {
 	public void setEstado(estadoActividad estado){
 		this.estado = estado;
 	}
+	public void setCategorias(List<categoria> categorias) {
+		this.categorias = categorias;
+	}
+	public List<categoria> getCategorias() {
+		return this.categorias;
+	}
 	public dataActividad toDataType() {
 		
 		List<dataSalida>DtSalidas = this.crearListaSalidaParaDt(this);
 		
 		List<dataPaquete> DtPaquetes = this.crearListaPaqueteParaDt(this);
+		List<String> dtCategorias = new ArrayList<String>();
 		
+		for (categoria categoria : this.categorias) {
+			dtCategorias.add(categoria.getNombre());
+		}
+
 		dataActividad dt = new dataActividad(
 			this.nombreA,
 			this.descripcion,
@@ -146,7 +161,8 @@ public class actividad {
 			this.departamento.toDataTypeWithoutActividades(),
 			this.proveedor.toDataTypeWithoutCollections(),
 			DtSalidas,
-			DtPaquetes);
+			DtPaquetes,
+			dtCategorias);
 
 		return dt;
 		

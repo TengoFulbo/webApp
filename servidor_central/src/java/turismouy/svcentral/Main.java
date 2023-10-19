@@ -1,6 +1,7 @@
 package turismouy.svcentral;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import turismouy.svcentral.excepciones.NoExisteExcepcion;
@@ -9,6 +10,7 @@ import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
 import turismouy.svcentral.excepciones.UsuarioYaExisteExcepcion;
 import turismouy.svcentral.excepciones.YaExisteExcepcion;
 import turismouy.svcentral.interfaces.IActividadController;
+import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.interfaces.ICompraController;
 import turismouy.svcentral.interfaces.IDepartamentoController;
 import turismouy.svcentral.interfaces.IPaqueteController;
@@ -28,55 +30,55 @@ public class Main {
         IActividadController IAC = fabrica.getIActividadController();
         ICompraController ICoC = fabrica.getICompraController();
         IPaqueteController IPC = fabrica.getIPaqueteController();
-//        try {
-//            if (IUC.login("eze", "eze")) { log.warning("True to login");
-//            } else { log.warning("False to login"); };
-//
-//        //     if (IUC.login("eze", "hola123")) { log.warning("True to login");
-//        //     } else { log.warning("False to login"); };
-//
-//        //     // if (IUC.login("eze", "eze")) { log.warning("True to login");
-//        //     // } else { log.warning("False to login"); };
-//        // } catch (Exception e) {
-//        //     log.error(e.toString());
-//        // }
+       try {
+           if (IUC.login("eze", "eze")) { log.warning("True to login");
+           } else { log.warning("False to login"); };
 
-        cargarProveedores();
-        log.warning("########################################################");
-        cargarDepartamentos();
-        log.warning("########################################################");
-        cargarPaquetes();
-        log.warning("########################################################");
-        cargarActividades();
-        log.warning("########################################################");
-        cargarActividadesPaquetes();
-        try {
-			IAC.modificarEstadoActividad("Tour de Vinos en Bodegas", estadoActividad.CONFIRMADA);
-		} catch (NoExisteExcepcion | ParametrosInvalidosExcepcion | YaExisteExcepcion e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+           if (IUC.login("eze", "hola123")) { log.warning("True to login");
+           } else { log.warning("False to login"); };
+
+           // if (IUC.login("eze", "eze")) { log.warning("True to login");
+           // } else { log.warning("False to login"); };
+       } catch (Exception e) {
+           log.error(e.toString());
+       }
+
+        // cargarProveedores();
+        // log.warning("########################################################");
+        // cargarDepartamentos();
+        // log.warning("########################################################");
+        // cargarPaquetes();
+        // log.warning("########################################################");
+        // cargarActividades();
+        // log.warning("########################################################");
+        // cargarActividadesPaquetes();
+        // try {
+		// 	IAC.modificarEstadoActividad("Tour de Vinos en Bodegas", estadoActividad.CONFIRMADA);
+		// } catch (NoExisteExcepcion | ParametrosInvalidosExcepcion | YaExisteExcepcion e) {
+		// 	// TODO Auto-generated catch block
+		// 	e.printStackTrace();
+		// }
         
-        try {
-			IAC.crearActividad("Canelones", "techGadgets", "a", "Experimenta la vida gaucha a caballo en la campiña.", 240, 80, "C", LocalDate.now());
-		} catch (ParametrosInvalidosExcepcion | UsuarioYaExisteExcepcion | UsuarioNoExisteExcepcion e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        // try {
+		// 	IAC.crearActividad("Canelones", "techGadgets", "a", "Experimenta la vida gaucha a caballo en la campiña.", 240, 80, "C", LocalDate.now());
+		// } catch (ParametrosInvalidosExcepcion | UsuarioYaExisteExcepcion | UsuarioNoExisteExcepcion e) {
+		// 	// TODO Auto-generated catch block
+		// 	e.printStackTrace();
+		// }
       
-        try {
-			ICoC.crearCompra(LocalDate.now(), 2, 3, LocalDate.now(), "Paquete Aventura", "eze");
-		} catch (ParametrosInvalidosExcepcion | UsuarioYaExisteExcepcion | UsuarioNoExisteExcepcion e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        // try {
+		// 	ICoC.crearCompra(LocalDate.now(), 2, 3, LocalDate.now(), "Paquete Aventura", "eze");
+		// } catch (ParametrosInvalidosExcepcion | UsuarioYaExisteExcepcion | UsuarioNoExisteExcepcion e) {
+		// 	// TODO Auto-generated catch block
+		// 	e.printStackTrace();
+		// }
         
-        try {
-			IPC.agregarActividadPaquete("Paquete Aventura", "Tour de Arte Urbano");
-		} catch (NoExisteExcepcion | YaExisteExcepcion e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        // try {
+		// 	IPC.agregarActividadPaquete("Paquete Aventura", "Tour de Arte Urbano");
+		// } catch (NoExisteExcepcion | YaExisteExcepcion e) {
+		// 	// TODO Auto-generated catch block
+		// 	e.printStackTrace();
+		// }
     
 //        List <dataPaquete> LDtPaquete = IPC.listarPaquetesSinComprar();
 //        if(LDtPaquete == null) {
@@ -176,39 +178,65 @@ public class Main {
             } catch (Exception e) { log.error("Error: " + e.toString()); }
     }
 
+    public static void cargarCategorias() {
+        Fabrica fabrica = Fabrica.getInstance();
+        ICategoriaController ICC = fabrica.getICategoriaController();
+
+        try { ICC.crearCategoria("fulbo");
+            } catch (Exception e) { log.error("Error: " + e.toString()); }
+
+        try { ICC.crearCategoria("paseo");
+            } catch (Exception e) { log.error("Error: " + e.toString()); }
+
+        try { ICC.crearCategoria("playa");
+            } catch (Exception e) { log.error("Error: " + e.toString()); }
+
+        try { ICC.crearCategoria("fulbo");
+            } catch (Exception e) { log.error("Error: " + e.toString()); }
+
+        try { ICC.crearCategoria("fulbo");
+            } catch (Exception e) { log.error("Error: " + e.toString()); }
+
+        try { ICC.crearCategoria("fulbo");
+            } catch (Exception e) { log.error("Error: " + e.toString()); }
+    }
+
     public static void cargarActividades() {
 		Fabrica fabrica = Fabrica.getInstance();
 		IActividadController IAC = fabrica.getIActividadController();
 
-        try { IAC.crearActividad("Canelones", "homeSolutions", "Tour de Vinos en Bodegas", "Recorrido por las mejores bodegas de la región.", 120, 50, "Canelones", LocalDate.now());
+        List<String> categorias1 = new ArrayList<String>();
+        categorias1.add("fulbo");
+
+        try { IAC.crearActividad("Canelones", "homeSolutions", "Tour de Vinos en Bodegas", "Recorrido por las mejores bodegas de la región.", 120, 50, "Canelones", LocalDate.now(), categorias1);
             } catch (Exception e) { log.error("Error: " + e.toString()); }            
-        try { IAC.crearActividad("Montevideo", "homeSolutions", "Recorrido Cultural por Museos", "Explora la historia y el arte de la ciudad.", 90, 30, "Montevideo", LocalDate.now());
+        try { IAC.crearActividad("Montevideo", "homeSolutions", "Recorrido Cultural por Museos", "Explora la historia y el arte de la ciudad.", 90, 30, "Montevideo", LocalDate.now(), categorias1);
             } catch (Exception e) { log.error("Error: " + e.toString()); }
-        try { IAC.crearActividad("Maldonado", "homeSolutions", "Playa y Surf en Punta del Este", "Día de diversión bajo el sol y clases de surf.", 180, 70, "Punta del Este", LocalDate.now());
+        try { IAC.crearActividad("Maldonado", "homeSolutions", "Playa y Surf en Punta del Este", "Día de diversión bajo el sol y clases de surf.", 180, 70, "Punta del Este", LocalDate.now(), categorias1);
             } catch (Exception e) { log.error("Error: " + e.toString()); }
-        try { IAC.crearActividad("Rocha", "techGadgets", "Senderismo en el Parque Nacional", "Explora la belleza natural del parque.", 150, 60, "La Paloma", LocalDate.now());
+        try { IAC.crearActividad("Rocha", "techGadgets", "Senderismo en el Parque Nacional", "Explora la belleza natural del parque.", 150, 60, "La Paloma", LocalDate.now(), categorias1);
             } catch (Exception e) { log.error("Error: " + e.toString()); }
-        try { IAC.crearActividad("Colonia", "techGadgets", "Paseo en Kayak por el Río", "Navega por el río y disfruta de la naturaleza.", 120, 55, "Colonia del Sacramento", LocalDate.now());
+        try { IAC.crearActividad("Colonia", "techGadgets", "Paseo en Kayak por el Río", "Navega por el río y disfruta de la naturaleza.", 120, 55, "Colonia del Sacramento", LocalDate.now(), categorias1);
             } catch (Exception e) { log.error("Error: " + e.toString()); }
-        try { IAC.crearActividad("Cerro Largo", "techGadgets", "Turismo Rural en Estancia", "Vive la experiencia gaucha en una estancia local.", 240, 80, "Melo", LocalDate.now());
+        try { IAC.crearActividad("Cerro Largo", "techGadgets", "Turismo Rural en Estancia", "Vive la experiencia gaucha en una estancia local.", 240, 80, "Melo", LocalDate.now(), categorias1);
             } catch (Exception e) { log.error("Error: " + e.toString()); }
-        try { IAC.crearActividad("Durazno", "urbanExplore", "Observación Nocturna de Estrellas", "Admira el cielo estrellado en la noche.", 90, 40, "Durazno", LocalDate.now());
+        try { IAC.crearActividad("Durazno", "urbanExplore", "Observación Nocturna de Estrellas", "Admira el cielo estrellado en la noche.", 90, 40, "Durazno", LocalDate.now(), categorias1);
             } catch (Exception e) { log.error("Error: " + e.toString()); }
-        try { IAC.crearActividad("Lavalleja", "urbanExplore", "Ruta de Ciclismo de Montaña", "Recorrido en bicicleta por las colinas.", 180, 75, "Minas", LocalDate.now());
+        try { IAC.crearActividad("Lavalleja", "urbanExplore", "Ruta de Ciclismo de Montaña", "Recorrido en bicicleta por las colinas.", 180, 75, "Minas", LocalDate.now(), categorias1);
             } catch (Exception e) { log.error("Error: " + e.toString()); }
-        try { IAC.crearActividad("San José", "urbanExplore", "Avistamiento de Aves en el Humedal", "Observa la vida silvestre en el humedal.", 120, 50, "San José", LocalDate.now());
+        try { IAC.crearActividad("San José", "urbanExplore", "Avistamiento de Aves en el Humedal", "Observa la vida silvestre en el humedal.", 120, 50, "San José", LocalDate.now(), categorias1);
             } catch (Exception e) { log.error("Error: " + e.toString()); }
-        try { IAC.crearActividad("Rivera", "urbanExplore", "Pesca Deportiva en el Río", "Día de pesca en el río con guías locales.", 240, 90, "Rivera", LocalDate.now());
+        try { IAC.crearActividad("Rivera", "urbanExplore", "Pesca Deportiva en el Río", "Día de pesca en el río con guías locales.", 240, 90, "Rivera", LocalDate.now(), categorias1);
             } catch (Exception e) { log.error("Error: " + e.toString()); }
-        try { IAC.crearActividad("Artigas", "urbanExplore", "Tour de Arte Urbano", "Explora las obras de arte en las calles de la ciudad.", 90, 35, "Artigas", LocalDate.now());
+        try { IAC.crearActividad("Artigas", "urbanExplore", "Tour de Arte Urbano", "Explora las obras de arte en las calles de la ciudad.", 90, 35, "Artigas", LocalDate.now(), categorias1);
             } catch (Exception e) { log.error("Error: " + e.toString()); }
-        try { IAC.crearActividad("Treinta y Tres", "urbanExplore", "Caminata por la Quebrada", "Recorrido escénico por la quebrada local.", 120, 45, "Treinta y Tres", LocalDate.now());
+        try { IAC.crearActividad("Treinta y Tres", "urbanExplore", "Caminata por la Quebrada", "Recorrido escénico por la quebrada local.", 120, 45, "Treinta y Tres", LocalDate.now(), categorias1);
             } catch (Exception e) { log.error("Error: " + e.toString()); }
-        try { IAC.crearActividad("Río Negro", "urbanExplore", "Visita a la Fortaleza de Santa Teresa", "Explora la histórica fortaleza junto al mar.", 150, 60, "Fray Bentos", LocalDate.now());
+        try { IAC.crearActividad("Río Negro", "urbanExplore", "Visita a la Fortaleza de Santa Teresa", "Explora la histórica fortaleza junto al mar.", 150, 60, "Fray Bentos", LocalDate.now(), categorias1);
             } catch (Exception e) { log.error("Error: " + e.toString()); }
-        try { IAC.crearActividad("Salto", "urbanExplore", "Relax en las Termas Naturales", "Disfruta de las aguas termales y sus beneficios.", 180, 70, "Salto", LocalDate.now());
+        try { IAC.crearActividad("Salto", "urbanExplore", "Relax en las Termas Naturales", "Disfruta de las aguas termales y sus beneficios.", 180, 70, "Salto", LocalDate.now(), categorias1);
             } catch (Exception e) { log.error("Error: " + e.toString()); }
-        try { IAC.crearActividad("Tacuarembó", "urbanExplore", "Ruta de Gauchos a Caballo", "Experimenta la vida gaucha a caballo en la campiña.", 240, 80, "Tacuarembó", LocalDate.now());
+        try { IAC.crearActividad("Tacuarembó", "urbanExplore", "Ruta de Gauchos a Caballo", "Experimenta la vida gaucha a caballo en la campiña.", 240, 80, "Tacuarembó", LocalDate.now(), categorias1);
             } catch (Exception e) { log.error("Error: " + e.toString()); }
     }
 

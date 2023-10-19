@@ -17,9 +17,10 @@ public class dataActividad {
 	private dataUsuario proveedor;
 	private List<dataSalida>DtSalidas;
 	private List<dataPaquete>DtPaquetes;
+	private List<String> dtCategorias;
 	
 	
-	public dataActividad(String nombre, String desc, int duracion, int costoUni, String ciudad, LocalDate fechaCrea, estadoActividad estado, dataDepartamento departamento, dataUsuario proveedor, List<dataSalida>DtSalidas, List<dataPaquete>DtPaquetes){
+	public dataActividad(String nombre, String desc, int duracion, int costoUni, String ciudad, LocalDate fechaCrea, estadoActividad estado, dataDepartamento departamento, dataUsuario proveedor, List<dataSalida>DtSalidas, List<dataPaquete>DtPaquetes, List<String> dtCategorias) {
 		this.nombre = nombre;
 		this.desc = desc;
 		this.duracion = duracion;
@@ -31,6 +32,7 @@ public class dataActividad {
 		this.proveedor = proveedor;
 		this.DtSalidas = DtSalidas;
 		this.DtPaquetes = DtPaquetes;
+		this.dtCategorias = dtCategorias;
 	}
 
 
@@ -103,5 +105,13 @@ public class dataActividad {
 
 	public void setDtPaquetes(List<dataPaquete> dtPaquetes) {
 		DtPaquetes = dtPaquetes;
+	}
+
+	public void setDtCategorias(List<String> dtCategorias) {
+		this.dtCategorias = dtCategorias;
+	}
+
+	public List<String> getDtCategorias() {
+		return this.dtCategorias;
 	}
 }

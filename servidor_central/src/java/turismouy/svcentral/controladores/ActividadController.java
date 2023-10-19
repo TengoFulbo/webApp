@@ -1,6 +1,7 @@
 package turismouy.svcentral.controladores;
 
 import turismouy.svcentral.entidades.actividad;
+import turismouy.svcentral.entidades.categoria;
 import turismouy.svcentral.entidades.departamento;
 import turismouy.svcentral.entidades.proveedor;
 import turismouy.svcentral.entidades.salida;
@@ -12,6 +13,7 @@ import turismouy.svcentral.excepciones.UsuarioYaExisteExcepcion;
 import turismouy.svcentral.excepciones.YaExisteExcepcion;
 import turismouy.svcentral.interfaces.IActividadController;
 import turismouy.svcentral.manejadores.ActividadManejador;
+import turismouy.svcentral.manejadores.CategoriaManejador;
 import turismouy.svcentral.manejadores.DepartamentoManejador;
 import turismouy.svcentral.manejadores.PaqueteManejador;
 import turismouy.svcentral.manejadores.UsuarioManejador;
@@ -25,7 +27,7 @@ import java.util.List;
 
 public class ActividadController implements IActividadController {
 
-	public void crearActividad(String nombreDepto, String nombreProv, String nombre, String desc, int duracion, int costoUni, String ciudad, LocalDate fechaCrea) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion, UsuarioNoExisteExcepcion{
+	public void crearActividad(String nombreDepto, String nombreProv, String nombre, String desc, int duracion, int costoUni, String ciudad, LocalDate fechaCrea, List<String> sCategorias) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion, UsuarioNoExisteExcepcion{
 		
         // Validaciones sobre parametros.
         if (!validarTexto(nombreDepto, 1) || !validarTexto(nombre, 1) || !validarTexto(desc, 1) || !validarTexto(ciudad, 1)) {
@@ -68,7 +70,20 @@ public class ActividadController implements IActividadController {
         	throw new UsuarioNoExisteExcepcion("El proveedor " + nombreProv + " no existe");
         }
         
-		actividad act = new actividad(nombre, desc, duracion, costoUni, ciudad, fechaCrea);
+        List<categoria> categorias = new ArrayList<categoria>();
+
+        CategoriaManejador cm = CategoriaManejador.getInstance();
+
+        for (String sCategoria : sCategorias) {
+            categoria categoria = cm.getCategoria(sCategoria);
+            if (categoria == null) {
+                log.error("[ActividadController] [altaActividad] Error: No se encuentra la categoria '" + sCategoria + "' en el sistema.");
+                throw new UsuarioNoExisteExcepcion("La categoria '" + sCategoria + "' no existe en el sistema");
+            }
+        }
+        // TODO: Aplicar categorias
+
+		actividad act = new actividad(nombre, desc, duracion, costoUni, ciudad, fechaCrea, categorias);
 		
         act.setDepartamento(depto);
         act.setProveedor(prov);

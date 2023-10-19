@@ -1,5 +1,9 @@
 package turismouy.svcentral.controladores;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import turismouy.svcentral.datatypes.dataCategoria;
 import turismouy.svcentral.entidades.categoria;
 import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
 import turismouy.svcentral.excepciones.YaExisteExcepcion;
@@ -26,6 +30,23 @@ public class CategoriaController implements ICategoriaController {
         categoria categoria = new categoria(nombre);
         cm.addCategoria(categoria);
     };
+
+    public List<dataCategoria> listasCateorias() {
+        CategoriaManejador cm = CategoriaManejador.getInstance();
+        List<categoria> categorias = cm.getAllCategorias();
+        
+        if (categorias == null) {
+            return null;
+        }
+
+        List<dataCategoria> dataCategorias = new ArrayList<dataCategoria>();
+
+        for (categoria categoria : categorias) {
+            dataCategorias.add(categoria.toDataType());
+        }
+        
+        return dataCategorias;
+    }
 
     /*
         * Level 1: Textos simples. Valida que no sea vacio, que no empiece o termine con espacio y que al menos tenga 1 letra o número.
