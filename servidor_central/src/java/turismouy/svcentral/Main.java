@@ -12,6 +12,7 @@ import turismouy.svcentral.interfaces.IActividadController;
 import turismouy.svcentral.interfaces.ICompraController;
 import turismouy.svcentral.interfaces.IDepartamentoController;
 import turismouy.svcentral.interfaces.IPaqueteController;
+import turismouy.svcentral.interfaces.ISalidaController;
 import turismouy.svcentral.interfaces.IUsuarioController;
 import turismouy.svcentral.utilidades.estadoActividad;
 import turismouy.svcentral.datatypes.dataActividad;
@@ -28,6 +29,7 @@ public class Main {
         IActividadController IAC = fabrica.getIActividadController();
         ICompraController ICoC = fabrica.getICompraController();
         IPaqueteController IPC = fabrica.getIPaqueteController();
+        ISalidaController ISC = fabrica.getISalidaController();
         try {
             if (IUC.login("eze", "eze")) { log.warning("True to login");
             } else { log.warning("False to login"); };
@@ -50,6 +52,13 @@ public class Main {
         cargarActividades();
         log.warning("########################################################");
         cargarActividadesPaquetes();
+        
+        try {
+			ISC.crearSalida("Salida a la playa", 20, LocalDate.now(), LocalDate.of(2024, 05, 20),"Kiyu","Playa y Surf en Punta del Este" );
+		} catch (UsuarioYaExisteExcepcion | ParametrosInvalidosExcepcion | UsuarioNoExisteExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         try {
 			IAC.modificarEstadoActividad("Tour de Vinos en Bodegas", estadoActividad.CONFIRMADA);
 		} catch (NoExisteExcepcion | ParametrosInvalidosExcepcion | YaExisteExcepcion e) {
@@ -77,14 +86,19 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    
-        List <dataPaquete> LDtPaquete = IPC.listarPaquetesSinComprar();
-        if(LDtPaquete == null) {
-        	System.out.println("Paquete null");
-        }
-        for(dataPaquete dtPaquete : LDtPaquete) {
-        	System.out.println(dtPaquete.getNombre());
-        }
+        
+       try {
+		List<dataActividad> LAct = IAC.getActividadesDepartamentoNoPaquete("Paquete Histórico", "Canelones");
+		
+	       for(dataActividad DtAct : LAct) {
+	    	   System.out.println(DtAct.getNombre());
+	       }
+	} catch (UsuarioNoExisteExcepcion e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+        
+       
         
         
 

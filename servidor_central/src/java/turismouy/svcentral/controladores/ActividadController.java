@@ -280,6 +280,57 @@ public class ActividadController implements IActividadController {
         return dtActividades;
     }    
     
+    public List<dataActividad> getActividadesDepartamentoNoPaquete(String nombrePaquete, String nombreDepartamento ) throws UsuarioNoExisteExcepcion{
+    	
+        PaqueteManejador pm = PaqueteManejador.getinstance();
+        DepartamentoManejador dm = DepartamentoManejador.getinstance();
+        paquete paquete = pm.getPaquete(nombrePaquete);
+        departamento departamento = dm.getDepartamento(nombreDepartamento);
+        
+        if (paquete == null) {
+            log.error("El paquete: " + nombrePaquete + " no existe.");
+        	throw new UsuarioNoExisteExcepcion("La actividad " + nombrePaquete + " ya existe");
+        }
+        
+        if (departamento == null) {
+            log.error("El departamento " + nombreDepartamento + " no existe.");
+        	throw new UsuarioNoExisteExcepcion("La actividad " + nombreDepartamento + " ya existe");
+        }
+        
+        List<dataActividad> LActPaquete = paquete.toDataType().getActividades();
+        List<actividad> LAct = departamento.getActividades();
+        List<dataActividad> LActDepto = new ArrayList<dataActividad>();
+        
+        System.out.println("Actividades Confirmadas");
+        for (actividad act : LAct) {
+        	if(act.getEstado().equals(estadoActividad.CONFIRMADA)){
+        		LActDepto.add(act.toDataType());
+        		System.out.println(act.getNombre());
+        		System.out.println();
+        	}
+        }
+        
+    	List<dataActividad> LActNoPaquete = new ArrayList<dataActividad>();
+    	boolean esta = false;
+    	
+    	for(dataActividad DtAct : LActDepto) {
+    		esta = false;
+    		for(dataActividad DtActDepto : LActPaquete) {
+    			if(DtAct.getNombre().equals(DtActDepto.getNombre())) {
+    				System.out.println("Entra al if de bool");
+    				esta = true;
+    				break;
+    			}
+    		}
+    		if(!esta) {
+    			LActNoPaquete.add(DtAct);
+    		}
+    	}
+    	return LActNoPaquete;
+    	
+
+    }
+    
     public void modificarEstadoActividad(String nombre, estadoActividad estado) throws NoExisteExcepcion, ParametrosInvalidosExcepcion, YaExisteExcepcion {
         if (estado != estadoActividad.CONFIRMADA && estado != estadoActividad.RECHAZADA) {
             log.error("Parametros invalidos por primero.");
