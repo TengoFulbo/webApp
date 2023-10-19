@@ -19,7 +19,7 @@ import turismouy.svcentral.entidades.compra;
         private List<inscripcion> inscripciones = new ArrayList<inscripcion>();
         
         @OneToMany(mappedBy = "turista")
-        public List<compra> compra = new ArrayList<compra>();
+        private List<compra> compra = new ArrayList<compra>();
 
     public turista(String nickname, String nombre, String apellido, String email, String nacionalidad, LocalDate nacimiento) {
         super(nickname, nombre, apellido, email, nacimiento);

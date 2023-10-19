@@ -28,18 +28,18 @@ public class Main {
         IActividadController IAC = fabrica.getIActividadController();
         ICompraController ICoC = fabrica.getICompraController();
         IPaqueteController IPC = fabrica.getIPaqueteController();
-        try {
-            if (IUC.login("eze", "eze")) { log.warning("True to login");
-            } else { log.warning("False to login"); };
-
-        //     if (IUC.login("eze", "hola123")) { log.warning("True to login");
-        //     } else { log.warning("False to login"); };
-
-        //     // if (IUC.login("eze", "eze")) { log.warning("True to login");
-        //     // } else { log.warning("False to login"); };
-        // } catch (Exception e) {
-        //     log.error(e.toString());
-        // }
+//        try {
+//            if (IUC.login("eze", "eze")) { log.warning("True to login");
+//            } else { log.warning("False to login"); };
+//
+//        //     if (IUC.login("eze", "hola123")) { log.warning("True to login");
+//        //     } else { log.warning("False to login"); };
+//
+//        //     // if (IUC.login("eze", "eze")) { log.warning("True to login");
+//        //     // } else { log.warning("False to login"); };
+//        // } catch (Exception e) {
+//        //     log.error(e.toString());
+//        // }
 
         cargarProveedores();
         log.warning("########################################################");
@@ -78,14 +78,15 @@ public class Main {
 			e.printStackTrace();
 		}
     
-        List <dataPaquete> LDtPaquete = IPC.listarPaquetesSinComprar();
-        if(LDtPaquete == null) {
-        	System.out.println("Paquete null");
-        }
-        for(dataPaquete dtPaquete : LDtPaquete) {
-        	System.out.println(dtPaquete.getNombre());
-        }
-        
+//        List <dataPaquete> LDtPaquete = IPC.listarPaquetesSinComprar();
+//        if(LDtPaquete == null) {
+//        	System.out.println("Paquete null");
+//        }else {
+//	        for(dataPaquete dtPaquete : LDtPaquete) {
+//	        	System.out.println(dtPaquete.getNombre());
+//	        }
+//        }
+//        
         
 
         // try {

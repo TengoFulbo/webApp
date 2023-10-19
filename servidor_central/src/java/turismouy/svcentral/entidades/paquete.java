@@ -27,7 +27,7 @@ public class paquete {
 	private List<actividad> actividades;
 	
 	@OneToMany(mappedBy = "paquete")
-    public List<compra> compra;
+    private List<compra> compra;
 	
 	public paquete() {};
 
