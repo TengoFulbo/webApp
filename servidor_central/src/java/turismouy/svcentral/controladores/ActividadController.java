@@ -194,6 +194,52 @@ public class ActividadController implements IActividadController {
             return null; 
         return LDtAct;
     }
+    
+    public List<dataActividad> getAllActividadesAgregadas() {
+        List<dataActividad> LDtAct = new ArrayList<>();
+           DepartamentoManejador dm = DepartamentoManejador.getinstance();
+        List<departamento> deptos = dm.getAllDepartamento();
+        
+            for (departamento depto : deptos) {
+                if (depto != null && depto.getNombre() != null) {
+                    List<actividad> LAct = depto.getActividades();
+                    if (LAct != null) {
+                        for (actividad act : LAct) {
+                        	if(act.getEstado().equals(estadoActividad.AGREGADA)){
+                        		LDtAct.add(act.toDataType());
+                        	}
+                        }
+                    }
+                    break;
+                }
+            }
+        if (LDtAct.isEmpty())
+            return null; 
+        return LDtAct;
+    }
+    
+    public List<dataActividad> getAllActividadesConfirmadas() {
+        List<dataActividad> LDtAct = new ArrayList<>();
+           DepartamentoManejador dm = DepartamentoManejador.getinstance();
+        List<departamento> deptos = dm.getAllDepartamento();
+        
+            for (departamento depto : deptos) {
+                if (depto != null && depto.getNombre() != null) {
+                    List<actividad> LAct = depto.getActividades();
+                    if (LAct != null) {
+                        for (actividad act : LAct) {
+                        	if(act.getEstado().equals(estadoActividad.CONFIRMADA)){
+                        		LDtAct.add(act.toDataType());
+                        	}
+                        }
+                    }
+                    break;
+                }
+            }
+        if (LDtAct.isEmpty())
+            return null; 
+        return LDtAct;
+    }
 
     public List<dataActividad> getAllActividadesDepartamentoSinPaquete(String nombreDep, String nombrePaquete) {
         List<dataActividad> LDtAct = new ArrayList<>();

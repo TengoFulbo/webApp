@@ -1,6 +1,7 @@
 package com.presentacion.utilidades;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dialog;
 import java.awt.EventQueue;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -24,21 +26,29 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTree;
+import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import turismouy.svcentral.Fabrica;
 import turismouy.svcentral.datatypes.dataActividad;
 import turismouy.svcentral.datatypes.dataDepartamento;
 import turismouy.svcentral.datatypes.dataUsuario;
+import turismouy.svcentral.excepciones.NoExisteExcepcion;
 import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
 import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
 import turismouy.svcentral.excepciones.UsuarioYaExisteExcepcion;
+import turismouy.svcentral.excepciones.YaExisteExcepcion;
 import turismouy.svcentral.interfaces.IActividadController;
 import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.interfaces.IDepartamentoController;
 import turismouy.svcentral.interfaces.IUsuarioController;
+import turismouy.svcentral.utilidades.estadoActividad;
 
 public class tmp {
 
@@ -68,187 +78,117 @@ public class tmp {
 		JDialog popupDialog = new JDialog();
 		popupDialog.setResizable(false);
 		popupDialog.setTitle("Actividad");
-		popupDialog.setSize(799, 397);
+		popupDialog.setSize(493, 397);
 		popupDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		popupDialog.setLocationRelativeTo(null);
 		popupDialog.getContentPane().setLayout(null);
 
 		JPanel popupPanel = new JPanel();
-		popupPanel.setBounds(0, 0, 490, 364);
+		popupPanel.setBounds(0, 0, 477, 364);
 		popupDialog.getContentPane().add(popupPanel);
 		popupPanel.setLayout(null);
 
-		JLabel nom = new JLabel("Nombre: ");
-		nom.setBounds(7, 69, 128, 20);
-		popupPanel.add(nom);
-
-		JTextField nombre = new JTextField();
-		nombre.setColumns(10);
-		nombre.setBounds(145, 69, 326, 20);
-		popupPanel.add(nombre);
-
-		JLabel des = new JLabel("Descripcion:");
-		des.setBounds(7, 100, 128, 20);
-		popupPanel.add(des);
-
-		JTextField descripcion = new JTextField();
-		descripcion.setColumns(10);
-		descripcion.setBounds(145, 100, 326, 20);
-		popupPanel.add(descripcion);
-
-		JLabel prov = new JLabel("Proveedor:");
-		prov.setBounds(7, 224, 128, 20);
-		popupPanel.add(prov);
-
-		JComboBox<String> proveedor = new JComboBox<>();
-		DefaultComboBoxModel<String> proveedoresModel = new DefaultComboBoxModel<>();
-		proveedor.setBounds(145, 224, 326, 20);
-
-		IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
-		List<dataUsuario> provedoreslist = IUC.listarUsuarios();
-
-		if (provedoreslist == null) {
-			JOptionPane.showMessageDialog(popupDialog, "No existen proveedores para la actividad en el sistema",
-					"Error", JOptionPane.ERROR_MESSAGE);
-			popupDialog.dispose();
-			return;
-		} else {
-			for (dataUsuario proveedornick : provedoreslist) {
-				if (proveedornick.getisProveedor()) {
-					proveedoresModel.addElement(proveedornick.getNickname());
-				}
-			}
-			proveedor.setModel(proveedoresModel);
-			popupPanel.add(proveedor);
-		}
-
 		JSeparator separator = new JSeparator();
-		separator.setBounds(83, 287, 297, 2);
+		separator.setBounds(90, 287, 297, 2);
 		popupPanel.add(separator);
 
-		JLabel dep = new JLabel("Departamento:");
-		dep.setBounds(7, 38, 128, 20);
-		popupPanel.add(dep);
-
-		JComboBox<String> departamento = new JComboBox<>();
-		DefaultComboBoxModel<String> departamentoModel = new DefaultComboBoxModel<>();
-		departamento.setBounds(145, 37, 326, 22);
-
-		IDepartamentoController IDC = Fabrica.getInstance().getIDepartamentoController();
-		List<dataDepartamento> departamentos = IDC.listarDepartamentos();
-
-		if (departamentos == null) {
-			JOptionPane.showMessageDialog(popupDialog, "No existen departamentos en los cuales crear las actividades",
-					"Error", JOptionPane.ERROR_MESSAGE);
-			popupDialog.dispose();
-			return;
-		} else {
-			for (dataDepartamento dept : departamentos) {
-				departamentoModel.addElement(dept.getNombre());
-				departamento.setModel(departamentoModel);
-				popupPanel.add(departamento);
-			}
-		}
-
-		JLabel cosuni = new JLabel("Costo Unico:");
-		cosuni.setBounds(7, 131, 128, 20);
-		popupPanel.add(cosuni);
-
-		JSpinner costoUnico = new JSpinner();
-		costoUnico.setModel(new SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
-		costoUnico.setBounds(145, 131, 86, 20);
-		popupPanel.add(costoUnico);
-
-		JLabel cit = new JLabel("Ciudad:");
-		cit.setBounds(7, 193, 128, 20);
-		popupPanel.add(cit);
-
-		JTextField ciudad = new JTextField();
-		ciudad.setColumns(10);
-		ciudad.setBounds(145, 193, 326, 20);
-		popupPanel.add(ciudad);
-
-		JLabel dur = new JLabel("Duracion:");
-		dur.setBounds(7, 162, 128, 20);
-		popupPanel.add(dur);
-
-		JSpinner duracion = new JSpinner();
-		duracion.setModel(new SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
-		duracion.setBounds(145, 162, 86, 20);
-		popupPanel.add(duracion);
-
-		JButton aceptar = new JButton("Aceptar");
+		JButton aceptar = new JButton("Confirmar");
 		aceptar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		aceptar.setBounds(4, 314, 224, 38);
 		aceptar.putClientProperty("JButton.buttonType", "roundRect");
 		popupPanel.add(aceptar);
 
-		JButton cancelar = new JButton("Cancelar");
-		cancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		cancelar.setBounds(247, 314, 224, 38);
-		cancelar.putClientProperty("JButton.buttonType", "roundRect");
-		popupPanel.add(cancelar);
+		JButton rechazar = new JButton("Rechazar");
+		rechazar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		rechazar.setBounds(248, 314, 224, 38);
+		rechazar.putClientProperty("JButton.buttonType", "roundRect");
+		popupPanel.add(rechazar);
 		
-		JPanel treeConteiner = new JPanel();
-		treeConteiner.setBounds(500, 34, 273, 252);
-		popupDialog.getContentPane().add(treeConteiner);
+		JPanel center = new JPanel();
+		center.setBounds(8, 7, 462, 271);
+		popupPanel.add(center);
+		center.setLayout(new BorderLayout(0, 0));
 		
-		DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Elementos");
-//		JCheckBoxTree checkboxTree = new JCheckBoxTree(rootNode);
-//		checkboxTree.setRootVisible(false);
-	
-		ArrayList<String> listaDeElementos = new ArrayList<>(); // Tu lista de elementos
-		for (String elemento : listaDeElementos) {
-		    DefaultMutableTreeNode node = new DefaultMutableTreeNode(elemento);
-		    rootNode.add(node);
+		IActividadController IAC = Fabrica.getInstance().getIActividadController();
+		List<dataActividad> actividades = IAC.getAllActividades();
+
+		String[] columnNames = { "Nombre", "Proveedor", "Departamento", "Precio Unitario" };
+		DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
+			boolean[] columnEditables = new boolean[] { false, false, false, false };
+		};
+		TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
+		
+		JButton btnMnjAcc = new JButton("Aceptar/Rechazar Actividades");
+		btnMnjAcc.setBounds(344, 480, 327, 47);
+		btnMnjAcc.putClientProperty("JButton.buttonType", "roundRect");
+		btnMnjAcc.putClientProperty("FlatLaf.styleClass", "h3");
+		center.add(btnMnjAcc);
+
+		JTable table = new JTable(model) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(0, 130, 671, 337);
+		center.add(scrollPane);
+
+		table.setRowSorter(sorter);
+
+		if (actividades != null) {
+			for (dataActividad actividad : actividades) {
+				String dept = actividad.getDepartamento().getNombre();
+				String prov = actividad.getProveedor().getNickname();
+				String nomb = actividad.getNombre();
+				int preciouni = actividad.getCostoUni();
+				model.addRow(new Object[] { nomb, prov, dept, preciouni });
+			}
 		}
-
-		// Agregar el árbol a la interfaz
-		treeConteiner.setLayout(new BorderLayout());
-//		treeConteiner.add(checkboxTree, BorderLayout.CENTER);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(598, 11, 74, 21);
-		popupDialog.getContentPane().add(lblNewLabel);
+		ListSelectionModel selectionModel = table.getSelectionModel();
+		selectionModel.addListSelectionListener(e -> {
+		    int selectedRow = table.getSelectedRow();
+		    if (selectedRow >= 0) {
+		        String nombreActividad = (String) model.getValueAt(selectedRow, 0);
+		        System.out.println("Actividad seleccionada: " + nombreActividad);
+		    }
+		});
 
-		cancelar.addMouseListener(new MouseAdapter() {
+		rechazar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				popupDialog.dispose();
+				int selectedRow = table.getSelectedRow();
+		        if (selectedRow >= 0) {
+		            String nombreActividad = (String) model.getValueAt(selectedRow, 0);
+		            System.out.println(nombreActividad + " ha sido rechazada");
+		            try {
+						IAC.modificarEstadoActividad(nombreActividad, estadoActividad.RECHAZADA);
+					} catch (NoExisteExcepcion | ParametrosInvalidosExcepcion | YaExisteExcepcion e1) {
+						// TODO Bloque catch generado automáticamente
+						e1.printStackTrace();
+					}
+		        }
+		        
 			}
 		});
 
 		aceptar.addMouseListener(new MouseAdapter() {
+			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (nombre.getText().isEmpty() || descripcion.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(popupDialog, "Todos los campos deben estar llenos",
-							"Campos incompletos", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				IActividadController IAC = Fabrica.getInstance().getIActividadController();
-				try {
-					Object duracionObj = duracion.getValue();
-					int duracionInt = (int) duracionObj;
-					Object precioObj = costoUnico.getValue();
-					int precioInt = (int) precioObj;
-					IAC.crearActividad(departamento.getSelectedItem().toString(),
-							proveedor.getSelectedItem().toString(), nombre.getText(), descripcion.getText(),
-							duracionInt, precioInt, ciudad.getText(), LocalDate.now());
-					JOptionPane.showMessageDialog(popupDialog, "Actividad creada con EXITO", "Registro Completado",
-							JOptionPane.INFORMATION_MESSAGE);
-					popupDialog.dispose();
-				} catch (UsuarioYaExisteExcepcion a) {
-					JOptionPane.showMessageDialog(popupDialog,"Ya existe la actividad " + nombre.getText(), a.getMessage() , JOptionPane.ERROR_MESSAGE);
-					return;
-				} catch (ParametrosInvalidosExcepcion a) {
-					JOptionPane.showMessageDialog(popupDialog,  "Parametros invalidos", a.getMessage(), JOptionPane.ERROR_MESSAGE);
-					return;
-				} catch (UsuarioNoExisteExcepcion a) {
-					JOptionPane.showMessageDialog(popupDialog, "No existe la actividad " + nombre.getText(), a.getMessage(), JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-
+				int selectedRow = table.getSelectedRow();
+		        if (selectedRow >= 0) {
+		            String nombreActividad = (String) model.getValueAt(selectedRow, 0);
+		            System.out.println(nombreActividad + " ha sido aceptada");
+		            try {
+						IAC.modificarEstadoActividad(nombreActividad, estadoActividad.CONFIRMADA);
+					} catch (NoExisteExcepcion | ParametrosInvalidosExcepcion | YaExisteExcepcion e1) {
+						// TODO Bloque catch generado automáticamente
+						e1.printStackTrace();
+					}
+		        }
 			}
 		});
 
