@@ -415,7 +415,7 @@ public class paquetesVista extends JPanel {
 		paquete.setBounds(164, 9, 312, 22);
 
 		IPaqueteController IPC = Fabrica.getInstance().getIPaqueteController();
-		List<dataPaquete> paqs = IPC.listarPaquetes();
+		List<dataPaquete> paqs = IPC.listarPaquetesSinComprar();
 
 		if (paqs == null) {
 			JOptionPane.showMessageDialog(popupDialog, "No existen paquetes a los cuales asociar las actividades",
@@ -508,9 +508,18 @@ public class paquetesVista extends JPanel {
 		actividad.setBounds(164, 9, 312, 22);
 
 		IActividadController IAC = Fabrica.getInstance().getIActividadController();
-		List<dataActividad> activ = IAC.getAllActividadesDepartamento(departamentoParameter);
+		List<dataActividad> activ = null;
+		
+		try {
+			activ = IAC.getActividadesDepartamentoNoPaquete(paqueteParameter, departamentoParameter);
+		} catch (UsuarioNoExisteExcepcion e) {
+			JOptionPane.showMessageDialog(popupDialog, "No existen actividades las cuales asociar",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			popupDialog.dispose();
+			return;
+		}
 
-		if (activ == null) {
+		if (activ.isEmpty()) {
 			JOptionPane.showMessageDialog(popupDialog, "No existen actividades las cuales asociar",
 					"Error", JOptionPane.ERROR_MESSAGE);
 			popupDialog.dispose();

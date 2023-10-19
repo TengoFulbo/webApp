@@ -6,6 +6,8 @@ import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JTree;
+import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
@@ -14,9 +16,11 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.util.List;
@@ -34,26 +38,35 @@ import turismouy.svcentral.datatypes.dataDepartamento;
 import turismouy.svcentral.datatypes.dataPaquete;
 import turismouy.svcentral.datatypes.dataSalida;
 import turismouy.svcentral.datatypes.dataUsuario;
+import turismouy.svcentral.excepciones.NoExisteExcepcion;
 import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
 import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
 import turismouy.svcentral.excepciones.UsuarioYaExisteExcepcion;
+import turismouy.svcentral.excepciones.YaExisteExcepcion;
 import turismouy.svcentral.interfaces.IActividadController;
 import turismouy.svcentral.interfaces.IDepartamentoController;
 import turismouy.svcentral.interfaces.IUsuarioController;
+import turismouy.svcentral.utilidades.estadoActividad;
 import turismouy.svcentral.utilidades.log;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dialog;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -93,7 +106,7 @@ public class actividadesVista extends JPanel {
 		descripcion.setBounds(0, 39, 671, 40);
 		center.add(descripcion);
 
-		PlaceholderTextField textBuscador = new PlaceholderTextField("Ingrese el nombre de la salida a buscar");
+		PlaceholderTextField textBuscador = new PlaceholderTextField("Ingrese el nombre de la categoria a buscar");
 		textBuscador.setBounds(0, 90, 530, 29);
 		center.add(textBuscador);
 		textBuscador.setColumns(10);
@@ -111,19 +124,25 @@ public class actividadesVista extends JPanel {
 
 		JButton btnNewActividad = new JButton("Crear nueva Actividad Turistica");
 		btnNewActividad.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnNewActividad.setBounds(0, 480, 671, 47);
+		btnNewActividad.setBounds(0, 480, 327, 47);
 		btnNewActividad.putClientProperty("JButton.buttonType", "roundRect");
 		btnNewActividad.putClientProperty("FlatLaf.styleClass", "h3");
 		center.add(btnNewActividad);
 
 		IActividadController IAC = Fabrica.getInstance().getIActividadController();
-		List<dataActividad> actividades = IAC.getAllActividades();
+		List<dataActividad> actividades = IAC.getAllActividadesConfirmadas();
 
 		String[] columnNames = { "Nombre", "Proveedor", "Departamento", "Precio Unitario" };
 		DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
 			boolean[] columnEditables = new boolean[] { false, false, false, false };
 		};
 		TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
+		
+		JButton btnMnjAcc = new JButton("Aceptar/Rechazar Actividades");
+		btnMnjAcc.setBounds(344, 480, 327, 47);
+		btnMnjAcc.putClientProperty("JButton.buttonType", "roundRect");
+		btnMnjAcc.putClientProperty("FlatLaf.styleClass", "h3");
+		center.add(btnMnjAcc);
 
 		JTable table = new JTable(model) {
 			@Override
@@ -170,7 +189,28 @@ public class actividadesVista extends JPanel {
 
 				model.setRowCount(0);
 
-				List<dataActividad> actividades = IAC.getAllActividades();
+				List<dataActividad> actividades = IAC.getAllActividadesConfirmadas();
+
+				if (actividades != null) {
+					for (dataActividad actividad : actividades) {
+						String dept = actividad.getDepartamento().getNombre();
+						String nomb = actividad.getNombre();
+						int dur = actividad.getDuracion();
+						int preciouni = actividad.getCostoUni();
+						model.addRow(new Object[] { nomb, dept, dur, preciouni });
+					}
+				}
+			}
+		});
+		
+		btnMnjAcc.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				mostrarManejoActicidad();;
+
+				model.setRowCount(0);
+
+				List<dataActividad> actividades = IAC.getAllActividadesConfirmadas();
 
 				if (actividades != null) {
 					for (dataActividad actividad : actividades) {
@@ -575,7 +615,7 @@ public class actividadesVista extends JPanel {
 		JDialog popupDialog = new JDialog();
 		popupDialog.setResizable(false);
 		popupDialog.setTitle("Actividad");
-		popupDialog.setSize(505, 397);
+		popupDialog.setSize(799, 397);
 		popupDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		popupDialog.setLocationRelativeTo(null);
 		popupDialog.getContentPane().setLayout(null);
@@ -695,6 +735,57 @@ public class actividadesVista extends JPanel {
 		cancelar.setBounds(247, 314, 224, 38);
 		cancelar.putClientProperty("JButton.buttonType", "roundRect");
 		popupPanel.add(cancelar);
+		
+		JPanel treeConteiner = new JPanel();
+		treeConteiner.setBounds(500, 37, 273, 250);
+		popupDialog.getContentPane().add(treeConteiner);
+
+		List<dataDepartamento> listaDeElementos = IDC.listarDepartamentos();
+
+		DefaultTableModel tableModel = new DefaultTableModel() {
+		    @Override
+		    public Class<?> getColumnClass(int columnIndex) {
+		        if (columnIndex == 0) {
+		            return Boolean.class; // Indica que la columna 0 es de tipo booleano
+		        }
+		        return super.getColumnClass(columnIndex);
+		    }
+		};
+		tableModel.addColumn("Seleccionar");
+		tableModel.addColumn("Nombre Departamento");
+
+		for (dataDepartamento dept : listaDeElementos) {
+		    Object[] row = {false, dept.getNombre()};
+		    tableModel.addRow(row);
+		}
+
+		JTable table = new JTable(tableModel) {
+		    @Override
+		    public Class<?> getColumnClass(int column) {
+		        return column == 0 ? Boolean.class : String.class;
+		    }
+		};
+
+		table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
+		    @Override
+		    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+		        JCheckBox checkBox = new JCheckBox();
+		       
+		        checkBox.setSelected((Boolean) value);
+		        checkBox.setHorizontalAlignment(SwingConstants.CENTER);
+		        
+		        if (isSelected) {
+		            checkBox.setBackground(table.getSelectionBackground());
+		        } else {
+		            checkBox.setBackground(table.getBackground());
+		        }
+		        return checkBox;
+		    }
+		});
+
+		table.getTableHeader().setReorderingAllowed(false);
+		treeConteiner.setLayout(new BorderLayout());
+		treeConteiner.add(new JScrollPane(table), BorderLayout.CENTER);
 
 		cancelar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -704,9 +795,23 @@ public class actividadesVista extends JPanel {
 		});
 
 		aceptar.addMouseListener(new MouseAdapter() {
+			
+			List<String> departamentosSeleccionados = new ArrayList<>();
+			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (nombre.getText().isEmpty() || descripcion.getText().isEmpty()) {
+				
+				for (int i = 0; i < table.getRowCount(); i++) {
+		            Boolean seleccionado = (Boolean) table.getValueAt(i, 0);
+		            if (seleccionado != null && seleccionado) {
+		                String nombreDepartamento = (String) table.getValueAt(i, 1);
+		                departamentosSeleccionados.add(nombreDepartamento);
+		                System.out.println(nombreDepartamento);
+		            }
+		        }
+				
+				
+				if (nombre.getText().isEmpty() || descripcion.getText().isEmpty() || departamentosSeleccionados.isEmpty()) {
 					JOptionPane.showMessageDialog(popupDialog, "Todos los campos deben estar llenos",
 							"Campos incompletos", JOptionPane.ERROR_MESSAGE);
 					return;
@@ -734,6 +839,166 @@ public class actividadesVista extends JPanel {
 					return;
 				}
 
+			}
+		});
+
+		popupDialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+
+		popupDialog.setVisible(true);
+	}
+	
+	private void mostrarManejoActicidad() {
+		JDialog popupDialog = new JDialog();
+		popupDialog.setResizable(false);
+		popupDialog.setTitle("Actividad");
+		popupDialog.setSize(493, 397);
+		popupDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		popupDialog.setLocationRelativeTo(null);
+		popupDialog.getContentPane().setLayout(null);
+
+		JPanel popupPanel = new JPanel();
+		popupPanel.setBounds(0, 0, 477, 364);
+		popupDialog.getContentPane().add(popupPanel);
+		popupPanel.setLayout(null);
+
+		JSeparator separator = new JSeparator();
+		separator.setBounds(90, 287, 297, 2);
+		popupPanel.add(separator);
+
+		JButton aceptar = new JButton("Confirmar");
+		aceptar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		aceptar.setBounds(4, 314, 224, 38);
+		aceptar.putClientProperty("JButton.buttonType", "roundRect");
+		popupPanel.add(aceptar);
+
+		JButton rechazar = new JButton("Rechazar");
+		rechazar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		rechazar.setBounds(248, 314, 224, 38);
+		rechazar.putClientProperty("JButton.buttonType", "roundRect");
+		popupPanel.add(rechazar);
+		
+		JPanel center = new JPanel();
+		center.setBounds(8, 7, 462, 271);
+		popupPanel.add(center);
+		center.setLayout(new BorderLayout(0, 0));
+		
+		IActividadController IAC = Fabrica.getInstance().getIActividadController();
+		List<dataActividad> actividades = IAC.getAllActividadesAgregadas();
+
+		String[] columnNames = { "Nombre", "Proveedor", "Departamento", "Precio Unitario" };
+		DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
+			boolean[] columnEditables = new boolean[] { false, false, false, false };
+		};
+		TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
+		
+		JButton btnMnjAcc = new JButton("Aceptar/Rechazar Actividades");
+		btnMnjAcc.setBounds(344, 480, 327, 47);
+		btnMnjAcc.putClientProperty("JButton.buttonType", "roundRect");
+		btnMnjAcc.putClientProperty("FlatLaf.styleClass", "h3");
+		center.add(btnMnjAcc);
+
+		JTable table = new JTable(model) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(0, 130, 671, 337);
+		center.add(scrollPane);
+
+		table.setRowSorter(sorter);
+
+		if (actividades != null) {
+			for (dataActividad actividad : actividades) {
+				String dept = actividad.getDepartamento().getNombre();
+				String prov = actividad.getProveedor().getNickname();
+				String nomb = actividad.getNombre();
+				int preciouni = actividad.getCostoUni();
+				model.addRow(new Object[] { nomb, prov, dept, preciouni });
+			}
+		}
+		
+		ListSelectionModel selectionModel = table.getSelectionModel();
+		selectionModel.addListSelectionListener(e -> {
+		    int selectedRow = table.getSelectedRow();
+		    if (selectedRow >= 0) {
+		        String nombreActividad = (String) model.getValueAt(selectedRow, 0);
+		        System.out.println("Actividad seleccionada: " + nombreActividad);
+		    }
+		});
+
+		rechazar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int selectedRow = table.getSelectedRow();
+		        if (selectedRow >= 0) {
+		            String nombreActividad = (String) model.getValueAt(selectedRow, 0);
+		            System.out.println(nombreActividad + " ha sido rechazada");
+		            try {
+						IAC.modificarEstadoActividad(nombreActividad, estadoActividad.RECHAZADA);
+						
+						model.setRowCount(0);
+
+			            log.info("Vuelvo a imprimir");
+			            
+			            List<dataActividad> actividades = IAC.getAllActividadesAgregadas();
+			            
+			            if (actividades != null) {
+			    			for (dataActividad actividad : actividades) {
+			    				String dept = actividad.getDepartamento().getNombre();
+			    				String prov = actividad.getProveedor().getNickname();
+			    				String nomb = actividad.getNombre();
+			    				int preciouni = actividad.getCostoUni();
+			    				model.addRow(new Object[] { nomb, prov, dept, preciouni });
+			    			}
+			    		}
+					} catch (NoExisteExcepcion | ParametrosInvalidosExcepcion | YaExisteExcepcion e1) {
+						JOptionPane.showMessageDialog(popupDialog, "Error al manejar la actividad",
+								"Error", JOptionPane.ERROR_MESSAGE);
+						popupDialog.dispose();
+						return;
+					}
+
+		        }
+		        
+			}
+		});
+
+		aceptar.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int selectedRow = table.getSelectedRow();
+		        if (selectedRow >= 0) {
+		            String nombreActividad = (String) model.getValueAt(selectedRow, 0);
+		            System.out.println(nombreActividad + " ha sido aceptada");
+		            try {
+						IAC.modificarEstadoActividad(nombreActividad, estadoActividad.CONFIRMADA);
+						
+						model.setRowCount(0);
+
+			            log.info("Vuelvo a imprimir");
+			            
+			            List<dataActividad> actividades = IAC.getAllActividadesAgregadas();
+			            
+			            if (actividades != null) {
+			    			for (dataActividad actividad : actividades) {
+			    				String dept = actividad.getDepartamento().getNombre();
+			    				String prov = actividad.getProveedor().getNickname();
+			    				String nomb = actividad.getNombre();
+			    				int preciouni = actividad.getCostoUni();
+			    				model.addRow(new Object[] { nomb, prov, dept, preciouni });
+			    			}
+			    		}
+					} catch (NoExisteExcepcion | ParametrosInvalidosExcepcion | YaExisteExcepcion e1) {
+						JOptionPane.showMessageDialog(popupDialog, "Error al manejar la actividad",
+								"Error", JOptionPane.ERROR_MESSAGE);
+						popupDialog.dispose();
+						return;
+					}
+		        }
 			}
 		});
 

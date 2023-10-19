@@ -14,6 +14,7 @@ import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.interfaces.ICompraController;
 import turismouy.svcentral.interfaces.IDepartamentoController;
 import turismouy.svcentral.interfaces.IPaqueteController;
+import turismouy.svcentral.interfaces.ISalidaController;
 import turismouy.svcentral.interfaces.IUsuarioController;
 import turismouy.svcentral.utilidades.estadoActividad;
 import turismouy.svcentral.datatypes.dataActividad;
@@ -73,22 +74,26 @@ public class Main {
 		// 	e.printStackTrace();
 		// }
         
-        // try {
-		// 	IPC.agregarActividadPaquete("Paquete Aventura", "Tour de Arte Urbano");
-		// } catch (NoExisteExcepcion | YaExisteExcepcion e) {
-		// 	// TODO Auto-generated catch block
-		// 	e.printStackTrace();
-		// }
-    
-//        List <dataPaquete> LDtPaquete = IPC.listarPaquetesSinComprar();
-//        if(LDtPaquete == null) {
-//        	System.out.println("Paquete null");
-//        }else {
-//	        for(dataPaquete dtPaquete : LDtPaquete) {
-//	        	System.out.println(dtPaquete.getNombre());
-//	        }
-//        }
-//        
+        try {
+			IPC.agregarActividadPaquete("Paquete Aventura", "Tour de Arte Urbano");
+		} catch (NoExisteExcepcion | YaExisteExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+       try {
+		List<dataActividad> LAct = IAC.getActividadesDepartamentoNoPaquete("Paquete Histórico", "Canelones");
+		
+	       for(dataActividad DtAct : LAct) {
+	    	   System.out.println(DtAct.getNombre());
+	       }
+	} catch (UsuarioNoExisteExcepcion e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+        
+       
+        
         
 
         // try {
