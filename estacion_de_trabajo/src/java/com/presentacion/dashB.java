@@ -250,7 +250,7 @@ public class dashB extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				contenido.removeAll();
 
-				departamentosVista v = new departamentosVista((String) temas.getSelectedItem());
+				categoriasVista v = new categoriasVista((String) temas.getSelectedItem());
 				contenido.setLayout(new BorderLayout());
 				contenido.add(v, BorderLayout.CENTER);
 

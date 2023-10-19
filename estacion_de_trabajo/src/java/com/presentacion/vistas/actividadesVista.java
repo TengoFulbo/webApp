@@ -93,7 +93,7 @@ public class actividadesVista extends JPanel {
 		descripcion.setBounds(0, 39, 671, 40);
 		center.add(descripcion);
 
-		PlaceholderTextField textBuscador = new PlaceholderTextField("Ingrese el nombre de la salida a buscar");
+		PlaceholderTextField textBuscador = new PlaceholderTextField("Ingrese el nombre de la categoria a buscar");
 		textBuscador.setBounds(0, 90, 530, 29);
 		center.add(textBuscador);
 		textBuscador.setColumns(10);
