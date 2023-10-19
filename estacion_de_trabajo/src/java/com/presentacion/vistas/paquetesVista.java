@@ -508,7 +508,12 @@ public class paquetesVista extends JPanel {
 		actividad.setBounds(164, 9, 312, 22);
 
 		IActividadController IAC = Fabrica.getInstance().getIActividadController();
-		List<dataActividad> activ = IAC.getAllActividadesDepartamento(departamentoParameter);
+		List<dataActividad> activ = null;
+		try {
+			activ = IAC.getActividadesDepartamentoNoPaquete(paqueteParameter, departamentoParameter);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 
 		if (activ == null) {
 			JOptionPane.showMessageDialog(popupDialog, "No existen actividades las cuales asociar",

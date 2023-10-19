@@ -7,6 +7,7 @@ import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -193,8 +194,8 @@ public class tmp {
 		popupDialog.getContentPane().add(treeConteiner);
 		
 		DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Elementos");
-		JCheckBoxTree checkboxTree = new JCheckBoxTree(rootNode);
-		checkboxTree.setRootVisible(false);
+//		JCheckBoxTree checkboxTree = new JCheckBoxTree(rootNode);
+//		checkboxTree.setRootVisible(false);
 	
 		ArrayList<String> listaDeElementos = new ArrayList<>(); // Tu lista de elementos
 		for (String elemento : listaDeElementos) {
@@ -204,7 +205,7 @@ public class tmp {
 
 		// Agregar el árbol a la interfaz
 		treeConteiner.setLayout(new BorderLayout());
-		treeConteiner.add(checkboxTree, BorderLayout.CENTER);
+//		treeConteiner.add(checkboxTree, BorderLayout.CENTER);
 		
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setBounds(598, 11, 74, 21);
