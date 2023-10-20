@@ -18,6 +18,8 @@
       %>
     </title>
 
+    <link rel="shortcut icon" href="./src/img/kombi.png" type="image/x-icon">
+
     <!-- LINKS DE CSS -->
     <link rel="stylesheet" href="./src/css/style.css" />
 

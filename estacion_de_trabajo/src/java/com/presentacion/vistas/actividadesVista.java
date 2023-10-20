@@ -822,9 +822,11 @@ public class actividadesVista extends JPanel {
 					int duracionInt = (int) duracionObj;
 					Object precioObj = costoUnico.getValue();
 					int precioInt = (int) precioObj;
+					List<String> catList = null;
+					catList.add("Test");
 					IAC.crearActividad(departamento.getSelectedItem().toString(),
 							proveedor.getSelectedItem().toString(), nombre.getText(), descripcion.getText(),
-							duracionInt, precioInt, ciudad.getText(), LocalDate.now());
+							duracionInt, precioInt, ciudad.getText(), LocalDate.now(), catList);
 					JOptionPane.showMessageDialog(popupDialog, "Actividad creada con EXITO", "Registro Completado",
 							JOptionPane.INFORMATION_MESSAGE);
 					popupDialog.dispose();

@@ -19,6 +19,10 @@
 
     <!-- LINKS DE CSS -->
     <link rel="stylesheet" href="./src/css/homeStyle.css" />
+    
+    
+    <!-- FAVICON -->
+    <link rel="shortcut icon" href="./src/img/kombi.png" type="image/x-icon">
 
     <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

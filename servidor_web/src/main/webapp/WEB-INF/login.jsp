@@ -11,6 +11,7 @@
        else { out.print(pageTitle); } %>
   </title>
   <link rel="stylesheet" href="./src/css/register.css">
+  <link rel="shortcut icon" href="./src/img/kombi.png" type="image/x-icon">
   <style>
     @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
     @media only screen and (max-width: 600px) {

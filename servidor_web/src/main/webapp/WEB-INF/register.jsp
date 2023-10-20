@@ -14,6 +14,7 @@
       %>
     </title>
     <link rel="stylesheet" href="./src/css/register.css">
+    <link rel="shortcut icon" href="./src/img/kombi.png" type="image/x-icon">
   </head>
   <body>
     <div class="topButtons">
