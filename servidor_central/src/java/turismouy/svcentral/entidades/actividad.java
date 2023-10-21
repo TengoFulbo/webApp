@@ -43,7 +43,9 @@ public class actividad {
 			)
 	@ManyToMany(fetch = FetchType.EAGER)
     private List<salida> salidas;
-
+    
+    @ManyToMany(mappedBy = "actividades")
+    private List<categoria> categorias;
 
     public actividad(){};
 	
@@ -57,6 +59,7 @@ public class actividad {
 		this.fechaCrea = fechaCrea;
 		this.paquetes = new ArrayList<paquete>();
 		this.salidas = new ArrayList<salida>();
+		this.categorias = new ArrayList<categoria>();
 		this.estado = estadoActividad.AGREGADA;
 	}
 
@@ -129,6 +132,19 @@ public class actividad {
 	public void setEstado(estadoActividad estado){
 		this.estado = estado;
 	}
+	
+	public List<categoria> getCategorias() {
+		return categorias;
+	}
+	
+	public void addCategoria(categoria categoria) {
+		this.categorias.add(categoria);
+	}
+
+	public void setCategorias(List<categoria> categorias) {
+		this.categorias = categorias;
+	}
+	
 	public dataActividad toDataType() {
 		
 		List<dataSalida>DtSalidas = this.crearListaSalidaParaDt(this);

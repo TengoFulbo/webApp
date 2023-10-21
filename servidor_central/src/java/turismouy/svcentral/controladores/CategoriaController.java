@@ -1,5 +1,8 @@
 package turismouy.svcentral.controladores;
 
+import java.util.List;
+
+import turismouy.svcentral.datatypes.dataCategoria;
 import turismouy.svcentral.entidades.categoria;
 import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
 import turismouy.svcentral.excepciones.YaExisteExcepcion;
