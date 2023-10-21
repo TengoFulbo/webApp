@@ -31,7 +31,7 @@ public class CategoriaController implements ICategoriaController {
         cm.addCategoria(categoria);
     };
 
-    public List<dataCategoria> listasCateorias() {
+    public List<dataCategoria> listarCategorias() {
         CategoriaManejador cm = CategoriaManejador.getInstance();
         List<categoria> categorias = cm.getAllCategorias();
         

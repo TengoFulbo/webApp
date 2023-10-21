@@ -29,7 +29,11 @@ public class PaqueteManejador {
 	    EntityManager em = factory.createEntityManager();
 
         paqueteNombre = new HashMap<String, paquete>();
-        List<paquete> paquetes = em.createQuery("SELECT p FROM paquete p JOIN FETCH p.actividades", paquete.class).getResultList();
+        // List<paquete> paquetes = em.createQuery("SELECT p FROM paquete p JOIN FETCH p.actividades", paquete.class).getResultList();
+        List<paquete> paquetes = em.createQuery("SELECT DISTINCT p FROM paquete p " +
+                                                "JOIN FETCH p.actividades a " +
+                                                "JOIN FETCH a.categorias", paquete.class)
+        .getResultList();
 
         if (paquetes != null) {
             for (paquete paquete : paquetes) {
@@ -88,7 +92,7 @@ public class PaqueteManejador {
 
         paquete paquete;
         try {
-            paquete = em.createQuery("SELECT p FROM paquete p JOIN FETCH p.actividades WHERE p.nombre = '" + nombre + "'", paquete.class).getSingleResult();
+            paquete = em.createQuery("SELECT p FROM paquete p JOIN FETCH p.actividades JOIN FETCH a.categorias WHERE p.nombre = '" + nombre + "'", paquete.class).getSingleResult();
         } catch (Exception e) {
             paquete = null;
         }
