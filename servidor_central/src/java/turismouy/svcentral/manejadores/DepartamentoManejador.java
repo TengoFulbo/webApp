@@ -27,7 +27,11 @@ public class DepartamentoManejador {
 	    EntityManager em = factory.createEntityManager();
 
         // List<departamento> departamentos = em.createQuery("SELECT d from departamento d LEFT JOIN FETCH d.actividades", departamento.class).getResultList();
-        List<departamento> departamentos = em.createQuery("SELECT d FROM departamento d LEFT JOIN FETCH d.actividades", departamento.class).getResultList();
+        List<departamento> departamentos = em.createQuery("SELECT d FROM departamento d LEFT JOIN FETCH d.actividades a", departamento.class).getResultList();
+        // List<departamento> departamentos = em.createQuery(  "SELECT DISTINCT d FROM departamento d " +
+        //                                                     "LEFT JOIN FETCH d.actividades a " +
+        //                                                     "LEFT JOIN FETCH a.categorias", departamento.class)
+        // .getResultList();
 
         if (departamentos != null) {
             for (departamento departamento : departamentos ) {

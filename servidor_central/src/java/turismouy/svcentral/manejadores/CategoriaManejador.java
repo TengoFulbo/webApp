@@ -9,7 +9,6 @@ import javax.persistence.EntityTransaction;
 
 import turismouy.svcentral.EMFactory;
 import turismouy.svcentral.entidades.categoria;
-import turismouy.svcentral.entidades.departamento;
 import turismouy.svcentral.utilidades.log;
 
 public class CategoriaManejador {
@@ -51,6 +50,7 @@ public class CategoriaManejador {
         }
     }
 
+
     public categoria getCategoria(String nombre) {
 	    EntityManager em = factory.createEntityManager();
         nombre = nombre.toLowerCase();
@@ -82,5 +82,34 @@ public class CategoriaManejador {
         }
         
         return categorias;
+    }
+
+    public void updateCategoria(categoria categoria) {
+        // Para cada función hay que crear un nuevo em y tx.
+	    EntityManager em = factory.createEntityManager();
+	    EntityTransaction tx = em.getTransaction();
+
+        String nombre = categoria.getNombre();
+
+        try {
+            tx.begin();
+            
+            // Se actualiza el archivo.
+            em.merge(categoria);
+            
+            tx.commit();        
+            
+            // Se actualiza en la colección.
+            log.info("La categoria " + categoria + " se actualizó correctamente");
+        } catch (Exception e) {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
+            log.error("Actualizado la Categoria '" + nombre + "' erroneo.");
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+
     }
 }

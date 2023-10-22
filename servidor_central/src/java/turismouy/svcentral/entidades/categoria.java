@@ -7,7 +7,6 @@ import javax.persistence.*;
 
 import turismouy.svcentral.datatypes.dataActividad;
 import turismouy.svcentral.datatypes.dataCategoria;
-import turismouy.svcentral.datatypes.dataDepartamento;
 
 @Entity
 public class categoria {
@@ -37,6 +36,10 @@ public class categoria {
 
     public void setNombre(String nombre){
         this.nombre = nombre;
+    }
+
+    public void addActividad(actividad actividad) {
+        actividades.add(actividad);
     }
     
     public dataCategoria toDataType() {

@@ -44,7 +44,7 @@ public class actividad {
 	@ManyToMany(fetch = FetchType.EAGER)
     private List<salida> salidas;
 
-	@ManyToMany(mappedBy = "actividades")
+	@ManyToMany(mappedBy = "actividades", targetEntity = categoria.class)
 	private List<categoria> categorias;
 
 
