@@ -12,7 +12,6 @@ servidor_central/.classpath
 servidor_central/.project
 servidor_central/.project
 servidor_web/.classpath
-*.xml
 *.prefs
 servidor_central/.settings/org.eclipse.jdt.core.prefs
 *.prefs
