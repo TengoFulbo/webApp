@@ -106,8 +106,9 @@
           <h4>Actividades</h4>
           <ul class="collection">
           <%
-          if (user != null && !user.getActividades().isEmpty()) {
-            for (dataActividad actividad : user.getActividades()) {
+          if (user != null) {
+            if (user.getActividades() != null) {
+              for (dataActividad actividad : user.getActividades()) {
           %>
               <!-- <p><%= actividad.getNombre() %></p> -->
               <li class="collection-item">
@@ -116,6 +117,7 @@
                 </div>
               </li>
           <%
+              }
             }
           }
           %>

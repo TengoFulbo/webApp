@@ -16,9 +16,15 @@ import turismouy.svcentral.interfaces.IDepartamentoController;
 import turismouy.svcentral.interfaces.IPaqueteController;
 import turismouy.svcentral.interfaces.ISalidaController;
 import turismouy.svcentral.interfaces.IUsuarioController;
+import turismouy.svcentral.manejadores.DepartamentoManejador;
 import turismouy.svcentral.utilidades.estadoActividad;
 import turismouy.svcentral.datatypes.dataActividad;
+import turismouy.svcentral.datatypes.dataCategoria;
+import turismouy.svcentral.datatypes.dataDepartamento;
 import turismouy.svcentral.datatypes.dataPaquete;
+import turismouy.svcentral.entidades.actividad;
+import turismouy.svcentral.entidades.categoria;
+import turismouy.svcentral.entidades.departamento;
 // import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.utilidades.log;
 
@@ -31,22 +37,86 @@ public class Main {
         IActividadController IAC = fabrica.getIActividadController();
         ICompraController ICoC = fabrica.getICompraController();
         IPaqueteController IPC = fabrica.getIPaqueteController();
-       try {
-           if (IUC.login("eze", "eze")) { log.warning("True to login");
-           } else { log.warning("False to login"); };
+        ICategoriaController ICC = fabrica.getICategoriaController();
+        IDepartamentoController IDC = fabrica.getIDepartamentoController();
 
-           if (IUC.login("eze", "hola123")) { log.warning("True to login");
-           } else { log.warning("False to login"); };
+        List<dataDepartamento> departamentos = IDC.listarDepartamentos();
 
-           // if (IUC.login("eze", "eze")) { log.warning("True to login");
-           // } else { log.warning("False to login"); };
-       } catch (Exception e) {
-           log.error(e.toString());
-       }
+        for (dataDepartamento dep : departamentos) {
+            log.info(dep.getNombre());
+            for (dataActividad act : dep.getActividades()) {
+                log.info("  - " + act.getNombre());
+                for (String cat : act.getDtCategorias()) {
+                    log.info("  [" + cat + "]");
+                }
+            }
+        }
+
+        // List<String> categorias = new ArrayList<String>();
+        // categorias.add("paseo");
+        // categorias.add("fulbo");
+
+        // try {
+        //     IAC.crearActividad("San José", "homeSolutions", "Prueba1", "Prueba1", 2, 200, "San Jose de mayo", LocalDate.now(), categorias);
+        // } catch (Exception e) {
+        //     log.error(e.toString());
+        // }
+
+        // DepartamentoManejador DM = DepartamentoManejador.getinstance();
+
+        // List<departamento> departamentos = DM.getAllDepartamento();
+
+        // for (departamento dep : departamentos) {
+        //     log.warning("Departamento: " + dep.getNombre());
+        //     for (actividad actividad : dep.getActividades()) {
+        //         log.info("    - Actividad: " + actividad.getNombre());
+        //         for (categoria categoria : actividad.getCategorias()) {
+        //             log.info("        _: " + categoria.getNombre());
+        //         }
+        //     }
+        // }
+
+        // List<dataDepartamento> departamentos = IDC.listarDepartamentos();
+
+        // if (departamentos != null) {
+        //     for (dataDepartamento departamento : departamentos) {
+        //         log.info(departamento.getNombre());
+        //     }
+        // } else {
+        //     log.error("No hay departamentosclear");
+        // }
+
+        // List<dataActividad> actividades = IAC.getAllActividades();
+
+        // for (dataActividad actividad : actividades) {
+        //     log.info(actividad.getNombre());
+        // }
+
+        // List<dataCategoria> categorias = ICC.listarCategorias();
+
+        // for (dataCategoria categoria : categorias) {
+        //     log.info(categoria.getNombre());
+        // }
+
+
+    //    try {
+    //        if (IUC.login("eze", "eze")) { log.warning("True to login");
+    //        } else { log.warning("False to login"); };
+
+    //        if (IUC.login("eze", "hola123")) { log.warning("True to login");
+    //        } else { log.warning("False to login"); };
+
+    //        // if (IUC.login("eze", "eze")) { log.warning("True to login");
+    //        // } else { log.warning("False to login"); };
+    //    } catch (Exception e) {
+    //        log.error(e.toString());
+    //    }
 
         // cargarProveedores();
         // log.warning("########################################################");
         // cargarDepartamentos();
+        // log.warning("########################################################");
+        // cargarCategorias();
         // log.warning("########################################################");
         // cargarPaquetes();
         // log.warning("########################################################");
@@ -74,23 +144,23 @@ public class Main {
 		// 	e.printStackTrace();
 		// }
         
-        try {
-			IPC.agregarActividadPaquete("Paquete Aventura", "Tour de Arte Urbano");
-		} catch (NoExisteExcepcion | YaExisteExcepcion e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    //     try {
+	// 		IPC.agregarActividadPaquete("Paquete Aventura", "Tour de Arte Urbano");
+	// 	} catch (NoExisteExcepcion | YaExisteExcepcion e) {
+	// 		// TODO Auto-generated catch block
+	// 		e.printStackTrace();
+	// 	}
         
-       try {
-		List<dataActividad> LAct = IAC.getActividadesDepartamentoNoPaquete("Paquete Histórico", "Canelones");
+    //    try {
+	// 	List<dataActividad> LAct = IAC.getActividadesDepartamentoNoPaquete("Paquete Histórico", "Canelones");
 		
-	       for(dataActividad DtAct : LAct) {
-	    	   System.out.println(DtAct.getNombre());
-	       }
-	} catch (UsuarioNoExisteExcepcion e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+	//        for(dataActividad DtAct : LAct) {
+	//     	   System.out.println(DtAct.getNombre());
+	//        }
+	// } catch (UsuarioNoExisteExcepcion e) {
+	// 	// TODO Auto-generated catch block
+	// 	e.printStackTrace();
+	// }
         
        
         

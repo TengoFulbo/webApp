@@ -10,6 +10,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
 import turismouy.svcentral.EMFactory;
+import turismouy.svcentral.entidades.actividad;
 import turismouy.svcentral.entidades.departamento;
 import turismouy.svcentral.utilidades.log;
 
@@ -17,7 +18,6 @@ public class DepartamentoManejador {
     private Map<String, departamento> departamentoNombre;
     private static DepartamentoManejador instancia = null;
 
-    // EntityManagerFactory factory = Persistence.createEntityManagerFactory("PA2023");
     EntityManagerFactory factory = EMFactory.getEntityManagerFactory();
 
     private DepartamentoManejador(){
@@ -25,13 +25,22 @@ public class DepartamentoManejador {
 
         // Para cada función hay que crear un nuevo em y tx.
 	    EntityManager em = factory.createEntityManager();
-
-        // List<departamento> departamentos = em.createQuery("SELECT d from departamento d LEFT JOIN FETCH d.actividades", departamento.class).getResultList();
-        List<departamento> departamentos = em.createQuery("SELECT d FROM departamento d LEFT JOIN FETCH d.actividades a", departamento.class).getResultList();
-        // List<departamento> departamentos = em.createQuery(  "SELECT DISTINCT d FROM departamento d " +
-        //                                                     "LEFT JOIN FETCH d.actividades a " +
-        //                                                     "LEFT JOIN FETCH a.categorias", departamento.class)
-        // .getResultList();
+        
+        List<departamento> departamentos = null;
+        
+        try {
+            // List<departamento> departamentos = em.createQuery("SELECT d from departamento d LEFT JOIN FETCH d.actividades", departamento.class).getResultList();
+            departamentos = em.createQuery("SELECT DISTINCT d FROM departamento d LEFT JOIN FETCH d.actividades a", departamento.class).getResultList();
+            // departamentos = em.createQuery( "SELECT DISTINCT d FROM departamento d " +
+                                            // "LEFT JOIN FETCH d.actividades a " +
+                                            // "LEFT JOIN FETCH a.categorias", departamento.class)
+            // .getResultList();
+        } catch (Exception e) {
+            log.error("error");
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
 
         if (departamentos != null) {
             for (departamento departamento : departamentos ) {
@@ -40,7 +49,6 @@ public class DepartamentoManejador {
             }
         }
         log.info("Departamentos cargados: " + departamentoNombre.size());
-        em.close();
     }
 
     // Singleton.

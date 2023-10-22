@@ -6,7 +6,9 @@ import turismouy.svcentral.EMFactory;
 import turismouy.svcentral.datatypes.dataActividad;
 import turismouy.svcentral.datatypes.dataPaquete;
 import turismouy.svcentral.datatypes.dataSalida;
+import turismouy.svcentral.manejadores.ActividadManejador;
 import turismouy.svcentral.utilidades.estadoActividad;
+import turismouy.svcentral.utilidades.log;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -44,7 +46,13 @@ public class actividad {
 	@ManyToMany(fetch = FetchType.EAGER)
     private List<salida> salidas;
 
-	@ManyToMany(mappedBy = "actividades", targetEntity = categoria.class)
+	// @ManyToMany(mappedBy = "actividades", targetEntity = categoria.class)
+    @JoinTable(
+		name = "categoria_actividad",
+        joinColumns = @JoinColumn(name = "fk_actividad"),
+        inverseJoinColumns = @JoinColumn(name = "fk_categoria")
+	)
+	@ManyToMany()
 	private List<categoria> categorias;
 
 
@@ -145,8 +153,15 @@ public class actividad {
 		
 		List<dataPaquete> DtPaquetes = this.crearListaPaqueteParaDt(this);
 		List<String> dtCategorias = new ArrayList<String>();
-		
-		for (categoria categoria : this.categorias) {
+
+		actividad actividad = ActividadManejador.getinstance().getActividad(this.nombreA);
+		// List<categoria> categorias = null;
+		// if (this.categorias == null) {
+		// 	categorias = actividad.getCategorias();
+		// }
+
+		for (categoria categoria : actividad.getCategorias()) {
+			log.info("[actividad toDataType] categoria: " + categoria.getNombre());
 			dtCategorias.add(categoria.getNombre());
 		}
 

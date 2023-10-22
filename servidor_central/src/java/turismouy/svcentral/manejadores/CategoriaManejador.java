@@ -62,6 +62,8 @@ public class CategoriaManejador {
                         .getSingleResult();     
         } catch (Exception e) {
             return null;
+        } finally {
+            em.close();
         }
 
         return categoria;
