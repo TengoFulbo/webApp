@@ -161,7 +161,7 @@ public class actividad {
 		// }
 
 		for (categoria categoria : actividad.getCategorias()) {
-			log.info("[actividad toDataType] categoria: " + categoria.getNombre());
+			// log.info("[actividad toDataType] categoria: " + categoria.getNombre());
 			dtCategorias.add(categoria.getNombre());
 		}
 

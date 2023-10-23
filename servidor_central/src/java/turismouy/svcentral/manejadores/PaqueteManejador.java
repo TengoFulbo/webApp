@@ -92,7 +92,8 @@ public class PaqueteManejador {
 
         paquete paquete;
         try {
-            paquete = em.createQuery("SELECT p FROM paquete p JOIN FETCH p.actividades JOIN FETCH a.categorias WHERE p.nombre = '" + nombre + "'", paquete.class).getSingleResult();
+            // paquete = em.createQuery("SELECT p FROM paquete p LEFT JOIN FETCH p.actividades LEFT JOIN FETCH a.categorias WHERE p.nombre = '" + nombre + "'", paquete.class).getSingleResult();
+            paquete = em.createQuery("SELECT p FROM paquete p LEFT JOIN FETCH p.actividades WHERE p.nombre = '" + nombre + "'", paquete.class).getSingleResult();
         } catch (Exception e) {
             paquete = null;
         } finally {
@@ -114,7 +115,7 @@ public class PaqueteManejador {
 	    EntityTransaction tx = em.getTransaction();
         
         String nombre = paquete.getNombre();
-        System.out.println(nombre + " ----------------");
+        // System.out.println(nombre + " ----------------");
         
         try {
             tx.begin();
@@ -125,7 +126,7 @@ public class PaqueteManejador {
             tx.commit();        
             
             // Se actualiza en la colección.
-            System.out.println(paquete.getNombre() + "++++++++++++++++++++++++++");
+            // System.out.println(paquete.getNombre() + "++++++++++++++++++++++++++");
             paqueteNombre.put(nombre, paquete);
             log.info("El paquete " + paquete + " se actualizó correctamente");
         } catch (Exception e) {

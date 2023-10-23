@@ -57,7 +57,7 @@ public class CategoriaManejador {
 
         categoria categoria = null;
         try {
-            categoria = em.createQuery("SELECT c from categoria c WHERE LOWER(c.nombre) = :nombre", categoria.class)
+            categoria = em.createQuery("SELECT c from categoria c LEFT JOIN FETCH c.actividades WHERE LOWER(c.nombre) = :nombre", categoria.class)
                         .setParameter("nombre", nombre)
                         .getSingleResult();     
         } catch (Exception e) {
@@ -75,7 +75,7 @@ public class CategoriaManejador {
         List<categoria> categorias = new ArrayList<categoria>();
 
         try {
-            categorias = em.createQuery("SELECT c from categoria c JOIN FETCH c.actividades", categoria.class)
+            categorias = em.createQuery("SELECT c from categoria c LEFT JOIN FETCH c.actividades", categoria.class)
                         .getResultList();     
         } catch (Exception e) {
             return null;
