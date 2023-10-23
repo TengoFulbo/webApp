@@ -2,10 +2,16 @@
     <%@ page import="java.util.List" %>
     <%@ page import="turismouy.svcentral.datatypes.dataActividad" %>
     <%@ page import="turismouy.svcentral.datatypes.dataDepartamento" %>
+    <%@ page import="turismouy.svcentral.datatypes.dataCategoria" %>
+
         <%@ include file="./utils/head.jsp" %>
 
             <head>
                 <link rel="stylesheet" href="./src/css/homeMulti.css" />
+                <!-- MATERIALIZE JS -->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+                <!-- MATERIALIZE LOCAL JS -->
+                <script src="src/js/materialize.js"></script>
             </head>
 
             <body>
@@ -61,32 +67,45 @@
                                 </div>
                                 <div class="page__filter">
                                     <h3 class="page__filter--title">Filtros:</h3>
+<!-- Botón para abrir el modal -->
+<button id="abrirModalBtn" class="btn">Abrir Modal</button>
                                     <ul class="pagination page__filter--list">
                                         <li>
                                             <div class="input-field col s12">
-                                                <select>
-                                                    <option value="" disabled selected></option>
-                                                    <option value="1">Escalada</option>
-                                                    <option value="2">Turismo</option>
-                                                    <option value="3">Caminata</option>
+                                                <select id="categorias">
+                                                    <option value="" disabled selected>No seleccionado</option>
+                                                    <% List<dataCategoria> categorias = (List<dataCategoria>) request.getAttribute("categorias"); %>
+                                                        <%
+                                                        int value = 1;
+                                                        if (categorias != null) {
+                                                            if (!categorias.isEmpty()) {
+                                                                for (dataCategoria categoria : categorias) {
+                                                        %>
+                                                                    <option value="<%= categoria.getNombre() %>"><%= value %> - <%= categoria.getNombre() %></option>
+                                                        <%
+                                                                    value++;
+                                                                }
+                                                            }
+                                                        }
+                                                        %>
                                                 </select>
                                                 <label>Categorias</label>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="input-field col s12">
-                                                <select>
-                                                    <option value="" disabled selected></option>
-                                                    <% List<dataCategoria> categorias = (List<dataCategoria>) request.getAttribute("categorias");
+                                                <select id="departamentos">
+                                                    <option value="" disabled selected>No seleccionado</option>
+                                                    <% List<dataDepartamento> departamentos = (List<dataDepartamento>) request.getAttribute("departamentos"); %>
                                                     <%
-                                                    int value = 1;
-                                                    if (categorias != null) {
-                                                        if (!categorias.isEmpty()) {
-                                                            for (dataCategoria categoria : categorias) {
+                                                    int value2 = 1;
+                                                    if (departamentos != null) {
+                                                        if (!departamentos.isEmpty()) {
+                                                            for (dataDepartamento departamento : departamentos) {
                                                     %>
-                                                                <option value="<%= value %>"><%= categoria.getNombre() %></option>
+                                                                <option value="<%= departamento.getNombre() %>"> <%= value2 %> - <%= departamento.getNombre() %></option>
                                                     <%
-                                                                value+1;
+                                                                value2++;
                                                             }
                                                         }
                                                     }
@@ -97,92 +116,278 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="page__wrap">
-                                    <% List<dataActividad> ListaActividades = (List<dataActividad>) request.getAttribute("actividades");
-                                            if (ListaActividades != null) {
-                                            for (dataActividad dataAct : ListaActividades) {
-                                            %>
-                                            <div class="row">
-                                                <div class="col s12 m6 page__card">
-                                                    <div class="card">
-                                                        <div class="card-image">
-                                                            <img src="src/img/blurry-gradient1.svg"
-                                                                class="page__card--img" />
-                                                            <span class="card-title page__card--title"><%= dataAct.getNombre() %></span>
-                                                        </div>
-                                                        <div class="card-content page__card--contenido">
-                                                            <p>
-                                                                <%= dataAct.getDesc() %>
-                                                            </p>
-                                                            <div class="page__card--btns">
-                                                                <a class="waves-effect waves-light modal-trigger btn page__card--btn"
-                                                                    href="#modalConsulta">Consultar</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <% }
-                                        }else { %>
-                                            <h1>No hay actividades</h1>
-                                        <% } %>
-
-
+                                <div class="page__wrap" id="actividades">
+                                    <!-- Esto se llena con JS. -->
                                 </div>
                             </section>
                         </div>
                     </div>
                     <!-- MODALS -->
-                    <div id="modalConsulta" class="modal">
-                        <div class="modal-content">
-                            <h4>Consulta de Salida</h4>
-                            <form>
-                                <div class="input-field">
-                                    <input id="nombre" type="text" class="validate" readonly value="Salida 1" />
-                                    <label for="nombre" class="active">Nombre</label>
-                                </div>
-                                <div class="input-field">
-                                    <input id="cant" type="number" class="validate" readonly value="99" />
-                                    <label for="cant" class="active">Cantidad de lugares</label>
-                                </div>
-                                <div class="input-field">
-                                    <input id="dateSalida" type="date" class="validate" disabled value="2023-01-01" />
-                                    <label for="dateSalida" class="active">Fecha de salida</label>
-                                </div>
-                                <div class="input-field">
-                                    <input id="dateAlta" type="date" class="validate" disabled value="2023-01-01" />
-                                    <label for="dateAlta" class="active">Fecha de alta</label>
-                                </div>
-                                <div class="input-field">
-                                    <input id="lugarSalida" type="text" class="validate" readonly value="San Jose" />
-                                    <label for="lugarSalida" class="active">Lugar de Salida</label>
-                                </div>
-                                <div class="divider"></div>
-                                <ul class="collection with-header">
-                                    <li class="collection-header">
-                                        <h4>Actividades</h4>
-                                    </li>
-                                    <li class="collection-item">Actividad1</li>
-                                    <li class="collection-item">Actividad2</li>
-                                    <li class="collection-item">Actividad3</li>
-                                    <li class="collection-item">Actividad4</li>
-                                </ul>
-                            </form>
-                        </div>
+
+                    <!-- Modal Structure -->
+                    <div id="consultaModal" class="modal">
+                      <div class="modal-content">
+                        <h4>Consulta de Salida</h4> 
+                        <form>
+                            <div class="input-field">
+                                <input id="modalNombre" type="text" class="validate" readonly value=" " />
+                                <label for="nombre" class="active">Nombre</label>
+                            </div>
+                            <div class="input-field">
+                                <input id="modalDescripcion" type="text" class="validate" readonly value=" " />
+                                <label for="desc" class="active">Descripción</label>
+                            </div>
+                            <div class="input-field">
+                                <input id="modalCiudad" type="text" class="validate" readonly value=" " />
+                                <label for="ciudad" class="active">Ciudad</label>
+                            </div>
+                            <div class="input-field">
+                                <input id="modalCosto" type="text" class="validate" readonly value=" " />
+                                <label for="costo" class="active">Costo Unitario</label>
+                            </div>
+                            <div class="input-field">
+                                <input id="modalDuracion" type="text" class="validate" readonly value=" " />
+                                <label for="duracion" class="active">Duración</label>
+                            </div>
+                            <div class="input-field">
+                                <input id="modalFecha" type="date" class="validate" readonly value="" />
+                                <label for="fecha" class="active">Fecha</label>
+                            </div>
+                            <!-- <div class="input-field">
+                                <input id="modalCant" type="number" class="validate" readonly value="99" />
+                                <label for="cant" class="active">Cantidad de lugares</label>
+                            </div>
+                            <div class="input-field">
+                                <input id="modalDateSalida" type="date" class="validate" disabled value="2023-01-01" />
+                                <label for="dateSalida" class="active">Fecha de salida</label>
+                            </div>
+                            <div class="input-field">
+                                <input id="modalDateAlta" type="date" class="validate" disabled value="2023-01-01" />
+                                <label for="dateAlta" class="active">Fecha de alta</label>
+                            </div>
+                            <div class="input-field">
+                                <input id="modalLugarSalida" type="text" class="validate" readonly value="San Jose" />
+                                <label for="lugarSalida" class="active">Lugar de Salida</label>
+                            </div> -->
+                            <div class="divider"></div>
+                            <ul class="collection with-header">
+                                <li class="collection-header">
+                                    <h4>Actividades</h4>
+                                </li>
+                                <li class="collection-item">Actividad1</li>
+                                <li class="collection-item">Actividad2</li>
+                                <li class="collection-item">Actividad3</li>
+                                <li class="collection-item">Actividad4</li>
+                            </ul>
+                        </form>
+                    </div>
                         <div class="modal-footer">
                             <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
                         </div>
                     </div>
 
-
                     <%@ include file="./utils/footer.jsp" %>
 
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                var modal = M.Modal.init(document.getElementById("consultaModal"));
+                            });
 
-                        <!-- MATERIALIZE JS -->
-                        <script
-                            src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-                        <!-- MATERIALIZE LOCAL JS -->
-                        <script src="src/js/materialize.js"></script>
+                            // Agrega un evento de clic al botón "Consultar" (delegación de eventos)
+                            document.addEventListener("click", function (event) {
+                                if (event.target.classList.contains("abrirModalBtn")) {
+                                    // Obtiene los datos de la actividad
+                                    var objeto = event.target.getAttribute("dataActividad");
+                                    var dataActividad = JSON.parse(objeto)
+                                    // var actividadDescripcion = event.target.getAttribute("data-desc");
+                                
+                                    // Llena el modal con los datos de la actividad
+                                    document.getElementById("modalNombre").value = dataActividad.nombre;
+                                    console.log(dataActividad);
+                                    document.getElementById("modalFecha").value = dataActividad.fechaCrea;
+                                    document.getElementById("modalDescripcion").value = dataActividad.desc;
+                                    document.getElementById("modalCiudad").value = dataActividad.departamento.nombre;
+                                    document.getElementById("modalCosto").value = dataActividad.costoUni;
+                                    document.getElementById("modalDuracion").value = dataActividad.duracion;
+                                    // document.getElementById("modalActividadDescripcion").textContent = actividadDescripcion;
+                                
+                                    // Abre el modal
+                                    var modal = M.Modal.init(document.getElementById("consultaModal"));
+                                    modal.open();
+                                }
+                            });
+
+                            // $('#abrirModalBtn').click(function () {
+                            //     console.log("HOla click");
+                            //     // Abre el modal utilizando el atributo data-target
+                            //     // var target = $(this).data('target');
+                            //     // $('#' + target).modal('open');
+                            // });
+
+                            $(document).ready(function () {
+                                var departamento = document.getElementById("departamentos").value;
+                                var categoria = document.getElementById("categorias").value;
+                                actualizarActividades(categoria, departamento);
+
+                                // $('.modal').modal();
+                                // M.Modal.init(document.querySelectorAll(".modal"));
+                                $('#actividades').on('click', '.abrir-modal-btn', function () {
+                                    // var target = $(this).data('target');
+                                    // $('#' + target).modal('open');
+                                    // $('#').modal('open');
+                                    console.log("Click");
+                                });
+                            });
+
+                            $("#categorias").change(function () {
+                                var departamento = document.getElementById("departamentos").value;
+                                var categoria = document.getElementById("categorias").value;
+                                actualizarActividades(categoria, departamento);
+                            });
+
+                            $("#departamentos").change(function () {
+                                var departamento = document.getElementById("departamentos").value;
+                                var categoria = document.getElementById("categorias").value;
+                                actualizarActividades(categoria, departamento);
+                            });
+
+                            function actualizarActividades(categoria, departamento) {
+                                // Realiza una solicitud POST al Servlet con el valor seleccionado.
+                                $.ajax({
+                                    type: "POST",
+                                    url: "./homeActividades",
+                                    data: { departamento: departamento, categoria: categoria },
+                                    dataType: "json",
+                                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                                    success: function (actividades) {
+                                        // Procesa la respuesta del Servlet y llena la lista.
+                                        var lista = document.getElementById("actividades");
+                                        
+                                        // Limpia la lista antes de agregar nuevos elementos.
+                                        lista.innerHTML = "";
+
+                                        if (actividades.length == 0) {
+                                            var row = document.createElement("div");
+                                            row.className = "row";
+
+                                            var h2 = document.createElement("h2");
+                                            h2.className = "center-align"
+                                            h2.innerHTML = "No se encontraron actividades ☹️";
+
+                                            row.appendChild(h2)
+
+                                            lista.appendChild(row);
+                                            return;
+                                        }
+
+                                        actividades.forEach(actividad => {
+                                            // Creamos los elementos HTML.
+                                            var row = document.createElement("div");
+                                            row.className = "row";
+
+                                            var col = document.createElement("div");
+                                            col.className = "col s12 m6 page__card";
+
+                                            var card = document.createElement("div");
+                                            card.className = "card";
+
+                                            var cardImage = document.createElement("div");
+                                            cardImage.className = "card-image";
+
+                                            var img = document.createElement("img");
+                                            img.src = "src/img/blurry-gradient1.svg";
+                                            img.className = "page__card--img";
+
+                                            var title = document.createElement("span");
+                                            title.className = "card-title page__card--title";
+                                            title.textContent = actividad.nombre;
+
+                                            var cardContent = document.createElement("div");
+                                            cardContent.className = "card-content page__card--contenido";
+
+                                            var paragraph = document.createElement("p");
+                                            paragraph.textContent = actividad.desc;
+
+                                            var btnDiv = document.createElement("div");
+                                            btnDiv.className = "page__card--btns";
+
+                                            var btn = document.createElement("button");
+                                            btn.className = "btn abrirModalBtn";
+                                            // btn.href = "#modalConsulta";
+                                            // btn.id = "abrirModalBtn"
+                                            btn.setAttribute("dataActividad", JSON.stringify(actividad));
+                                            btn.textContent = "Consultar";
+                                            // <!-- Modal Trigger -->
+                                                // <button data-target="modal1" class="btn modal-trigger">Modal</button>
+
+                                            // Agrupa los elementos en la estructura deseada
+                                            cardImage.appendChild(img);
+                                            cardImage.appendChild(title);
+                                                                                
+                                            cardContent.appendChild(paragraph);
+                                            cardContent.appendChild(btnDiv);
+                                            btnDiv.appendChild(btn);
+                                                                                
+                                            card.appendChild(cardImage);
+                                            card.appendChild(cardContent);
+                                                                                
+                                            col.appendChild(card);
+                                            row.appendChild(col);
+                                                                                
+                                            // Agrega la fila al contenedor de actividades
+                                            console.log("Llenando..");
+                                            lista.appendChild(row);
+                                        });
+                                        
+                                    }
+                                });
+                            }
+
+                            // $("#btnAbrirModal").click(function () {
+                            //     var abrirModalButtons = document.querySelectorAll(".abrirModalBtn");
+                            //     console.log(abrirModalButtons);
+
+                            //     // Agrega un evento de clic a cada botón
+                            //     abrirModalButtons.forEach(function (boton) {
+                            //         boton.addEventListener("click", function () {
+                            //             // Encuentra el elemento con la clase "card-title" más cercano (el título de la tarjeta)
+                            //             var tarjeta = this.closest(".card");
+                            //             console.log(tarjeta);
+                            //             // var titulo = tarjeta.querySelector(".card-title").textContent;
+                                    
+                            //             // Aquí puedes utilizar el título como desees, por ejemplo, mostrarlo en la consola
+                            //             // console.log("Título de la tarjeta:", titulo);
+
+                            //             // Ahora, puedes utilizar "titulo" para realizar alguna lógica con la información de la tarjeta
+                            //         });
+                            //     });
+                            //     // var abrirModalBtn = document.getElementById("abrirModalBtn");
+                            //     // var modalConsulta = M.Modal.init(document.getElementById("modalConsulta")); // Inicializa el modal
+
+                            //     // abrirModalBtn.addEventListener("click", function () {
+                            //     //     modalConsulta.open(); // Abre el modal
+                            //     // });
+                            // });
+                            // $(document).ready(function () {
+                            //     // Cuando la página se carga, carga datos desde el Servlet al primer select.
+                            //     console.log("DOM Listo");
+                            //     cargarDatosDesdeServlet("servlet1", "select1");
+                            // });
+
+                            // function cargarDatosDesdeServlet(servletUrl, selectId) {
+                            //     $.get('./homeActividades', function (data) {
+                            //         // Llena el select con los datos recibidos del Servlet.
+                            //         var select = document.getElementById(selectId);
+                            //         for (var i = 0; i < data.length; i++) {
+                            //             console.log(data[i]);
+                            //             // var option = document.createElement("option");
+                            //             // option.text = data[i].nombre; // Ajusta esto según tus datos.
+                            //             // option.value = data[i].id; // Ajusta esto según tus datos.
+                            //             // select.appendChild(option);
+                            //         }
+                            //     });
+                            // }
+                        </script>
             </body>
 
             </html>
