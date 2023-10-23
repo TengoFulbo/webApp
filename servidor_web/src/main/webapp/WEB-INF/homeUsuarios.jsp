@@ -42,7 +42,7 @@
                 </span>
                 <p>@<%= user.getNickname() %><br>
                 </p>
-                <div>
+                <div class="right-align">
                   <a class="btn right-align" href="./miCuenta?nickname=<%= user.getNickname() %>">Ver perfil</a>
                 </div>
               <%

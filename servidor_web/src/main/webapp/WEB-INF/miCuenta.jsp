@@ -118,6 +118,14 @@
               </li>
           <%
               }
+            }else {
+              %>
+
+              <blockquote>
+                No hay actividades que listar
+              </blockquote>
+              
+              <%
             }
           }
           %>
