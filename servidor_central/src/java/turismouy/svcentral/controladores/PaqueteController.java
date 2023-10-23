@@ -4,19 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.TypedQuery;
-import turismouy.svcentral.EMFactory;
-
 import turismouy.svcentral.datatypes.dataPaquete;
 import turismouy.svcentral.entidades.actividad;
-import turismouy.svcentral.entidades.compra;
-import turismouy.svcentral.entidades.inscripcion;
 import turismouy.svcentral.entidades.paquete;
-import turismouy.svcentral.entidades.turista;
-import turismouy.svcentral.entidades.usuario;
 import turismouy.svcentral.excepciones.YaExisteExcepcion;
 import turismouy.svcentral.excepciones.NoExisteExcepcion;
 import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
