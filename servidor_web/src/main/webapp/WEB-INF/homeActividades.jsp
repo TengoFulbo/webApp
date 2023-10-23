@@ -67,8 +67,6 @@
                                 </div>
                                 <div class="page__filter">
                                     <h3 class="page__filter--title">Filtros:</h3>
-<!-- Botón para abrir el modal -->
-<button id="abrirModalBtn" class="btn">Abrir Modal</button>
                                     <ul class="pagination page__filter--list">
                                         <li>
                                             <div class="input-field col s12">
@@ -329,7 +327,7 @@
                                         
                                     }
                                 });
-                            }
+                            }   
                         </script>
             </body>
 
