@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ page import="java.util.List" %>
     <%@ page import="turismouy.svcentral.datatypes.dataActividad" %>
+    <%@ page import="turismouy.svcentral.datatypes.dataDepartamento" %>
         <%@ include file="./utils/head.jsp" %>
 
             <head>
@@ -76,25 +77,20 @@
                                             <div class="input-field col s12">
                                                 <select>
                                                     <option value="" disabled selected></option>
-                                                    <option value="1">Artigas</option>
-                                                    <option value="2">Canelones</option>
-                                                    <option value="3">Cerro Largo</option>
-                                                    <option value="4">Colonia</option>
-                                                    <option value="5">Durazno</option>
-                                                    <option value="6">Flores</option>
-                                                    <option value="7">Florida</option>
-                                                    <option value="8">Lavalleja</option>
-                                                    <option value="9">Maldonado</option>
-                                                    <option value="10">Montevideo</option>
-                                                    <option value="11">Paysandú</option>
-                                                    <option value="12">Río Negro</option>
-                                                    <option value="13">Rivera</option>
-                                                    <option value="14">Rocha</option>
-                                                    <option value="15">Salto</option>
-                                                    <option value="16">San José</option>
-                                                    <option value="17">Soriano</option>
-                                                    <option value="18">Tacuarembó</option>
-                                                    <option value="19">Treinta y Tres</option>
+                                                    <% List<dataCategoria> categorias = (List<dataCategoria>) request.getAttribute("categorias");
+                                                    <%
+                                                    int value = 1;
+                                                    if (categorias != null) {
+                                                        if (!categorias.isEmpty()) {
+                                                            for (dataCategoria categoria : categorias) {
+                                                    %>
+                                                                <option value="<%= value %>"><%= categoria.getNombre() %></option>
+                                                    <%
+                                                                value+1;
+                                                            }
+                                                        }
+                                                    }
+                                                    %>
                                                 </select>
                                                 <label>Departamentos</label>
                                             </div>

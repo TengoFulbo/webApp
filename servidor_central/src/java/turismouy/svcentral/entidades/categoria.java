@@ -7,7 +7,6 @@ import javax.persistence.*;
 
 import turismouy.svcentral.datatypes.dataActividad;
 import turismouy.svcentral.datatypes.dataCategoria;
-import turismouy.svcentral.datatypes.dataDepartamento;
 
 @Entity
 public class categoria {
@@ -16,12 +15,13 @@ public class categoria {
     long id;
     private String nombre;
 
-    @JoinTable(
-		name = "categoria_actividad",
-        joinColumns = @JoinColumn(name = "fk_categoria"),
-        inverseJoinColumns = @JoinColumn(name = "fk_actividad")
-		)
-	@ManyToMany()
+    // @JoinTable(
+	// 	name = "categoria_actividad",
+    //     joinColumns = @JoinColumn(name = "fk_categoria"),
+    //     inverseJoinColumns = @JoinColumn(name = "fk_actividad")
+	// 	)
+	// @ManyToMany()
+	@ManyToMany(mappedBy = "categorias", targetEntity = actividad.class)
     private List<actividad> actividades; 
 
     // Constructor vacio pedido por JPA.
@@ -37,6 +37,10 @@ public class categoria {
 
     public void setNombre(String nombre){
         this.nombre = nombre;
+    }
+
+    public void addActividad(actividad actividad) {
+        actividades.add(actividad);
     }
     
     public dataCategoria toDataType() {

@@ -76,15 +76,17 @@ public class ActividadController implements IActividadController {
 
         for (String sCategoria : sCategorias) {
             categoria categoria = cm.getCategoria(sCategoria);
-            if (categoria == null) {
+            if (categoria != null) {
+                categorias.add(categoria);
+                log.warning("Se agrega la categoría: " + categoria.getNombre());
+            } else {
                 log.error("[ActividadController] [altaActividad] Error: No se encuentra la categoria '" + sCategoria + "' en el sistema.");
                 throw new UsuarioNoExisteExcepcion("La categoria '" + sCategoria + "' no existe en el sistema");
             }
         }
-        // TODO: Aplicar categorias
 
 		actividad act = new actividad(nombre, desc, duracion, costoUni, ciudad, fechaCrea, categorias);
-		
+
         act.setDepartamento(depto);
         act.setProveedor(prov);
 
@@ -95,6 +97,14 @@ public class ActividadController implements IActividadController {
 
         depto.agregarActividad(act);
         dm.updateDepartamento(depto);
+
+        // Se trae el objeto luego de guardarlo.
+        act = am.getActividad(nombre);
+
+        for (categoria categoria : categorias) {
+            categoria.addActividad(act);
+            cm.updateCategoria(categoria);
+        }
 	}
 	
 	public dataActividad mostrarDatos(String nombreAct) throws UsuarioNoExisteExcepcion{

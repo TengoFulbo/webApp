@@ -84,13 +84,16 @@ public class ActividadManejador {
     	
         actividad actividad;
         try {
-            actividad = em.createQuery("SELECT a FROM actividad a JOIN FETCH a.salidas WHERE a.nombreA = '" + nombreAct + "' AND a.estado <> :estadoRechazada",actividad.class)
+            actividad = em.createQuery("SELECT DISTINCT a FROM actividad a " + 
+            //  "LEFT JOIN FETCH a.salidas " + 
+             "LEFT JOIN FETCH a.categorias WHERE a.nombreA = '" + nombreAct + "' AND a.estado <> :estadoRechazada",actividad.class)
                 .setParameter("estadoRechazada", estadoActividad.RECHAZADA.ordinal())                
                 .getSingleResult();
         } catch (NoResultException  e) {
             actividad = null;
+        } finally {
+            em.close();
         }
-    	em.close();
     	return actividad;
     }
 }

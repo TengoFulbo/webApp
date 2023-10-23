@@ -826,7 +826,7 @@ public class actividadesVista extends JPanel {
 					catList.add("Test");
 					IAC.crearActividad(departamento.getSelectedItem().toString(),
 							proveedor.getSelectedItem().toString(), nombre.getText(), descripcion.getText(),
-							duracionInt, precioInt, ciudad.getText(), LocalDate.now(), catList);
+							duracionInt, precioInt, ciudad.getText(), LocalDate.now(), null);
 					JOptionPane.showMessageDialog(popupDialog, "Actividad creada con EXITO", "Registro Completado",
 							JOptionPane.INFORMATION_MESSAGE);
 					popupDialog.dispose();

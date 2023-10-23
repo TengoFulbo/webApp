@@ -4,14 +4,11 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>turismouy.webapp</groupId>
-  <artifactId>servidor_web</artifactId>
+  <groupId>turismouy.estacion</groupId>
+  <artifactId>estacion_de_trabajo</artifactId>
   <version>1.0</version>
 
-  <!-- Sacado de otro lado -->
-  <packaging>war</packaging>
-
-  <name>turismouy - servidor_web</name>
+  <name>turismouy - estacion_de_trabajo</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
@@ -19,53 +16,39 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <!-- <failOnMissingWebXml>false</failOnMissingWebXml> -->
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>turismouy.svcentral</groupId>
+      <artifactId>servidor_central</artifactId>
+      <version>1.0</version>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>turismouy.svcentral</groupId>
-      <artifactId>servidor_central</artifactId>
-      <version>1.0</version>
-    </dependency>
-    <!-- Sacado de otro proyecto -->
-    <dependency>
-        <groupId>jakarta.platform</groupId>
-        <artifactId>jakarta.jakartaee-api</artifactId>
-        <version>9.0.0</version>
-        <scope>provided</scope>
-    </dependency>
-    <!-- dependencia para etiquetas core de jsps -->
-    <dependency>
-        <groupId>org.glassfish.web</groupId>
-        <artifactId>jakarta.servlet.jsp.jstl</artifactId>
-        <version>2.0.0</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
-    <dependency>
-        <groupId>com.google.code.gson</groupId>
-        <artifactId>gson</artifactId>
-        <version>2.10.1</version>
-    </dependency>
-    <!-- Servlet API -->
-    <!-- <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>javax.servlet-api</artifactId>
-        <version>4.0.1</version>
-        <scope>provided</scope>
-    </dependency> -->
-		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
+		<dependency>
+		  <groupId>com.formdev</groupId>
+		  <artifactId>flatlaf</artifactId>
+		  <version>3.2</version>
+		</dependency>
+		<dependency>
+		  <groupId>com.formdev</groupId>
+		  <artifactId>flatlaf-intellij-themes</artifactId>
+		  <version>3.2</version>
+		</dependency>
   </dependencies>
 
   <build>
-    <!-- Nombre final -->
-    <finalName>turismouy</finalName>
+    <!-- <sourceDirectory>src/java</sourceDirectory> -->
+    <!-- <resources>
+        <resource>
+            <directory>src/java/presentacion/res</directory>
+        </resource>
+    </resources> -->
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
@@ -78,27 +61,17 @@
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.0.2</version>
         </plugin>
-        <!-- <plugin>
+        <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.0</version>
-        </plugin> -->
-        <plugin>
-           <groupId>org.apache.maven.plugins</groupId>
-           <artifactId>maven-compiler-plugin</artifactId>
-           <version>3.8.1</version>
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.22.1</version>
         </plugin>
-        <!-- <plugin>
+        <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
-        </plugin> -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>3.3.1</version>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
