@@ -217,24 +217,12 @@
                                 }
                             });
 
-                            // $('#abrirModalBtn').click(function () {
-                            //     console.log("HOla click");
-                            //     // Abre el modal utilizando el atributo data-target
-                            //     // var target = $(this).data('target');
-                            //     // $('#' + target).modal('open');
-                            // });
-
                             $(document).ready(function () {
                                 var departamento = document.getElementById("departamentos").value;
                                 var categoria = document.getElementById("categorias").value;
                                 actualizarActividades(categoria, departamento);
 
-                                // $('.modal').modal();
-                                // M.Modal.init(document.querySelectorAll(".modal"));
                                 $('#actividades').on('click', '.abrir-modal-btn', function () {
-                                    // var target = $(this).data('target');
-                                    // $('#' + target).modal('open');
-                                    // $('#').modal('open');
                                     console.log("Click");
                                 });
                             });
@@ -342,51 +330,6 @@
                                     }
                                 });
                             }
-
-                            // $("#btnAbrirModal").click(function () {
-                            //     var abrirModalButtons = document.querySelectorAll(".abrirModalBtn");
-                            //     console.log(abrirModalButtons);
-
-                            //     // Agrega un evento de clic a cada botón
-                            //     abrirModalButtons.forEach(function (boton) {
-                            //         boton.addEventListener("click", function () {
-                            //             // Encuentra el elemento con la clase "card-title" más cercano (el título de la tarjeta)
-                            //             var tarjeta = this.closest(".card");
-                            //             console.log(tarjeta);
-                            //             // var titulo = tarjeta.querySelector(".card-title").textContent;
-                                    
-                            //             // Aquí puedes utilizar el título como desees, por ejemplo, mostrarlo en la consola
-                            //             // console.log("Título de la tarjeta:", titulo);
-
-                            //             // Ahora, puedes utilizar "titulo" para realizar alguna lógica con la información de la tarjeta
-                            //         });
-                            //     });
-                            //     // var abrirModalBtn = document.getElementById("abrirModalBtn");
-                            //     // var modalConsulta = M.Modal.init(document.getElementById("modalConsulta")); // Inicializa el modal
-
-                            //     // abrirModalBtn.addEventListener("click", function () {
-                            //     //     modalConsulta.open(); // Abre el modal
-                            //     // });
-                            // });
-                            // $(document).ready(function () {
-                            //     // Cuando la página se carga, carga datos desde el Servlet al primer select.
-                            //     console.log("DOM Listo");
-                            //     cargarDatosDesdeServlet("servlet1", "select1");
-                            // });
-
-                            // function cargarDatosDesdeServlet(servletUrl, selectId) {
-                            //     $.get('./homeActividades', function (data) {
-                            //         // Llena el select con los datos recibidos del Servlet.
-                            //         var select = document.getElementById(selectId);
-                            //         for (var i = 0; i < data.length; i++) {
-                            //             console.log(data[i]);
-                            //             // var option = document.createElement("option");
-                            //             // option.text = data[i].nombre; // Ajusta esto según tus datos.
-                            //             // option.value = data[i].id; // Ajusta esto según tus datos.
-                            //             // select.appendChild(option);
-                            //         }
-                            //     });
-                            // }
                         </script>
             </body>
 
