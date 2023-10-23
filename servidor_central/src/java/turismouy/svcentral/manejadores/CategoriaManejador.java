@@ -57,7 +57,7 @@ public class CategoriaManejador {
 
         categoria categoria = null;
         try {
-            categoria = em.createQuery("SELECT c from categoria c WHERE LOWER(c.nombre) = :nombre", categoria.class)
+            categoria = em.createQuery("SELECT c from categoria c LEFT JOIN FETCH c.actividades WHERE LOWER(c.nombre) = :nombre", categoria.class)
                         .setParameter("nombre", nombre)
                         .getSingleResult();     
         } catch (Exception e) {
