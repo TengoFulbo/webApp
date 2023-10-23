@@ -16,11 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-  var elems = document.querySelectorAll('#modalConsulta');
-  var instances = M.Modal.init(elems);
-});
-
-document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('#modalNuevaSalida');
   var instances = M.Modal.init(elems);
 });

@@ -2,6 +2,7 @@
     <%@ page import="java.util.List" %>
     <%@ page import="turismouy.svcentral.datatypes.dataActividad" %>
     <%@ page import="turismouy.svcentral.datatypes.dataDepartamento" %>
+    <%@ page import="turismouy.svcentral.datatypes.dataCategoria" %>
         <%@ include file="./utils/head.jsp" %>
 
             <head>
@@ -60,43 +61,52 @@
                                     </p>
                                 </div>
                                 <div class="page__filter">
-                                    <h3 class="page__filter--title">Filtros:</h3>
-                                    <ul class="pagination page__filter--list">
-                                        <li>
-                                            <div class="input-field col s12">
-                                                <select>
-                                                    <option value="" disabled selected></option>
-                                                    <option value="1">Escalada</option>
-                                                    <option value="2">Turismo</option>
-                                                    <option value="3">Caminata</option>
-                                                </select>
-                                                <label>Categorias</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="input-field col s12">
-                                                <select>
-                                                    <option value="" disabled selected></option>
-                                                    <% List<dataCategoria> categorias = (List<dataCategoria>) request.getAttribute("categorias");
-                                                    <%
-                                                    int value = 1;
-                                                    if (categorias != null) {
-                                                        if (!categorias.isEmpty()) {
-                                                            for (dataCategoria categoria : categorias) {
-                                                    %>
-                                                                <option value="<%= value %>"><%= categoria.getNombre() %></option>
-                                                    <%
-                                                                value+1;
-                                                            }
-                                                        }
-                                                    }
-                                                    %>
-                                                </select>
-                                                <label>Departamentos</label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
+								    <h3 class="page__filter--title">Filtros:</h3>
+								    <ul class="pagination page__filter--list">
+								        <li>
+								            <div class="input-field col s12">
+								                <select>
+								                    <option value="" disabled selected></option>
+								                    <% List<dataCategoria> categorias = (List<dataCategoria>) request.getAttribute("categorias");
+								                        int value = 1;
+								                        if (categorias != null) {
+								                            if (!categorias.isEmpty()) {
+								                                for (dataCategoria categoria : categorias) {
+								                    %>
+								                                    <option value="<%= value %>"><%= categoria.getNombre() %></option>
+								                    <%
+								                                    value++;
+								                                }
+								                            }
+								                        }
+								                    %>
+								                </select>
+								                <label>Categorias</label>
+								            </div>
+								        </li>
+								        <li>
+								            <div class="input-field col s12">
+								                <select>
+								                    <option value="" disabled selected></option>
+								                    <% List<dataDepartamento> departamentos = (List<dataDepartamento>) request.getAttribute("departamentos");
+								                        int valuedpto = 1;
+								                        if (categorias != null) {
+								                            if (!departamentos.isEmpty()) {
+								                                for (dataDepartamento dpto : departamentos) {
+								                    %>
+								                                    <option valuedpto="<%= valuedpto %>"><%= dpto.getNombre() %></option>
+								                    <%
+								                    				valuedpto++;
+								                                }
+								                            }
+								                        }
+								                    %>
+								                </select>
+								                <label>Departamentos</label>
+								            </div>
+								        </li>
+								    </ul>
+								</div>
                                 <div class="page__wrap">
                                     <% List<dataActividad> ListaActividades = (List<dataActividad>) request.getAttribute("actividades");
                                             if (ListaActividades != null) {
@@ -116,12 +126,67 @@
                                                             </p>
                                                             <div class="page__card--btns">
                                                                 <a class="waves-effect waves-light modal-trigger btn page__card--btn"
-                                                                    href="#modalConsulta">Consultar</a>
+                                                                    href='#<%= dataAct.getNombre() %>''>Consultar</a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <!-- MODALS -->
+                                            <div id='<%= dataAct.getNombre() %>'' class="modal">
+                                                <div class="modal-content">
+                                                    <h4>Consulta de Actividad</h4>
+                                                    <form>
+                                                        <div class="input-field">
+                                                            <input id="nombre" type="text" class="validate" readonly value='<%= dataAct.getNombre() %>' />
+                                                            <label for="nombre" class="active">Nombre</label>
+                                                        </div>
+                                                        <div class="input-field">
+                                                            <input id="cant" type="number" class="validate" readonly value='<%= dataAct.getDuracion() %>' />
+                                                            <label for="cant" class="active">Duracion (Horas)</label>
+                                                        </div>
+                                                        <div class="input-field">
+                                                            <input id="costo" type="date" class="validate" disabled value='<%= dataAct.getCostoUni() %>' />
+                                                            <label for="costo" class="active">Costo Unitario</label>
+                                                        </div>
+                                                        <div class="input-field">
+                                                            <input id="lugar" type="text" class="validate" readonly value='<%= dataAct.getCiudad() %>' />
+                                                            <label for="lugar" class="active">Ciudad</label>
+                                                        </div>
+                                                        <div class="input-field">
+                                                            <input id="dpto" type="text" class="validate" readonly value='<%= dataAct.getDepartamento().getNombre() %>' />
+                                                            <label for="dpto" class="active">Departamento</label>
+                                                        </div>
+                                                        <div class="input-field">
+                                                            <input id="dateAlta" type="date" class="validate" disabled value='<%= dataAct.getFechaCrea() %>' />
+                                                            <label for="dateAlta" class="active">Fecha de alta</label>
+                                                        </div>
+                                                        <div class="divider"></div>
+                                                        <ul class="collection with-header">
+                                                            <li class="collection-header">
+                                                                <h4>Categorias</h4>
+                                                            </li>
+                                                            <li class="collection-item">Categoria1</li>
+                                                            <li class="collection-item">Categoria2</li>
+                                                            <li class="collection-item">Categoria3</li>
+                                                            <li class="collection-item">Categoria4</li>
+                                                        </ul>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+                                                </div>
+                                            </div>
+
+                                            <script>
+                                                document.addEventListener('DOMContentLoaded', function() {
+                                                var elems = document.querySelectorAll('#<%= dataAct.getNombre() %>');
+                                                var instances = M.Modal.init(elems);
+                                                });
+                                            </script>
+
+
                                             <% }
                                         }else { %>
                                             <h1>No hay actividades</h1>
@@ -132,47 +197,7 @@
                             </section>
                         </div>
                     </div>
-                    <!-- MODALS -->
-                    <div id="modalConsulta" class="modal">
-                        <div class="modal-content">
-                            <h4>Consulta de Salida</h4>
-                            <form>
-                                <div class="input-field">
-                                    <input id="nombre" type="text" class="validate" readonly value="Salida 1" />
-                                    <label for="nombre" class="active">Nombre</label>
-                                </div>
-                                <div class="input-field">
-                                    <input id="cant" type="number" class="validate" readonly value="99" />
-                                    <label for="cant" class="active">Cantidad de lugares</label>
-                                </div>
-                                <div class="input-field">
-                                    <input id="dateSalida" type="date" class="validate" disabled value="2023-01-01" />
-                                    <label for="dateSalida" class="active">Fecha de salida</label>
-                                </div>
-                                <div class="input-field">
-                                    <input id="dateAlta" type="date" class="validate" disabled value="2023-01-01" />
-                                    <label for="dateAlta" class="active">Fecha de alta</label>
-                                </div>
-                                <div class="input-field">
-                                    <input id="lugarSalida" type="text" class="validate" readonly value="San Jose" />
-                                    <label for="lugarSalida" class="active">Lugar de Salida</label>
-                                </div>
-                                <div class="divider"></div>
-                                <ul class="collection with-header">
-                                    <li class="collection-header">
-                                        <h4>Actividades</h4>
-                                    </li>
-                                    <li class="collection-item">Actividad1</li>
-                                    <li class="collection-item">Actividad2</li>
-                                    <li class="collection-item">Actividad3</li>
-                                    <li class="collection-item">Actividad4</li>
-                                </ul>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
-                        </div>
-                    </div>
+                    
 
 
                     <%@ include file="./utils/footer.jsp" %>
