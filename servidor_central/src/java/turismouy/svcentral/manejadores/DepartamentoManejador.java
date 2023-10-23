@@ -10,7 +10,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
 import turismouy.svcentral.EMFactory;
-import turismouy.svcentral.entidades.actividad;
 import turismouy.svcentral.entidades.departamento;
 import turismouy.svcentral.utilidades.log;
 

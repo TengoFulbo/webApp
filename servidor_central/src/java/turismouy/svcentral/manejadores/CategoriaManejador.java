@@ -75,7 +75,7 @@ public class CategoriaManejador {
         List<categoria> categorias = new ArrayList<categoria>();
 
         try {
-            categorias = em.createQuery("SELECT c from categoria c JOIN FETCH c.actividades", categoria.class)
+            categorias = em.createQuery("SELECT c from categoria c LEFT JOIN FETCH c.actividades", categoria.class)
                         .getResultList();     
         } catch (Exception e) {
             return null;

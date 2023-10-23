@@ -100,7 +100,7 @@ public class ActividadController implements IActividadController {
 
         // Se trae el objeto luego de guardarlo.
         act = am.getActividad(nombre);
-
+        
         for (categoria categoria : categorias) {
             categoria.addActividad(act);
             cm.updateCategoria(categoria);

@@ -1,5 +1,4 @@
 package turismouy.webapp.home;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,29 +10,26 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
+import turismouy.svcentral.interfaces.ISalidaController;
 import turismouy.svcentral.interfaces.IUsuarioController;
 import turismouy.svcentral.Fabrica;
+import turismouy.svcentral.datatypes.dataSalida;
 import turismouy.svcentral.datatypes.dataUsuario;
 import turismouy.svcentral.utilidades.log;
 
-@WebServlet("/homeUsuarios")
-public class HomeUsuarios extends HttpServlet {
+@WebServlet("/homeSalidas")
+public class HomeSalidas extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setAttribute("pageTitle", "Salidas - TurismoUY");
 
-        request.setAttribute("pageTitle", "Usuarios - TurismoUY");
+        ISalidaController ISC = Fabrica.getInstance().getISalidaController();
 
-        // List<dataUsuario> usuarios = new ArrayList<dataUsuario>();
-        
-        IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+        List<dataSalida> salidas = ISC.getAllSalidas();
 
-        List<dataUsuario> usuarios = IUC.listarUsuarios();
+        request.setAttribute("salidas", salidas);
 
-        request.setAttribute("usuarios", usuarios);
-
-        // Muestra la pag de homeUsuarios
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/homeUsuarios.jsp");
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/homeSalidas.jsp");
         dispatcher.forward(request, response);
     }
 }

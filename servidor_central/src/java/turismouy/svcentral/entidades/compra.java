@@ -1,7 +1,6 @@
 package turismouy.svcentral.entidades;
 
 import java.time.LocalDate;
-import turismouy.svcentral.entidades.*;
 
 import javax.persistence.*;
 
