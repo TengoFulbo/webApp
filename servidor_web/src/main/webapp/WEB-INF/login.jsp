@@ -111,7 +111,7 @@
   
     if (notificacion && notificacion !== 'null' && notificacion !== 'undefined') {
       showToast(notificacion);
-      request.getSession().removeAttribute("errorLogin");
+      '<% request.getSession().removeAttribute("errorLogin"); %>'
     }
   </script>
   
