@@ -8,16 +8,17 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class LocalDateAdapter extends TypeAdapter<LocalDate> {
-private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+// private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Override
     public void write(JsonWriter out, LocalDate value) throws IOException {
-        out.value(formatter.format(value)); // Serializa LocalDate en formato "dd-MM-yyyy."
+        out.value(formatter.format(value)); // Serializa LocalDate en formato de arriba.
     }
 
     @Override
     public LocalDate read(JsonReader in) throws IOException {
-        return LocalDate.parse(in.nextString(), formatter); // Deserializa la cadena en formato "dd-MM-yyyy" a LocalDate.
+        return LocalDate.parse(in.nextString(), formatter); // Deserializa la cadena en formato de arriba a LocalDate.
     }
 }
 
