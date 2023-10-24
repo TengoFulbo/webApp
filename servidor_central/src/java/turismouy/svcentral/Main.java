@@ -121,8 +121,8 @@ public class Main {
         // cargarPaquetes();
         // log.warning("########################################################");
         // cargarActividades();
-        log.warning("########################################################");
-        cargarActividadesPaquetes();
+        // log.warning("########################################################");
+        // cargarActividadesPaquetes();
         // try {
 		// 	IAC.modificarEstadoActividad("Tour de Vinos en Bodegas", estadoActividad.CONFIRMADA);
 		// } catch (NoExisteExcepcion | ParametrosInvalidosExcepcion | YaExisteExcepcion e) {

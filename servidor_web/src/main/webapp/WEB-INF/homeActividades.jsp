@@ -125,7 +125,7 @@
                     <!-- Modal Structure -->
                     <div id="consultaModal" class="modal">
                       <div class="modal-content">
-                        <h4>Consulta de Salida</h4> 
+                        <h4>Consulta de Actividad</h4> 
                         <form>
                             <div class="input-field">
                                 <input id="modalNombre" type="text" class="validate" readonly value=" " />
@@ -151,27 +151,9 @@
                                 <input id="modalFecha" type="date" class="validate" readonly value="" />
                                 <label for="fecha" class="active">Fecha</label>
                             </div>
-                            <!-- <div class="input-field">
-                                <input id="modalCant" type="number" class="validate" readonly value="99" />
-                                <label for="cant" class="active">Cantidad de lugares</label>
-                            </div>
-                            <div class="input-field">
-                                <input id="modalDateSalida" type="date" class="validate" disabled value="2023-01-01" />
-                                <label for="dateSalida" class="active">Fecha de salida</label>
-                            </div>
-                            <div class="input-field">
-                                <input id="modalDateAlta" type="date" class="validate" disabled value="2023-01-01" />
-                                <label for="dateAlta" class="active">Fecha de alta</label>
-                            </div>
-                            <div class="input-field">
-                                <input id="modalLugarSalida" type="text" class="validate" readonly value="San Jose" />
-                                <label for="lugarSalida" class="active">Lugar de Salida</label>
-                            </div> -->
                             <div class="divider"></div>
-                            <ul class="collection with-header">
-                                <li class="collection-header">
-                                    <h4>Actividades</h4>
-                                </li>
+                            <h4>Actividades</h4>
+                            <ul class="collection">
                                 <li class="collection-item">Actividad1</li>
                                 <li class="collection-item">Actividad2</li>
                                 <li class="collection-item">Actividad3</li>
@@ -207,6 +189,7 @@
                                     document.getElementById("modalCiudad").value = dataActividad.departamento.nombre;
                                     document.getElementById("modalCosto").value = dataActividad.costoUni;
                                     document.getElementById("modalDuracion").value = dataActividad.duracion;
+                                    // document.getElementById("")
                                     // document.getElementById("modalActividadDescripcion").textContent = actividadDescripcion;
                                 
                                     // Abre el modal
