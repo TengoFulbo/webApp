@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 import turismouy.svcentral.datatypes.dataSalida;
 import turismouy.svcentral.datatypes.dataUsuario;
+import turismouy.svcentral.entidades.compra;
 
     @Entity
     @DiscriminatorValue("T")
