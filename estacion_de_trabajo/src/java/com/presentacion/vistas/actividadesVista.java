@@ -132,7 +132,7 @@ public class actividadesVista extends JPanel {
 		center.add(btnNewActividad);
 
 		IActividadController IAC = Fabrica.getInstance().getIActividadController();
-		List<dataActividad> actividades = IAC.getAllActividadesConfirmadas();
+		List<dataActividad> actividades = IAC.getAllActividades();
 
 		String[] columnNames = { "Nombre", "Proveedor", "Departamento", "Precio Unitario" };
 		DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
@@ -191,7 +191,7 @@ public class actividadesVista extends JPanel {
 
 				model.setRowCount(0);
 
-				List<dataActividad> actividades = IAC.getAllActividadesConfirmadas();
+				List<dataActividad> actividades = IAC.getAllActividades();
 
 				if (actividades != null) {
 					for (dataActividad actividad : actividades) {
@@ -212,7 +212,7 @@ public class actividadesVista extends JPanel {
 
 				model.setRowCount(0);
 
-				List<dataActividad> actividades = IAC.getAllActividadesConfirmadas();
+				List<dataActividad> actividades = IAC.getAllActividades();
 
 				if (actividades != null) {
 					for (dataActividad actividad : actividades) {
