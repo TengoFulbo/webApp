@@ -15,8 +15,12 @@ import turismouy.svcentral.entidades.inscripcion;
 public class SalidaManejador {
     private static SalidaManejador instancia = null;
 
-    EntityManagerFactory factory = Persistence.createEntityManagerFactory("PA2023");
+    //EntityManagerFactory factory = Persistence.createEntityManagerFactory("PA2023");
+    EntityManagerFactory factory = EMFactory.getEntityManagerFactory();
     // Singleton.
+    
+    private SalidaManejador(){};
+    
     public static SalidaManejador getInstance() {
         if (instancia == null)
             instancia = new SalidaManejador();
@@ -55,8 +59,8 @@ public class SalidaManejador {
         salida salida = null;
 
         try {
-            salida = em.createQuery("SELECT s from salida s WHERE s.nombreS = :nombre", salida.class)
-                        .setParameter("nombre", nombre)
+            salida = em.createQuery("SELECT s from salida s WHERE s.nombreS = '"+ nombre +"'", salida.class)
+                        //.setParameter("nombre", nombre)
                         .getSingleResult();     
         } catch (Exception e) {
             return null;
@@ -158,10 +162,10 @@ public class SalidaManejador {
         }
     	
     }
-    
+   
     public salida persistirInscripcionEnSalida(salida salida, inscripcion inscripcion){
     	
-    	EntityManagerFactory factory = EMFactory.getEntityManagerFactory();
+    	//EntityManagerFactory factory = EMFactory.getEntityManagerFactory();
 	    EntityManager em = factory.createEntityManager();
 	    EntityTransaction tx = em.getTransaction();
 	    
@@ -175,5 +179,6 @@ public class SalidaManejador {
 		return salida1;
     	
     }
+    
 }
     

@@ -23,7 +23,9 @@ import turismouy.svcentral.datatypes.dataUsuario;
 import turismouy.svcentral.entidades.actividad;
 import turismouy.svcentral.entidades.categoria;
 import turismouy.svcentral.entidades.departamento;
+import turismouy.svcentral.entidades.inscripcion;
 import turismouy.svcentral.entidades.proveedor;
+import turismouy.svcentral.entidades.salida;
 import turismouy.svcentral.entidades.turista;
 import turismouy.svcentral.entidades.usuario;
 import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
@@ -33,7 +35,10 @@ import turismouy.svcentral.excepciones.YaExisteExcepcion;
 import turismouy.svcentral.interfaces.IActividadController;
 import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.interfaces.IDepartamentoController;
+import turismouy.svcentral.interfaces.IInscripcionController;
+import turismouy.svcentral.interfaces.ISalidaController;
 import turismouy.svcentral.interfaces.IUsuarioController;
+import turismouy.svcentral.manejadores.UsuarioManejador;
 import turismouy.svcentral.utilidades.log;
 
 
@@ -404,6 +409,18 @@ public class test {
     	IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
     	IDepartamentoController IDC = Fabrica.getInstance().getIDepartamentoController();
     	
+    	UsuarioManejador um = UsuarioManejador.getinstance();
+        usuario user = um.getUsuario("PruebaProveedorNicknameConContra222");
+        proveedor prov = (proveedor) user;
+        
+        if(prov == null) {
+        	System.out.println("Es null");
+        }
+        else {
+        	System.out.println("No es null");
+        }
+    	
+    	
     	IDC.listarDepartamentos();
     	List<dataUsuario> LDtUsu = IUC.listarProveedores();
     	for(dataUsuario DtUsu : LDtUsu) {
@@ -426,9 +443,101 @@ public class test {
 			e.printStackTrace();
 		}
     	
-        actividad actividad = em.createQuery("SELECT a FROM actividad a WHERE a.nombreA = :'PruebaActividad'", actividad.class).getSingleResult();
+        actividad actividad = em.createQuery("SELECT a FROM actividad a WHERE a.nombreA = 'PruebaActividad'", actividad.class).getSingleResult();
         assertNotNull(actividad);
     	
     }
+    
+    @org.junit.Test
+    public void test20_ConsultaDeActividadTuristica(){
+    	IActividadController IAC = Fabrica.getInstance().getIActividadController();
+    	IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+    	IDepartamentoController IDC = Fabrica.getInstance().getIDepartamentoController();
+    	
+    	IDC.listarDepartamentos();
+    	IAC.getAllActividadesDepartamento("Prueba");
+    	try {
+			IAC.mostrarDatos("PruebaActividad");
+		} catch (UsuarioNoExisteExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    }
+    @org.junit.Test
+    public void test21_AltaDeSalidaTuristica() {
+    	EntityManager em = factory.createEntityManager();
+    	IActividadController IAC = Fabrica.getInstance().getIActividadController();
+    	IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+    	IDepartamentoController IDC = Fabrica.getInstance().getIDepartamentoController();
+    	ISalidaController ISA =Fabrica.getInstance().getISalidaController();
+    	
+    	IDC.listarDepartamentos();
+    	IAC.getAllActividadesDepartamento("Prueba");
+    	
+    	try {
+			ISA.crearSalida("PruebaSalida", 50, LocalDate.now(), LocalDate.of(2024, 1, 2), "LugarDePrueba", "PruebaActividad");
+		} catch (UsuarioYaExisteExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParametrosInvalidosExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UsuarioNoExisteExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+        salida salida = em.createQuery("SELECT s FROM salida s WHERE s.nombreS = 'PruebaSalida'", salida.class).getSingleResult();
+        assertNotNull(salida);
+    }
+    @org.junit.Test
+    public void test22_ConsultaDeSalidaTuristica() {
+    	EntityManager em = factory.createEntityManager();
+    	IActividadController IAC = Fabrica.getInstance().getIActividadController();
+    	IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+    	IDepartamentoController IDC = Fabrica.getInstance().getIDepartamentoController();
+    	ISalidaController ISC =Fabrica.getInstance().getISalidaController();
+    	
+    	IDC.listarDepartamentos();
+    	IAC.getAllActividadesDepartamento("Prueba");
+    	ISC.getAllSalidas();
+    	ISC.mostrarDatosSalida("PruebaSalida");
+    	
+    }
+    
+    @org.junit.Test
+    public void test23_InscripcionASalidaTuristica(){
+    	EntityManager em = factory.createEntityManager();
+    	IActividadController IAC = Fabrica.getInstance().getIActividadController();
+    	IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+    	IDepartamentoController IDC = Fabrica.getInstance().getIDepartamentoController();
+    	ISalidaController ISC = Fabrica.getInstance().getISalidaController();
+    	IInscripcionController IIC = Fabrica.getInstance().getIInscripcionController();
+    	
+    	IDC.listarDepartamentos();
+    	IAC.getAllActividadesDepartamento("Prueba");
+    	ISC.obtenerSalidasVigentesPorActividad("PruebaActividad");
+    	ISC.mostrarDatosSalida("PruebaSalida");
+    	IUC.listarTuristas();
+    	
+    	try {
+			IIC.crearInscripcion(LocalDate.now(), 3, "PruebaTurNickname321", "PruebaSalida", "PruebaActividad");
+		} catch (ParametrosInvalidosExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UsuarioYaExisteExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UsuarioNoExisteExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+        inscripcion inscripcion = em.createQuery("SELECT i FROM inscripcion i WHERE i.salida_nombre = 'PruebaSalida' AND i.turista_nickname = 'PruebaTurNickname321'", inscripcion.class).getSingleResult();
+        assertNotNull(inscripcion);
+    	
+    }
+    
     
 }

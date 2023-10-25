@@ -64,7 +64,7 @@ public class UsuarioManejador {
 
             // Si el archivo se logró guardar en BD, lo guarda en la colección y además muestra cuantos usuarios hay.
             usuariosNickname.put(nickname, usuario);
-            // log.info("[UsuarioManejador] se agrego correctamente el usuario: " + usuario.getNickname());
+            log.info("[UsuarioManejador] se agrego correctamente el usuario: " + usuario.getNickname());
             
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {
@@ -94,8 +94,8 @@ public class UsuarioManejador {
 
             // Se actualiza en la colección.
             usuariosNickname.put(nickname, usuario);
-            // log.info("El usuario se actualizó" + nickname + "correctamente");
-            // log.info("Usuarios: " + usuariosNickname.size());
+            log.info("El usuario se actualizó" + nickname + "correctamente");
+            log.info("Usuarios: " + usuariosNickname.size());
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {
                 tx.rollback();
@@ -137,7 +137,7 @@ public class UsuarioManejador {
         // Para cada función hay que crear un nuevo em y tx.
 	    EntityManager em = factory.createEntityManager();
 
-        usuariosNickname = new HashMap<String, usuario>();
+        //usuariosNickname = new HashMap<String, usuario>();
         // List<proveedor> proveedores = em.createQuery("SELECT p FROM usuario p WHERE tipo_usuario = 'P' JOIN FETCH p.actividades", proveedor.class).getResultList();
         // List<proveedor> proveedores = em.createQuery("SELECT DISTINCT p FROM proveedor p LEFT JOIN FETCH p.actividades", proveedor.class).getResultList();
         List<proveedor> proveedores = em.createQuery("SELECT DISTINCT p FROM proveedor p LEFT JOIN FETCH p.actividades", proveedor.class).getResultList();
