@@ -183,7 +183,7 @@
                                 
                                     // Llena el modal con los datos de la actividad
                                     document.getElementById("modalNombre").value = dataActividad.nombre;
-                                    console.log(dataActividad);
+                                    // console.log(dataActividad);
                                     document.getElementById("modalFecha").value = dataActividad.fechaCrea;
                                     document.getElementById("modalDescripcion").value = dataActividad.desc;
                                     document.getElementById("modalCiudad").value = dataActividad.departamento.nombre;
@@ -203,9 +203,9 @@
                                 var categoria = document.getElementById("categorias").value;
                                 actualizarActividades(categoria, departamento);
 
-                                $('#actividades').on('click', '.abrir-modal-btn', function () {
-                                    console.log("Click");
-                                });
+                                // $('#actividades').on('click', '.abrir-modal-btn', function () {
+                                //     console.log("Click");
+                                // });
                             });
 
                             $("#categorias").change(function () {
@@ -304,7 +304,7 @@
                                             row.appendChild(col);
                                                                                 
                                             // Agrega la fila al contenedor de actividades
-                                            console.log("Llenando..");
+                                            // console.log("Llenando..");
                                             lista.appendChild(row);
                                         });
                                         
