@@ -114,40 +114,40 @@ public class Main {
     //        log.error(e.toString());
     //    }
 
-         cargarProveedores();
-         log.warning("########################################################");
-         cargarDepartamentos();
-         log.warning("########################################################");
-         cargarCategorias();
-         log.warning("########################################################");
-         cargarPaquetes();
-         log.warning("########################################################");
-         cargarActividades();
-         log.warning("########################################################");
-         cargarActividadesPaquetes();
+        //  cargarProveedores();
+        //  log.warning("########################################################");
+        //  cargarDepartamentos();
+        //  log.warning("########################################################");
+        //  cargarCategorias();
+        //  log.warning("########################################################");
+        //  cargarPaquetes();
+        //  log.warning("########################################################");
+        //  cargarActividades();
+        //  log.warning("########################################################");
+        //  cargarActividadesPaquetes();
          
          
-         try {
-		 	IAC.modificarEstadoActividad("Tour de Arte Urbano", estadoActividad.CONFIRMADA);
-		 } catch (NoExisteExcepcion | ParametrosInvalidosExcepcion | YaExisteExcepcion e) {
-		 	// TODO Auto-generated catch block
-		 	e.printStackTrace();
-		 }
+        //  try {
+		//  	IAC.modificarEstadoActividad("Tour de Arte Urbano", estadoActividad.CONFIRMADA);
+		//  } catch (NoExisteExcepcion | ParametrosInvalidosExcepcion | YaExisteExcepcion e) {
+		//  	// TODO Auto-generated catch block
+		//  	e.printStackTrace();
+		//  }
          
          
          
-         List<dataActividad> LDtAct;
-		try {
-			LDtAct = IAC.getActividadesPorCategoria("fulbo");
+        //  List<dataActividad> LDtAct;
+		// try {
+		// 	LDtAct = IAC.getActividadesPorCategoria("fulbo");
 			
-	         for(dataActividad DtAct : LDtAct) {
-	          	System.out.println(DtAct.getNombre());
-	          	System.out.println(DtAct.getEstado());        
-	          	}
-		} catch (NoExisteExcepcion e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	    //      for(dataActividad DtAct : LDtAct) {
+	    //       	System.out.println(DtAct.getNombre());
+	    //       	System.out.println(DtAct.getEstado());        
+	    //       	}
+		// } catch (NoExisteExcepcion e) {
+		// 	// TODO Auto-generated catch block
+		// 	e.printStackTrace();
+		// }
          
 
         
