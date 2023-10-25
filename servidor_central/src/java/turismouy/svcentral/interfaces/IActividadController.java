@@ -68,5 +68,5 @@ public interface IActividadController {
     public abstract List<dataActividad> getActividadesNoPaquete(String nombreDepartamento, String nombrePaquete) throws UsuarioNoExisteExcepcion;
     public abstract List<dataActividad> getActividadesDepartamentoNoPaquete(String nombrePaquete, String nombreDepartamento) throws UsuarioNoExisteExcepcion;
     public abstract List<dataActividad> getAllActividadesAgregadas();
-    public abstract List<dataActividad> getAllActividadesConfirmadas(); 
+    public abstract List<dataActividad> getActividadesPorCategoria(String nombreCategoria) throws NoExisteExcepcion;
 }

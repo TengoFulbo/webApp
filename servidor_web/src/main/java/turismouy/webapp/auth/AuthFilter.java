@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpSession;
 
 @WebFilter(urlPatterns = {
                         "/resultado",
-                        "/resultado2",
+                        "/miCuenta",
                     })
 public class AuthFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

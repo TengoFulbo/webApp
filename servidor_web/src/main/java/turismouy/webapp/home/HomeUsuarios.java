@@ -32,7 +32,7 @@ public class HomeUsuarios extends HttpServlet {
 
         request.setAttribute("usuarios", usuarios);
 
-        // Muestra la pag de homeUsuarios
+        // Muestra el formulario de inicio de sesión
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/homeUsuarios.jsp");
         dispatcher.forward(request, response);
     }

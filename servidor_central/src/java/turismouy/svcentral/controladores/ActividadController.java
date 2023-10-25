@@ -100,7 +100,7 @@ public class ActividadController implements IActividadController {
 
         // Se trae el objeto luego de guardarlo.
         act = am.getActividad(nombre);
-        
+
         for (categoria categoria : categorias) {
             categoria.addActividad(act);
             cm.updateCategoria(categoria);
@@ -152,24 +152,25 @@ public class ActividadController implements IActividadController {
 	}  
 	
     public List<dataActividad> getAllActividades() {      
-    	List<dataActividad> LDtAct = new ArrayList<>();
+        List<dataActividad> LDtAct = new ArrayList<>();
         DepartamentoManejador dm = DepartamentoManejador.getinstance();
-        List <departamento> LDepto = dm.getAllDepartamento();
-        //Recorro todos los departamentos para poder buscar la actividad que
-        //me pasan por parametro
-        if (LDepto == null) {
-			return null;
-		}
-        for(departamento depto: LDepto){
-            // log.warning(depto.getNombre());
-            List<actividad> LAct = depto.getActividades();
-            // log.warning("Cantidad de actividades: " + LAct.size());
-            for(actividad act : LAct) {
-            	dataActividad DtAct = act.toDataType();
-            	LDtAct.add(DtAct);
-        	}
-        }
-        return LDtAct;
+     List<departamento> deptos = dm.getAllDepartamento();
+     
+         for (departamento depto : deptos) {
+             if (depto != null && depto.getNombre() != null) {
+                 List<actividad> LAct = depto.getActividades();
+                 if (LAct != null) {
+                     for (actividad act : LAct) {
+                     	if(act.getEstado().equals(estadoActividad.CONFIRMADA)){
+                     		LDtAct.add(act.toDataType());
+                     	}
+                     }
+                 }
+             }
+         }
+     if (LDtAct.isEmpty())
+         return null; 
+     return LDtAct;
     }
 
     public List<dataActividad> getAllActividadesDepartamento(String nombreDep) {
@@ -235,30 +236,6 @@ public class ActividadController implements IActividadController {
                         	}
                         }
                     }
-                    break;
-                }
-            }
-        if (LDtAct.isEmpty())
-            return null; 
-        return LDtAct;
-    }
-    
-    public List<dataActividad> getAllActividadesConfirmadas() {
-        List<dataActividad> LDtAct = new ArrayList<>();
-           DepartamentoManejador dm = DepartamentoManejador.getinstance();
-        List<departamento> deptos = dm.getAllDepartamento();
-        
-            for (departamento depto : deptos) {
-                if (depto != null && depto.getNombre() != null) {
-                    List<actividad> LAct = depto.getActividades();
-                    if (LAct != null) {
-                        for (actividad act : LAct) {
-                        	if(act.getEstado().equals(estadoActividad.CONFIRMADA)){
-                        		LDtAct.add(act.toDataType());
-                        	}
-                        }
-                    }
-                    break;
                 }
             }
         if (LDtAct.isEmpty())
@@ -402,6 +379,27 @@ public class ActividadController implements IActividadController {
 
     }
     
+    public List <dataActividad> getActividadesPorCategoria(String nombreCategoria) throws NoExisteExcepcion {
+    	CategoriaManejador cm = CategoriaManejador.getInstance();    	
+    	categoria categoria = cm.getCategoria(nombreCategoria);
+    	
+    	if(categoria == null) {
+        	log.error("La categoria '" + nombreCategoria + "' no existe.");
+        	throw new NoExisteExcepcion("La categoria " + nombreCategoria + " no existe");
+    		
+    	}
+    
+    	List<actividad> LAct = categoria.getActividades();
+    	List<dataActividad> LDtAct = new ArrayList<dataActividad>();
+    	
+    	for(actividad act : LAct) {
+    		dataActividad DtAct = act.toDataType();
+    		LDtAct.add(DtAct);
+    	}
+    	
+    	return LDtAct;
+    }
+    
     public void modificarEstadoActividad(String nombre, estadoActividad estado) throws NoExisteExcepcion, ParametrosInvalidosExcepcion, YaExisteExcepcion {
         if (estado != estadoActividad.CONFIRMADA && estado != estadoActividad.RECHAZADA) {
             log.error("Parametros invalidos por primero.");
@@ -422,7 +420,36 @@ public class ActividadController implements IActividadController {
 
         log.info("Se modifica el estado de la actividad '" + nombre + "' " + actividad.getEstado() + " a " + estado);
         actividad.setEstado(estado);
+        
+        DepartamentoManejador dm = DepartamentoManejador.getinstance();
+        departamento depto = dm.getDepartamento(actividad.getDepartamento().getNombre());
+        
+        UsuarioManejador um = UsuarioManejador.getinstance();
+        usuario usuario = um.getUsuario(actividad.getProveedor().getNickname());
+        proveedor prov =(proveedor) usuario;
+        
+        PaqueteManejador pm = PaqueteManejador.getinstance();
+        
+        CategoriaManejador cm = CategoriaManejador.getInstance();
+        
+        depto.remplazarActividad(actividad);
+        dm.updateDepartamento(depto);
+        
+        prov.remplazarActividad(actividad);
+        um.updateUsuario(usuario);
+        /*
+        for(categoria categoria : actividad.getCategorias()) {
+        	categoria.remplazarActividad(actividad);
+        	cm.updateCategoria(categoria);
+        }
+        
+        for(paquete paq : actividad.getPaquetes()) {
+        	paq.remplazarActividad(actividad);
+        	pm.updatePaquete(paq);
+        }
+        */
         am.updateActividad(actividad);
+        
     } 
 	
     private static boolean validarTexto(String texto, int nivel) {

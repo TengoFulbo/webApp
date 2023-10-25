@@ -10,6 +10,11 @@ import javax.persistence.NoResultException;
 
 import turismouy.svcentral.EMFactory;
 import turismouy.svcentral.entidades.compra;
+import turismouy.svcentral.entidades.inscripcion;
+import turismouy.svcentral.entidades.paquete;
+import turismouy.svcentral.entidades.salida;
+import turismouy.svcentral.entidades.turista;
+import turismouy.svcentral.entidades.usuario;
 import turismouy.svcentral.utilidades.log;
 
 public class CompraManejador{
