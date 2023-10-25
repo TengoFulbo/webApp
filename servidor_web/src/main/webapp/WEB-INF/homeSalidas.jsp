@@ -25,9 +25,9 @@
     <div class="mainWrap">
       <div class="mainWrap__pagination">
         <ul class="pagination">
-          <li class="active"><a href="./homeSalidas.html">Salidas</a></li>
-          <li class="waves-effect"><a href="./homeActividad.html">Actividades</a></li>
-          <li class="waves-effect"><a href="./homePaquete.html">Paquetes</a></li>
+          <li class="active"><a href="./homeSalidas">Salidas</a></li>
+          <li class="waves-effect"><a href="./homeActividad">Actividades</a></li>
+          <li class="waves-effect"><a href="./homePaquete">Paquetes</a></li>
         </ul>
 
         <ul id="dropdown1" class="dropdown-content">
