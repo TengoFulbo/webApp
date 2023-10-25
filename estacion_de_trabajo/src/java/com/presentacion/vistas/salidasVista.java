@@ -170,7 +170,8 @@ public class salidasVista extends JPanel {
 						String nomb = salida.getNombre();
 						String ls = salida.getLugarSalida();
 						String fs = salida.getFechaSalida().toString();
-						model.addRow(new Object[] {nomb, ls, fs});
+						String ld = salida.getCapacidad() + "";
+						model.addRow(new Object[] {nomb, ls, fs, ld});
 					}
 				}
 			}
