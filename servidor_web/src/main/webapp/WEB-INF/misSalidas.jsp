@@ -23,18 +23,18 @@
   <!-- MAIN -->
   <div class="main">
     <div class="mainWrap">
-      <div class="mainWrap__pagination">
+      <!-- <div class="mainWrap__pagination">
         <ul class="pagination">
           <li class="active"><a href="./homeSalidas">Salidas</a></li>
           <li class="waves-effect"><a href="./homeActividades">Actividades</a></li>
           <li class="waves-effect"><a href="./homePaquetes">Paquetes</a></li>
         </ul>
-      </div>
+      </div> -->
 
       <!-- page -->
       <section class="page">
         <div class="page__texto">
-          <h1 class="page__title">Salidas</h1>
+          <h1 class="page__title">Mis Salidas</h1>
           <p class="page__p">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Qui
             incidunt numquam tempora dolorem vel, facere necessitatibus ullam
@@ -283,7 +283,7 @@
         // Realiza una solicitud POST al Servlet con el valor seleccionado.
         $.ajax({
             type: "POST",
-            url: "./homeSalidas",
+            url: "./misSalidas",
             data: { departamento: departamento, categoria: categoria, actividad: actividad},
             dataType: "json",
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
@@ -344,12 +344,6 @@
                     btn.setAttribute("dataSalida", JSON.stringify(salida));
                     btn.textContent = "Consultar";
 
-                    var btnRegistro = document.createElement("button");
-                    btnRegistro.className = "btn abrirRegistrar";
-                    btnRegistro.setAttribute("dataSalida", JSON.stringify(salida));
-                    btnRegistro.textContent = "Resgistrarse";
-                    btnRegistro.style.marginLeft = "10px";
-
                     // Agrupa los elementos en la estructura deseada
                     cardImage.appendChild(img);
                     cardImage.appendChild(title);
@@ -357,7 +351,6 @@
                     cardContent.appendChild(paragraph);
                     cardContent.appendChild(btnDiv);
                     btnDiv.appendChild(btn);
-                    btnDiv.appendChild(btnRegistro);
                                                                 
                     card.appendChild(cardImage);
                     card.appendChild(cardContent);
