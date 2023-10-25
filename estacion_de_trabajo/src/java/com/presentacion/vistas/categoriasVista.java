@@ -30,6 +30,7 @@ import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialDeepOc
 import com.presentacion.utilidades.PlaceholderTextField;
 import turismouy.svcentral.Fabrica;
 import turismouy.svcentral.datatypes.dataActividad;
+import turismouy.svcentral.datatypes.dataCategoria;
 import turismouy.svcentral.datatypes.dataDepartamento;
 import turismouy.svcentral.datatypes.dataPaquete;
 import turismouy.svcentral.datatypes.dataSalida;
@@ -101,12 +102,12 @@ public class categoriasVista extends JPanel {
 		btnNewCategoria.putClientProperty("FlatLaf.styleClass", "h3");
 		center.add(btnNewCategoria);
 
-		IActividadController IAC = Fabrica.getInstance().getIActividadController();
-		List<dataActividad> actividades = IAC.getAllActividades();
+		ICategoriaController ICC = Fabrica.getInstance().getICategoriaController();
+		List<dataCategoria> categorias = ICC.listarCategorias();
 
-		String[] columnNames = { "Nombre", "Actividades Relacionadas (cant.)" };
+		String[] columnNames = { "Nombre"};
 		DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
-			boolean[] columnEditables = new boolean[] { false, false };
+			boolean[] columnEditables = new boolean[] { false };
 		};
 		TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
 
@@ -123,10 +124,10 @@ public class categoriasVista extends JPanel {
 
 		table.setRowSorter(sorter);
 
-		if (actividades != null) {
-			for (dataActividad actividad : actividades) {
-				String nomb = actividad.getNombre();
-				model.addRow(new Object[] { nomb, 0 });
+		if (categorias != null) {
+			for (dataCategoria cat : categorias) {
+				String nomb = cat.getNombre();
+				model.addRow(new Object[] { nomb });
 			}
 		}
 
@@ -142,12 +143,12 @@ public class categoriasVista extends JPanel {
 
 				model.setRowCount(0);
 
-				List<dataActividad> actividades = IAC.getAllActividades();
+				List<dataCategoria> categorias = ICC.listarCategorias();
 
-				if (actividades != null) {
-					for (dataActividad actividad : actividades) {
-						String nomb = actividad.getNombre();
-						model.addRow(new Object[] { nomb, 0 });
+				if (categorias != null) {
+					for (dataCategoria cat : categorias) {
+						String nomb = cat.getNombre();
+						model.addRow(new Object[] { nomb });
 					}
 				}
 			}

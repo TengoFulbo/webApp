@@ -678,11 +678,11 @@ public class usuariosVista extends JPanel {
 		aceptar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		aceptar.setBounds(19, 272, 224, 38);
 		aceptar.putClientProperty("JButton.buttonType", "roundRect");
-		popupPanel.add(aceptar);
-
 		dateModel.addChangeListener(e -> {
-			aceptar.setEnabled(true);
+			aceptar.setEnabled(false);
 		});
+		aceptar.setEnabled(false);
+		popupPanel.add(aceptar);
 
 		JButton cancelar = new JButton("Cancelar");
 		cancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -925,35 +925,42 @@ public class usuariosVista extends JPanel {
 			panel.add(SalidasPane);
 		}
 
-		nombre.getDocument().addDocumentListener(new DocumentListener() {
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				aceptar.setEnabled(true);
-			}
+//		nombre.getDocument().addDocumentListener(new DocumentListener() {
+//			@Override
+//			public void insertUpdate(DocumentEvent e) {
+//				aceptar.setEnabled(true);
+//			}
+//
+//			@Override
+//			public void removeUpdate(DocumentEvent e) {
+//				aceptar.setEnabled(true);
+//			}
+//
+//			@Override
+//			public void changedUpdate(DocumentEvent e) {
+//			}
+//		});
+//
+//		apellido.getDocument().addDocumentListener(new DocumentListener() {
+//			@Override
+//			public void insertUpdate(DocumentEvent e) {
+//				aceptar.setEnabled(true);
+//			}
+//
+//			@Override
+//			public void removeUpdate(DocumentEvent e) {
+//				aceptar.setEnabled(true);
+//			}
+//
+//			@Override
+//			public void changedUpdate(DocumentEvent e) {
+//			}
+//		});
 
+		cancelar.addMouseListener(new MouseAdapter() {
 			@Override
-			public void removeUpdate(DocumentEvent e) {
-				aceptar.setEnabled(true);
-			}
-
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-			}
-		});
-
-		apellido.getDocument().addDocumentListener(new DocumentListener() {
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				aceptar.setEnabled(true);
-			}
-
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				aceptar.setEnabled(true);
-			}
-
-			@Override
-			public void changedUpdate(DocumentEvent e) {
+			public void mouseClicked(MouseEvent e) {
+				popupDialog.dispose();
 			}
 		});
 
@@ -964,53 +971,46 @@ public class usuariosVista extends JPanel {
 			}
 		});
 
-		cancelar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				popupDialog.dispose();
-			}
-		});
-
-		aceptar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-				if (nickname.getText().isEmpty() || nombre.getText().isEmpty() || apellido.getText().isEmpty()
-						|| correo.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(popupDialog, "Todos los campos deben estar llenos",
-							"Campos incompletos", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-
-				Date selectedDate = (Date) fechanacimiento.getValue();
-				System.out.println(fechanacimiento.getValue().toString());
-				Calendar calendar = Calendar.getInstance();
-				calendar.setTime(selectedDate);
-
-				int year = calendar.get(Calendar.YEAR);
-				int month = calendar.get(Calendar.MONTH) + 1;
-				int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-				System.out.println(year + " " + month + " " + day);
-
-				LocalDate nuevaFecha = LocalDate.of(year, month, day);
-
-				System.out.println(nuevaFecha.toString());
-
-				try {
-					IUC.modificarUsuario(nickname.getText(), nombre.getText(), apellido.getText(), nuevaFecha);
-					System.out.println("Se ha modificado el usuario");
-					JOptionPane.showMessageDialog(popupDialog, "Usuario modificado con EXITO",
-							"Registro Completado", JOptionPane.INFORMATION_MESSAGE);
-					popupDialog.dispose();
-				} catch (ParametrosInvalidosExcepcion a) {
-					JOptionPane.showMessageDialog(popupDialog, "Los parametros ingresado no son validos",
-							"Parametros invalidos", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-
-			}
-		});
+//		aceptar.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//
+//				if (nickname.getText().isEmpty() || nombre.getText().isEmpty() || apellido.getText().isEmpty()
+//						|| correo.getText().isEmpty()) {
+//					JOptionPane.showMessageDialog(popupDialog, "Todos los campos deben estar llenos",
+//							"Campos incompletos", JOptionPane.ERROR_MESSAGE);
+//					return;
+//				}
+//
+//				Date selectedDate = (Date) fechanacimiento.getValue();
+//				System.out.println(fechanacimiento.getValue().toString());
+//				Calendar calendar = Calendar.getInstance();
+//				calendar.setTime(selectedDate);
+//
+//				int year = calendar.get(Calendar.YEAR);
+//				int month = calendar.get(Calendar.MONTH) + 1;
+//				int day = calendar.get(Calendar.DAY_OF_MONTH);
+//
+//				System.out.println(year + " " + month + " " + day);
+//
+//				LocalDate nuevaFecha = LocalDate.of(year, month, day);
+//
+//				System.out.println(nuevaFecha.toString());
+//
+//				try {
+//					IUC.modificarUsuario(nickname.getText(), nombre.getText(), apellido.getText(), nuevaFecha);
+//					System.out.println("Se ha modificado el usuario");
+//					JOptionPane.showMessageDialog(popupDialog, "Usuario modificado con EXITO",
+//							"Registro Completado", JOptionPane.INFORMATION_MESSAGE);
+//					popupDialog.dispose();
+//				} catch (ParametrosInvalidosExcepcion a) {
+//					JOptionPane.showMessageDialog(popupDialog, "Los parametros ingresado no son validos",
+//							"Parametros invalidos", JOptionPane.ERROR_MESSAGE);
+//					return;
+//				}
+//
+//			}
+//		});
 
 		popupDialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 

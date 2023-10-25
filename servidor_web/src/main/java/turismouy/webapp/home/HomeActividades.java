@@ -1,8 +1,12 @@
 package turismouy.webapp.home;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -19,8 +23,9 @@ import turismouy.svcentral.datatypes.dataActividad;
 import turismouy.svcentral.datatypes.dataCategoria;
 import turismouy.svcentral.datatypes.dataDepartamento;
 import turismouy.svcentral.utilidades.log;
+import turismouy.webapp.utils.LocalDateAdapter;
 
-@WebServlet("/homeActividad")
+@WebServlet("/homeActividades")
 public class HomeActividades extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -44,5 +49,53 @@ public class HomeActividades extends HttpServlet {
         // Redireciona
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/homeActividades.jsp");
         dispatcher.forward(request, response);
+    }
+
+    // @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Gson gson = new Gson();
+        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+
+        String categoria    = request.getParameter("categoria");
+        String departamento = request.getParameter("departamento");
+
+        log.info("Departamento: " + departamento);
+
+        log.info("[homeActividades Post]");
+
+        IActividadController IAC = Fabrica.getInstance().getIActividadController();
+        
+        List<dataActividad> actividadesList = IAC.getAllActividades();
+
+        // Creamos una lista que contendrá las actividades a eliminar
+        List<dataActividad> actEliminar = new ArrayList<dataActividad>();
+        
+        // Filtramos departamento
+        if (!departamento.equals("")) {
+            for (dataActividad actividad : actividadesList) {
+                if (!actividad.getDepartamento().getNombre().equals(departamento)) {
+                    actEliminar.add(actividad);
+                    // log.info("[homeActividades] Actividad: " + actividad.getNombre() + " se elimina por el filtro departamento");
+                }
+            }
+        }
+
+        // Filtramos por categoria
+        if (!categoria.equals("")) {
+            for(dataActividad actividad : actividadesList) {
+                if (!actividad.getDtCategorias().contains(categoria)) {
+                    actEliminar.add(actividad);
+                    // log.info("[homeActividades] Actividad: " + actividad.getNombre() + " se elimina por el filtro categoria");
+                }
+            }
+        }
+
+        // Elimina los elementos de la lista original
+        actividadesList.removeAll(actEliminar);
+
+        request.setCharacterEncoding("UTF-8");
+        String resultadoJson = gson.toJson(actividadesList);
+        response.setContentType("application/json");
+        response.getWriter().write(resultadoJson);
     }
 }
