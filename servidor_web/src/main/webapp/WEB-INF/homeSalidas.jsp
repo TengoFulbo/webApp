@@ -171,11 +171,11 @@
       <h4>Consulta de Salida</h4>
       <form>
         <div class="input-field">
-          <input id="nombre" type="text" class="validate" readonly value=" " />
+          <input id="modalNombre" type="text" class="validate" disabled value=" " />
           <label for="nombre" class="active">Nombre</label>
         </div>
         <div class="input-field">
-          <input id="cant" type="number" class="validate" readonly value=" " />
+          <input id="cant" type="text" class="validate" disabled value=" " />
           <label for="cant" class="active">Cantidad de lugares</label>
         </div>
         <div class="input-field">
@@ -187,7 +187,7 @@
           <label for="dateAlta" class="active">Fecha de alta</label>
         </div>
         <div class="input-field">
-          <input id="lugarSalida" type="text" class="validate" readonly value=" " />
+          <input id="lugarSalida" type="text" class="validate" disabled value=" " />
           <label for="lugarSalida" class="active">Lugar de Salida</label>
         </div>
         <div class="divider"></div>
@@ -218,25 +218,28 @@
     document.addEventListener("click", function (event) {
         if (event.target.classList.contains("abrirModalBtn")) {
             // Obtiene los datos de la actividad
-            var objeto = event.target.getAttribute("dataActividad");
-            var dataActividad = JSON.parse(objeto)
-            // var actividadDescripcion = event.target.getAttribute("data-desc");
+            var objeto = event.target.getAttribute("dataSalida");
+            var dtSalida= JSON.parse(objeto)
+            console.log("->  " + objeto);
+            console.log("->  " + dtSalida);
+            console.log("nombre ->  " + dtSalida.nombre);
+            // var SalidaDescripcion = event.target.getAttribute("data-desc");
         
-            // Llena el modal con los datos de la actividad
-            document.getElementById("modalNombre").value = dataActividad.nombre;
-            console.log(dataActividad);
-            document.getElementById("modalFecha").value = dataActividad.fechaCrea;
-            document.getElementById("modalDescripcion").value = dataActividad.desc;
-            document.getElementById("modalCiudad").value = dataActividad.departamento.nombre;
-            document.getElementById("modalCosto").value = dataActividad.costoUni;
-            document.getElementById("modalDuracion").value = dataActividad.duracion;
+            // Llena el modal con los datos de la Salida
+            document.getElementById("modalNombre").value = dtSalida.nombre;
+            document.getElementById("dateAlta").value = dtSalida.fechaAlta;
+            document.getElementById("dateSalida").value = dtSalida.fechaSalida;
+            document.getElementById("cant").value = dtSalida.capacidad;
+            document.getElementById("lugarSalida").value = dtSalida.lugarSalida;
             // document.getElementById("")
             // document.getElementById("modalActividadDescripcion").textContent = actividadDescripcion;
         
             // Abre el modal
-            var modal = M.Modal.init(document.getElementById("consultaModal"));
+            var modal = M.Modal.init(document.getElementById("modalConsulta"));
             modal.open();
         }
+
+        
     });
 
     $(document).ready(function () {
@@ -247,6 +250,19 @@
 
         $('#actividades').on('click', '.abrir-modal-btn', function () {
             console.log("Click");
+        });
+
+        $('#salidas').on('click', '.abrirRegistrar', function () {
+            // Obtiene los datos de la salida
+            var dataSalida = JSON.parse($(this).attr('dataSalida'));
+            
+            // Llena el modal de registro con los datos de la salida
+            $('#numero').val(''); // Limpia el campo de número (si es necesario)
+            $('input[name="formaPago"][value="general"]').prop('checked', true); // Marca la opción general (si es necesario)
+            
+            // Abre el modal de registro
+            var modalRegistro = M.Modal.init(document.getElementById("modalInscribirse"));
+            modalRegistro.open();
         });
     });
 
