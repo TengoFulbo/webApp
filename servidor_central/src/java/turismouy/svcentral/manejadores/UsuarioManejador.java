@@ -139,13 +139,13 @@ public class UsuarioManejador {
 
         usuariosNickname = new HashMap<String, usuario>();
         // List<proveedor> proveedores = em.createQuery("SELECT p FROM usuario p WHERE tipo_usuario = 'P' JOIN FETCH p.actividades", proveedor.class).getResultList();
-        // List<proveedor> proveedores = em.createQuery("SELECT DISTINCT p FROM proveedor p LEFT JOIN FETCH p.actividades", proveedor.class).getResultList();
-        List<proveedor> proveedores = em.createQuery(
-            "SELECT DISTINCT p FROM proveedor p " +
-            "LEFT JOIN FETCH p.actividades a " +
-            "LEFT JOIN FETCH a.salidas", 
-            proveedor.class
-        ).getResultList();
+        List<proveedor> proveedores = em.createQuery("SELECT DISTINCT p FROM proveedor p LEFT JOIN FETCH p.actividades", proveedor.class).getResultList();
+        // List<proveedor> proveedores = em.createQuery(
+            // "SELECT DISTINCT p FROM proveedor p " +
+            // "LEFT JOIN FETCH p.actividades a " +
+            // "LEFT JOIN FETCH a.salidas", 
+            // proveedor.class
+        // ).getResultList();
 
         if (proveedores == null) {
             em.close();
