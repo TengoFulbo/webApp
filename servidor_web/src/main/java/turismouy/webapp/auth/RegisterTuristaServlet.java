@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import turismouy.svcentral.Fabrica;
 import turismouy.svcentral.interfaces.IUsuarioController;
 
@@ -18,6 +19,8 @@ public class RegisterTuristaServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        HttpSession session = request.getSession();
 
         String nickname = null;
         String email = null;
@@ -67,12 +70,13 @@ public class RegisterTuristaServlet extends HttpServlet {
         try {
             IUC.registrarTurista(nickname, nombre, apellido, email, nacionalidad, fecha, password);
 
+            session.setAttribute("errorLogin", "Usuario registrado. Ahora puedes iniciar sesión");
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         } catch (Exception e) {
             System.out.println(e);
         }
-
+                
         response.sendRedirect(request.getContextPath() + "/register");
     }
 }
