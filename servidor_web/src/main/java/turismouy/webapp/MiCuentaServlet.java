@@ -41,4 +41,8 @@ public class MiCuentaServlet extends HttpServlet {
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/miCuenta.jsp");
         dispatcher.forward(request, response);
     }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("HOla");
+    }
 }

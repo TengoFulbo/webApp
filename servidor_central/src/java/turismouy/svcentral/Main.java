@@ -114,42 +114,23 @@ public class Main {
     //        log.error(e.toString());
     //    }
 
-         cargarProveedores();
-         log.warning("########################################################");
-         cargarDepartamentos();
-         log.warning("########################################################");
-         cargarCategorias();
-         log.warning("########################################################");
-         cargarPaquetes();
-         log.warning("########################################################");
-         cargarActividades();
-         log.warning("########################################################");
-         cargarActividadesPaquetes();
-         
-         
-         try {
-		 	IAC.modificarEstadoActividad("Tour de Arte Urbano", estadoActividad.CONFIRMADA);
-		 } catch (NoExisteExcepcion | ParametrosInvalidosExcepcion | YaExisteExcepcion e) {
-		 	// TODO Auto-generated catch block
-		 	e.printStackTrace();
-		 }
-         
-         
-         
-         List<dataActividad> LDtAct;
-		try {
-			LDtAct = IAC.getActividadesPorCategoria("fulbo");
-			
-	         for(dataActividad DtAct : LDtAct) {
-	          	System.out.println(DtAct.getNombre());
-	          	System.out.println(DtAct.getEstado());        
-	          	}
-		} catch (NoExisteExcepcion e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-         
-
+        // cargarProveedores();
+        // log.warning("########################################################");
+        // cargarDepartamentos();
+        // log.warning("########################################################");
+        // cargarCategorias();
+        // log.warning("########################################################");
+        // cargarPaquetes();
+        // log.warning("########################################################");
+        // cargarActividades();
+        // log.warning("########################################################");
+        // cargarActividadesPaquetes();
+        // try {
+		// 	IAC.modificarEstadoActividad("Tour de Vinos en Bodegas", estadoActividad.CONFIRMADA);
+		// } catch (NoExisteExcepcion | ParametrosInvalidosExcepcion | YaExisteExcepcion e) {
+		// 	// TODO Auto-generated catch block
+		// 	e.printStackTrace();
+		// }
         
         // try {
 		// 	IAC.crearActividad("Canelones", "techGadgets", "a", "Experimenta la vida gaucha a caballo en la campiña.", 240, 80, "C", LocalDate.now());
