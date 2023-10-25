@@ -66,7 +66,7 @@ public class ActividadController implements IActividadController {
         proveedor prov = (proveedor) user;
         
         if(prov == null) {
-        	log.error("El proveedor " + nombreProv + "no existe");
+        	log.error("El proveedor " + nombreProv + " no existe");
         	throw new UsuarioNoExisteExcepcion("El proveedor " + nombreProv + " no existe");
         }
         
