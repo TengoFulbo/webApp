@@ -40,18 +40,20 @@ public class Main {
         ICategoriaController ICC = fabrica.getICategoriaController();
         IDepartamentoController IDC = fabrica.getIDepartamentoController();
 
-        // List<dataDepartamento> departamentos = IDC.listarDepartamentos();
-
-        // for (dataDepartamento dep : departamentos) {
-        //     log.info(dep.getNombre());
-        //     for (dataActividad act : dep.getActividades()) {
-        //         log.info("  - " + act.getNombre());
-        //         for (String cat : act.getDtCategorias()) {
-        //             log.info("  [" + cat + "]");
-        //         }
-        //     }
-        // }
-
+        
+        
+        //List<dataDepartamento> departamentos = IDC.listarDepartamentos();
+/*
+        for (dataDepartamento dep : departamentos) {
+            log.info(dep.getNombre());
+            for (dataActividad act : dep.getActividades()) {
+                log.info("  - " + act.getNombre());
+                for (String cat : act.getDtCategorias()) {
+                    log.info("  [" + cat + "]");
+                }
+            }
+        }
+*/
         // List<String> categorias = new ArrayList<String>();
         // categorias.add("paseo");
         // categorias.add("fulbo");
@@ -112,23 +114,42 @@ public class Main {
     //        log.error(e.toString());
     //    }
 
-        // cargarProveedores();
-        // log.warning("########################################################");
-        // cargarDepartamentos();
-        // log.warning("########################################################");
-        // cargarCategorias();
-        // log.warning("########################################################");
-        // cargarPaquetes();
-        // log.warning("########################################################");
-        // cargarActividades();
-        // log.warning("########################################################");
-        // cargarActividadesPaquetes();
-        // try {
-		// 	IAC.modificarEstadoActividad("Tour de Vinos en Bodegas", estadoActividad.CONFIRMADA);
-		// } catch (NoExisteExcepcion | ParametrosInvalidosExcepcion | YaExisteExcepcion e) {
+        //  cargarProveedores();
+        //  log.warning("########################################################");
+        //  cargarDepartamentos();
+        //  log.warning("########################################################");
+        //  cargarCategorias();
+        //  log.warning("########################################################");
+        //  cargarPaquetes();
+        //  log.warning("########################################################");
+        //  cargarActividades();
+        //  log.warning("########################################################");
+        //  cargarActividadesPaquetes();
+         
+         
+        //  try {
+		//  	IAC.modificarEstadoActividad("Tour de Arte Urbano", estadoActividad.CONFIRMADA);
+		//  } catch (NoExisteExcepcion | ParametrosInvalidosExcepcion | YaExisteExcepcion e) {
+		//  	// TODO Auto-generated catch block
+		//  	e.printStackTrace();
+		//  }
+         
+         
+         
+        //  List<dataActividad> LDtAct;
+		// try {
+		// 	LDtAct = IAC.getActividadesPorCategoria("fulbo");
+			
+	    //      for(dataActividad DtAct : LDtAct) {
+	    //       	System.out.println(DtAct.getNombre());
+	    //       	System.out.println(DtAct.getEstado());        
+	    //       	}
+		// } catch (NoExisteExcepcion e) {
 		// 	// TODO Auto-generated catch block
 		// 	e.printStackTrace();
 		// }
+         
+
         
         // try {
 		// 	IAC.crearActividad("Canelones", "techGadgets", "a", "Experimenta la vida gaucha a caballo en la campiña.", 240, 80, "C", LocalDate.now());
@@ -266,13 +287,13 @@ public class Main {
         try { ICC.crearCategoria("playa");
             } catch (Exception e) { log.error("Error: " + e.toString()); }
 
-        try { ICC.crearCategoria("recreativo");
+        try { ICC.crearCategoria("fulbo");
             } catch (Exception e) { log.error("Error: " + e.toString()); }
 
-        try { ICC.crearCategoria("para niños");
+        try { ICC.crearCategoria("fulbo");
             } catch (Exception e) { log.error("Error: " + e.toString()); }
 
-        try { ICC.crearCategoria("aventura");
+        try { ICC.crearCategoria("fulbo");
             } catch (Exception e) { log.error("Error: " + e.toString()); }
     }
 
@@ -282,7 +303,6 @@ public class Main {
 
         List<String> categorias1 = new ArrayList<String>();
         categorias1.add("fulbo");
-        categorias1.add("para niños");
 
         try { IAC.crearActividad("Canelones", "homeSolutions", "Tour de Vinos en Bodegas", "Recorrido por las mejores bodegas de la región.", 120, 50, "Canelones", LocalDate.now(), categorias1);
             } catch (Exception e) { log.error("Error: " + e.toString()); }            

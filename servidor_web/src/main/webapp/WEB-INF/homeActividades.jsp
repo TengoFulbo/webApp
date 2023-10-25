@@ -2,16 +2,10 @@
     <%@ page import="java.util.List" %>
     <%@ page import="turismouy.svcentral.datatypes.dataActividad" %>
     <%@ page import="turismouy.svcentral.datatypes.dataDepartamento" %>
-    <%@ page import="turismouy.svcentral.datatypes.dataCategoria" %>
-
         <%@ include file="./utils/head.jsp" %>
 
             <head>
                 <link rel="stylesheet" href="./src/css/homeMulti.css" />
-                <!-- MATERIALIZE JS -->
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-                <!-- MATERIALIZE LOCAL JS -->
-                <script src="src/js/materialize.js"></script>
             </head>
 
             <body>
@@ -40,9 +34,9 @@
                         <div class="mainWrap">
                             <div class="mainWrap__pagination">
                                 <ul class="pagination">
-                                    <li class="waves-effect"><a href="./homeSalidas">Salidas</a></li>
-                                    <li class="active"><a href="./homeActividades">Actividades</a></li>
-                                    <li class="waves-effect"><a href="./homePaquete">Paquetes</a></li>
+                                    <li class="waves-effect"><a href="./homeSalidas.html">Salidas</a></li>
+                                    <li class="active"><a href="./homeActividad.html">Actividades</a></li>
+                                    <li class="waves-effect"><a href="./homePaquete.html">Paquetes</a></li>
                                 </ul>
 
                                 <ul id="dropdown1" class="dropdown-content">
@@ -70,40 +64,29 @@
                                     <ul class="pagination page__filter--list">
                                         <li>
                                             <div class="input-field col s12">
-                                                <select id="categorias">
-                                                    <option value="" disabled selected>No seleccionado</option>
-                                                    <% List<dataCategoria> categorias = (List<dataCategoria>) request.getAttribute("categorias"); %>
-                                                        <%
-                                                        int value = 1;
-                                                        if (categorias != null) {
-                                                            if (!categorias.isEmpty()) {
-                                                                for (dataCategoria categoria : categorias) {
-                                                        %>
-                                                                    <option value="<%= categoria.getNombre() %>"><%= value %> - <%= categoria.getNombre() %></option>
-                                                        <%
-                                                                    value++;
-                                                                }
-                                                            }
-                                                        }
-                                                        %>
+                                                <select>
+                                                    <option value="" disabled selected></option>
+                                                    <option value="1">Escalada</option>
+                                                    <option value="2">Turismo</option>
+                                                    <option value="3">Caminata</option>
                                                 </select>
                                                 <label>Categorias</label>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="input-field col s12">
-                                                <select id="departamentos">
-                                                    <option value="" disabled selected>No seleccionado</option>
-                                                    <% List<dataDepartamento> departamentos = (List<dataDepartamento>) request.getAttribute("departamentos"); %>
+                                                <select>
+                                                    <option value="" disabled selected></option>
+                                                    <% List<dataCategoria> categorias = (List<dataCategoria>) request.getAttribute("categorias");
                                                     <%
-                                                    int value2 = 1;
-                                                    if (departamentos != null) {
-                                                        if (!departamentos.isEmpty()) {
-                                                            for (dataDepartamento departamento : departamentos) {
+                                                    int value = 1;
+                                                    if (categorias != null) {
+                                                        if (!categorias.isEmpty()) {
+                                                            for (dataCategoria categoria : categorias) {
                                                     %>
-                                                                <option value="<%= departamento.getNombre() %>"> <%= value2 %> - <%= departamento.getNombre() %></option>
+                                                                <option value="<%= value %>"><%= categoria.getNombre() %></option>
                                                     <%
-                                                                value2++;
+                                                                value+1;
                                                             }
                                                         }
                                                     }
@@ -114,8 +97,37 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="page__wrap" id="actividades">
-                                    <!-- Esto se llena con JS. -->
+                                <div class="page__wrap">
+                                    <% List<dataActividad> ListaActividades = (List<dataActividad>) request.getAttribute("actividades");
+                                            if (ListaActividades != null) {
+                                            for (dataActividad dataAct : ListaActividades) {
+                                            %>
+                                            <div class="row">
+                                                <div class="col s12 m6 page__card">
+                                                    <div class="card">
+                                                        <div class="card-image">
+                                                            <img src="src/img/blurry-gradient1.svg"
+                                                                class="page__card--img" />
+                                                            <span class="card-title page__card--title"><%= dataAct.getNombre() %></span>
+                                                        </div>
+                                                        <div class="card-content page__card--contenido">
+                                                            <p>
+                                                                <%= dataAct.getDesc() %>
+                                                            </p>
+                                                            <div class="page__card--btns">
+                                                                <a class="waves-effect waves-light modal-trigger btn page__card--btn"
+                                                                    href="#modalConsulta">Consultar</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% }
+                                        }else { %>
+                                            <h1>No hay actividades</h1>
+                                        <% } %>
+
+
                                 </div>
                             </section>
                         </div>
@@ -166,12 +178,9 @@
                         </div>
                     </div>
 
+
                     <%@ include file="./utils/footer.jsp" %>
 
-                        <script>
-                            document.addEventListener("DOMContentLoaded", function () {
-                                var modal = M.Modal.init(document.getElementById("consultaModal"));
-                            });
 
                             // Agrega un evento de clic al botón "Consultar" (delegación de eventos)
                             document.addEventListener("click", function (event) {
@@ -312,6 +321,12 @@
                                 });
                             }   
                         </script>
+
+                        <!-- MATERIALIZE JS -->
+                        <script
+                            src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+                        <!-- MATERIALIZE LOCAL JS -->
+                        <script src="src/js/materialize.js"></script>
             </body>
 
             </html>

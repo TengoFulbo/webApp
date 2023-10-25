@@ -61,6 +61,8 @@ public interface IUsuarioController {
     public abstract List<dataUsuario> listarUsuarios();
 
     public abstract List<dataUsuario> listarProveedores();
+    
+    public abstract List<String> listarTuristas();
 
     public abstract boolean login(String usuario, String password);
 }

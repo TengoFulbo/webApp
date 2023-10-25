@@ -52,7 +52,9 @@ public class DepartamentoController implements IDepartamentoController {
             }
             listaDT.add(dep.toDataType());
         }
-    
+        if(listaDT.isEmpty()) {
+        	return null;
+        }
         return listaDT;
     };
 

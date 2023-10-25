@@ -29,7 +29,7 @@ public class SalidaController implements ISalidaController {
 	        log.error("[crearSalida] Parámetros inválidos: " + nombre);
 	        throw new ParametrosInvalidosExcepcion();
 	    }
-
+	    
 	    SalidaManejador sm = SalidaManejador.getInstance();
 	    salida s = sm.getSalida(nombre);
 	    
@@ -38,7 +38,7 @@ public class SalidaController implements ISalidaController {
 			throw new UsuarioYaExisteExcepcion("La salida '" + s.getNombre() + "' ya existe");
 	    
 	    }
-
+	
 	    // Obtener la entidad de actividad correspondiente al nombre
 	    ActividadManejador am = ActividadManejador.getinstance();
 	    actividad a = am.getActividad(nombreActividad);
@@ -70,6 +70,7 @@ public class SalidaController implements ISalidaController {
 	    	}
 	    }
 	    System.out.println("La actividad " + a.getNombre() + " no se remplazo");
+	   
 	}
 	
 	public List<dataSalida> getAllSalidas(){
