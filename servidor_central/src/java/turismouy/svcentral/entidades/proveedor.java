@@ -60,6 +60,19 @@ public class proveedor extends usuario {
 	public void addActividad(actividad actividad) {
 		this.actividades.add(actividad);
 	}
+	
+	public void remplazarActividad(actividad act) {
+		int indice = 0;
+		for(actividad actividad : this.actividades) {
+			if(actividad.getNombre().equals(act.getNombre())) {
+				System.out.println(this.actividades.get(indice).getNombre());
+				break;
+			}
+			indice++;
+		}
+		this.actividades.remove(indice);
+		this.actividades.add(act);
+	}
 
 
 	public dataUsuario toDataType() {

@@ -128,12 +128,11 @@
     <div class="modal-content">
       <h4>Inscripcion</h4>
       <div class="divider"></div>
-      <form action="./insSalida" method="post" class="modal__inscribirse">
+      <form action="#" class="modal__inscribirse">
         <p>Ingresa la cantidad de personas a inscribirse:</p>
-        <input hidden id="nombreSalida" name="nombreSalida" type="string" value="" />
         <div class="input-field col s6 modal__inscribirse--ninput">
-          <input id="cantidadIns" name="cantidadIns" type="number" class="validate" />
-          <label for="cantidadIns">Ingresa un número</label>
+          <input id="numero" type="number" class="validate" />
+          <label for="numero">Ingresa un número</label>
         </div>
         <p>Forma de pago:</p>
         <p>
@@ -246,24 +245,17 @@
         });
 
         $('#salidas').on('click', '.abrirRegistrar', function () {
-        // Obtiene los datos de la salida
-        var dataSalida = JSON.parse($(this).attr('dataSalida'));
-        var salida = document.getElementById("nombreSalida");
-
-        // Llena el modal de registro con los datos de la salida
-        $('#numero').val(''); // Limpia el campo de número (si es necesario)
-        $('input[name="formaPago"][value="general"]').prop('checked', true); // Marca la opción general (si es necesario)
-
-        console.log("llegue aca");
-        // Guarda los datos de la salida en la sesión
-        sessionStorage.setItem('datosInscripcion', JSON.stringify(dataSalida));
-        console.log(dataSalida);
-        salida.value = dataSalida.nombre;
-
-        // Abre el modal de registro
-        var modalRegistro = M.Modal.init(document.getElementById("modalInscribirse"));
-        modalRegistro.open();
-      });
+            // Obtiene los datos de la salida
+            var dataSalida = JSON.parse($(this).attr('dataSalida'));
+            
+            // Llena el modal de registro con los datos de la salida
+            $('#numero').val(''); // Limpia el campo de número (si es necesario)
+            $('input[name="formaPago"][value="general"]').prop('checked', true); // Marca la opción general (si es necesario)
+            
+            // Abre el modal de registro
+            var modalRegistro = M.Modal.init(document.getElementById("modalInscribirse"));
+            modalRegistro.open();
+        });
     });
 
     $("#categorias").change(function () {

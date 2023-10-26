@@ -66,7 +66,7 @@ public class ActividadController implements IActividadController {
         proveedor prov = (proveedor) user;
         
         if(prov == null) {
-        	log.error("El proveedor " + nombreProv + "no existe");
+        	log.error("El proveedor " + nombreProv + " no existe");
         	throw new UsuarioNoExisteExcepcion("El proveedor " + nombreProv + " no existe");
         }
         
@@ -100,7 +100,7 @@ public class ActividadController implements IActividadController {
 
         // Se trae el objeto luego de guardarlo.
         act = am.getActividad(nombre);
-        
+
         for (categoria categoria : categorias) {
             categoria.addActividad(act);
             cm.updateCategoria(categoria);
@@ -152,24 +152,25 @@ public class ActividadController implements IActividadController {
 	}  
 	
     public List<dataActividad> getAllActividades() {      
-    	List<dataActividad> LDtAct = new ArrayList<>();
+        List<dataActividad> LDtAct = new ArrayList<>();
         DepartamentoManejador dm = DepartamentoManejador.getinstance();
-        List <departamento> LDepto = dm.getAllDepartamento();
-        //Recorro todos los departamentos para poder buscar la actividad que
-        //me pasan por parametro
-        if (LDepto == null) {
-			return null;
-		}
-        for(departamento depto: LDepto){
-            // log.warning(depto.getNombre());
-            List<actividad> LAct = depto.getActividades();
-            // log.warning("Cantidad de actividades: " + LAct.size());
-            for(actividad act : LAct) {
-            	dataActividad DtAct = act.toDataType();
-            	LDtAct.add(DtAct);
-        	}
-        }
-        return LDtAct;
+     List<departamento> deptos = dm.getAllDepartamento();
+     
+         for (departamento depto : deptos) {
+             if (depto != null && depto.getNombre() != null) {
+                 List<actividad> LAct = depto.getActividades();
+                 if (LAct != null) {
+                     for (actividad act : LAct) {
+                     	if(act.getEstado().equals(estadoActividad.CONFIRMADA)){
+                     		LDtAct.add(act.toDataType());
+                     	}
+                     }
+                 }
+             }
+         }
+     if (LDtAct.isEmpty())
+         return null; 
+     return LDtAct;
     }
 
     public List<dataActividad> getAllActividadesDepartamento(String nombreDep) {
@@ -235,30 +236,6 @@ public class ActividadController implements IActividadController {
                         	}
                         }
                     }
-                    break;
-                }
-            }
-        if (LDtAct.isEmpty())
-            return null; 
-        return LDtAct;
-    }
-    
-    public List<dataActividad> getAllActividadesConfirmadas() {
-        List<dataActividad> LDtAct = new ArrayList<>();
-           DepartamentoManejador dm = DepartamentoManejador.getinstance();
-        List<departamento> deptos = dm.getAllDepartamento();
-        
-            for (departamento depto : deptos) {
-                if (depto != null && depto.getNombre() != null) {
-                    List<actividad> LAct = depto.getActividades();
-                    if (LAct != null) {
-                        for (actividad act : LAct) {
-                        	if(act.getEstado().equals(estadoActividad.CONFIRMADA)){
-                        		LDtAct.add(act.toDataType());
-                        	}
-                        }
-                    }
-                    break;
                 }
             }
         if (LDtAct.isEmpty())
@@ -266,91 +243,6 @@ public class ActividadController implements IActividadController {
         return LDtAct;
     }
 
-    public List<dataActividad> getAllActividadesDepartamentoSinPaquete(String nombreDep, String nombrePaquete) {
-        List<dataActividad> LDtAct = new ArrayList<>();
-        DepartamentoManejador dm = DepartamentoManejador.getinstance();
-        List<departamento> deptos = dm.getAllDepartamento();
-
-        if (deptos != null) {
-            for (departamento depto : deptos) {
-                if (depto != null && depto.getNombre() != null && depto.getNombre().equals(nombreDep)) {
-                    List<actividad> LAct = depto.getActividades();
-                    if (LAct != null) {
-                        for (actividad act : LAct) {
-                            // Verifica si la actividad no tiene paquetes asociados
-                            if (act.getPaquetes() == null || act.getPaquetes().isEmpty()) {
-                                LDtAct.add(act.toDataType());
-                            }
-                        }
-                    }
-                    break;
-                }
-            }
-        }
-        return LDtAct;
-    }
-
-    public List<String> getNombresSalidasAsociadas(String nombreActividad) {
-        ActividadManejador am = ActividadManejador.getinstance();
-        actividad actividad = am.getActividad(nombreActividad);
-
-        if (actividad == null) {
-            // Si no se encuentra la actividad, puedes manejar el error como desees.
-            return null;
-        }
-
-        List<salida> salidasAsociadas = actividad.getSalidas();
-        List<String> nombresSalidas = new ArrayList<>();
-
-        for (salida salida : salidasAsociadas) {
-            nombresSalidas.add(salida.getNombre());
-        }
-
-        return nombresSalidas;
-    }
-
-    public List<dataActividad> getActividadesNoPaquete(String nombreDepartamento, String nombrePaquete) throws UsuarioNoExisteExcepcion {
-        PaqueteManejador pm = PaqueteManejador.getinstance();
-        DepartamentoManejador dm = DepartamentoManejador.getinstance();
-        paquete paquete = pm.getPaquete(nombrePaquete);
-        departamento departamento = dm.getDepartamento(nombreDepartamento);
-
-        if (paquete == null) {
-            log.error("El paquete: " + nombrePaquete + " no existe.");
-        	throw new UsuarioNoExisteExcepcion("La actividad " + nombrePaquete + " ya existe");
-        }
-        
-        if (departamento == null) {
-            log.error("El departamento " + nombreDepartamento + " no existe.");
-        	throw new UsuarioNoExisteExcepcion("La actividad " + nombreDepartamento + " ya existe");
-        }
-
-        List<dataActividad> dtActividades = new ArrayList<dataActividad>();
-        List<actividad> actividades = departamento.getActividades();
-
-        if (actividades == null) {
-            return null;
-        }
-
-        for (actividad actividad : actividades) {
-            // log.warning(actividad.getNombre());
-            boolean existe = false;
-            if (paquete.getActividades() != null) {
-                for (actividad actividadP : paquete.getActividades()) {
-                    if (actividad.getNombre().equals(actividadP.getNombre())) {
-                        existe = true;
-                        break;
-                    }
-                }
-            }
-            if (!existe) {
-                dtActividades.add(actividad.toDataType());
-            }
-        }
-        if (dtActividades.size() == 0) { dtActividades = null; }
-        return dtActividades;
-    }    
-    
     public List<dataActividad> getActividadesDepartamentoNoPaquete(String nombrePaquete, String nombreDepartamento ) throws UsuarioNoExisteExcepcion{
     	
         PaqueteManejador pm = PaqueteManejador.getinstance();
@@ -402,6 +294,27 @@ public class ActividadController implements IActividadController {
 
     }
     
+    public List <dataActividad> getActividadesPorCategoria(String nombreCategoria) throws NoExisteExcepcion {
+    	CategoriaManejador cm = CategoriaManejador.getInstance();    	
+    	categoria categoria = cm.getCategoria(nombreCategoria);
+    	
+    	if(categoria == null) {
+        	log.error("La categoria '" + nombreCategoria + "' no existe.");
+        	throw new NoExisteExcepcion("La categoria " + nombreCategoria + " no existe");
+    		
+    	}
+    
+    	List<actividad> LAct = categoria.getActividades();
+    	List<dataActividad> LDtAct = new ArrayList<dataActividad>();
+    	
+    	for(actividad act : LAct) {
+    		dataActividad DtAct = act.toDataType();
+    		LDtAct.add(DtAct);
+    	}
+    	
+    	return LDtAct;
+    }
+    
     public void modificarEstadoActividad(String nombre, estadoActividad estado) throws NoExisteExcepcion, ParametrosInvalidosExcepcion, YaExisteExcepcion {
         if (estado != estadoActividad.CONFIRMADA && estado != estadoActividad.RECHAZADA) {
             log.error("Parametros invalidos por primero.");
@@ -422,7 +335,36 @@ public class ActividadController implements IActividadController {
 
         log.info("Se modifica el estado de la actividad '" + nombre + "' " + actividad.getEstado() + " a " + estado);
         actividad.setEstado(estado);
+        
+        DepartamentoManejador dm = DepartamentoManejador.getinstance();
+        departamento depto = dm.getDepartamento(actividad.getDepartamento().getNombre());
+        
+        UsuarioManejador um = UsuarioManejador.getinstance();
+        usuario usuario = um.getUsuario(actividad.getProveedor().getNickname());
+        proveedor prov =(proveedor) usuario;
+        
+        PaqueteManejador pm = PaqueteManejador.getinstance();
+        
+        CategoriaManejador cm = CategoriaManejador.getInstance();
+        
+        depto.remplazarActividad(actividad);
+        dm.updateDepartamento(depto);
+        
+        prov.remplazarActividad(actividad);
+        um.updateUsuario(usuario);
+        /*
+        for(categoria categoria : actividad.getCategorias()) {
+        	categoria.remplazarActividad(actividad);
+        	cm.updateCategoria(categoria);
+        }
+        
+        for(paquete paq : actividad.getPaquetes()) {
+        	paq.remplazarActividad(actividad);
+        	pm.updatePaquete(paq);
+        }
+        */
         am.updateActividad(actividad);
+        
     } 
 	
     private static boolean validarTexto(String texto, int nivel) {

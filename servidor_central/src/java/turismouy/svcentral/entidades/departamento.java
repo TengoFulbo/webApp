@@ -57,8 +57,19 @@ public class departamento {
 
 	public void agregarActividad(actividad actividad){
 		this.actividades.add(actividad);
-
 	};
+	
+	public void remplazarActividad(actividad act) {
+		int indice = 0;
+		for(actividad actividad : this.actividades) {
+			if(actividad.getNombre().equals(act.getNombre())) {
+				System.out.println(this.actividades.get(indice).getNombre());
+				this.actividades.remove(indice);
+				this.actividades.add(act);
+			}
+			indice++;
+		}
+	}
 
 	public void removerActividad(actividad actividad){
 

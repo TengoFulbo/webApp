@@ -8,6 +8,7 @@ import turismouy.svcentral.datatypes.dataPaquete;
 import turismouy.svcentral.datatypes.dataSalida;
 import turismouy.svcentral.manejadores.ActividadManejador;
 import turismouy.svcentral.utilidades.estadoActividad;
+import turismouy.svcentral.utilidades.log;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -160,7 +161,7 @@ public class actividad {
 		// }
 
 		for (categoria categoria : actividad.getCategorias()) {
-			// log.info("[actividad toDataType] categoria: " + categoria.getNombre());
+			log.info("[actividad toDataType] categoria: " + categoria.getNombre());
 			dtCategorias.add(categoria.getNombre());
 		}
 

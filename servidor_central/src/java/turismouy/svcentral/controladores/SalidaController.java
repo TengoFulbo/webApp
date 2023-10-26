@@ -29,7 +29,7 @@ public class SalidaController implements ISalidaController {
 	        log.error("[crearSalida] Parámetros inválidos: " + nombre);
 	        throw new ParametrosInvalidosExcepcion();
 	    }
-
+	    
 	    SalidaManejador sm = SalidaManejador.getInstance();
 	    salida s = sm.getSalida(nombre);
 	    
@@ -38,7 +38,7 @@ public class SalidaController implements ISalidaController {
 			throw new UsuarioYaExisteExcepcion("La salida '" + s.getNombre() + "' ya existe");
 	    
 	    }
-
+	
 	    // Obtener la entidad de actividad correspondiente al nombre
 	    ActividadManejador am = ActividadManejador.getinstance();
 	    actividad a = am.getActividad(nombreActividad);
@@ -70,6 +70,7 @@ public class SalidaController implements ISalidaController {
 	    	}
 	    }
 	    System.out.println("La actividad " + a.getNombre() + " no se remplazo");
+	   
 	}
 	
 	public List<dataSalida> getAllSalidas(){
@@ -129,7 +130,7 @@ public class SalidaController implements ISalidaController {
         	return null;
     	return salida.toDataType();
     }
-    
+/*    
 	public List<String> obtenerNombresActividadesAsociadas(salida salida) {
 		List<String> nombresActividades = new ArrayList<>();
 		for (actividad actividad : salida.getActividades()) {
@@ -137,7 +138,7 @@ public class SalidaController implements ISalidaController {
 		}
 		return nombresActividades;
 	}
-
+*/
 	public List<dataSalida> obtenerSalidasVigentesPorActividad(String nombreActividad) {
 	    List<dataSalida> listaSalidasPorActividad = new ArrayList<>();
 	    ActividadManejador am = ActividadManejador.getinstance();
@@ -165,7 +166,7 @@ public class SalidaController implements ISalidaController {
 
 
 	    return listaSalidasPorActividad.isEmpty() ? null : listaSalidasPorActividad;
-
+	    
 	}
 
 	public void eliminarSalida(String salida){

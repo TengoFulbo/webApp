@@ -12,7 +12,6 @@ public class dataActividad {
 	private int costoUni;
 	private String ciudad;
 	private LocalDate fechaCrea;
-	private String fechaS;
 	private estadoActividad estado;
 	private dataDepartamento departamento;
 	private dataUsuario proveedor;
@@ -63,18 +62,6 @@ public class dataActividad {
 
 	public LocalDate getFechaCrea() {
 		return fechaCrea;
-	}
-
-	public void setFechaCrea(LocalDate fechaCrea) {
-		this.fechaCrea = fechaCrea;
-	}
-
-	public String getFechaS() {
-		return this.fechaS;
-	}
-
-	public void setFechaS(String fechaS) {
-		this.fechaS = fechaS;
 	}
 
 	public estadoActividad getEstado() {

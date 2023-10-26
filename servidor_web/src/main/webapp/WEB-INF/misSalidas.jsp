@@ -23,18 +23,24 @@
   <!-- MAIN -->
   <div class="main">
     <div class="mainWrap">
-      <div class="mainWrap__pagination">
+      <div class="main__createBtn">
+        <div class="main__createBtn--wrap">
+          <a class="waves-effect waves-light modal-trigger btn main__createBtn--btn" href="#modalNuevaSalida">Crear
+            Salida</a>
+        </div>
+      </div>
+      <!-- <div class="mainWrap__pagination">
         <ul class="pagination">
           <li class="active"><a href="./homeSalidas">Salidas</a></li>
           <li class="waves-effect"><a href="./homeActividades">Actividades</a></li>
           <li class="waves-effect"><a href="./homePaquetes">Paquetes</a></li>
         </ul>
-      </div>
+      </div> -->
 
       <!-- page -->
       <section class="page">
         <div class="page__texto">
-          <h1 class="page__title">Salidas</h1>
+          <h1 class="page__title">Mis Salidas</h1>
           <p class="page__p">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Qui
             incidunt numquam tempora dolorem vel, facere necessitatibus ullam
@@ -124,40 +130,80 @@
   </div>
 
   <!-- MODALS -->
-  <div id="modalInscribirse" class="modal">
+  <div id="modalNuevaSalida" class="modal">
     <div class="modal-content">
-      <h4>Inscripcion</h4>
-      <div class="divider"></div>
-      <form action="./insSalida" method="post" class="modal__inscribirse">
-        <p>Ingresa la cantidad de personas a inscribirse:</p>
-        <input hidden id="nombreSalida" name="nombreSalida" type="string" value="" />
-        <div class="input-field col s6 modal__inscribirse--ninput">
-          <input id="cantidadIns" name="cantidadIns" type="number" class="validate" />
-          <label for="cantidadIns">Ingresa un número</label>
-        </div>
-        <p>Forma de pago:</p>
-        <p>
-          <label>
-            <input id="formaPago" name="formaPago" value="general" type="radio" checked />
-            <span>General</span>
-          </label>
-        </p>
-        <p>
-          <label>
-            <input id="formaPago" name="formaPago" value="paquete" type="radio" />
-            <span>Paquete</span>
-          </label>
-        </p>
-        <button class="btn waves-effect waves-light modal__inscribirse--submit" type="submit" name="action">
-          Enviar
-          <i class="material-icons right">send</i>
-        </button>
-      </form>
+        <h4>Crear Salida</h4>
+        <form action="altaSalida" method="post">
+            <div class="input-field col s12">
+              <select name="actividadSelect">
+                <option value="" disabled selected>Elije una Actividad</option>
+                <% List<dataActividad> actividadList = (List<dataActividad>) request.getAttribute("actividades"); %>
+                <% int valorFor1 = 1; %> <!-- Mover la declaración de value aquí -->
+                <%
+                if (actividadList != null) {
+                    if (!actividadList.isEmpty()) {
+                        for (dataActividad act : actividadList) { 
+                %>     
+                            <option value="<%= act.getNombre() %>"> <%= valorFor1 %> - <%= act.getNombre() %> </option>
+                <%  
+                            valorFor1++;
+                        }
+                    }
+                }
+                %>
+            </select>
+                <label>Actividad</label>
+            </div>
+            <div class="input-field col s12">
+              <select name="departamentoSelect">
+                <option value="" disabled selected>Elije una Departamento</option>
+                <% List<dataDepartamento> departamentoList = (List<dataDepartamento>) request.getAttribute("departamentos"); %>
+                <% int valorFor2 = 1; %>
+                <%
+                if (departamentoList != null) {
+                    if (!departamentoList.isEmpty()) {
+                        for (dataDepartamento dpto : departamentoList) { 
+                %>     
+                            <option value="<%= dpto.getNombre() %>"> <%= valorFor2 %> - <%= dpto.getNombre() %> </option>
+                <%  
+                            valorFor2++;
+                        }
+                    }
+                }
+                %>
+            </select>
+                <label>Departamento</label>
+            </div>
+            <div class="divider"></div>
+            <div class="input-field">
+                <input id="nombre" name="nombre" type="text" class="validate" value="">
+                <label for="nombre" class="active">Nombre</label>
+            </div>
+            <div class="input-field">
+              <input id="lugarSalida" name="lugarSalida" type="text" class="validate" value="">
+              <label for="lugarSalida" class="active">Lugar de Salida</label>
+            </div>
+            <div class="input-field">
+              <input name="fechaSalidaString" type="date" placeholder="Fecha de salida" />
+              <label for="fechaSalida" class="active">Fecha de Salida</label>
+            </div>
+            <div class="input-field">
+              <input id="capacidad" name="capacidad" type="number" class="validate" value="">
+              <label for="capacidad" class="active">Capacidad</label>
+            </div>
+            <!-- Otros campos del formulario aquí... -->
+            <div class="divider"></div>
+            <button class="btn waves-effect waves-light modal__inscribirse--submit" type="submit" name="action">
+                Enviar
+                <i class="material-icons right">send</i>
+            </button>
+        </form>
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
     </div>
   </div>
+
 
   <div id="modalConsulta" class="modal">
     <div class="modal-content">
@@ -246,24 +292,17 @@
         });
 
         $('#salidas').on('click', '.abrirRegistrar', function () {
-        // Obtiene los datos de la salida
-        var dataSalida = JSON.parse($(this).attr('dataSalida'));
-        var salida = document.getElementById("nombreSalida");
-
-        // Llena el modal de registro con los datos de la salida
-        $('#numero').val(''); // Limpia el campo de número (si es necesario)
-        $('input[name="formaPago"][value="general"]').prop('checked', true); // Marca la opción general (si es necesario)
-
-        console.log("llegue aca");
-        // Guarda los datos de la salida en la sesión
-        sessionStorage.setItem('datosInscripcion', JSON.stringify(dataSalida));
-        console.log(dataSalida);
-        salida.value = dataSalida.nombre;
-
-        // Abre el modal de registro
-        var modalRegistro = M.Modal.init(document.getElementById("modalInscribirse"));
-        modalRegistro.open();
-      });
+            // Obtiene los datos de la salida
+            var dataSalida = JSON.parse($(this).attr('dataSalida'));
+            
+            // Llena el modal de registro con los datos de la salida
+            $('#numero').val(''); // Limpia el campo de número (si es necesario)
+            $('input[name="formaPago"][value="general"]').prop('checked', true); // Marca la opción general (si es necesario)
+            
+            // Abre el modal de registro
+            var modalRegistro = M.Modal.init(document.getElementById("modalInscribirse"));
+            modalRegistro.open();
+        });
     });
 
     $("#categorias").change(function () {
@@ -291,7 +330,7 @@
         // Realiza una solicitud POST al Servlet con el valor seleccionado.
         $.ajax({
             type: "POST",
-            url: "./homeSalidas",
+            url: "./misSalidas",
             data: { departamento: departamento, categoria: categoria, actividad: actividad},
             dataType: "json",
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
@@ -352,12 +391,6 @@
                     btn.setAttribute("dataSalida", JSON.stringify(salida));
                     btn.textContent = "Consultar";
 
-                    var btnRegistro = document.createElement("button");
-                    btnRegistro.className = "btn abrirRegistrar";
-                    btnRegistro.setAttribute("dataSalida", JSON.stringify(salida));
-                    btnRegistro.textContent = "Resgistrarse";
-                    btnRegistro.style.marginLeft = "10px";
-
                     // Agrupa los elementos en la estructura deseada
                     cardImage.appendChild(img);
                     cardImage.appendChild(title);
@@ -365,7 +398,6 @@
                     cardContent.appendChild(paragraph);
                     cardContent.appendChild(btnDiv);
                     btnDiv.appendChild(btn);
-                    btnDiv.appendChild(btnRegistro);
                                                                 
                     card.appendChild(cardImage);
                     card.appendChild(cardContent);

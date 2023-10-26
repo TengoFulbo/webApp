@@ -34,6 +34,7 @@ import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialDeepOc
 import com.presentacion.utilidades.PlaceholderTextField;
 import turismouy.svcentral.Fabrica;
 import turismouy.svcentral.datatypes.dataActividad;
+import turismouy.svcentral.datatypes.dataCategoria;
 import turismouy.svcentral.datatypes.dataDepartamento;
 import turismouy.svcentral.datatypes.dataPaquete;
 import turismouy.svcentral.datatypes.dataSalida;
@@ -44,6 +45,7 @@ import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
 import turismouy.svcentral.excepciones.UsuarioYaExisteExcepcion;
 import turismouy.svcentral.excepciones.YaExisteExcepcion;
 import turismouy.svcentral.interfaces.IActividadController;
+import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.interfaces.IDepartamentoController;
 import turismouy.svcentral.interfaces.IUsuarioController;
 import turismouy.svcentral.utilidades.estadoActividad;
@@ -130,7 +132,7 @@ public class actividadesVista extends JPanel {
 		center.add(btnNewActividad);
 
 		IActividadController IAC = Fabrica.getInstance().getIActividadController();
-		List<dataActividad> actividades = IAC.getAllActividadesConfirmadas();
+		List<dataActividad> actividades = IAC.getAllActividades();
 
 		String[] columnNames = { "Nombre", "Proveedor", "Departamento", "Precio Unitario" };
 		DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
@@ -189,15 +191,15 @@ public class actividadesVista extends JPanel {
 
 				model.setRowCount(0);
 
-				List<dataActividad> actividades = IAC.getAllActividadesConfirmadas();
+				List<dataActividad> actividades = IAC.getAllActividades();
 
 				if (actividades != null) {
 					for (dataActividad actividad : actividades) {
 						String dept = actividad.getDepartamento().getNombre();
+						String prov = actividad.getProveedor().getNickname();
 						String nomb = actividad.getNombre();
-						int dur = actividad.getDuracion();
 						int preciouni = actividad.getCostoUni();
-						model.addRow(new Object[] { nomb, dept, dur, preciouni });
+						model.addRow(new Object[] { nomb, prov, dept, preciouni });
 					}
 				}
 			}
@@ -210,15 +212,15 @@ public class actividadesVista extends JPanel {
 
 				model.setRowCount(0);
 
-				List<dataActividad> actividades = IAC.getAllActividadesConfirmadas();
+				List<dataActividad> actividades = IAC.getAllActividades();
 
 				if (actividades != null) {
 					for (dataActividad actividad : actividades) {
 						String dept = actividad.getDepartamento().getNombre();
+						String prov = actividad.getProveedor().getNickname();
 						String nomb = actividad.getNombre();
-						int dur = actividad.getDuracion();
 						int preciouni = actividad.getCostoUni();
-						model.addRow(new Object[] { nomb, dept, dur, preciouni });
+						model.addRow(new Object[] { nomb, prov, dept, preciouni });
 					}
 				}
 			}
@@ -740,7 +742,11 @@ public class actividadesVista extends JPanel {
 		treeConteiner.setBounds(500, 37, 273, 250);
 		popupDialog.getContentPane().add(treeConteiner);
 
-		List<dataDepartamento> listaDeElementos = IDC.listarDepartamentos();
+//		List<dataDepartamento> listaDeElementos = IDC.listarDepartamentos();
+		
+		ICategoriaController IDCa = Fabrica.getInstance().getICategoriaController();
+		
+		List<dataCategoria> listaDeElementos = IDCa.listarCategorias();
 
 		DefaultTableModel tableModel = new DefaultTableModel() {
 		    @Override
@@ -752,10 +758,10 @@ public class actividadesVista extends JPanel {
 		    }
 		};
 		tableModel.addColumn("Seleccionar");
-		tableModel.addColumn("Nombre Departamento");
+		tableModel.addColumn("Nombre Categorias");
 
-		for (dataDepartamento dept : listaDeElementos) {
-		    Object[] row = {false, dept.getNombre()};
+		for (dataCategoria cat : listaDeElementos) {
+		    Object[] row = {false, cat.getNombre()};
 		    tableModel.addRow(row);
 		}
 
@@ -824,7 +830,7 @@ public class actividadesVista extends JPanel {
 					int precioInt = (int) precioObj;
 					IAC.crearActividad(departamento.getSelectedItem().toString(),
 							proveedor.getSelectedItem().toString(), nombre.getText(), descripcion.getText(),
-							duracionInt, precioInt, ciudad.getText(), LocalDate.now(), null);
+							duracionInt, precioInt, ciudad.getText(), LocalDate.now(), departamentosSeleccionados);
 					JOptionPane.showMessageDialog(popupDialog, "Actividad creada con EXITO", "Registro Completado",
 							JOptionPane.INFORMATION_MESSAGE);
 					popupDialog.dispose();

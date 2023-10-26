@@ -7,6 +7,7 @@ import javax.persistence.NoResultException;
 
 import turismouy.svcentral.EMFactory;
 import turismouy.svcentral.entidades.actividad;
+import turismouy.svcentral.entidades.departamento;
 import turismouy.svcentral.utilidades.estadoActividad;
 import turismouy.svcentral.utilidades.log;
 
@@ -42,6 +43,7 @@ public class ActividadManejador {
             tx.commit();       
             log.info("[ActividadManejador] Se crea la actividad " + actividad.getNombre());
             
+            
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {
                 tx.rollback();
@@ -67,6 +69,8 @@ public class ActividadManejador {
             tx.commit();       
             log.info("La actividad " + actividad.getNombre() + " se actualizó correctamente");
             // log.info("Salidas: " + actividad.getSalidas().size());
+            
+            
 
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {

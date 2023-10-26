@@ -38,12 +38,32 @@ public class categoria {
     public void setNombre(String nombre){
         this.nombre = nombre;
     }
+    
+    public List<actividad> getActividades() {
+		return actividades;
+	}
 
     public void addActividad(actividad actividad) {
         actividades.add(actividad);
     }
-    
-    public dataCategoria toDataType() {
+/*    
+	public void remplazarActividad(actividad act) {
+		int indice = 0;
+		for(actividad actividad : this.actividades) {
+			if(actividad.getNombre().equals(act.getNombre())) {
+				System.out.println(this.actividades.get(indice).getNombre());
+				this.actividades.remove(indice);
+				this.actividades.add(act);
+			}
+			indice++;
+		}
+	}
+*/
+	public void setActividades(List<actividad> actividades) {
+		this.actividades = actividades;
+	}
+
+	public dataCategoria toDataType() {
         List<dataActividad> dataActividades = new ArrayList<dataActividad>();
 
         if (this.actividades != null) {
