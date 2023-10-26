@@ -174,7 +174,7 @@ public class UsuarioManejador {
         List<usuario> users = new ArrayList<>(usuariosNickname.values());
         return users;
     }
-
+/*
     public turista persistirInscripcionEnTurista(turista turista, inscripcion inscripcion){
     	EntityManagerFactory factory = EMFactory.getEntityManagerFactory();
 	    EntityManager em = factory.createEntityManager();
@@ -191,7 +191,7 @@ public class UsuarioManejador {
 		
 		return turista1;
     }
-    
+  */  
     public turista persistirCompraEnTurista(turista turista, compra compra) {
             try {
                 // Para cada función hay que crear un nuevo em y tx.

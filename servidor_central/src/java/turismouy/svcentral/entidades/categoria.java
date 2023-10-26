@@ -46,7 +46,7 @@ public class categoria {
     public void addActividad(actividad actividad) {
         actividades.add(actividad);
     }
-    
+/*    
 	public void remplazarActividad(actividad act) {
 		int indice = 0;
 		for(actividad actividad : this.actividades) {
@@ -58,7 +58,7 @@ public class categoria {
 			indice++;
 		}
 	}
-
+*/
 	public void setActividades(List<actividad> actividades) {
 		this.actividades = actividades;
 	}

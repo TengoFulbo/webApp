@@ -130,7 +130,7 @@ public class SalidaController implements ISalidaController {
         	return null;
     	return salida.toDataType();
     }
-    
+/*    
 	public List<String> obtenerNombresActividadesAsociadas(salida salida) {
 		List<String> nombresActividades = new ArrayList<>();
 		for (actividad actividad : salida.getActividades()) {
@@ -138,7 +138,7 @@ public class SalidaController implements ISalidaController {
 		}
 		return nombresActividades;
 	}
-
+*/
 	public List<dataSalida> obtenerSalidasVigentesPorActividad(String nombreActividad) {
 	    List<dataSalida> listaSalidasPorActividad = new ArrayList<>();
 	    ActividadManejador am = ActividadManejador.getinstance();
@@ -166,7 +166,7 @@ public class SalidaController implements ISalidaController {
 
 
 	    return listaSalidasPorActividad.isEmpty() ? null : listaSalidasPorActividad;
-
+	    
 	}
 
 	public void eliminarSalida(String salida){

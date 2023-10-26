@@ -24,7 +24,7 @@ public class InscripcionManejador {
             instancia = new InscripcionManejador();
         return instancia;
     }
-
+/*
     public void updateInscripcion(inscripcion inscripcion){
         // Para cada función hay que crear un nuevo em y tx.
         EntityManager em = factory.createEntityManager();
@@ -49,7 +49,7 @@ public class InscripcionManejador {
             em.close();
         }
     };
-
+*/
 
     public void addInscripcion(inscripcion inscripcion) {
         // Para cada función hay que crear un nuevo em y tx.
@@ -76,7 +76,7 @@ public class InscripcionManejador {
             em.close();
         }
     }
-
+/*
     public inscripcion getInscripcion(String idInscripcion) {
     	EntityManager em = factory.createEntityManager();
     	
@@ -103,7 +103,7 @@ public class InscripcionManejador {
         }
     	em.close();
     	return inscripciones;
-    	
+    
     }
-
+*/
 }

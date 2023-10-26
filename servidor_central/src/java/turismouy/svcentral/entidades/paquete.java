@@ -82,7 +82,7 @@ public class paquete {
 	public List<actividad> getActividades() {
 		return this.actividades;
 	}
-	
+	/*
 	public void remplazarActividad(actividad act) {
 		int indice = 0;
 		for(actividad actividad : this.actividades) {
@@ -94,6 +94,7 @@ public class paquete {
 			indice++;
 		}
 	}
+	*/
 	public List<compra> getCompra() {
 		return compra;
 	}
