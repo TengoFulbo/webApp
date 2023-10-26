@@ -108,46 +108,50 @@
         </div>
     </div>
     <!-- MODALS -->
-    <div id="modalConsulta" class="modal">
+    <div id="consultaModal" class="modal">
         <div class="modal-content">
-            <h4>Consulta de Salida</h4>
-            <form>
-                <div class="input-field">
-                    <input id="nombre" type="text" class="validate" readonly value="Salida 1" />
-                    <label for="nombre" class="active">Nombre</label>
-                </div>
-                <div class="input-field">
-                    <input id="cant" type="number" class="validate" readonly value="99" />
-                    <label for="cant" class="active">Cantidad de lugares</label>
-                </div>
-                <div class="input-field">
-                    <input id="dateSalida" type="date" class="validate" disabled value="2023-01-01" />
-                    <label for="dateSalida" class="active">Fecha de salida</label>
-                </div>
-                <div class="input-field">
-                    <input id="dateAlta" type="date" class="validate" disabled value="2023-01-01" />
-                    <label for="dateAlta" class="active">Fecha de alta</label>
-                </div>
-                <div class="input-field">
-                    <input id="lugarSalida" type="text" class="validate" readonly value="San Jose" />
-                    <label for="lugarSalida" class="active">Lugar de Salida</label>
-                </div>
-                <div class="divider"></div>
-                <ul class="collection with-header">
-                    <li class="collection-header">
-                        <h4>Actividades</h4>
-                    </li>
-                    <li class="collection-item">Actividad1</li>
-                    <li class="collection-item">Actividad2</li>
-                    <li class="collection-item">Actividad3</li>
-                    <li class="collection-item">Actividad4</li>
-                </ul>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
-        </div>
-    </div>
+          <h4>Consulta de Actividad</h4> 
+          <form>
+              <div class="input-field">
+                  <input id="modalNombre" type="text" class="validate" readonly value=" " />
+                  <label for="nombre" class="active">Nombre</label>
+              </div>
+              <div class="input-field">
+                  <input id="modalDescripcion" type="text" class="validate" readonly value=" " />
+                  <label for="desc" class="active">Descripción</label>
+              </div>
+              <div class="input-field">
+                  <input id="modalCiudad" type="text" class="validate" readonly value=" " />
+                  <label for="ciudad" class="active">Ciudad</label>
+              </div>
+              <div class="input-field">
+                  <input id="modalCosto" type="text" class="validate" readonly value=" " />
+                  <label for="costo" class="active">Costo Unitario</label>
+              </div>
+              <div class="input-field">
+                  <input id="modalDuracion" type="text" class="validate" readonly value=" " />
+                  <label for="duracion" class="active">Duración</label>
+              </div>
+              <div class="input-field">
+                  <input id="modalFecha" type="date" class="validate" readonly value="" />
+                  <label for="fecha" class="active">Fecha</label>
+              </div>
+              <div class="divider"></div>
+              <h4>Categorias</h4>
+              <ul class="collection" id="listaCategorias">
+                  
+              </ul>
+              <div class="divider"></div>
+              <h4>Salidas</h4>
+              <ul class="collection" id="listaSalidas">
+                  
+              </ul>
+          </form>
+      </div>
+          <div class="modal-footer">
+              <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+          </div>
+      </div>
 
     <div id="modalNuevaActividad" class="modal">
         <div class="modal-content">
@@ -218,6 +222,52 @@
         document.addEventListener("DOMContentLoaded", function () {
             var modal = M.Modal.init(document.getElementById("consultaModal"));
             var modal = M.Modal.init(document.getElementById("modalNuevaActividad"));
+        });
+
+        document.addEventListener("click", function (event) {
+            if (event.target.classList.contains("abrirModalBtn")) {
+                // Obtiene los datos de la actividad
+                var objeto = event.target.getAttribute("dataActividad");
+                var dataActividad = JSON.parse(objeto)
+                // var actividadDescripcion = event.target.getAttribute("data-desc");
+            
+                // Llena el modal con los datos de la actividad
+                document.getElementById("modalNombre").value = dataActividad.nombre;
+                // console.log(dataActividad);
+                document.getElementById("modalFecha").value = dataActividad.fechaCrea;
+                document.getElementById("modalDescripcion").value = dataActividad.desc;
+                document.getElementById("modalCiudad").value = dataActividad.departamento.nombre;
+                document.getElementById("modalCosto").value = dataActividad.costoUni;
+                document.getElementById("modalDuracion").value = dataActividad.duracion;
+                // document.getElementById("")
+                // document.getElementById("modalActividadDescripcion").textContent = actividadDescripcion;
+
+                var categoriasList = dataActividad.dtCategorias;
+                var salidasList = dataActividad.DtSalidas;
+                var contCat = document.getElementById("listaCategorias");
+                var contSal = document.getElementById("listaSalidas");
+
+                contCat.innerHTML = "";
+                contSal.innerHTML = "";
+
+                categoriasList.forEach(categoria => {
+                    let cat = document.createElement("li");
+                    cat.className = "collection-item";
+                    cat.textContent = categoria;
+                    contCat.appendChild(cat);
+                });
+
+                salidasList.forEach(salida => {
+                    let sal = document.createElement("li");
+                    sal.className = "collection-item";
+                    sal.textContent = salida.nombre + " - " + salida.fechaSalida;
+                    contSal.appendChild(sal);
+                });
+            
+                // Abre el modal
+                var modal = M.Modal.init(document.getElementById("consultaModal"));
+                modal.open();
+            }
         });
 
         $(document).ready(function () {
