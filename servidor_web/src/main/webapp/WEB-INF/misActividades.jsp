@@ -36,7 +36,7 @@
         <div class="mainWrap">
             <div class="main__createBtn">
                 <div class="main__createBtn--wrap">
-                    <a class="waves-effect waves-light modal-trigger btn main__createBtn--btn"
+                    <a class="modal-trigger btn main__createBtn--btn"
                         href="#modalNuevaActividad">Crear
                         Actividad</a>
                 </div>
@@ -151,10 +151,10 @@
 
     <div id="modalNuevaActividad" class="modal">
         <div class="modal-content">
-            <h4>Crear Salida</h4>
+            <h4>Crear Actividad</h4>
             <form>
                 <div class="input-field col s12">
-                    <select>
+                    <select id="departamentosAlta">
                         <option value="" disabled selected>No seleccionado</option>
                         <%
                         int value3 = 1;
@@ -173,20 +173,27 @@
                     <label>Departamento</label>
                 </div>
                 <div class="input-field">
-                    <input id="nombre" type="text" class="validate" value="">
+                    <input id="nombreAlta" type="text" class="validate" value="" placeholder="Nombre">
                     <label for="nombre" class="active">Nombre</label>
                 </div>
                 <div class="input-field">
-                    <input id="dura" type="number" class="validate" value="" placeholder="En Horas">
+                    <input id="descAlta" type="text" class="validate" value="" placeholder="Descripcion">
+                    <label for="descripcion" class="active">Descripcion</label>
+                </div>
+                <div class="input-field">
+                    <input id="duraAlta" type="number" class="validate" value="" placeholder="En Horas">
                     <label for="dura" class="active">Duracion</label>
                 </div>
                 <div class="input-field">
-                    <input id="precio" type="number" class="validate" value="" placeholder="En Pesos Uruguayos">
+                    <input id="precioAlta" type="number" class="validate" value="" placeholder="En Pesos Uruguayos">
                     <label for="precio" class="active">Precio</label>
                 </div>
                 <div class="input-field">
-                    <input id="ciudad" type="text" class="validate" value="">
+                    <input id="ciudadAlta" type="text" class="validate" value="">
                     <label for="ciudad" class="active">Ciudad</label>
+                </div>
+                <div class="input-field col s12" id="contenedorCheckbox">
+                    <!-- Las casillas de verificación de Materialize se agregarán aquí de forma dinámica -->
                 </div>
                 <div class="divider"></div>
                 <button class="btn waves-effect waves-light modal__inscribirse--submit" type="submit" name="action" onclick="crearActividad()">
@@ -210,11 +217,65 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             var modal = M.Modal.init(document.getElementById("consultaModal"));
+            var modal = M.Modal.init(document.getElementById("modalNuevaActividad"));
         });
+
         $(document).ready(function () {
             var departamento = document.getElementById("departamentos").value;
             var categoria = document.getElementById("categorias").value;
             actualizarActividades(categoria, departamento);
+
+            function crearCasillasDeVerificacion() {
+                var categorias;
+
+                $.ajax({
+                    url: "./crearActividad", // Reemplaza con la URL de tu servlet
+                    type: "GET",
+                    dataType: "json",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    success: function (data) {
+                        // Accede a las actividades y categorías por separado
+                        var actividades = data.actividades;
+                        categorias = data.categorias;
+
+                        // Realiza acciones con las listas de actividades y categorías
+                        console.log("Actividades:", actividades);
+                        console.log("Categorias:", categorias);
+
+                        var contenedor = $("#contenedorCheckbox");
+                        contenedor.empty(); // Limpia el contenedor
+
+                        console.log(categorias);
+
+                        $.each(categorias, function (index, categoria) {
+                            var checkboxId = "checkbox" + index;
+                            var checkbox = $('<p class="p-checkbox">');
+                            var label = $('<label>').attr('for', checkboxId);
+                            var input = $('<input>')
+                                .attr("type", "checkbox")
+                                .attr("id", checkboxId)
+                                .attr("name", "categorias")
+                                .attr("class", "filled-in")
+                                .val(categoria.nombre);
+                            var span = $('<span>').text(categoria.nombre);
+
+                            label.append(input);
+                            label.append(span);
+                            checkbox.append(label);
+
+                            contenedor.append(checkbox);
+                        });
+                    },
+                    error: function (error) {
+                        console.error("Error en la solicitud AJAX:", error);
+                    },
+                });
+            }
+
+            // Inicializa Materialize CSS para las casillas de verificación
+            M.AutoInit();
+
+            crearCasillasDeVerificacion(categorias);
         });
 
         $("#categorias").change(function () {
@@ -342,7 +403,57 @@
 
         function crearActividad() {
             event.preventDefault()
-            console.log("holasldlasmdklas");
+
+            // Obtener los valores de los campos del formulario
+            var departamento    = document.getElementById('departamentosAlta').value;
+            var nombre          = document.getElementById('nombreAlta').value;
+            var desc            = document.getElementById('descAlta').value;
+            var duracion        = document.getElementById('duraAlta').value;
+            var precio          = document.getElementById('precioAlta').value;
+            var ciudad          = document.getElementById('ciudadAlta').value;
+            var categorias      = $("input[name='categorias']:checked")
+                                    .map(function() {
+                                        return $(this).val();
+                                    }).get()
+            console.log(categorias);
+
+            // Realizar comprobaciones de validación
+            if (departamento === "" || nombre === "" || duracion === "" || precio === "" || ciudad === "") {
+                alert('Por favor, complete todos los campos antes de enviar.');
+                return;
+            }
+
+            // Crear un objeto con los datos
+            var actividadData = {
+                departamento: departamento,
+                nombre: nombre,
+                desc: desc,
+                duracion: duracion,
+                precio: precio,
+                ciudad: ciudad,
+                categorias: categorias
+            };
+
+            console.log(actividadData);
+
+            $.ajax({
+                url: './crearActividad',
+                type: 'POST',
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify(actividadData),
+                success: function (data, status, xhr) {
+                    if (xhr.status === 200) {
+                    // La solicitud se completó con éxito, puedes realizar acciones adicionales si es necesario.
+                    console.log('Actividad creada con éxito.');
+                    alert("La actividad se ha creado correctamente.")
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // Manejar errores aquí
+                    console.error('Error al crear la actividad: ' + error);
+                    alert("Hubo un error al crear la actividad.")
+                }
+                });
         }
     </script>
 </body>
