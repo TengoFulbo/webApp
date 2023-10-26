@@ -19,7 +19,10 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import turismouy.svcentral.datatypes.dataActividad;
+import turismouy.svcentral.datatypes.dataCategoria;
+import turismouy.svcentral.datatypes.dataDepartamento;
 import turismouy.svcentral.datatypes.dataPaquete;
+import turismouy.svcentral.datatypes.dataSalida;
 import turismouy.svcentral.datatypes.dataUsuario;
 import turismouy.svcentral.entidades.actividad;
 import turismouy.svcentral.entidades.categoria;
@@ -429,6 +432,15 @@ public class test {
     }
     
     @org.junit.Test
+    public void test19_LoginVacio() {
+    	IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+
+    	if(!IUC.login("PruebaTurNicknameConContra321","")) {
+    		assertTrue(true);
+    	}
+    }
+    
+    @org.junit.Test
     public void test21_DarDeAltaCategoriaCorrectamente() {
     	EntityManager em = factory.createEntityManager();
     	ICategoriaController ICA = Fabrica.getInstance().getICategoriaController();
@@ -572,7 +584,13 @@ public class test {
     	IDC.listarDepartamentos();
     	IAC.getAllActividadesDepartamento("Prueba");
     	ISC.obtenerSalidasVigentesPorActividad("PruebaActividad");
-    	ISC.mostrarDatosSalida("PruebaSalida");
+    	dataSalida DtSalida = ISC.mostrarDatosSalida("PruebaSalida");
+    	DtSalida.getNombre();
+    	DtSalida.getActividades();
+    	DtSalida.getCapacidad();
+    	DtSalida.getFechaAlta();
+    	DtSalida.getFechaSalida();
+    	DtSalida.getLugarSalida();
     	IUC.listarTuristas();
     	
     	try {
@@ -793,10 +811,38 @@ public class test {
     	IDepartamentoController IDC = Fabrica.getInstance().getIDepartamentoController();
     	ICategoriaController ICA = Fabrica.getInstance().getICategoriaController();
         
-        IAC.getAllActividades();
+        List<dataActividad> LDtAct = IAC.getAllActividades();
+    	for(dataActividad DtAct :LDtAct) {
+    		DtAct.getNombre();
+    		DtAct.getCiudad();
+    		DtAct.getCostoUni();
+    		DtAct.getDepartamento();
+    		DtAct.getDesc();
+    		DtAct.getDtCategorias();
+    		DtAct.getDtPaquetes();
+    		DtAct.getDtSalidas();
+    		DtAct.getDuracion();
+    		DtAct.getEstado();
+    		DtAct.getFechaCrea();
+    		DtAct.getProveedor();
+    		
+    	}
         
-    	ICA.listarCategorias();
-    	IDC.listarDepartamentos();
+    	List<dataCategoria> LDtCat = ICA.listarCategorias();
+    	for(dataCategoria DtCat : LDtCat) {
+    		DtCat.getNombre();
+    	}
+    	
+    	List<dataDepartamento> LDtDepto = IDC.listarDepartamentos();
+    	for(dataDepartamento DtDepto : LDtDepto) {
+    		DtDepto.getNombre();
+    		DtDepto.getActividades();
+    		DtDepto.getDescripcion();
+    		DtDepto.getUrl();
+    		
+    	}
+    	
+    	
     	List<dataUsuario> LDtUsu = IUC.listarProveedores();
     	for(dataUsuario DtUsu : LDtUsu) {
     		System.out.println(DtUsu.getNickname());
@@ -1453,6 +1499,54 @@ public class test {
 			e.printStackTrace();
 		} catch (YaExisteExcepcion e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    }
+    
+    @org.junit.Test
+    public void test60_CrearTuristaRepConContra() {
+    	IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+    	
+    	try {
+    		IUC.registrarTurista("PruebaTurNicknameConContra321", "PruebaNombre1", "PruebaApellido1", "PruebaTurNickNameConContra@gmail.com", "PruebaNacionalidad", LocalDate.of(2000, 1, 3),"PruebaContraseña");
+		} catch (ParametrosInvalidosExcepcion e) {
+			fail("Parametros Invalidos");
+			e.printStackTrace();
+		} catch (UsuarioYaExisteExcepcion e) {
+			assertTrue(true);
+			e.printStackTrace();
+		}
+    }
+    
+    @org.junit.Test
+    public void test61_CrearProveedorRepetidoPorMail() {
+    	IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+    	
+    	try {
+			IUC.registrarProveedor("PruebaProveedorNicknameConContra", "PruebaNombre1", "PruebaApellido1", "PruebaConContra222@gmail.com", "PruebaDescripcion","PruebaURL", LocalDate.of(2000, 1, 3));
+		} catch (ParametrosInvalidosExcepcion e) {
+			assertTrue(true);
+			e.printStackTrace();
+		} catch (UsuarioYaExisteExcepcion e) {
+			assertTrue(true);
+			e.printStackTrace();
+		}
+    	
+    }
+    
+    
+    @org.junit.Test
+    public void test62_CrearProveedorConContraRepetidoPorNick() {
+    	IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+    	
+    	try {
+			IUC.registrarProveedor("PruebaProveedorNicknameConContra222", "PruebaNombre1", "PruebaApellido1", "PruebaConContra@gmail.com", "PruebaDescripcion","PruebaURL", LocalDate.of(2000, 1, 3),"PruebaContraseña");
+		} catch (ParametrosInvalidosExcepcion e) {
+			assertTrue(true);
+			e.printStackTrace();
+		} catch (UsuarioYaExisteExcepcion e) {
+			assertTrue(true);
 			e.printStackTrace();
 		}
     	

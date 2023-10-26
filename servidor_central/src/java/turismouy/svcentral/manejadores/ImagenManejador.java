@@ -1,4 +1,4 @@
-package turismouy.svcentral.manejadores;
+/*package turismouy.svcentral.manejadores;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -86,3 +86,4 @@ public class ImagenManejador {
         return imagen;
     }
 }
+*/

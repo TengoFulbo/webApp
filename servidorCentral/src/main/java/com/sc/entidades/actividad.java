@@ -1,14 +1,11 @@
-package turismouy.svcentral.entidades;
+package com.sc.entidades;
 
 import javax.persistence.*;
 
-import turismouy.svcentral.EMFactory;
-import turismouy.svcentral.datatypes.dataActividad;
-import turismouy.svcentral.datatypes.dataPaquete;
-import turismouy.svcentral.datatypes.dataSalida;
-import turismouy.svcentral.manejadores.ActividadManejador;
-import turismouy.svcentral.utilidades.estadoActividad;
-import turismouy.svcentral.utilidades.log;
+import com.sc.EMFactory;
+import com.sc.datatypes.dataActividad;
+import com.sc.datatypes.dataPaquete;
+import com.sc.datatypes.dataSalida;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,9 +13,7 @@ import java.util.List;
 
 @Entity
 public class actividad {
-	@Id // Dice que es PK
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // Autoincremental
-	long id;
+	@Id @Column
 	private String nombreA;
 	@Column
 	private String descripcion;
@@ -29,7 +24,6 @@ public class actividad {
 	@Column
 	private String ciudad;
 	private LocalDate fechaCrea;
-	estadoActividad estado;
 	@ManyToOne() // Un proveedor puede tener muchas actividades.
 	private proveedor proveedor;
 	@ManyToOne() // Un departamento puede tener muchas actividades.
@@ -46,19 +40,8 @@ public class actividad {
 	@ManyToMany(fetch = FetchType.EAGER)
     private List<salida> salidas;
 
-	// @ManyToMany(mappedBy = "actividades", targetEntity = categoria.class)
-    @JoinTable(
-		name = "categoria_actividad",
-        joinColumns = @JoinColumn(name = "fk_actividad"),
-        inverseJoinColumns = @JoinColumn(name = "fk_categoria")
-	)
-	@ManyToMany()
-	private List<categoria> categorias;
 
-
-    public actividad(){};
-	
-	public actividad(String nombre, String descripcion, int duracion, int costeUni, String ciudad, LocalDate fechaCrea, List<categoria> categorias) {
+    public actividad(){}; public actividad(String nombre, String descripcion, int duracion, int costeUni, String ciudad, LocalDate fechaCrea) {
 		super();
 		this.nombreA = nombre;
 		this.descripcion = descripcion;
@@ -68,8 +51,6 @@ public class actividad {
 		this.fechaCrea = fechaCrea;
 		this.paquetes = new ArrayList<paquete>();
 		this.salidas = new ArrayList<salida>();
-		this.estado = estadoActividad.AGREGADA;
-		this.categorias = categorias;
 	}
 
 	public String getNombre() {
@@ -135,36 +116,12 @@ public class actividad {
 	public void setSalidas(List<salida> salidas) {
 		this.salidas = salidas;
 	}
-	public estadoActividad getEstado(){
-		return this.estado;
-	}
-	public void setEstado(estadoActividad estado){
-		this.estado = estado;
-	}
-	public void setCategorias(List<categoria> categorias) {
-		this.categorias = categorias;
-	}
-	public List<categoria> getCategorias() {
-		return this.categorias;
-	}
 	public dataActividad toDataType() {
 		
 		List<dataSalida>DtSalidas = this.crearListaSalidaParaDt(this);
 		
 		List<dataPaquete> DtPaquetes = this.crearListaPaqueteParaDt(this);
-		List<String> dtCategorias = new ArrayList<String>();
-
-		actividad actividad = ActividadManejador.getinstance().getActividad(this.nombreA);
-		// List<categoria> categorias = null;
-		// if (this.categorias == null) {
-		// 	categorias = actividad.getCategorias();
-		// }
-
-		for (categoria categoria : actividad.getCategorias()) {
-			// log.info("[actividad toDataType] categoria: " + categoria.getNombre());
-			dtCategorias.add(categoria.getNombre());
-		}
-
+		
 		dataActividad dt = new dataActividad(
 			this.nombreA,
 			this.descripcion,
@@ -172,12 +129,10 @@ public class actividad {
 			this.costeUni,
 			this.ciudad,
 			this.fechaCrea,
-			this.estado,
 			this.departamento.toDataTypeWithoutActividades(),
 			this.proveedor.toDataTypeWithoutCollections(),
 			DtSalidas,
-			DtPaquetes,
-			dtCategorias);
+			DtPaquetes);
 
 		return dt;
 		
