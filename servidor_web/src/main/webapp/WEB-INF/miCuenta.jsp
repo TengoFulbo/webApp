@@ -241,10 +241,10 @@
       xhr.onload = function () {
           if (xhr.status === 200) {
               // La carga se completó con éxito, puedes mostrar un mensaje de éxito o realizar otras acciones
-              document.getElementById("uploadStatus").innerHTML = "La imagen se cargó con éxito.";
+              document.getElementById("uploadStatus").innerHTML = "La información se envió con éxito.";
             } else {7
               // Hubo un error en la carga, muestra un mensaje de error
-              document.getElementById("uploadStatus").innerHTML = "Error al cargar la imagen.";
+              document.getElementById("uploadStatus").innerHTML = "Error al enviar la información.";
           }
       };
 

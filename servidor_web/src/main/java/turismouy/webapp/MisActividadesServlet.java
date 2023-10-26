@@ -30,7 +30,6 @@ import turismouy.webapp.utils.LocalDateAdapter;
 @WebServlet("/misActividades")
 public class MisActividadesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         request.setAttribute("pageTitle", "Mis Actividades - TurismoUY");
 
         IActividadController IAC = Fabrica.getInstance().getIActividadController();
@@ -75,14 +74,14 @@ public class MisActividadesServlet extends HttpServlet {
         // Creamos una lista que contendrá las actividades a eliminar
         List<dataActividad> actEliminar = new ArrayList<dataActividad>();
 
-        log.info("Nickname a filtrar: " + nickname);
+        // log.info("Nickname a filtrar: " + nickname);
 
         // Filtramos para mostrar solo las pertenecientes al proveedor.
         for (dataActividad actividad : actividadesList) {
             log.info("Proveedor: " + nickname + " | Actividad: '" + actividad.getNombre() + "'");
             if (!actividad.getProveedor().getNickname().equals(nickname)) {
                 actEliminar.add(actividad);
-                log.info("La actividad: '" + actividad.getNombre() + "' se elimina.");
+                // log.info("La actividad: '" + actividad.getNombre() + "' se elimina.");
             }
         }
 
@@ -109,7 +108,7 @@ public class MisActividadesServlet extends HttpServlet {
         // Elimina los elementos de la lista original
         actividadesList.removeAll(actEliminar);
 
-        log.warning("Cantidad de actividades que se pasan: " + actividadesList.isEmpty());
+        // log.warning("Cantidad de actividades que se pasan: " + actividadesList.isEmpty());
         request.setCharacterEncoding("UTF-8");
         String resultadoJson = gson.toJson(actividadesList);
         response.setContentType("application/json");

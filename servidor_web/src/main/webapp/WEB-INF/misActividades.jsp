@@ -155,11 +155,20 @@
             <form>
                 <div class="input-field col s12">
                     <select>
-                        <option value="" disabled selected>Elije un Departamento</option>
-                        <option value="1">Departamento 1</option>
-                        <option value="2">Departamento 2</option>
-                        <option value="3">Departamento 3</option>
-
+                        <option value="" disabled selected>No seleccionado</option>
+                        <%
+                        int value3 = 1;
+                        if (departamentos != null) {
+                            if (!departamentos.isEmpty()) {
+                                for (dataDepartamento departamento : departamentos) {
+                        %>
+                                    <option value="<%= departamento.getNombre() %>"> <%= value3 %> - <%= departamento.getNombre() %></option>
+                        <%
+                                    value3++;
+                                }
+                            }
+                        }
+                        %>
                     </select>
                     <label>Departamento</label>
                 </div>
@@ -180,14 +189,14 @@
                     <label for="ciudad" class="active">Ciudad</label>
                 </div>
                 <div class="divider"></div>
-                <button class="btn waves-effect waves-light modal__inscribirse--submit" type="submit" name="action">
+                <button class="btn waves-effect waves-light modal__inscribirse--submit" type="submit" name="action" onclick="crearActividad()">
                     Enviar
                     <i class="material-icons right">send</i>
                 </button>
             </form>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+            <a href="#!" class="modal-close btn-flat">Cerrar</a>
         </div>
     </div>
 
@@ -310,7 +319,12 @@
                     });
                 }
             });
-        }   
+        }
+
+        function crearActividad() {
+            event.preventDefault()
+            console.log("holasldlasmdklas");
+        }
     </script>
 </body>
 

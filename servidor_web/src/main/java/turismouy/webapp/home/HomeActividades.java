@@ -59,7 +59,7 @@ public class HomeActividades extends HttpServlet {
         String categoria    = request.getParameter("categoria");
         String departamento = request.getParameter("departamento");
 
-        log.info("Departamento: " + departamento);
+        // log.info("Departamento: " + departamento);
 
         log.info("[homeActividades Post]");
 
