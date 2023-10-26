@@ -289,6 +289,22 @@
         <div class="footer__p">TengoFulbo &copy; | 2023 - 2023</div>
     </footer>
 
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.carousel');
+        var options = {
+            duration: 400, 
+        };
+        var instances = M.Carousel.init(elems, options);
+
+        function nextSlide() {
+            var carouselInstances = M.Carousel.getInstance(elems[0]);
+            carouselInstances.next();
+        }
+        setInterval(nextSlide, 4000);
+    });
+    </script>
+
     <!-- MATERIALIZE JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- MATERIALIZE LOCAL JS -->
