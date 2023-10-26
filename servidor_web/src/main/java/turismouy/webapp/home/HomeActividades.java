@@ -67,6 +67,13 @@ public class HomeActividades extends HttpServlet {
         
         List<dataActividad> actividadesList = IAC.getAllActividades();
 
+        if (actividadesList == null) {
+            System.out.println("[homeActividades] No hay actividades");
+            // response.getWriter().write("");
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+
         // Creamos una lista que contendrá las actividades a eliminar
         List<dataActividad> actEliminar = new ArrayList<dataActividad>();
         

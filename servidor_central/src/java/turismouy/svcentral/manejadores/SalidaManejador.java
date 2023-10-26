@@ -100,11 +100,30 @@ public class SalidaManejador {
         List<salida> salidas = new ArrayList<salida>();
 
         try {
-            salidas = em.createQuery("SELECT s from salida s LEFT JOIN FETCH s.inscripciones", salida.class).getResultList();     
+            salidas = em.createQuery("SELECT s from salida s LEFT JOIN FETCH s.inscripciones", salida.class).getResultList();
         } catch (Exception e) {
             return null;
         }
         em.close();
+        return salidas;
+    }
+
+    public List<salida> getAllSalidasCompletas() {
+	    EntityManager em = factory.createEntityManager();
+        List<salida> salidas = null;
+
+        try {
+            salidas = em.createQuery("SELECT s from salida s LEFT JOIN FETCH s.inscripciones", salida.class).getResultList();
+
+            for (salida salida : salidas) {
+                salida salidaWithActividad = em.createQuery("SELECT s from salida s LEFT JOIN FETCH s.actividades WHERE s.nombreS = '" + salida.getNombre() + "'", salida.class).getSingleResult();
+                salida.setActividades(salidaWithActividad.getActividades());
+            }
+        } catch (Exception e) {
+            return null;
+        } finally {
+            em.close();
+        }
         return salidas;
     }
 
