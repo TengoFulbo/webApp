@@ -432,6 +432,15 @@ public class test {
     }
     
     @org.junit.Test
+    public void test19_LoginVacio() {
+    	IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+
+    	if(!IUC.login("PruebaTurNicknameConContra321","")) {
+    		assertTrue(true);
+    	}
+    }
+    
+    @org.junit.Test
     public void test21_DarDeAltaCategoriaCorrectamente() {
     	EntityManager em = factory.createEntityManager();
     	ICategoriaController ICA = Fabrica.getInstance().getICategoriaController();
@@ -1490,6 +1499,54 @@ public class test {
 			e.printStackTrace();
 		} catch (YaExisteExcepcion e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    }
+    
+    @org.junit.Test
+    public void test60_CrearTuristaRepConContra() {
+    	IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+    	
+    	try {
+    		IUC.registrarTurista("PruebaTurNicknameConContra321", "PruebaNombre1", "PruebaApellido1", "PruebaTurNickNameConContra@gmail.com", "PruebaNacionalidad", LocalDate.of(2000, 1, 3),"PruebaContraseña");
+		} catch (ParametrosInvalidosExcepcion e) {
+			fail("Parametros Invalidos");
+			e.printStackTrace();
+		} catch (UsuarioYaExisteExcepcion e) {
+			assertTrue(true);
+			e.printStackTrace();
+		}
+    }
+    
+    @org.junit.Test
+    public void test61_CrearProveedorRepetidoPorMail() {
+    	IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+    	
+    	try {
+			IUC.registrarProveedor("PruebaProveedorNicknameConContra", "PruebaNombre1", "PruebaApellido1", "PruebaConContra222@gmail.com", "PruebaDescripcion","PruebaURL", LocalDate.of(2000, 1, 3));
+		} catch (ParametrosInvalidosExcepcion e) {
+			assertTrue(true);
+			e.printStackTrace();
+		} catch (UsuarioYaExisteExcepcion e) {
+			assertTrue(true);
+			e.printStackTrace();
+		}
+    	
+    }
+    
+    
+    @org.junit.Test
+    public void test62_CrearProveedorConContraRepetidoPorNick() {
+    	IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+    	
+    	try {
+			IUC.registrarProveedor("PruebaProveedorNicknameConContra222", "PruebaNombre1", "PruebaApellido1", "PruebaConContra@gmail.com", "PruebaDescripcion","PruebaURL", LocalDate.of(2000, 1, 3),"PruebaContraseña");
+		} catch (ParametrosInvalidosExcepcion e) {
+			assertTrue(true);
+			e.printStackTrace();
+		} catch (UsuarioYaExisteExcepcion e) {
+			assertTrue(true);
 			e.printStackTrace();
 		}
     	
