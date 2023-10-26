@@ -19,7 +19,10 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import turismouy.svcentral.datatypes.dataActividad;
+import turismouy.svcentral.datatypes.dataCategoria;
+import turismouy.svcentral.datatypes.dataDepartamento;
 import turismouy.svcentral.datatypes.dataPaquete;
+import turismouy.svcentral.datatypes.dataSalida;
 import turismouy.svcentral.datatypes.dataUsuario;
 import turismouy.svcentral.entidades.actividad;
 import turismouy.svcentral.entidades.categoria;
@@ -572,7 +575,13 @@ public class test {
     	IDC.listarDepartamentos();
     	IAC.getAllActividadesDepartamento("Prueba");
     	ISC.obtenerSalidasVigentesPorActividad("PruebaActividad");
-    	ISC.mostrarDatosSalida("PruebaSalida");
+    	dataSalida DtSalida = ISC.mostrarDatosSalida("PruebaSalida");
+    	DtSalida.getNombre();
+    	DtSalida.getActividades();
+    	DtSalida.getCapacidad();
+    	DtSalida.getFechaAlta();
+    	DtSalida.getFechaSalida();
+    	DtSalida.getLugarSalida();
     	IUC.listarTuristas();
     	
     	try {
@@ -793,10 +802,38 @@ public class test {
     	IDepartamentoController IDC = Fabrica.getInstance().getIDepartamentoController();
     	ICategoriaController ICA = Fabrica.getInstance().getICategoriaController();
         
-        IAC.getAllActividades();
+        List<dataActividad> LDtAct = IAC.getAllActividades();
+    	for(dataActividad DtAct :LDtAct) {
+    		DtAct.getNombre();
+    		DtAct.getCiudad();
+    		DtAct.getCostoUni();
+    		DtAct.getDepartamento();
+    		DtAct.getDesc();
+    		DtAct.getDtCategorias();
+    		DtAct.getDtPaquetes();
+    		DtAct.getDtSalidas();
+    		DtAct.getDuracion();
+    		DtAct.getEstado();
+    		DtAct.getFechaCrea();
+    		DtAct.getProveedor();
+    		
+    	}
         
-    	ICA.listarCategorias();
-    	IDC.listarDepartamentos();
+    	List<dataCategoria> LDtCat = ICA.listarCategorias();
+    	for(dataCategoria DtCat : LDtCat) {
+    		DtCat.getNombre();
+    	}
+    	
+    	List<dataDepartamento> LDtDepto = IDC.listarDepartamentos();
+    	for(dataDepartamento DtDepto : LDtDepto) {
+    		DtDepto.getNombre();
+    		DtDepto.getActividades();
+    		DtDepto.getDescripcion();
+    		DtDepto.getUrl();
+    		
+    	}
+    	
+    	
     	List<dataUsuario> LDtUsu = IUC.listarProveedores();
     	for(dataUsuario DtUsu : LDtUsu) {
     		System.out.println(DtUsu.getNickname());
