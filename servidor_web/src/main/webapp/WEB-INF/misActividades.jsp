@@ -238,6 +238,24 @@
                 data: { departamento: departamento, categoria: categoria },
                 dataType: "json",
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                error: function () {
+                    var lista = document.getElementById("actividades");
+
+                    // Limpia la lista antes de agregar nuevos elementos.
+                    lista.innerHTML = "";
+
+                    var row = document.createElement("div");
+                    row.className = "row";
+
+                    var h2 = document.createElement("h2");
+                    h2.className = "center-align"
+                    h2.innerHTML = "No se encontraron actividades ☹️";
+
+                    row.appendChild(h2)
+
+                    lista.appendChild(row);
+                    return;
+                },
                 success: function (actividades) {
                     // Procesa la respuesta del Servlet y llena la lista.
                     var lista = document.getElementById("actividades");
