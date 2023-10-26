@@ -83,7 +83,7 @@ public class CompraManejador{
             em.close();
         }
     }
-
+/*
     public compra getCompra(String idCompra) {
     	EntityManager em = factory.createEntityManager();
     	
@@ -113,5 +113,5 @@ public class CompraManejador{
     	
     }
 
-
+*/
 }

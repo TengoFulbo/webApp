@@ -117,7 +117,7 @@ public class SalidaManejador {
             tx.begin();
 
             // Se elimina la salida.
-            salida sali = em.find(salida.class,salidaNombre);
+            salida sali = em.createQuery("SELECT s FROM salida s WHERE s.nombreS = '"+ salidaNombre +"'",salida.class).getSingleResult();
             
             em.remove(sali);
 

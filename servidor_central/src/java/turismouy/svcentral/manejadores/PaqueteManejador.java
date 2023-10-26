@@ -92,7 +92,7 @@ public class PaqueteManejador {
 
         paquete paquete;
         try {
-            paquete = em.createQuery("SELECT p FROM paquete p JOIN FETCH p.actividades JOIN FETCH a.categorias WHERE p.nombre = '" + nombre + "'", paquete.class).getSingleResult();
+            paquete = em.createQuery("SELECT p FROM paquete p JOIN FETCH p.actividades WHERE p.nombre = '" + nombre + "'", paquete.class).getSingleResult();
         } catch (Exception e) {
             paquete = null;
         } finally {

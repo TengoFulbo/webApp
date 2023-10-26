@@ -76,7 +76,7 @@ public class InscripcionManejador {
             em.close();
         }
     }
-
+/*
     public inscripcion getInscripcion(String idInscripcion) {
     	EntityManager em = factory.createEntityManager();
     	
@@ -103,7 +103,7 @@ public class InscripcionManejador {
         }
     	em.close();
     	return inscripciones;
-    	
+    
     }
-
+*/
 }
