@@ -152,12 +152,14 @@
                                 <label for="fecha" class="active">Fecha</label>
                             </div>
                             <div class="divider"></div>
-                            <h4>Actividades</h4>
-                            <ul class="collection">
-                                <li class="collection-item">Actividad1</li>
-                                <li class="collection-item">Actividad2</li>
-                                <li class="collection-item">Actividad3</li>
-                                <li class="collection-item">Actividad4</li>
+                            <h4>Categorias</h4>
+                            <ul class="collection" id="listaCategorias">
+                                
+                            </ul>
+                            <div class="divider"></div>
+                            <h4>Salidas</h4>
+                            <ul class="collection" id="listaSalidas">
+                                
                             </ul>
                         </form>
                     </div>
@@ -191,6 +193,28 @@
                                     document.getElementById("modalDuracion").value = dataActividad.duracion;
                                     // document.getElementById("")
                                     // document.getElementById("modalActividadDescripcion").textContent = actividadDescripcion;
+
+                                    var categoriasList = dataActividad.dtCategorias;
+                                    var salidasList = dataActividad.DtSalidas;
+                                    var contCat = document.getElementById("listaCategorias");
+                                    var contSal = document.getElementById("listaSalidas");
+
+                                    contCat.innerHTML = "";
+                                    contSal.innerHTML = "";
+
+                                    categoriasList.forEach(categoria => {
+                                        let cat = document.createElement("li");
+                                        cat.className = "collection-item";
+                                        cat.textContent = categoria;
+                                        contCat.appendChild(cat);
+                                    });
+
+                                    salidasList.forEach(salida => {
+                                        let sal = document.createElement("li");
+                                        sal.className = "collection-item";
+                                        sal.textContent = salida.nombre + " - " + salida.fechaSalida;
+                                        contSal.appendChild(sal);
+                                    });
                                 
                                     // Abre el modal
                                     var modal = M.Modal.init(document.getElementById("consultaModal"));
@@ -250,6 +274,13 @@
                                         }
 
                                         actividades.forEach(actividad => {
+
+                                            console.log(actividad)
+                                            console.log(actividad.proveedor)
+                                            console.log(actividad.dtCategorias)
+                                            console.log(actividad.DtPaquetes)
+                                            console.log(actividad.DtSalidas)
+
                                             // Creamos los elementos HTML.
                                             var row = document.createElement("div");
                                             row.className = "row";
@@ -286,6 +317,16 @@
                                             // btn.id = "abrirModalBtn"
                                             btn.setAttribute("dataActividad", JSON.stringify(actividad));
                                             btn.textContent = "Consultar";
+
+                                            // var categoriasList = actividad.dtCategorias;
+                                            // var contCat = document.getElementById("listaCategorias");
+
+                                            // categoriasList.forEach(categoria => {
+                                            //     let cat = document.createElement("li");
+                                            //     cat.className = "collection-item";
+                                            //     cat.textContent = categoria;
+                                            //     contCat.appendChild(cat);
+                                            // });
                                             // <!-- Modal Trigger -->
                                                 // <button data-target="modal1" class="btn modal-trigger">Modal</button>
 
