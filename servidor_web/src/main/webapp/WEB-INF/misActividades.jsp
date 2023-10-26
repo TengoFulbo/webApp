@@ -260,6 +260,7 @@
                     }
 
                     actividades.forEach(actividad => {
+
                         // Creamos los elementos HTML.
                         var row = document.createElement("div");
                         row.className = "row";
