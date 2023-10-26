@@ -87,9 +87,13 @@ public class UsuarioController implements IUsuarioController {
 
         usuario user = um.getUsuario(nickname);
 
+        // Si por nickname no lo encuentra, va por el correo.
         if (user == null) {
-            // log.error("El usuario no existe.");
-            // return null; // ⚠️ Cambiar por excepción.
+            // Probamos con el email.
+            user = um.getUsuarioEmail(nickname);
+        }
+
+        if (user == null) {
             throw new UsuarioNoExisteExcepcion("El usuario '" + nickname + "' no existe.");
         }
 
@@ -213,6 +217,36 @@ public class UsuarioController implements IUsuarioController {
         log.info("[modificarUsuario] El usuario '" + nickname + "' se actualizó con exito");
     };
 
+    public void modificarUsuario(String nickname, String nombre, String apellido, LocalDate nacimiento, byte[] imageData) throws ParametrosInvalidosExcepcion {
+        // Validaciones sobre parametros.
+        if (!validarTexto(nickname, 3) ||
+            !validarTexto(nombre, 1) ||
+            !validarTexto(apellido, 1) ||
+            imageData == null) {
+            throw new ParametrosInvalidosExcepcion();
+        }
+
+        // Trae la instancia del manejador.
+        UsuarioManejador um = UsuarioManejador.getinstance();
+
+        usuario user = um.getUsuario(nickname);
+
+        if (user == null){
+            // throw new UsuarioNoExisteExcepcion("El usuario" + nickname + " no existe.");
+            log.error("Usuario '" + nickname + "' no existe");
+            return;
+        }
+
+        // imagen imagen = new ima
+
+        user.setNombre(nombre);
+        user.setApellido(apellido);
+        user.setNacimiento(nacimiento);
+
+        um.updateUsuario(user);
+
+        log.info("[modificarUsuario] El usuario '" + nickname + "' con imagen se actualizó con exito");
+    };
 
     public List<dataUsuario> listarUsuarios(){
         // Trae la instancia del manejador.

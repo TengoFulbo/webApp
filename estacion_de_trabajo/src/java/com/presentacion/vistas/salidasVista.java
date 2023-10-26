@@ -170,7 +170,8 @@ public class salidasVista extends JPanel {
 						String nomb = salida.getNombre();
 						String ls = salida.getLugarSalida();
 						String fs = salida.getFechaSalida().toString();
-						model.addRow(new Object[] {nomb, ls, fs});
+						String ld = salida.getCapacidad() + "";
+						model.addRow(new Object[] {nomb, ls, fs, ld});
 					}
 				}
 			}
@@ -299,7 +300,7 @@ public class salidasVista extends JPanel {
 		actividad.setBounds(164, 9, 312, 22);
 
 		IActividadController IAC = Fabrica.getInstance().getIActividadController();
-		List<dataActividad> actividades = IAC.getAllActividadesDepartamento(departamentoParameter);
+		List<dataActividad> actividades = IAC.getAllActividadesConfirmadasDepartamento(departamentoParameter);
 
 		if (actividades == null) {
 			JOptionPane.showMessageDialog(popupDialog, "No existen departamentos por los cuales buscar actividades",
@@ -875,7 +876,7 @@ public class salidasVista extends JPanel {
 		actividades.setBounds(148, 10, 326, 22);
 		
 		IActividadController IAC = Fabrica.getInstance().getIActividadController();
-		List<dataActividad> listAct = IAC.getAllActividadesDepartamento(departamento.toString());
+		List<dataActividad> listAct = IAC.getAllActividadesConfirmadasDepartamento(departamento.toString());
 		
 		if (listAct == null) {
 			JOptionPane.showMessageDialog(popupDialog, "No existen departamentos por los cuales buscar actividades para la salida",

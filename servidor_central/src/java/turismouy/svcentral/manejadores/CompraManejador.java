@@ -45,7 +45,7 @@ public class CompraManejador{
 
             tx.commit();
 
-            log.info("La compra se actualizó" + compra.getId() + "correctamente");
+            log.info("La compra se actualizó" + compra.getId() + " correctamente");
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {
                 tx.rollback();
@@ -77,7 +77,7 @@ public class CompraManejador{
             if (tx != null && tx.isActive()) {
                 tx.rollback();
             }
-            log.error("Guardado de compra '" + compra + "' errrono.");
+            log.error("Guardado de compra '" + compra + "' errono.");
             e.printStackTrace();
         } finally {
             em.close();

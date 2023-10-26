@@ -32,10 +32,21 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
-        
         HttpSession session = request.getSession();
 
+
+        // Validaciones sobre parametros.
+        if (!validarTexto(username, 1) || !validarTexto(password, 1)) {
+            session.setAttribute("errorLogin", "El usuario / contraseña no son correctos.");
+
+            log.error("Parametros invalidos.");
+            response.sendRedirect(request.getContextPath() + "/login");
+            return; 
+        }
+
+
+        IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+        
         if (IUC.login(username, password)) {
 
             // Creamos la sesión.
@@ -45,8 +56,6 @@ public class LoginServlet extends HttpServlet {
                 dataUsuario usuario = IUC.mostrarInfo(username);
                 session.setAttribute("dataUsuario", usuario);
                 System.out.println(usuario.getNombre());
-
-                // TODO: ⚠️ Agregar o modificar "mostrarInfo" para que también pueda recibir un correo. 
             } catch (Exception e) {
                 log.error("[LoginServlet] Error con el usuario");
             }
@@ -60,23 +69,44 @@ public class LoginServlet extends HttpServlet {
             log.error("El usuario es incorrecto.");
             // request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             response.sendRedirect(request.getContextPath() + "/login");
-            // request
         }
+    }
 
+    /*
+        * Level 1: Textos simples. Valida que no sea vacio, que no empiece o termine con espacio y que al menos tenga 1 letra o número.
+        * Level 2: Correos. Valida lo mismo que el nivel 1, además valida que contenga una sola @ para los correos.
+        * Livel 3: Nicknames. Valida lo mismo que el nivel 1, además valida que no contenga espacios. Sirve para nombres de usuario.
+    */
+    private static boolean validarTexto(String texto, int nivel) {
+        switch (nivel) {
+            case 1:
+                return validarNivel1(texto);
+            case 2:
+                return validarNivel1(texto) && contarCaracter(texto, '@') == 1;
+            case 3:
+                return validarNivel1(texto) && !texto.contains(" ");
+            default:
+                return false;
+        }
+    }
 
-        // // Validar las credenciales (esto puede ser reemplazado por una lógica más robusta)
-        // if (username.equals("Ezequiel") && password.equals("1234")) {
-        //     // Crear una sesión HttpSession y almacenar información de usuario
-        //     HttpSession session = request.getSession();
-        //     session.setAttribute("username", username);
+    private static boolean validarNivel1(String texto) {
+        if (texto == null || texto.isEmpty()) {
+            return false;
+        }
+        if (texto.trim().length() != texto.length()) {
+            return false;
+        }
+        return texto.matches(".*[a-zA-Z0-9].*");
+    }
 
-        //     // Redirigir a la página protegida
-        //     response.sendRedirect(request.getContextPath() + "/home");
-        //     // request.getRequestDispatcher("/WEB-INF/hola.jsp").forward(request, response);
-        // } else {
-        //     // Si las credenciales son incorrectas, redirigir de vuelta al formulario de inicio de sesión
-        //     request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
-        //     // response.sendRedirect(request.getContextPath() + "/WEB-INF/login.jsp");
-        // }
+    private static int contarCaracter(String texto, char caracter) {
+        int count = 0;
+        for (char c : texto.toCharArray()) {
+            if (c == caracter) {
+                count++;
+            }
+        }
+        return count;
     }
 }

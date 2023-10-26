@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import turismouy.svcentral.Fabrica;
 import turismouy.svcentral.interfaces.IUsuarioController;
 
@@ -18,6 +19,8 @@ public class RegisterTuristaServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        HttpSession session = request.getSession();
 
         String nickname = null;
         String email = null;
@@ -28,14 +31,6 @@ public class RegisterTuristaServlet extends HttpServlet {
         String apellido = null;
         String nacionalidad = null; // Requiere turista.
 
-        // if (nickname == null || email == null || fechaN == null ||
-        //     password = null ||
-        //     nombre == null ||
-        //     apellido == null ||
-        //     nacionalidad == null) {
-
-        // }
-
         nickname        = request.getParameter("nickname");
         nombre          = request.getParameter("nombre");
         apellido        = request.getParameter("apellido");
@@ -43,6 +38,20 @@ public class RegisterTuristaServlet extends HttpServlet {
         fechaN          = request.getParameter("fechaN");
         nacionalidad    = request.getParameter("nacionalidad");
         password        = request.getParameter("password");
+
+        if (nickname == null || nickname == "" ||
+            nombre == null || nombre == "" ||
+            apellido == null || apellido == "" ||
+            email == null || apellido == "" ||
+            fechaN == null || fechaN == "" ||
+            nacionalidad == null || nacionalidad == "" ||
+            password == null || password == "")
+        {
+            System.out.println("[RegisterTurista] Error: Parametros invalidos.");
+            session.setAttribute("errorLogin", "Parametros invalidos.");
+            response.sendRedirect(request.getContextPath() + "/register");
+            return;
+        }
 
         try {
             // Parsear la cadena en un objeto LocalDate
@@ -67,12 +76,13 @@ public class RegisterTuristaServlet extends HttpServlet {
         try {
             IUC.registrarTurista(nickname, nombre, apellido, email, nacionalidad, fecha, password);
 
+            session.setAttribute("errorLogin", "Usuario registrado. Ahora puedes iniciar sesión");
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         } catch (Exception e) {
             System.out.println(e);
         }
-
+                
         response.sendRedirect(request.getContextPath() + "/register");
     }
 }
