@@ -64,11 +64,12 @@ public class departamento {
 		for(actividad actividad : this.actividades) {
 			if(actividad.getNombre().equals(act.getNombre())) {
 				System.out.println(this.actividades.get(indice).getNombre());
-				this.actividades.remove(indice);
-				this.actividades.add(act);
+				break;
 			}
 			indice++;
 		}
+		this.actividades.remove(indice);
+		this.actividades.add(act);
 	}
 
 	public void removerActividad(actividad actividad){
