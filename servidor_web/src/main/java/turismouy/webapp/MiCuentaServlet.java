@@ -3,6 +3,9 @@ package turismouy.webapp;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -15,7 +18,9 @@ import jakarta.servlet.http.Part;
 import turismouy.svcentral.Fabrica;
 import turismouy.svcentral.datatypes.dataUsuario;
 import turismouy.svcentral.entidades.imagen;
+import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
 import turismouy.svcentral.interfaces.IUsuarioController;
+import turismouy.svcentral.utilidades.log;
 
 @WebServlet("/miCuenta")
 @MultipartConfig
@@ -48,6 +53,8 @@ public class MiCuentaServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        
         Part filePart = request.getPart("file");
 
         byte[] imageData = new byte[(int) filePart.getSize()];
@@ -55,15 +62,61 @@ public class MiCuentaServlet extends HttpServlet {
             input.read(imageData);
         }
 
+        String nickname                 = request.getParameter("nickname");
+        String nombre                   = request.getParameter("nombre");
+        String apellido                 = request.getParameter("apellido");
+        String nacimiento               = request.getParameter("nacimiento");
+        String email                    = request.getParameter("email");
+        String descripcion              = request.getParameter("descripcion");
+        String url                      = request.getParameter("url");
+        String nacionalidad             = request.getParameter("nacionalidad");
+
+        log.info("--------------------------------------------------------------");
+        System.out.println("Nickname: " + nickname);
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Apellido: " + apellido);
+        System.out.println("Email: " + email);
+        System.out.println("Nacimiento: " + nacimiento);
+        System.out.println("Descripción: " + descripcion);
+        System.out.println("URL: " + url);
+        System.out.println("Nacionalidad: " + nacionalidad);
+        log.info("--------------------------------------------------------------");
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        LocalDate fechaLocalDate = LocalDate.parse(nacimiento, formatter);
+
+
+
         IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
 
-        // IUC.
-        // System.out.println(imageData);
-        // imagen userImage = new imagen();
-        // userImage.setUser(user);
-        // userImage.setImageData(imageData);
         
-        response.setStatus(HttpServletResponse.SC_OK); // Indicar que la carga se completó con éxito
-        System.out.println("HOla");
+        if (nacionalidad != null){
+            try{
+                IUC.modificarUsuario(nickname, nombre, apellido, fechaLocalDate);
+                log.info("  -> Usuario Modificado <-");
+            }catch(Exception e){
+                log.warning("[ERROR AL MODIFICAR TURISTA]");
+            }
+        }else if (descripcion != null || url != null){
+            try{
+                IUC.modificarUsuario(nickname, nombre, apellido, fechaLocalDate);
+                log.info("  -> Usuario Modificado <-");
+            }catch(Exception e){
+                log.warning("[ERROR AL MODIFICAR PROVEEDOR]");
+            }
+        }
+
+        dataUsuario usuario;
+        try {
+            usuario = IUC.mostrarInfo(nickname);
+            session.removeAttribute("dataUsuario");
+            session.setAttribute("dataUsuario", usuario);
+        } catch (UsuarioNoExisteExcepcion e) {
+            e.printStackTrace();
+        }
+
+        response.sendRedirect(request.getContextPath() + "/home");
+        log.info("Successfully");
     }
 }

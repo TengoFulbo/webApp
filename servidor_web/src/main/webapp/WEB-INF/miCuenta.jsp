@@ -27,7 +27,7 @@
         <div class="container center-align">
           <div class="container center-align">
             <div class="row center-align">
-              <form class="col s12" id="imageUploadForm" enctype="multipart/form-data">
+              <form action="modificarUsuario" method="post" class="col s12" id="imageUploadForm" enctype="multipart/form-data">
                 <div class="row">
                   <img src="src/img/avatar1.png" class="imgUserAccount" alt="Imagen de usuario">
                 </div>
@@ -66,13 +66,13 @@
                     <label for="apellido">Apellido</label>
                   </div>
                   <div class="input-field col s6">
-                    <input id="email" type="email" class="validate" value="<%= (user != null) ? user.getEmail() : "" %>">
+                    <input id="email" type="email" class="validate" value="<%= (user != null) ? user.getEmail() : "" %>" readonly>
                     <label for="email">Email</label>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s12">
-                    <input id="nacimiento" type="date" class="validate" value="<%= (user != null) ? user.getNacimiento() : "" %>" readonly>
+                    <input id="nacimiento" type="date" class="validate" value="<%= (user != null) ? user.getNacimiento() : "" %>">
                     <label for="nacimiento">Fecha de Nacimiento</label>
                   </div>
                 </div>
@@ -80,13 +80,13 @@
                 if (user != null && user.getisProveedor()) { %>
                     <div class="row">
                       <div class="input-field col s12">
-                        <textarea id="descripcion" class="materialize-textarea"><%= (user != null && user.getDescripcion() != null) ? user.getDescripcion() : "" %></textarea>
+                        <textarea id="descripcion" class="materialize-textarea" readonly><%= (user != null && user.getDescripcion() != null) ? user.getDescripcion() : "" %></textarea>
                         <label for="descripcion">Descripción</label>
                       </div>
                     </div>
                     <div class="row">
                       <div class="input-field col s12">
-                        <input id="url" type="text" class="validate" value="<%= (user != null && user.getUrl() != null) ? user.getUrl() : "" %>">
+                        <input id="url" type="text" class="validate" value="<%= (user != null && user.getUrl() != null) ? user.getUrl() : "" %>" readonly>
                         <label for="url">URL</label>
                       </div>
                     </div>
@@ -96,7 +96,7 @@
                 if (user != null && !user.getisProveedor()) { %>
                     <div class="row">
                       <div class="input-field col s12">
-                        <input id="nacionalidad" type="text" class="validate" value="<%= (user != null && user.getNacionalidad() != null) ? user.getNacionalidad() : "" %>">
+                        <input id="nacionalidad" readonly type="text" class="validate" value="<%= (user != null && user.getNacionalidad() != null) ? user.getNacionalidad() : "" %>">
                         <label for="nacionalidad">Nacionalidad</label>
                       </div>
                     </div>
@@ -135,83 +135,7 @@
       </section>
     </div>
   </div>
-  <!-- MODALS -->
-  <div id="modalInscribirse" class="modal">
-    <div class="modal-content">
-      <h4>Inscripcion</h4>
-      <div class="divider"></div>
-      <form action="#" class="modal__inscribirse">
-        <p>Ingresa la cantidad de personas a inscribirse:</p>
-        <div class="input-field col s6 modal__inscribirse--ninput">
-          <input id="numero" type="number" class="validate" />
-          <label for="numero">Ingresa un número</label>
-        </div>
-        <p>Forma de pago:</p>
-        <p>
-          <label>
-            <input id="formaPago" name="formaPago" value="general" type="radio" checked />
-            <span>General</span>
-          </label>
-        </p>
-        <p>
-          <label>
-            <input id="formaPago" name="formaPago" value="paquete" type="radio" />
-            <span>Paquete</span>
-          </label>
-        </p>
-        <button class="btn waves-effect waves-light modal__inscribirse--submit" type="submit" name="action">
-          Enviar
-          <i class="material-icons right">send</i>
-        </button>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
-    </div>
-  </div>
 
-  <div id="modalConsulta" class="modal">
-    <div class="modal-content">
-      <h4>Consulta de Salida</h4>
-      <form>
-        <div class="input-field">
-          <input id="nombre" type="text" class="validate" readonly value="Salida 1" />
-          <label for="nombre" class="active">Nombre</label>
-        </div>
-        <div class="input-field">
-          <input id="cant" type="number" class="validate" readonly value="99" />
-          <label for="cant" class="active">Cantidad de lugares</label>
-        </div>
-        <div class="input-field">
-          <input id="dateSalida" type="date" class="validate" disabled value="2023-01-01" />
-          <label for="dateSalida" class="active">Fecha de salida</label>
-        </div>
-        <div class="input-field">
-          <input id="dateAlta" type="date" class="validate" disabled value="2023-01-01" />
-          <label for="dateAlta" class="active">Fecha de alta</label>
-        </div>
-        <div class="input-field">
-          <input id="lugarSalida" type="text" class="validate" readonly value="San Jose" />
-          <label for="lugarSalida" class="active">Lugar de Salida</label>
-        </div>
-        <div class="divider"></div>
-        <ul class="collection with-header">
-          <li class="collection-header">
-            <h4>Actividades</h4>
-          </li>
-          <li class="collection-item">Actividad1</li>
-          <li class="collection-item">Actividad2</li>
-          <li class="collection-item">Actividad3</li>
-          <li class="collection-item">Actividad4</li>
-        </ul>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
-    </div>
-  </div>
-
-  
   <%@ include file="./utils/footer.jsp" %>
 
   <!-- MATERIALIZE JS -->
@@ -226,9 +150,41 @@
 
       var formData = new FormData();
       var fileInput = document.getElementById("imageInput");
+      var nickname = document.getElementById("nickname");
+      var nombre = document.getElementById("nombre");
+      var apellido = document.getElementById("apellido");
+      var email = document.getElementById("email");
+      var nacimiento = document.getElementById("nacimiento");
+      var descripcion = document.getElementById("descripcion");
+      var url = document.getElementById("url");
+      var nacionalidad = document.getElementById("nacionalidad");
       // var descriptionInput = document.getElementById("description");
 
       formData.append("file", fileInput.files[0]);
+      formData.append("file", imageInput.files[0]);
+      formData.append("nickname", nickname.value);
+      formData.append("nombre", nombre.value);
+      formData.append("apellido", apellido.value);
+      formData.append("email", email.value);
+      formData.append("nacimiento", nacimiento.value);
+
+      if (descripcion != null) {
+        formData.append("descripcion", descripcion.value);
+      }
+      if (nacionalidad != null) {
+        formData.append("nacionalidad", nacionalidad.value);
+      }
+      if (url != null) {
+        formData.append("url", url.value);
+      }
+
+      // var descripcionValue  = descripcion.value || '';
+      // var nacionalidadValue = nacionalidad.value || '';
+      // var urlValue          = url.value || '';
+
+      // formData.append("descripcion", descripcionValue);
+      // formData.append("url", urlValue);
+      // formData.append("nacionalidad", nacionalidadValue);
       // formData.append("description", descriptionInput.value);
 
       document.getElementById("uploadContainer").style.display = "block";
