@@ -85,6 +85,7 @@ public class proveedor extends usuario {
 					for (salida salida : actividad.getSalidas()) {
 						// log.warning("Coso " + salida.getNombre());
 						dataSalidas.add(salida.toDataTypeWithoutActividades());
+						// TODO: Arreglar esto para que se traigan las salidas de forma manual.
 					}
 				}
 			}

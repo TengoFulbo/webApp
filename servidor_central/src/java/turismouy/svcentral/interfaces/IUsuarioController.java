@@ -53,6 +53,7 @@ public interface IUsuarioController {
      * @throws ParametrosInvalidosExcepcion
      */
     public abstract void modificarUsuario(String nickname, String nombre, String apellido, LocalDate nacimiento) throws ParametrosInvalidosExcepcion;
+    public abstract void modificarUsuario(String nickname, String nombre, String apellido, LocalDate nacimiento, byte[] imageData) throws ParametrosInvalidosExcepcion;
     
     /**
      * Lista todos los usuarios.

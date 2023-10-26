@@ -78,14 +78,18 @@ public class SalidaController implements ISalidaController {
 		
 		SalidaManejador sm = SalidaManejador.getInstance();
 		
-		List<salida> salidas = sm.getAllSalidas();
+		// En caso de error cambiar por la función de arriba.
+		// List<salida> salidas = sm.getAllSalidas();
+		List<salida> salidas = sm.getAllSalidasCompletas();
+		
 		
 		if (salidas == null) {
 				return null;
 			}
 			
 		for (salida salida : salidas) {
-				dataSalidas.add(salida.toDataTypeWithoutActividades());
+				// dataSalidas.add(salida.toDataTypeWithoutActividades());
+				dataSalidas.add(salida.toDataType());
 			}
 			
 		return dataSalidas;

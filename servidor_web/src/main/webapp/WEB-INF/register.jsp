@@ -85,5 +85,29 @@
       </div>
     </div>
     <script src="./src/js/register.js"></script>
+
+    <script>
+      function showToast(message) {
+        var toast = document.createElement("div");
+        toast.className = "toast";
+        toast.textContent = message;
+        document.body.appendChild(toast);
+      
+        setTimeout(function () {
+          toast.classList.add("show");
+          setTimeout(function () {
+            toast.classList.remove("show");
+            document.body.removeChild(toast);
+          }, 3000); 
+        }, 100);
+      }
+    
+      var notificacion = '<%= request.getSession().getAttribute("errorRegister") %>';
+    
+      if (notificacion && notificacion !== 'null' && notificacion !== 'undefined') {
+        showToast(notificacion);
+        '<% request.getSession().removeAttribute("errorRegister"); %>'
+      }
+    </script>
   </body>
 </html>

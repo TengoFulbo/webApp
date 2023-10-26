@@ -23,6 +23,10 @@ public class usuario{
 	protected LocalDate nacimiento;
 	protected String password;
 	
+	@OneToOne
+	@JoinColumn(name = "imagen_id")
+	private imagen imagen;
+	
 	// Constructor vacio pedido por JPA.
 	public usuario(){};
 

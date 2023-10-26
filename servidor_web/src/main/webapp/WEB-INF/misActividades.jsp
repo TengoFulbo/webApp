@@ -159,11 +159,20 @@
             <form>
                 <div class="input-field col s12">
                     <select>
-                        <option value="" disabled selected>Elije un Departamento</option>
-                        <option value="1">Departamento 1</option>
-                        <option value="2">Departamento 2</option>
-                        <option value="3">Departamento 3</option>
-
+                        <option value="" disabled selected>No seleccionado</option>
+                        <%
+                        int value3 = 1;
+                        if (departamentos != null) {
+                            if (!departamentos.isEmpty()) {
+                                for (dataDepartamento departamento : departamentos) {
+                        %>
+                                    <option value="<%= departamento.getNombre() %>"> <%= value3 %> - <%= departamento.getNombre() %></option>
+                        <%
+                                    value3++;
+                                }
+                            }
+                        }
+                        %>
                     </select>
                     <label>Departamento</label>
                 </div>
@@ -184,14 +193,14 @@
                     <label for="ciudad" class="active">Ciudad</label>
                 </div>
                 <div class="divider"></div>
-                <button class="btn waves-effect waves-light modal__inscribirse--submit" type="submit" name="action">
+                <button class="btn waves-effect waves-light modal__inscribirse--submit" type="submit" name="action" onclick="crearActividad()">
                     Enviar
                     <i class="material-icons right">send</i>
                 </button>
             </form>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+            <a href="#!" class="modal-close btn-flat">Cerrar</a>
         </div>
     </div>
 
@@ -280,6 +289,24 @@
                 data: { departamento: departamento, categoria: categoria },
                 dataType: "json",
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                error: function () {
+                    var lista = document.getElementById("actividades");
+
+                    // Limpia la lista antes de agregar nuevos elementos.
+                    lista.innerHTML = "";
+
+                    var row = document.createElement("div");
+                    row.className = "row";
+
+                    var h2 = document.createElement("h2");
+                    h2.className = "center-align"
+                    h2.innerHTML = "No se encontraron actividades ☹️";
+
+                    row.appendChild(h2)
+
+                    lista.appendChild(row);
+                    return;
+                },
                 success: function (actividades) {
                     // Procesa la respuesta del Servlet y llena la lista.
                     var lista = document.getElementById("actividades");
@@ -362,7 +389,12 @@
                     });
                 }
             });
-        }   
+        }
+
+        function crearActividad() {
+            event.preventDefault()
+            console.log("holasldlasmdklas");
+        }
     </script>
 </body>
 

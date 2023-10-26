@@ -59,13 +59,20 @@ public class HomeActividades extends HttpServlet {
         String categoria    = request.getParameter("categoria");
         String departamento = request.getParameter("departamento");
 
-        log.info("Departamento: " + departamento);
+        // log.info("Departamento: " + departamento);
 
         log.info("[homeActividades Post]");
 
         IActividadController IAC = Fabrica.getInstance().getIActividadController();
         
         List<dataActividad> actividadesList = IAC.getAllActividades();
+
+        if (actividadesList == null) {
+            System.out.println("[homeActividades] No hay actividades");
+            // response.getWriter().write("");
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
 
         // Creamos una lista que contendrá las actividades a eliminar
         List<dataActividad> actEliminar = new ArrayList<dataActividad>();

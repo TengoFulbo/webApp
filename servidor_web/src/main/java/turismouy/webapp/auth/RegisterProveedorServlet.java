@@ -42,6 +42,21 @@ public class RegisterProveedorServlet extends HttpServlet {
         url             = request.getParameter("url");
         password        = request.getParameter("password");
 
+        if (nickname == null || nickname == "" ||
+            nombre == null || nombre == "" ||
+            apellido == null || apellido == "" ||
+            email == null || apellido == "" ||
+            fechaN == null || fechaN == "" ||
+            desc == null || desc == "" ||
+            url == null || url == "" ||
+            password == null || password == "")
+        {
+            System.out.println("[RegisterTurista] Error: Parametros invalidos.");
+            session.setAttribute("errorLogin", "Parametros invalidos.");
+            response.sendRedirect(request.getContextPath() + "/register");
+            return;
+        }
+
         try {
             // Parsear la cadena en un objeto LocalDate
             fecha = LocalDate.parse(fechaN, formatoFecha);

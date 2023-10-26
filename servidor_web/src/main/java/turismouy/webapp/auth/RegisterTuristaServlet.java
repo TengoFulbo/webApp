@@ -31,14 +31,6 @@ public class RegisterTuristaServlet extends HttpServlet {
         String apellido = null;
         String nacionalidad = null; // Requiere turista.
 
-        // if (nickname == null || email == null || fechaN == null ||
-        //     password = null ||
-        //     nombre == null ||
-        //     apellido == null ||
-        //     nacionalidad == null) {
-
-        // }
-
         nickname        = request.getParameter("nickname");
         nombre          = request.getParameter("nombre");
         apellido        = request.getParameter("apellido");
@@ -46,6 +38,20 @@ public class RegisterTuristaServlet extends HttpServlet {
         fechaN          = request.getParameter("fechaN");
         nacionalidad    = request.getParameter("nacionalidad");
         password        = request.getParameter("password");
+
+        if (nickname == null || nickname == "" ||
+            nombre == null || nombre == "" ||
+            apellido == null || apellido == "" ||
+            email == null || apellido == "" ||
+            fechaN == null || fechaN == "" ||
+            nacionalidad == null || nacionalidad == "" ||
+            password == null || password == "")
+        {
+            System.out.println("[RegisterTurista] Error: Parametros invalidos.");
+            session.setAttribute("errorLogin", "Parametros invalidos.");
+            response.sendRedirect(request.getContextPath() + "/register");
+            return;
+        }
 
         try {
             // Parsear la cadena en un objeto LocalDate
