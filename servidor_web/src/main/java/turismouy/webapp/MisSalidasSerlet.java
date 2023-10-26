@@ -108,13 +108,24 @@ public class MisSalidasSerlet extends HttpServlet {
             }
         }
 
+        if(userList == null || userList.isEmpty()) {
+            log.warning("====================================================");
+            log.warning("...           -> Lista user no contiene nada");
+            log.warning("====================================================");
+        }
+        if(filterList == null || filterList.isEmpty()) {
+            log.warning("====================================================");
+            log.warning("...           -> Lista filtros no contiene nada");
+            log.warning("====================================================");
+        }
+
         if (respList.isEmpty()) {
+            log.warning("La lista de respuesta es vacia⛔");
+        }else{
             log.warning("La lista de respuesta NO es vacia✅");
             for (dataSalida salida : respList){
                 log.info(salida.getNombre());
             }
-        }else{
-            log.warning("La lista de respuesta es vacia⛔");
         }
 
         request.setCharacterEncoding("UTF-8");

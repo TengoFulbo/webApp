@@ -23,6 +23,12 @@
   <!-- MAIN -->
   <div class="main">
     <div class="mainWrap">
+      <div class="main__createBtn">
+        <div class="main__createBtn--wrap">
+          <a class="waves-effect waves-light modal-trigger btn main__createBtn--btn" href="#modalNuevaSalida">Crear
+            Salida</a>
+        </div>
+      </div>
       <!-- <div class="mainWrap__pagination">
         <ul class="pagination">
           <li class="active"><a href="./homeSalidas">Salidas</a></li>
@@ -124,39 +130,80 @@
   </div>
 
   <!-- MODALS -->
-  <div id="modalInscribirse" class="modal">
+  <div id="modalNuevaSalida" class="modal">
     <div class="modal-content">
-      <h4>Inscripcion</h4>
-      <div class="divider"></div>
-      <form action="#" class="modal__inscribirse">
-        <p>Ingresa la cantidad de personas a inscribirse:</p>
-        <div class="input-field col s6 modal__inscribirse--ninput">
-          <input id="numero" type="number" class="validate" />
-          <label for="numero">Ingresa un número</label>
-        </div>
-        <p>Forma de pago:</p>
-        <p>
-          <label>
-            <input id="formaPago" name="formaPago" value="general" type="radio" checked />
-            <span>General</span>
-          </label>
-        </p>
-        <p>
-          <label>
-            <input id="formaPago" name="formaPago" value="paquete" type="radio" />
-            <span>Paquete</span>
-          </label>
-        </p>
-        <button class="btn waves-effect waves-light modal__inscribirse--submit" type="submit" name="action">
-          Enviar
-          <i class="material-icons right">send</i>
-        </button>
-      </form>
+        <h4>Crear Salida</h4>
+        <form action="altaSalida" method="post">
+            <div class="input-field col s12">
+              <select name="actividadSelect">
+                <option value="" disabled selected>Elije una Actividad</option>
+                <% List<dataActividad> actividadList = (List<dataActividad>) request.getAttribute("actividades"); %>
+                <% int valorFor1 = 1; %> <!-- Mover la declaración de value aquí -->
+                <%
+                if (actividadList != null) {
+                    if (!actividadList.isEmpty()) {
+                        for (dataActividad act : actividadList) { 
+                %>     
+                            <option value="<%= act.getNombre() %>"> <%= valorFor1 %> - <%= act.getNombre() %> </option>
+                <%  
+                            valorFor1++;
+                        }
+                    }
+                }
+                %>
+            </select>
+                <label>Actividad</label>
+            </div>
+            <div class="input-field col s12">
+              <select name="departamentoSelect">
+                <option value="" disabled selected>Elije una Departamento</option>
+                <% List<dataDepartamento> departamentoList = (List<dataDepartamento>) request.getAttribute("departamentos"); %>
+                <% int valorFor2 = 1; %>
+                <%
+                if (departamentoList != null) {
+                    if (!departamentoList.isEmpty()) {
+                        for (dataDepartamento dpto : departamentoList) { 
+                %>     
+                            <option value="<%= dpto.getNombre() %>"> <%= valorFor2 %> - <%= dpto.getNombre() %> </option>
+                <%  
+                            valorFor2++;
+                        }
+                    }
+                }
+                %>
+            </select>
+                <label>Departamento</label>
+            </div>
+            <div class="divider"></div>
+            <div class="input-field">
+                <input id="nombre" name="nombre" type="text" class="validate" value="">
+                <label for="nombre" class="active">Nombre</label>
+            </div>
+            <div class="input-field">
+              <input id="lugarSalida" name="lugarSalida" type="text" class="validate" value="">
+              <label for="lugarSalida" class="active">Lugar de Salida</label>
+            </div>
+            <div class="input-field">
+              <input name="fechaSalidaString" type="date" placeholder="Fecha de salida" />
+              <label for="fechaSalida" class="active">Fecha de Salida</label>
+            </div>
+            <div class="input-field">
+              <input id="capacidad" name="capacidad" type="number" class="validate" value="">
+              <label for="capacidad" class="active">Capacidad</label>
+            </div>
+            <!-- Otros campos del formulario aquí... -->
+            <div class="divider"></div>
+            <button class="btn waves-effect waves-light modal__inscribirse--submit" type="submit" name="action">
+                Enviar
+                <i class="material-icons right">send</i>
+            </button>
+        </form>
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
     </div>
   </div>
+
 
   <div id="modalConsulta" class="modal">
     <div class="modal-content">
