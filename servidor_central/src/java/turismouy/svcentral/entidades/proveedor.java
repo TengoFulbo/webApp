@@ -57,6 +57,14 @@ public class proveedor extends usuario {
 		this.descripcion = descripcion;
 	}
 
+	public void setActividades(List<actividad> actividades) {
+		this.actividades = actividades;
+	}
+
+	public List<actividad> getActividades() {
+		return this.actividades;
+	}
+
 	public void addActividad(actividad actividad) {
 		this.actividades.add(actividad);
 	}

@@ -15,7 +15,6 @@ import turismouy.svcentral.entidades.inscripcion;
 public class SalidaManejador {
     private static SalidaManejador instancia = null;
 
-    //EntityManagerFactory factory = Persistence.createEntityManagerFactory("PA2023");
     EntityManagerFactory factory = EMFactory.getEntityManagerFactory();
     // Singleton.
     

@@ -1,9 +1,7 @@
 package turismouy.svcentral.manejadores;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -11,44 +9,16 @@ import javax.persistence.EntityTransaction;
 
 import turismouy.svcentral.EMFactory;
 import turismouy.svcentral.entidades.compra;
-import turismouy.svcentral.entidades.inscripcion;
 import turismouy.svcentral.entidades.paquete;
-import turismouy.svcentral.entidades.salida;
 import turismouy.svcentral.entidades.turista;
-import turismouy.svcentral.entidades.usuario;
 import turismouy.svcentral.utilidades.log;
 
 public class PaqueteManejador {
-    private Map<String, paquete> paqueteNombre;
     private static PaqueteManejador instancia = null;
 
     EntityManagerFactory factory = EMFactory.getEntityManagerFactory();
 
-    private PaqueteManejador() {
-        // Para cada función hay que crear un nuevo em y tx.
-	    EntityManager em = factory.createEntityManager();
-
-        paqueteNombre = new HashMap<String, paquete>();
-        List<paquete> paquetes = em.createQuery("SELECT p FROM paquete p JOIN FETCH p.actividades", paquete.class).getResultList();
-        // List<paquete> paquetes = em.createQuery("SELECT DISTINCT p FROM paquete p " +
-                                                // "LEFT JOIN FETCH p.actividades a " +
-                                                // "LEFT JOIN FETCH a.categorias", paquete.class)
-        // .getResultList();
-
-        if (paquetes != null) {
-            for (paquete paquete : paquetes) {
-                // log.warning("[P] " + paquete.getNombre() + " " + paquete.getActividades().size());
-                // if (paquete.getActividades() != null) {
-                //     for (actividad actividad : paquete.getActividades()) {
-                //         log.warning("    " + actividad.getNombre());
-                //     }
-                // }
-                paqueteNombre.put(paquete.getNombre(), paquete);
-            }
-        }
-        log.info("Paquetes cargados: " + paqueteNombre.size());
-        em.close();
-    };
+    private PaqueteManejador() {};
 
     // Singleton.
     public static PaqueteManejador getinstance() {
@@ -62,7 +32,7 @@ public class PaqueteManejador {
 	    EntityManager em = factory.createEntityManager();
 	    EntityTransaction tx = em.getTransaction();
 
-        String nombre = paquete.getNombre();
+        // String nombre = paquete.getNombre();
 
         try {
             tx.begin();
@@ -72,8 +42,6 @@ public class PaqueteManejador {
 
             tx.commit();
 
-            // Si el archivo se logró guardar en BD, lo guarda en la colección y además muestra cuantos paquetes hay.
-            paqueteNombre.put(nombre, paquete);
             log.info("[PaqueteManejador] se agrego correctamente el paquete: " + paquete.getNombre());
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {
@@ -86,13 +54,23 @@ public class PaqueteManejador {
         }
     }
 
-    public paquete getPaquete(String nombre){
-        // return ((paquete) paqueteNombre.get(nombre));
+
+    public paquete getPaquete(String nombre) {
     	EntityManager em = factory.createEntityManager();
 
         paquete paquete;
+        paquete paqueteWithCompra;
+
         try {
-            paquete = em.createQuery("SELECT p FROM paquete p JOIN FETCH p.actividades WHERE p.nombre = '" + nombre + "'", paquete.class).getSingleResult();
+            paquete = em.createQuery("SELECT p FROM paquete p LEFT JOIN FETCH p.actividades WHERE p.nombre = :nombre", paquete.class)
+                .setParameter("nombre", nombre)
+                .getSingleResult();
+
+            paqueteWithCompra = em.createQuery("SELECT p FROM paquete p LEFT JOIN FETCH p.compra WHERE p.nombre = :nombre", paquete.class)
+                .setParameter("nombre", nombre)
+                .getSingleResult();
+
+            paquete.setCompra(paqueteWithCompra.getCompra());
         } catch (Exception e) {
             paquete = null;
         } finally {
@@ -101,10 +79,26 @@ public class PaqueteManejador {
         return paquete;
     }
 
-    public List<paquete> getAllPaquetes() {
-        if (paqueteNombre.isEmpty()) { return null; };
 
-        List<paquete> paquetes = new ArrayList<>(paqueteNombre.values());
+    public List<paquete> getAllPaquetes() {
+    	EntityManager em = factory.createEntityManager();
+
+        List<paquete> paqs = new ArrayList<paquete>();
+        List<paquete> paquetes = new ArrayList<paquete>();
+        
+        try {
+            paqs = em.createQuery("SELECT p FROM paquete p", paquete.class)
+                .getResultList();
+
+            for (paquete paquete : paqs) {
+                paquetes.add(getPaquete(paquete.getNombre()));
+            }
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        } finally {
+            em.close();
+        }
         return paquetes;
     }
 
@@ -114,7 +108,7 @@ public class PaqueteManejador {
 	    EntityTransaction tx = em.getTransaction();
         
         String nombre = paquete.getNombre();
-        System.out.println(nombre + " ----------------");
+        // System.out.println(nombre + " ----------------");
         
         try {
             tx.begin();
@@ -124,9 +118,6 @@ public class PaqueteManejador {
             
             tx.commit();        
             
-            // Se actualiza en la colección.
-            System.out.println(paquete.getNombre() + "++++++++++++++++++++++++++");
-            paqueteNombre.put(nombre, paquete);
             log.info("El paquete " + paquete + " se actualizó correctamente");
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {
@@ -170,7 +161,6 @@ public class PaqueteManejador {
 		tx.commit();
 		em.close();
 		return P;
-		
     }
     
     public boolean TuristaYaComproPaquete(turista turista,paquete paquete){
@@ -191,6 +181,5 @@ public class PaqueteManejador {
 		em.close();
 		
 		return false;
-		
     }
 }

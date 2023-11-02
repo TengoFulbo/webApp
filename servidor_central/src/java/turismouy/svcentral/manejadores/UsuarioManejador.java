@@ -2,8 +2,6 @@ package turismouy.svcentral.manejadores;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -19,26 +17,11 @@ import turismouy.svcentral.entidades.salida;
 import turismouy.svcentral.entidades.turista;
 
 public class UsuarioManejador {
-    private Map<String, usuario> usuariosNickname;
     private static UsuarioManejador instancia = null;
     
     EntityManagerFactory factory = EMFactory.getEntityManagerFactory();
 
-    private UsuarioManejador() {
-        // Para cada función hay que crear un nuevo em y tx.
-	    EntityManager em = factory.createEntityManager();
-
-        usuariosNickname = new HashMap<String, usuario>();
-        List<usuario> usuarios = em.createQuery("SELECT u FROM usuario u LEFT JOIN FETCH u.actividades", usuario.class).getResultList();
-        
-        if (usuarios != null) {
-            for (usuario usuario : usuarios) {
-                usuariosNickname.put(usuario.getNickname(), usuario);
-            }
-        }
-        log.info("Usuarios Cargados: " + usuariosNickname.size());
-        em.close();
-    };
+    private UsuarioManejador() {};
 
     // Singleton.
     public static UsuarioManejador getinstance() {
@@ -51,8 +34,6 @@ public class UsuarioManejador {
         // Para cada función hay que crear un nuevo em y tx.
 	    EntityManager em = factory.createEntityManager();
 	    EntityTransaction tx = em.getTransaction();
-
-        String nickname = usuario.getNickname();
         
         try {
             tx.begin();
@@ -61,11 +42,7 @@ public class UsuarioManejador {
             em.persist(usuario);
 
             tx.commit();        
-
-            // Si el archivo se logró guardar en BD, lo guarda en la colección y además muestra cuantos usuarios hay.
-            usuariosNickname.put(nickname, usuario);
             log.info("[UsuarioManejador] se agrego correctamente el usuario: " + usuario.getNickname());
-            
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {
                 tx.rollback();
@@ -90,12 +67,8 @@ public class UsuarioManejador {
             // Se actualiza el archivo.
             em.merge(usuario);
 
-            tx.commit();        
-
-            // Se actualiza en la colección.
-            usuariosNickname.put(nickname, usuario);
+            tx.commit();
             log.info("El usuario se actualizó" + nickname + "correctamente");
-            log.info("Usuarios: " + usuariosNickname.size());
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {
                 tx.rollback();
@@ -107,9 +80,6 @@ public class UsuarioManejador {
         }
     };
 
-    public usuario getUsuario(String nickname) {
-        return ((usuario) usuariosNickname.get(nickname));
-    }
 
     public usuario getUsuarioEmail(String email) {
         try {
@@ -129,6 +99,84 @@ public class UsuarioManejador {
             log.error("Error al getUsuarioEmail. " + e.toString());
             return null;
         }
+    }
+
+
+    // public usuario getUsuario(String nickname) {
+    //     return ((usuario) usuariosNickname.get(nickname));
+    // }
+
+
+    public usuario getUsuario(String nickname) {
+	    EntityManager em = factory.createEntityManager();
+
+        usuario usuario;
+
+        try {
+
+            usuario = em.createQuery("SELECT u FROM usuario u WHERE LOWER(u.nickname) = :nickname", usuario.class)
+                .setParameter("nickname", nickname.toLowerCase())
+                .getSingleResult();
+
+        if (usuario instanceof proveedor) {
+            proveedor proveedor = (proveedor) usuario;
+
+            proveedor proveedorWithActividades = em.createQuery("SELECT p FROM proveedor p LEFT JOIN FETCH p.actividades WHERE p.nickname = :nickname", proveedor.class)
+                .setParameter("nickname", usuario.getNickname())
+                .getSingleResult();
+
+            proveedor.setActividades(proveedorWithActividades.getActividades());
+
+        } else if (usuario instanceof turista) {
+            turista turista = (turista) usuario;
+            // compra e inscripciones
+
+            turista turistaWithInscripciones = em.createQuery("SELECT t FROM turista t LEFT JOIN FETCH t.inscripciones WHERE t.nickname = :nickname", turista.class)
+                .setParameter("nickname", nickname)
+                .getSingleResult();
+            
+            turista turistaWithCompra = em.createQuery("SELECT t FROM turista t LEFT JOIN FETCH t.compra WHERE t.nickname = :nickname", turista.class)
+                .setParameter("nickname", nickname)
+                .getSingleResult();
+
+            turista.setInscripciones(turistaWithInscripciones.getInscripciones());
+            turista.setCompra(turistaWithCompra.getCompra());
+        }
+
+        } catch (Exception e) {
+            // log.error(e.getMessage());
+            return null;
+        } finally {
+            em.close();
+        }
+        return usuario;
+    }
+
+
+    public List<usuario> getAllUsuario() {
+	    EntityManager em = factory.createEntityManager();
+
+        List<usuario> users = new ArrayList<usuario>();
+        List<usuario> usuarios = new ArrayList<usuario>();
+
+        try {
+            users = em.createQuery("SELECT u FROM usuario u", usuario.class)
+                .getResultList();
+
+            for (usuario usuario : users) {
+                usuarios.add(getUsuario(usuario.getNickname()));
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        } finally {
+            em.close();
+        }
+
+        return usuarios;
+        // if (usuariosNickname.isEmpty()) { return null; };
+        
+        // List<usuario> users = new ArrayList<>(usuariosNickname.values());
+        // return users;
     }
 
 
@@ -168,12 +216,6 @@ public class UsuarioManejador {
         return count > 0;
     }
 
-    public List<usuario> getAllUsuario() {
-        if (usuariosNickname.isEmpty()) { return null; };
-        
-        List<usuario> users = new ArrayList<>(usuariosNickname.values());
-        return users;
-    }
 /*
     public turista persistirInscripcionEnTurista(turista turista, inscripcion inscripcion){
     	EntityManagerFactory factory = EMFactory.getEntityManagerFactory();

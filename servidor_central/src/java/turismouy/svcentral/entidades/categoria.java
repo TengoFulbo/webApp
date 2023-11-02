@@ -15,14 +15,8 @@ public class categoria {
     long id;
     private String nombre;
 
-    // @JoinTable(
-	// 	name = "categoria_actividad",
-    //     joinColumns = @JoinColumn(name = "fk_categoria"),
-    //     inverseJoinColumns = @JoinColumn(name = "fk_actividad")
-	// 	)
-	// @ManyToMany()
 	@ManyToMany(mappedBy = "categorias", targetEntity = actividad.class)
-    private List<actividad> actividades; 
+    private List<actividad> actividades = new ArrayList<actividad>(); 
 
     // Constructor vacio pedido por JPA.
     public categoria() {};
@@ -46,19 +40,7 @@ public class categoria {
     public void addActividad(actividad actividad) {
         actividades.add(actividad);
     }
-/*    
-	public void remplazarActividad(actividad act) {
-		int indice = 0;
-		for(actividad actividad : this.actividades) {
-			if(actividad.getNombre().equals(act.getNombre())) {
-				System.out.println(this.actividades.get(indice).getNombre());
-				this.actividades.remove(indice);
-				this.actividades.add(act);
-			}
-			indice++;
-		}
-	}
-*/
+
 	public void setActividades(List<actividad> actividades) {
 		this.actividades = actividades;
 	}

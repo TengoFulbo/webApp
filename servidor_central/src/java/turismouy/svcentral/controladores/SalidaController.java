@@ -58,7 +58,7 @@ public class SalidaController implements ISalidaController {
 	    am.updateActividad(a);
 	    
 	    DepartamentoManejador dm = DepartamentoManejador.getinstance();	 
-	    List<departamento> LDepartamentos = dm.getAllDepartamento();
+	    List<departamento> LDepartamentos = dm.getAllDepartamentos();
 	    for(departamento depto : LDepartamentos){
 	    	List<actividad> LActividades = depto.getActividades();
 	    	for(actividad act : LActividades) {

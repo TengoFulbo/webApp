@@ -2,25 +2,20 @@ package turismouy.svcentral.manejadores;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.NoResultException;
 
 import turismouy.svcentral.EMFactory;
 import turismouy.svcentral.entidades.compra;
-import turismouy.svcentral.entidades.inscripcion;
-import turismouy.svcentral.entidades.paquete;
-import turismouy.svcentral.entidades.salida;
-import turismouy.svcentral.entidades.turista;
-import turismouy.svcentral.entidades.usuario;
 import turismouy.svcentral.utilidades.log;
 
+// TODO: ⚠️ Pendiente
 public class CompraManejador{
     private static CompraManejador instancia = null;
 
-    //EntityManagerFactory factory = Persistence.createEntityManagerFactory("PA2023");
     EntityManagerFactory factory = EMFactory.getEntityManagerFactory();
 
     private CompraManejador(){}
@@ -44,7 +39,6 @@ public class CompraManejador{
             em.merge(compra);
 
             tx.commit();
-
             log.info("La compra se actualizó" + compra.getId() + " correctamente");
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {
@@ -70,8 +64,6 @@ public class CompraManejador{
             em.persist(compra);
 
             tx.commit();        
-
-            // Si el archivo se logró guardar en BD, lo guarda en la colección y además muestra cuantos usuarios hay.
             log.info("[CompraManejador] se agrego la inscripcion: " + compra);
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {
@@ -83,19 +75,23 @@ public class CompraManejador{
             em.close();
         }
     }
-/*
+
     public compra getCompra(String idCompra) {
     	EntityManager em = factory.createEntityManager();
     	
         compra compra;
         try {
-            compra = em.createQuery("SELECT c from compra c WHERE c.id = '" + idCompra + " '", compra.class).getSingleResult();
-        } catch (NoResultException  e) {
+            // compra = em.createQuery("SELECT c from compra c WHERE c.id = '" + idCompra + " '", compra.class).getSingleResult();
+            compra = em.createQuery("SELECT c FROM compra c WHERE c.id = :id", compra.class)
+                .setParameter("id", idCompra)    
+                .getSingleResult();
+        } catch (Exception e) {
             compra = null;
+        } finally {
+            em.close();
         }
-    	em.close();
+
     	return compra;
-    	
     }
 
     public List<compra> getAllCompras(){
@@ -105,13 +101,13 @@ public class CompraManejador{
     	
         try {
         	compra = em.createQuery("SELECT c FROM compra c",compra.class).getResultList();
-        } catch (NoResultException  e) {
+        } catch (Exception e) {
             compra = null;
+        } finally {
+            em.close();
         }
-    	em.close();
-    	return compra;
-    	
+
+    	return compra;    	
     }
 
-*/
 }

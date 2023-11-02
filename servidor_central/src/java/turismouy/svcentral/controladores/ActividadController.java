@@ -133,7 +133,7 @@ public class ActividadController implements IActividadController {
         }
         
         DepartamentoManejador dm = DepartamentoManejador.getinstance();
-        List <departamento> LDepto = dm.getAllDepartamento();
+        List <departamento> LDepto = dm.getAllDepartamentos();
         //Recorro todos los departamentos para poder buscar la actividad que
         //me pasan por parametro
         for(departamento depto: LDepto){
@@ -154,7 +154,7 @@ public class ActividadController implements IActividadController {
     public List<dataActividad> getAllActividades() {      
         List<dataActividad> LDtAct = new ArrayList<>();
         DepartamentoManejador dm = DepartamentoManejador.getinstance();
-     List<departamento> deptos = dm.getAllDepartamento();
+     List<departamento> deptos = dm.getAllDepartamentos();
      
          for (departamento depto : deptos) {
              if (depto != null && depto.getNombre() != null) {
@@ -176,7 +176,7 @@ public class ActividadController implements IActividadController {
     public List<dataActividad> getAllActividadesDepartamento(String nombreDep) {
         List<dataActividad> LDtAct = new ArrayList<>();
            DepartamentoManejador dm = DepartamentoManejador.getinstance();
-        List<departamento> deptos = dm.getAllDepartamento();
+        List<departamento> deptos = dm.getAllDepartamentos();
         
         if (deptos != null) {
             for (departamento depto : deptos) {
@@ -199,7 +199,7 @@ public class ActividadController implements IActividadController {
     public List<dataActividad> getAllActividadesConfirmadasDepartamento(String nombreDep) {
         List<dataActividad> LDtAct = new ArrayList<>();
            DepartamentoManejador dm = DepartamentoManejador.getinstance();
-        List<departamento> deptos = dm.getAllDepartamento();
+        List<departamento> deptos = dm.getAllDepartamentos();
         
         if (deptos != null) {
             for (departamento depto : deptos) {
@@ -224,7 +224,7 @@ public class ActividadController implements IActividadController {
     public List<dataActividad> getAllActividadesAgregadas() {
         List<dataActividad> LDtAct = new ArrayList<>();
            DepartamentoManejador dm = DepartamentoManejador.getinstance();
-        List<departamento> deptos = dm.getAllDepartamento();
+        List<departamento> deptos = dm.getAllDepartamentos();
         
             for (departamento depto : deptos) {
                 if (depto != null && depto.getNombre() != null) {

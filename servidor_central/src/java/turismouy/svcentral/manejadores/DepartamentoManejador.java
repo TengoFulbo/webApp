@@ -1,9 +1,7 @@
 package turismouy.svcentral.manejadores;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -15,41 +13,11 @@ import turismouy.svcentral.entidades.departamento;
 import turismouy.svcentral.utilidades.log;
 
 public class DepartamentoManejador {
-    private Map<String, departamento> departamentoNombre;
     private static DepartamentoManejador instancia = null;
 
     EntityManagerFactory factory = EMFactory.getEntityManagerFactory();
 
-    private DepartamentoManejador(){
-        departamentoNombre = new HashMap<String, departamento>();
-
-        // Para cada función hay que crear un nuevo em y tx.
-	    EntityManager em = factory.createEntityManager();
-        
-        List<departamento> departamentos = null;
-        
-        try {
-            // List<departamento> departamentos = em.createQuery("SELECT d from departamento d LEFT JOIN FETCH d.actividades", departamento.class).getResultList();
-            departamentos = em.createQuery("SELECT DISTINCT d FROM departamento d LEFT JOIN FETCH d.actividades a", departamento.class).getResultList();
-            // departamentos = em.createQuery( "SELECT DISTINCT d FROM departamento d " +
-                                            // "LEFT JOIN FETCH d.actividades a " +
-                                            // "LEFT JOIN FETCH a.categorias", departamento.class)
-            // .getResultList();
-        } catch (Exception e) {
-            log.error("error");
-            e.printStackTrace();
-        } finally {
-            em.close();
-        }
-
-        if (departamentos != null) {
-            for (departamento departamento : departamentos ) {
-            	// log.info(departamento.getNombre());
-                departamentoNombre.put(departamento.getNombre(), departamento);
-            }
-        }
-        log.info("Departamentos cargados: " + departamentoNombre.size());
-    }
+    private DepartamentoManejador() {}
 
     // Singleton.
     public static DepartamentoManejador getinstance() {
@@ -73,10 +41,7 @@ public class DepartamentoManejador {
 
             tx.commit();
 
-            // Se actualiza en la colección.
-            departamentoNombre.put(nombre, departamento);
             log.info("El departamento se actualizó '" + nombre + "' correctamente");
-            // log.info("Departamentos: " + departamentoNombre.size());
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {
                 tx.rollback();
@@ -102,10 +67,6 @@ public class DepartamentoManejador {
             em.persist(departamento);
 
             tx.commit();        
-
-            // Si el archivo se logró guardar en BD, lo guarda en la colección y además muestra cuantos usuarios hay.
-            departamentoNombre.put(nombre, departamento);
-            log.info("[DepartamentoManejador] se agrego el departamento: " + nombre);
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {
                 tx.rollback();
@@ -118,15 +79,60 @@ public class DepartamentoManejador {
     }
 
     public departamento getDepartamento(String nombre) {
-    	//System.out.println("Obtiene el departamento " + departamentoNombre.get(nombre).getNombre());
-        return departamentoNombre.get(nombre);
-        
+	    EntityManager em = factory.createEntityManager();
+        ActividadManejador am = ActividadManejador.getinstance();
+                
+        nombre = nombre.toLowerCase();
+        departamento departamento = null;
+
+        try {
+            departamento = em.createQuery("SELECT d FROM departamento d LEFT JOIN FETCH d.actividades WHERE LOWER(d.nombre) = :nombre", departamento.class)
+                .setParameter("nombre", nombre)
+                .getSingleResult();
+
+                // Se crea una lista de actividades que luego se va a setear en el departamento.
+                List<actividad> actividades = new ArrayList<actividad>();
+
+                // Va por cada actividad del departamento, para luego traer del manejador de actividad.
+                for (actividad act : departamento.getActividades()) {
+
+                    // Se obtiene la actividad y la guarda en la lista de actividades.
+                    actividad actividad = am.getActividad(act.getNombre());
+                    actividades.add(actividad);
+                }
+
+                // La lista de actividades (que tiene paquetes, departamentos, salidas, etc) se setea al departamento.
+                departamento.setActividades(actividades);
+        } catch (Exception e) {
+            // e.printStackTrace();
+            return null;
+        } finally {
+            em.close();
+        }
+
+        return departamento;
     }
 
-    public List<departamento> getAllDepartamento() {
-        if (departamentoNombre.isEmpty()) { return null; };
+    public List<departamento> getAllDepartamentos() {
+        EntityManager em = factory.createEntityManager();
+        
+        List<departamento> deptos           = new ArrayList<departamento>();
+        List<departamento> departamentos    = new ArrayList<departamento>();
 
-        List<departamento> deptos = new ArrayList<>(departamentoNombre.values());
-        return deptos;
+        try {
+            deptos = em.createQuery("SELECT DISTINCT d FROM departamento d LEFT JOIN FETCH d.actividades", departamento.class)
+                .getResultList();
+
+            for (departamento departamento : deptos) {
+                departamentos.add(getDepartamento(departamento.getNombre()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // return null;
+        } finally {
+            em.close();
+        }
+
+        return departamentos;
     }
 }

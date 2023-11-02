@@ -36,15 +36,16 @@ public class actividad {
 	private departamento departamento;
 
 	@ManyToMany(mappedBy = "actividades")
-	private List<paquete> paquetes;
+	private List<paquete> paquetes = new ArrayList<paquete>();
 	
 	@JoinTable(
 			name = "actividad_salida",
 			joinColumns = @JoinColumn(name = "FK_ACTIVIDAD"),
 			inverseJoinColumns = @JoinColumn(name = "FK_SALIDA")
 			)
-	@ManyToMany(fetch = FetchType.EAGER)
-    private List<salida> salidas;
+	// @ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany()
+    private List<salida> salidas = new ArrayList<salida>();;
 
 	// @ManyToMany(mappedBy = "actividades", targetEntity = categoria.class)
     @JoinTable(
@@ -53,7 +54,7 @@ public class actividad {
         inverseJoinColumns = @JoinColumn(name = "fk_categoria")
 	)
 	@ManyToMany()
-	private List<categoria> categorias;
+	private List<categoria> categorias = new ArrayList<categoria>();
 
 
     public actividad(){};
@@ -66,8 +67,8 @@ public class actividad {
 		this.costeUni = costeUni;
 		this.ciudad = ciudad;
 		this.fechaCrea = fechaCrea;
-		this.paquetes = new ArrayList<paquete>();
-		this.salidas = new ArrayList<salida>();
+		// this.paquetes = new ArrayList<paquete>();
+		// this.salidas = new ArrayList<salida>();
 		this.estado = estadoActividad.AGREGADA;
 		this.categorias = categorias;
 	}
@@ -126,11 +127,14 @@ public class actividad {
 	public List<paquete> getPaquetes() {
 		return this.paquetes;
 	}
+	public void setPaquetes(List<paquete> paquetes) {
+		this.paquetes = paquetes;
+	}
 	public void addSalida(salida salida) {
 		salidas.add(salida);
 	}
 	public List<salida> getSalidas() {
-		return salidas;
+		return this.salidas;
 	}
 	public void setSalidas(List<salida> salidas) {
 		this.salidas = salidas;

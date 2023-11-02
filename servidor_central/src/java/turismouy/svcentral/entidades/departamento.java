@@ -55,6 +55,10 @@ public class departamento {
 		this.url = url;
 	}
 
+	public void setActividades(List<actividad> actividades) {
+		this.actividades = actividades;
+	}
+
 	public void agregarActividad(actividad actividad){
 		this.actividades.add(actividad);
 	};

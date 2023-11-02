@@ -37,7 +37,7 @@ public class DepartamentoController implements IDepartamentoController {
 
     public List<dataDepartamento> listarDepartamentos(){
         DepartamentoManejador dm = DepartamentoManejador.getinstance();
-        List<departamento> deptos = dm.getAllDepartamento();
+        List<departamento> deptos = dm.getAllDepartamentos();
 
         if (deptos == null) {
             return null;

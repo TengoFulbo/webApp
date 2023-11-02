@@ -51,6 +51,7 @@ public class InscripcionManejador {
     };
 */
 
+
     public void addInscripcion(inscripcion inscripcion) {
         // Para cada función hay que crear un nuevo em y tx.
 	    EntityManager em = factory.createEntityManager();
@@ -64,7 +65,6 @@ public class InscripcionManejador {
 
             tx.commit();        
 
-            // Si el archivo se logró guardar en BD, lo guarda en la colección y además muestra cuantos usuarios hay.
             log.info("[InscripcionManejador] se agrego la inscripcion: " + inscripcion);
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {
