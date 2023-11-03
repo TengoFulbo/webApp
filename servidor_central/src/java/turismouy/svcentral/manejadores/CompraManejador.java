@@ -2,7 +2,6 @@ package turismouy.svcentral.manejadores;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

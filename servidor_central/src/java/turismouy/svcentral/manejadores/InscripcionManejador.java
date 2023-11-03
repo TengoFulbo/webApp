@@ -2,18 +2,14 @@ package turismouy.svcentral.manejadores;
 
 import turismouy.svcentral.entidades.inscripcion;
 import turismouy.svcentral.utilidades.log;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.NoResultException;
 import turismouy.svcentral.EMFactory;
 
 public class InscripcionManejador {
     private static InscripcionManejador instancia = null;
 
-    //EntityManagerFactory factory = Persistence.createEntityManagerFactory("PA2023");
     EntityManagerFactory factory = EMFactory.getEntityManagerFactory();
 
     private InscripcionManejador(){}
