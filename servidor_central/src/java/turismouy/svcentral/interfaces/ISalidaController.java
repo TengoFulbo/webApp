@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import turismouy.svcentral.datatypes.dataSalida;
-import turismouy.svcentral.entidades.salida;
 import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
 import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
 import turismouy.svcentral.excepciones.UsuarioYaExisteExcepcion;
