@@ -43,7 +43,7 @@ public class CompraController implements ICompraController{
         	throw new UsuarioYaExisteExcepcion("El turista" + nombreTurista + " ya compro el paquete" + paquete.getNombre());
         }
 		
-		compra compra =  new compra(fecha,cantTotal,costoTotal,vencimiento);
+		compra compra = new compra(fecha, cantTotal, costoTotal, vencimiento);
 		
 		compra.setPaquete(paquete);
 		compra.setTurista(turista);
