@@ -66,7 +66,8 @@ public class DepartamentoManejador {
             // Se guarda el archivo.
             em.persist(departamento);
 
-            tx.commit();        
+            tx.commit();
+            log.info("[departamentoManejador] Se agrego correctamente el departamento '" + departamento.getNombre() + "'");
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {
                 tx.rollback();

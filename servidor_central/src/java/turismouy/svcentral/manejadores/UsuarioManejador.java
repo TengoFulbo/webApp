@@ -68,12 +68,12 @@ public class UsuarioManejador {
             em.merge(usuario);
 
             tx.commit();
-            log.info("El usuario se actualizó" + nickname + "correctamente");
+            log.info("El usuario '" + nickname + "' se actualizó correctamente");
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {
                 tx.rollback();
             }
-            log.error("Actualizado el Usuario '" + usuario.getNickname() + "' errrono.");
+            log.error("Actualizado el Usuario '" + usuario.getNickname() + "' erroneo.");
             e.printStackTrace();
         } finally {
             em.close();
