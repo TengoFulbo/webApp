@@ -83,7 +83,7 @@ import turismouy.svcentral.datatypes.dataUsuario;
         return dt;
     }
 
-	public List<compra> getCompra() {
+	public List<compra> getCompras() {
 		return compra;
 	}
 	

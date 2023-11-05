@@ -140,7 +140,7 @@ public class UsuarioManejador {
                 .getSingleResult();
 
             turista.setInscripciones(turistaWithInscripciones.getInscripciones());
-            turista.setCompra(turistaWithCompra.getCompra());
+            turista.setCompra(turistaWithCompra.getCompras());
         }
 
         } catch (Exception e) {
