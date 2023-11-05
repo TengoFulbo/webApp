@@ -4,7 +4,7 @@ import turismouy.svcentral.entidades.actividad;
 import turismouy.svcentral.entidades.categoria;
 import turismouy.svcentral.entidades.departamento;
 import turismouy.svcentral.entidades.proveedor;
-import turismouy.svcentral.entidades.salida;
+// import turismouy.svcentral.entidades.salida;
 import turismouy.svcentral.entidades.usuario;
 import turismouy.svcentral.entidades.paquete;
 import turismouy.svcentral.excepciones.NoExisteExcepcion;
@@ -343,9 +343,9 @@ public class ActividadController implements IActividadController {
         usuario usuario = um.getUsuario(actividad.getProveedor().getNickname());
         proveedor prov =(proveedor) usuario;
         
-        PaqueteManejador pm = PaqueteManejador.getinstance();
+        // PaqueteManejador pm = PaqueteManejador.getinstance();
         
-        CategoriaManejador cm = CategoriaManejador.getInstance();
+        // CategoriaManejador cm = CategoriaManejador.getInstance();
         
         depto.remplazarActividad(actividad);
         dm.updateDepartamento(depto);
