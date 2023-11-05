@@ -75,14 +75,13 @@ public class CompraManejador{
         }
     }
 
-    public compra getCompra(String idCompra) {
+    public compra getCompra(int idCompra) {
     	EntityManager em = factory.createEntityManager();
     	
         compra compra;
         try {
-            // compra = em.createQuery("SELECT c from compra c WHERE c.id = '" + idCompra + " '", compra.class).getSingleResult();
-            compra = em.createQuery("SELECT c FROM compra c WHERE c.id = :id", compra.class)
-                .setParameter("id", idCompra)    
+            compra = em.createQuery("SELECT c FROM compra c LEFT JOIN FETCH c.cupos WHERE c.id = :id", compra.class)
+                .setParameter("id", idCompra)
                 .getSingleResult();
         } catch (Exception e) {
             compra = null;
@@ -96,17 +95,23 @@ public class CompraManejador{
     public List<compra> getAllCompras(){
     	EntityManager em = factory.createEntityManager();
     	
-    	List<compra> compra = new ArrayList<compra>();
+    	List<compra> compras = new ArrayList<compra>();
+    	List<compra> comprasCompletas = new ArrayList<compra>();
     	
         try {
-        	compra = em.createQuery("SELECT c FROM compra c",compra.class).getResultList();
+        	compras = em.createQuery("SELECT c FROM compra c",compra.class).getResultList();
+
+            for (compra compra : compras) {
+                comprasCompletas.add(getCompra(compra.getId()));
+            }
         } catch (Exception e) {
-            compra = null;
+            e.printStackTrace();
+            // compra = null;
         } finally {
             em.close();
         }
 
-    	return compra;    	
+    	return comprasCompletas;
     }
 
 }

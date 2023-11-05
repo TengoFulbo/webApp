@@ -1,8 +1,12 @@
 package turismouy.svcentral.controladores;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import turismouy.svcentral.entidades.actividad;
 import turismouy.svcentral.entidades.compra;
+import turismouy.svcentral.entidades.compra_cupo;
 import turismouy.svcentral.entidades.paquete;
 import turismouy.svcentral.entidades.turista;
 import turismouy.svcentral.entidades.usuario;
@@ -10,6 +14,7 @@ import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
 import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
 import turismouy.svcentral.excepciones.UsuarioYaExisteExcepcion;
 import turismouy.svcentral.interfaces.ICompraController;
+import turismouy.svcentral.manejadores.CompraCupoManejador;
 import turismouy.svcentral.manejadores.CompraManejador;
 import turismouy.svcentral.manejadores.PaqueteManejador;
 import turismouy.svcentral.manejadores.UsuarioManejador;
@@ -22,11 +27,12 @@ public class CompraController implements ICompraController{
 		PaqueteManejador pm = PaqueteManejador.getinstance();
 		UsuarioManejador um = UsuarioManejador.getinstance();
 		CompraManejador cm = CompraManejador.getinstance();
+		CompraCupoManejador ccm = CompraCupoManejador.getinstance();
 		
 		paquete paquete = pm.getPaquete(nombrePaquete);
 		
         if(paquete == null) {
-        	log.error("El paquete " + nombrePaquete + " no existe");
+        	log.error("[compraController] El paquete " + nombrePaquete + " no existe");
         	throw new UsuarioNoExisteExcepcion("El paquete " + nombrePaquete + " no existe");
         }
         
@@ -47,12 +53,27 @@ public class CompraController implements ICompraController{
 		
 		compra.setPaquete(paquete);
 		compra.setTurista(turista);
-		
-		turista = um.persistirCompraEnTurista(turista, compra);
-		paquete = pm.persistirCompraEnPaquete(paquete, compra);
+				
+		turista.addCompra(compra);
+		paquete.addCompra(compra);
+		// turista = um.persistirCompraEnTurista(turista, compra);
+		// paquete = pm.persistirCompraEnPaquete(paquete, compra);
 		
 		pm.updatePaquete(paquete);
 		um.updateUsuario(turista);
+		
 		cm.addCompra(compra);
+
+		List<compra_cupo> cupos = new ArrayList<compra_cupo>();
+
+
+		compra compraSaved = cm.getCompra(compra.getId());
+
+		for (actividad actividad : paquete.getActividades()) {
+			compra_cupo cupo = new compra_cupo(actividad, cantTotal);
+			cupo.setCompra(compraSaved);
+			cupos.add(cupo);
+			ccm.addCupo(cupo);
+		}
 	}
 }

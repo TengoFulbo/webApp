@@ -32,6 +32,7 @@ import turismouy.svcentral.datatypes.dataPaquete;
 import turismouy.svcentral.entidades.actividad;
 import turismouy.svcentral.entidades.categoria;
 import turismouy.svcentral.entidades.compra;
+import turismouy.svcentral.entidades.compra_cupo;
 import turismouy.svcentral.entidades.departamento;
 import turismouy.svcentral.entidades.inscripcion;
 import turismouy.svcentral.entidades.paquete;
@@ -54,18 +55,33 @@ public class Main {
 
         log.warning("###################################3");
 
-
-
-        // CompraManejador cm = CompraManejador.getinstance();
+        CompraManejador cm = CompraManejador.getinstance();
+        
+        // try { ICoC.crearCompra(LocalDate.now(), 1, 200, LocalDate.now().plusDays(5), "Paquete Aventura", "lucia_22");
+        //     } catch (Exception e) { log.error(e.getMessage()); };
 
         // List<compra> compras = cm.getAllCompras();
-
+        
         // for (compra compra : compras) {
         //     log.info("Compra: " + compra.getId());
         // }
 
+        // compra compra = cm.getCompra(30);
 
+        // log.info("Compra: " + compra.getId());
+        // log.info("Cupos: " + compra.getCupos().size());
 
+        List<compra> compras = cm.getAllCompras();
+
+        for (compra compra : compras) {
+            log.info("Compra: " + compra.getId());
+            log.info("# Paquete: '" + compra.getPaquete().getNombre() + "'");
+            log.info("# Turista: '" + compra.getTurista().getNombre() + "'");
+            log.info("# Cantidad turistas: '" + compra.getCantTotal() + "'");
+            for (compra_cupo cupo : compra.getCupos()) {
+                log.info("  - cupo: " + cupo.getId() + ". Cantidad: " + cupo.getCantidad() + ". Actividad: " + cupo.getActividad().getNombre());
+            }
+        }
 
         // UsuarioManejador um = UsuarioManejador.getinstance();
 
@@ -673,13 +689,13 @@ public class Main {
        try { ICC.crearCategoria("playa");
            } catch (Exception e) { log.error("Error: " + e.toString()); }
 
-       try { ICC.crearCategoria("fulbo");
+       try { ICC.crearCategoria("aventura");
            } catch (Exception e) { log.error("Error: " + e.toString()); }
 
-       try { ICC.crearCategoria("fulbo");
+       try { ICC.crearCategoria("senderismo");
            } catch (Exception e) { log.error("Error: " + e.toString()); }
 
-       try { ICC.crearCategoria("fulbo");
+       try { ICC.crearCategoria("viaje al exterior");
            } catch (Exception e) { log.error("Error: " + e.toString()); }
    }
 

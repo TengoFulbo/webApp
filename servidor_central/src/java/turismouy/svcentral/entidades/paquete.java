@@ -24,10 +24,10 @@ public class paquete {
         inverseJoinColumns = @JoinColumn(name = "fk_actividad")
 		)
 	@ManyToMany()
-	private List<actividad> actividades;
+	private List<actividad> actividades = new ArrayList<actividad>();
 	
 	@OneToMany(mappedBy = "paquete")
-    private List<compra> compra;
+    private List<compra> compra = new ArrayList<compra>();
 	
 	public paquete() {};
 
@@ -38,8 +38,8 @@ public class paquete {
 		this.descripcion = descripcion;
 		this.validez = validez;
 		this.fechaAlta = fechaAlta;
-		this.actividades = new ArrayList<actividad>();
-		this.compra = new ArrayList<compra>();
+		// this.actividades;
+		// this.compra;
 	}
 	
 	

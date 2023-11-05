@@ -1,7 +1,8 @@
 package turismouy.svcentral.entidades;
 
 import java.time.LocalDate;
-import turismouy.svcentral.entidades.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -27,6 +28,9 @@ public class compra {
 	@ManyToOne
 	@JoinColumn(name = "turista_Nombre")
 	private turista turista;
+
+	@OneToMany(mappedBy = "compra", targetEntity = compra_cupo.class)
+	private List<compra_cupo> cupos = new ArrayList<compra_cupo>();
 	
 	public compra(){};
 
@@ -39,8 +43,8 @@ public class compra {
 		this.turista = null;
 	}
 
-	public Long getId() {
-		return id;
+	public int getId() {
+		return id.intValue();
 	}
 
 	public LocalDate getFecha() {
@@ -91,5 +95,11 @@ public class compra {
 		this.turista = turista;
 	}
 	
+	public void setCupos(List<compra_cupo> cupos) {
+		this.cupos = cupos;
+	}
 	
+	public List<compra_cupo> getCupos() {
+		return this.cupos;
+	}
 }
