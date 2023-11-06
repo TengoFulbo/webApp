@@ -25,6 +25,8 @@ import turismouy.svcentral.manejadores.InscripcionManejador;
 import turismouy.svcentral.manejadores.PaqueteManejador;
 import turismouy.svcentral.manejadores.UsuarioManejador;
 import turismouy.svcentral.utilidades.estadoActividad;
+import turismouy.svcentral.controladores.CompraController;
+import turismouy.svcentral.controladores.InscripcionController;
 import turismouy.svcentral.datatypes.dataActividad;
 import turismouy.svcentral.datatypes.dataCategoria;
 import turismouy.svcentral.datatypes.dataDepartamento;
@@ -52,11 +54,23 @@ public class Main {
         ICompraController ICoC = fabrica.getICompraController();
         IPaqueteController IPC = fabrica.getIPaqueteController();
         IDepartamentoController IDC = fabrica.getIDepartamentoController();
+        IInscripcionController IIC = fabrica.getIInscripcionController();
 
         log.warning("###################################3");
 
         CompraManejador cm = CompraManejador.getinstance();
-        
+
+        // ICoC.crearCompra(null, 0, 0, null, null, null);
+
+        try {
+            // ICoC.crearCompraV2("eze", "Tour de Vinos en Bodegas", "Paquete Aventura", 10);
+            IIC.crearInscripcionPago(false, 5, "lucia_22", "Tour de Vinos en Bodegas - Salida 1", "Tour de Vinos en Bodegas");
+        } catch (ParametrosInvalidosExcepcion e) {
+            log.error("Parametros invitados");
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+
         // try { ICoC.crearCompra(LocalDate.now(), 1, 200, LocalDate.now().plusDays(5), "Paquete Aventura", "lucia_22");
         //     } catch (Exception e) { log.error(e.getMessage()); };
 
@@ -71,17 +85,17 @@ public class Main {
         // log.info("Compra: " + compra.getId());
         // log.info("Cupos: " + compra.getCupos().size());
 
-        List<compra> compras = cm.getAllCompras();
+        // List<compra> compras = cm.getAllCompras();
 
-        for (compra compra : compras) {
-            log.info("Compra: " + compra.getId());
-            log.info("# Paquete: '" + compra.getPaquete().getNombre() + "'");
-            log.info("# Turista: '" + compra.getTurista().getNombre() + "'");
-            log.info("# Cantidad turistas: '" + compra.getCantTotal() + "'");
-            for (compra_cupo cupo : compra.getCupos()) {
-                log.info("  - cupo: " + cupo.getId() + ". Cantidad: " + cupo.getCantidad() + ". Actividad: " + cupo.getActividad().getNombre());
-            }
-        }
+        // for (compra compra : compras) {
+        //     log.info("Compra: " + compra.getId());
+        //     log.info("# Paquete: '" + compra.getPaquete().getNombre() + "'");
+        //     log.info("# Turista: '" + compra.getTurista().getNombre() + "'");
+        //     log.info("# Cantidad turistas: '" + compra.getCantTotal() + "'");
+        //     for (compra_cupo cupo : compra.getCupos()) {
+        //         log.info("  - cupo: " + cupo.getId() + ". Cantidad: " + cupo.getCantidad() + ". Actividad: " + cupo.getActividad().getNombre());
+        //     }
+        // }
 
         // UsuarioManejador um = UsuarioManejador.getinstance();
 
