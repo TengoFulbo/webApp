@@ -63,7 +63,7 @@ public class Main {
         // ICoC.crearCompra(null, 0, 0, null, null, null);
 
         try {
-            // ICoC.crearCompraV2("eze", "Tour de Vinos en Bodegas", "Paquete Aventura", 10);
+            // ICoC.crearCompraV2("lucia_22", "Tour de Vinos en Bodegas", "Paquete Aventura", 10);
             IIC.crearInscripcionPago(false, 5, "lucia_22", "Tour de Vinos en Bodegas - Salida 1", "Tour de Vinos en Bodegas");
         } catch (ParametrosInvalidosExcepcion e) {
             log.error("Parametros invitados");

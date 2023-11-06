@@ -55,9 +55,21 @@ public class CompraController implements ICompraController{
 		}
 		if (debug) log.info(debugMsg + "Turista ok");
 
-		if (pm.TuristaYaComproPaquete(turista, paquete)) {
-			throw new YaExisteExcepcion("El usuario '" + nombreTurista + "' ya tiene el paquete '" + nombrePaquete + "' comprado.");
+		for (compra compra : turista.getCompras()) {
+			if (compra.getPaquete().getNombre().equals(nombrePaquete)) {
+				LocalDate fechaActual = LocalDate.now();
+				LocalDate vencimientoCompra = compra.getVencimiento();
+				if (fechaActual.isAfter(vencimientoCompra)) {
+					log.warning("Fecha true");
+				} else {
+					log.warning("Fecha false");
+					throw new YaExisteExcepcion("El usuario '" + nombreTurista + "' ya tiene el paquete '" + nombrePaquete + "' comprado.");
+				}
+			}
 		}
+		// if (pm.TuristaYaComproPaquete(turista, paquete)) {
+		// 	throw new YaExisteExcepcion("El usuario '" + nombreTurista + "' ya tiene el paquete '" + nombrePaquete + "' comprado.");
+		// }
 		LocalDate fechaActual = LocalDate.now();
 		LocalDate fechaVencimiento = fechaActual.plusDays(paquete.getValidez());
 

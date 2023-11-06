@@ -84,6 +84,7 @@ public class InscripcionController implements IInscripcionController {
 
 			turista turista = (turista) usuario;
 
+			// TODO: Falta verificar que la inscripción haya vencido.
 			if(um.yaEstaInscripto(turista, salida)) {
 				throw new YaExisteExcepcion("La inscripcion del turista: '" + turista.getNickname() + "' no pudo realizarse porque ya se encuentra inscripto a la salida: '" + salida.getNombre()  + "'.");
 			}
@@ -128,7 +129,7 @@ public class InscripcionController implements IInscripcionController {
 
 					for (actividad act : paquete.getActividades()) {
 						costo += act.getCosteUni();
-						log.info(" - " + act.getNombre() + " | " + act.getCosteUni() + " | " + costo);
+						if (debug) log.info(debugMsg + " - " + act.getNombre() + " | " + act.getCosteUni() + " | " + costo);
 					}
 
 					// Multiplicamos el costo total por la cantidad.
@@ -146,8 +147,6 @@ public class InscripcionController implements IInscripcionController {
 
 			for (compra_cupo cupo : cm.getCompra(compraId).getCupos()) {
 				if (cupo.getActividad().getNombre().equals(nombreActividad)) {
-					log.warning("El cupo tiene: " + cupo.getCantidad());
-					// if (cupo.getCantidad() < cantidad) {
 					if (cantidad > cupo.getCantidad()) {
 						log.error("Tu cantidad supera la cantidad de cupos disponibles.");
 						throw new ParametrosInvalidosExcepcion();
