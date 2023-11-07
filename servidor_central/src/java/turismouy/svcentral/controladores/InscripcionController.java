@@ -47,7 +47,6 @@ public class InscripcionController implements IInscripcionController {
 			CompraCupoManejador		ccm = CompraCupoManejador.getinstance();
 
 			int costo = 0;
-			int compraId = 0;
 
 			// Validamos.
 			if (cantidad == 0 || nickname == "" || nombreSalida == "" || nombreActividad == "") {
@@ -84,12 +83,19 @@ public class InscripcionController implements IInscripcionController {
 
 			turista turista = (turista) usuario;
 
-			// TODO: Falta verificar que la inscripción haya vencido.
-			if(um.yaEstaInscripto(turista, salida)) {
-				throw new YaExisteExcepcion("La inscripcion del turista: '" + turista.getNickname() + "' no pudo realizarse porque ya se encuentra inscripto a la salida: '" + salida.getNombre()  + "'.");
+			Boolean existeInscripcion = false;
+			for(inscripcion ins : turista.getInscripciones()) {
+				if (ins.getSalida().getNombre().equals(salida.getNombre())) {
+					existeInscripcion = true;
+				}
+			}
+
+			if (existeInscripcion) {
+				throw new YaExisteExcepcion("El usuario '" + turista.getNombre() + "' ya cuenta con una inscripción.");
 			}
 
 			if(debug) log.info(debugMsg + "Pago: " + (pagoGeneral ? "General" : "Por paquete"));
+			
 			if (pagoGeneral) {
 				costo = cantidad * actividad.getCosteUni();
 			} else {
@@ -141,27 +147,27 @@ public class InscripcionController implements IInscripcionController {
 					
 					// Descontamos el descuento.
 					costo = costo - descuento;
-					compraId = compra.getId();
-				}
-			}
 
-			for (compra_cupo cupo : cm.getCompra(compraId).getCupos()) {
-				if (cupo.getActividad().getNombre().equals(nombreActividad)) {
-					if (cantidad > cupo.getCantidad()) {
-						log.error("Tu cantidad supera la cantidad de cupos disponibles.");
-						throw new ParametrosInvalidosExcepcion();
+					for (compra_cupo cupo : cm.getCompra(compra.getId()).getCupos()) {
+						if (cupo.getActividad().getNombre().equals(nombreActividad)) {
+							if (cantidad > cupo.getCantidad()) {
+								log.error("Tu cantidad supera la cantidad de cupos disponibles.");
+								throw new ParametrosInvalidosExcepcion();
+							}
+							cupo.disminuirCupos(cantidad);
+							ccm.updateCupo(cupo);
+						}
 					}
-					cupo.disminuirCupos(cantidad);
-					ccm.updateCupo(cupo);
 				}
 			}
 
 			inscripcion inscripcion = new inscripcion(LocalDate.now(), cantidad, costo);
 
+			
 			inscripcion.setSalida(salida);
 			inscripcion.setTurista(turista);
 			im.addInscripcion(inscripcion);
-
+			
 			turista.addInscripcion(inscripcion);
 			um.updateUsuario(usuario);
 			// turista = UM.persistirInscripcionEnTurista(turista, inscripcion);
