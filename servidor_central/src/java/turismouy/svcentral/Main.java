@@ -62,14 +62,14 @@ public class Main {
 
         // ICoC.crearCompra(null, 0, 0, null, null, null);
 
-        try {
-            // ICoC.crearCompraV2("lucia_22", "Tour de Vinos en Bodegas", "Paquete Aventura", 10);
-            IIC.crearInscripcionPago(true, 5, "lucia_22", "Tour de Vinos en Bodegas - Salida 1", "Tour de Vinos en Bodegas");
-        } catch (ParametrosInvalidosExcepcion e) {
-            log.error("Parametros invitados");
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
+        // try {
+        //     // ICoC.crearCompraV2("lucia_22", "Tour de Vinos en Bodegas", "Paquete Aventura", 10);
+        //     IIC.crearInscripcionPago(true, 5, "lucia_22", "Tour de Vinos en Bodegas - Salida 1", "Tour de Vinos en Bodegas");
+        // } catch (ParametrosInvalidosExcepcion e) {
+        //     log.error("Parametros invitados");
+        // } catch (Exception e) {
+        //     log.error(e.getMessage());
+        // }
 
         // try { ICoC.crearCompra(LocalDate.now(), 1, 200, LocalDate.now().plusDays(5), "Paquete Aventura", "lucia_22");
         //     } catch (Exception e) { log.error(e.getMessage()); };

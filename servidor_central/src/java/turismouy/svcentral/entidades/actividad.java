@@ -8,7 +8,6 @@ import turismouy.svcentral.datatypes.dataPaquete;
 import turismouy.svcentral.datatypes.dataSalida;
 import turismouy.svcentral.manejadores.ActividadManejador;
 import turismouy.svcentral.utilidades.estadoActividad;
-import turismouy.svcentral.utilidades.log;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
