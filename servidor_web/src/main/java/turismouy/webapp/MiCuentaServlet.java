@@ -62,6 +62,9 @@ public class MiCuentaServlet extends HttpServlet {
             input.read(imageData);
         }
 
+        imagen imagen = new imagen();
+        imagen.setData(imageData);
+
         String nickname                 = request.getParameter("nickname");
         String nombre                   = request.getParameter("nombre");
         String apellido                 = request.getParameter("apellido");
@@ -80,41 +83,40 @@ public class MiCuentaServlet extends HttpServlet {
         System.out.println("Descripción: " + descripcion);
         System.out.println("URL: " + url);
         System.out.println("Nacionalidad: " + nacionalidad);
+        System.out.println("Imagen: " + imageData);
         log.info("--------------------------------------------------------------");
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         LocalDate fechaLocalDate = LocalDate.parse(nacimiento, formatter);
 
-
-
         IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
-
         
         if (nacionalidad != null){
-            try{
-                IUC.modificarUsuario(nickname, nombre, apellido, fechaLocalDate);
+            try {
+                IUC.modificarUsuario(nickname, nombre, apellido, fechaLocalDate, imageData);
                 log.info("  -> Usuario Modificado <-");
-            }catch(Exception e){
+            } catch(Exception e) {
                 log.warning("[ERROR AL MODIFICAR TURISTA]");
             }
-        }else if (descripcion != null || url != null){
-            try{
+        } else if (descripcion != null || url != null) {
+            try {
                 IUC.modificarUsuario(nickname, nombre, apellido, fechaLocalDate);
                 log.info("  -> Usuario Modificado <-");
-            }catch(Exception e){
+            } catch(Exception e) {
                 log.warning("[ERROR AL MODIFICAR PROVEEDOR]");
             }
         }
 
-        dataUsuario usuario;
-        try {
-            usuario = IUC.mostrarInfo(nickname);
-            session.removeAttribute("dataUsuario");
-            session.setAttribute("dataUsuario", usuario);
-        } catch (UsuarioNoExisteExcepcion e) {
-            e.printStackTrace();
-        }
+        // dataUsuario usuario;
+        // try {
+        //     usuario = IUC.mostrarInfo(nickname);
+        //     session.removeAttribute("dataUsuario");
+        //     session.setAttribute("dataUsuario", usuario);
+        // } catch (UsuarioNoExisteExcepcion e) {
+        //     System.out.println("Error al mostrar el usuario.");
+        //     e.printStackTrace();
+        // }
 
         response.sendRedirect(request.getContextPath() + "/home");
         log.info("Successfully");

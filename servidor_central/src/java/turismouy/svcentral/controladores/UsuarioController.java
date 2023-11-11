@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import turismouy.svcentral.datatypes.dataUsuario;
+import turismouy.svcentral.entidades.imagen;
 import turismouy.svcentral.entidades.proveedor;
 import turismouy.svcentral.entidades.turista;
 import turismouy.svcentral.entidades.usuario;
@@ -13,6 +14,7 @@ import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
 import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
 import turismouy.svcentral.excepciones.UsuarioYaExisteExcepcion;
 import turismouy.svcentral.interfaces.IUsuarioController;
+import turismouy.svcentral.manejadores.ImagenManejador;
 import turismouy.svcentral.manejadores.UsuarioManejador;
 import turismouy.svcentral.utilidades.log;
 import turismouy.svcentral.utilidades.utilPassword;
@@ -228,6 +230,7 @@ public class UsuarioController implements IUsuarioController {
 
         // Trae la instancia del manejador.
         UsuarioManejador um = UsuarioManejador.getinstance();
+        ImagenManejador im = ImagenManejador.getinstance();
 
         usuario user = um.getUsuario(nickname);
 
@@ -237,8 +240,12 @@ public class UsuarioController implements IUsuarioController {
             return;
         }
 
-        // imagen imagen = new ima
+        imagen imagen = new imagen(true, user, imageData);
+        im.addImagen(imagen);
 
+        log.info("ID IMAGEN: " + imagen.getId());
+
+        // user.setImagen(imagen);
         user.setNombre(nombre);
         user.setApellido(apellido);
         user.setNacimiento(nacimiento);

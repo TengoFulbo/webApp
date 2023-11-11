@@ -23,6 +23,9 @@ public class usuario{
 	protected LocalDate nacimiento;
 	protected String password;
 	
+	// @OneToOne
+	// // @JoinColumn(name = "imagen_id")
+	// @OneToOne(mappedBy = "usuario", targetEntity = imagen.class)
 	@OneToOne
 	@JoinColumn(name = "imagen_id")
 	private imagen imagen;
@@ -94,5 +97,9 @@ public class usuario{
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public void setImagen(imagen imagen) {
+		this.imagen = imagen;
 	}
 }

@@ -148,20 +148,20 @@
     function subirDatos() {
       event.preventDefault();
 
-      var formData = new FormData();
-      var fileInput = document.getElementById("imageInput");
-      var nickname = document.getElementById("nickname");
-      var nombre = document.getElementById("nombre");
-      var apellido = document.getElementById("apellido");
-      var email = document.getElementById("email");
-      var nacimiento = document.getElementById("nacimiento");
-      var descripcion = document.getElementById("descripcion");
-      var url = document.getElementById("url");
-      var nacionalidad = document.getElementById("nacionalidad");
+      var formData      = new FormData();
+      var fileInput     = document.getElementById("imageInput");
+      var nickname      = document.getElementById("nickname");
+      var nombre        = document.getElementById("nombre");
+      var apellido      = document.getElementById("apellido");
+      var email         = document.getElementById("email");
+      var nacimiento    = document.getElementById("nacimiento");
+      var descripcion   = document.getElementById("descripcion");
+      var url           = document.getElementById("url");
+      var nacionalidad  = document.getElementById("nacionalidad");
       // var descriptionInput = document.getElementById("description");
 
       formData.append("file", fileInput.files[0]);
-      formData.append("file", imageInput.files[0]);
+      // formData.append("file", imageInput.files[0]);
       formData.append("nickname", nickname.value);
       formData.append("nombre", nombre.value);
       formData.append("apellido", apellido.value);
@@ -198,7 +198,7 @@
           if (xhr.status === 200) {
               // La carga se completó con éxito, puedes mostrar un mensaje de éxito o realizar otras acciones
               document.getElementById("uploadStatus").innerHTML = "La información se envió con éxito.";
-            } else {7
+            } else {
               // Hubo un error en la carga, muestra un mensaje de error
               document.getElementById("uploadStatus").innerHTML = "Error al enviar la información.";
           }

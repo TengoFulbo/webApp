@@ -21,6 +21,7 @@ import turismouy.svcentral.manejadores.ActividadManejador;
 import turismouy.svcentral.manejadores.CategoriaManejador;
 import turismouy.svcentral.manejadores.CompraManejador;
 import turismouy.svcentral.manejadores.DepartamentoManejador;
+import turismouy.svcentral.manejadores.ImagenManejador;
 import turismouy.svcentral.manejadores.InscripcionManejador;
 import turismouy.svcentral.manejadores.PaqueteManejador;
 import turismouy.svcentral.manejadores.UsuarioManejador;
@@ -36,6 +37,7 @@ import turismouy.svcentral.entidades.categoria;
 import turismouy.svcentral.entidades.compra;
 import turismouy.svcentral.entidades.compra_cupo;
 import turismouy.svcentral.entidades.departamento;
+import turismouy.svcentral.entidades.imagen;
 import turismouy.svcentral.entidades.inscripcion;
 import turismouy.svcentral.entidades.paquete;
 import turismouy.svcentral.entidades.proveedor;
@@ -56,9 +58,56 @@ public class Main {
         IDepartamentoController IDC = fabrica.getIDepartamentoController();
         IInscripcionController IIC = fabrica.getIInscripcionController();
 
-        log.warning("###################################3");
+        // cargarTuristas();
+        // log.warning("########################################################");
+        // cargarProveedores();
+        // log.warning("########################################################");
+        // cargarDepartamentos();
+        // log.warning("########################################################");
+        // cargarCategorias();
+        // log.warning("########################################################");
+        // cargarPaquetes();
+        // log.warning("########################################################");
+        // cargarActividades();
+        // log.warning("########################################################");
+        // cargarActividadesPaquetes();
+        // log.warning("########################################################");
+        // cargarSalidas();
+        // log.warning("########################################################");
+        // cargarInscripcionSalida();
+        // log.warning("########################################################");
 
-        CompraManejador cm = CompraManejador.getinstance();
+        // log.warning("###################################3");
+
+        // CompraManejador cm = CompraManejador.getinstance();
+        ImagenManejador im = ImagenManejador.getinstance();
+        UsuarioManejador um = UsuarioManejador.getinstance();
+
+
+        usuario usuario = um.getUsuario("sofiareyes");
+
+        log.info("Existe usuario? " + (usuario == null ? "no" : "si"));
+        
+        String imagenBase64 = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAZElEQVR42mP8z/CfAQwAZ9AIbfm/w5B+LgCJGwYPQRIAAAAASUVORK5CYII=";
+        
+        byte[] imagenData = java.util.Base64.getDecoder().decode(imagenBase64);
+
+        imagen imagen = new imagen(true, null, imagenData);
+        // imagen.setUsuario(usuario);
+
+        im.addImagen(imagen);
+
+        // // log.info("Hola " + usuario.getNombre());
+        usuario.setNombre("lucia");
+        usuario.setImagen(imagen);
+
+        um.updateUsuario(usuario);
+
+        // im.updateImagen(imagen);
+
+        
+        // usuario usuario2 = um.getUsuario("lucia_22");
+        // log.info("ahora: " + usuario2.getNombre());
 
         // ICoC.crearCompra(null, 0, 0, null, null, null);
 
@@ -283,25 +332,6 @@ public class Main {
 //    //        log.error(e.toString());
 //    //    }
 //
-
-        // cargarTuristas();
-        // log.warning("########################################################");
-        // cargarProveedores();
-        // log.warning("########################################################");
-        // cargarDepartamentos();
-        // log.warning("########################################################");
-        // cargarCategorias();
-        // log.warning("########################################################");
-        // cargarPaquetes();
-        // log.warning("########################################################");
-        // cargarActividades();
-        // log.warning("########################################################");
-        // cargarActividadesPaquetes();
-        // log.warning("########################################################");
-        // cargarSalidas();
-        // log.warning("########################################################");
-        // cargarInscripcionSalida();
-        // log.warning("########################################################");
          
 //         
 //         try {
