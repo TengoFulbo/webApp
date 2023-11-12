@@ -2,12 +2,14 @@ package turismouy.svcentral.entidades;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import javax.persistence.*;
 
 import turismouy.svcentral.datatypes.dataActividad;
 import turismouy.svcentral.datatypes.dataSalida;
 import turismouy.svcentral.datatypes.dataUsuario;
+import turismouy.svcentral.utilidades.log;
 
 @Entity
 @DiscriminatorValue("P")
@@ -109,6 +111,15 @@ public class proveedor extends usuario {
 			dataActividades = null;
 		}
 
+		// Hacemos el encode para que el datatype no tenga que hacerlo :D
+		String imagenBase64 = "";
+		if (this.imagen != null) {
+			imagenBase64 = Base64.getEncoder().encodeToString(this.imagen.getData());
+		}
+
+		log.warning("imagenBase64: " + imagenBase64);
+		log.warning("imagendata: " + this.imagen.getData());
+
 		dataUsuario dt = new dataUsuario(	this.nickname,
 											this.nombre,
 											this.apellido,
@@ -118,12 +129,19 @@ public class proveedor extends usuario {
 											true,
 											this.descripcion,
 											this.url,
+											imagenBase64,
 											dataActividades,
 											dataSalidas);
 		return dt;
 	}
 
 	public dataUsuario toDataTypeWithoutCollections() {
+		// Hacemos el encode para que el datatype no tenga que hacerlo :D
+		String imagenBase64 = "";
+		if (this.imagen != null) {
+			imagenBase64 = Base64.getEncoder().encodeToString(this.imagen.getData());
+		}
+
 		dataUsuario dt = new dataUsuario(	this.nickname,
 											this.nombre,
 											this.apellido,
@@ -133,6 +151,7 @@ public class proveedor extends usuario {
 											true,
 											this.descripcion,
 											this.url,
+											imagenBase64,
 											null,
 											null);
 		return dt;

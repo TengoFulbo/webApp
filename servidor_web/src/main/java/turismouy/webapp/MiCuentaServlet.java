@@ -37,7 +37,6 @@ public class MiCuentaServlet extends HttpServlet {
             dataUsuario usuario = null;
             try {
                 usuario = IUC.mostrarInfo(nickname);
-                // usuario.getActividades().isEmpty()
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
             }
@@ -74,17 +73,17 @@ public class MiCuentaServlet extends HttpServlet {
         String url                      = request.getParameter("url");
         String nacionalidad             = request.getParameter("nacionalidad");
 
-        log.info("--------------------------------------------------------------");
-        System.out.println("Nickname: " + nickname);
-        System.out.println("Nombre: " + nombre);
-        System.out.println("Apellido: " + apellido);
-        System.out.println("Email: " + email);
-        System.out.println("Nacimiento: " + nacimiento);
-        System.out.println("Descripción: " + descripcion);
-        System.out.println("URL: " + url);
-        System.out.println("Nacionalidad: " + nacionalidad);
-        System.out.println("Imagen: " + imageData);
-        log.info("--------------------------------------------------------------");
+        // log.info("--------------------------------------------------------------");
+        // System.out.println("Nickname: " + nickname);
+        // System.out.println("Nombre: " + nombre);
+        // System.out.println("Apellido: " + apellido);
+        // System.out.println("Email: " + email);
+        // System.out.println("Nacimiento: " + nacimiento);
+        // System.out.println("Descripción: " + descripcion);
+        // System.out.println("URL: " + url);
+        // System.out.println("Nacionalidad: " + nacionalidad);
+        // System.out.println("Imagen: " + imageData);
+        // log.info("--------------------------------------------------------------");
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 

@@ -118,6 +118,13 @@ public class UsuarioManejador {
                 .setParameter("nickname", nickname.toLowerCase())
                 .getSingleResult();
 
+            usuario usuariowithimg = em.createQuery("SELECT u FROM usuario u LEFT JOIN FETCH u.imagen WHERE LOWER(u.nickname) = :nickname", usuario.class)
+                .setParameter("nickname", nickname.toLowerCase())
+                .getSingleResult();
+
+            usuario.setImagen(usuariowithimg.getImagen());
+
+
         if (usuario instanceof proveedor) {
             proveedor proveedor = (proveedor) usuario;
 

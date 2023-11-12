@@ -36,7 +36,11 @@
                     for (dataUsuario user : usuarios) {
             %>
             <li class="collection-item avatar">
-                <img src="src/img/avatar1.png" alt="" class="circle">
+                <% if (user.getImagenBase64() == "") { %>
+                  <img src="src/img/avatar1.png" alt="" class="circle">
+                <% } else { %>
+                  <img id="imagen" src="data:image/png;base64, <%= user.getImagenBase64() %>" class="circle" alt="Imagen de usuario">
+                <% }%>
                 <span class="title"><%= user.getNombre() %> <%= user.getApellido() %>
                   <span class="new badge <%= (user.getisProveedor()) ? "pink darken-3" : "indigo darken-3" %>" data-badge-caption=""><%= (user.getisProveedor()) ? "Proveedor" : "Turista" %></span>
                 </span>

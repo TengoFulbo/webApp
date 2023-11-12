@@ -29,7 +29,17 @@
             <div class="row center-align">
               <form action="modificarUsuario" method="post" class="col s12" id="imageUploadForm" enctype="multipart/form-data">
                 <div class="row">
-                  <img src="src/img/avatar1.png" class="imgUserAccount" alt="Imagen de usuario">
+                  <%
+                  if (user == null) { %>
+                    <img id="imagen" src="src/img/avatar1.png" class="imgUserAccount" alt="Imagen de usuario">
+                    <% } else {
+                      if (user.getImagenBase64() == "") { %>
+                        <img id="imagen" src="src/img/avatar1.png" class="imgUserAccount" alt="Imagen de usuario">
+                      <% } else { %>
+                        <img id="imagen" src="data:image/png;base64, <%= user.getImagenBase64() %>" class="imgUserAccount" alt="Imagen de usuario">
+                    <% }
+                  }
+                  %>
                 </div>
                 <div id="uploadContainer" style="display: none">
                   <div class="progress">
@@ -158,6 +168,7 @@
       var descripcion   = document.getElementById("descripcion");
       var url           = document.getElementById("url");
       var nacionalidad  = document.getElementById("nacionalidad");
+      // var imagen        = document.getElementById("imagen");
       // var descriptionInput = document.getElementById("description");
 
       formData.append("file", fileInput.files[0]);

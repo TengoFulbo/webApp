@@ -1,6 +1,7 @@
 package turismouy.svcentral.controladores;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -98,7 +99,6 @@ public class UsuarioController implements IUsuarioController {
         if (user == null) {
             throw new UsuarioNoExisteExcepcion("El usuario '" + nickname + "' no existe.");
         }
-
 
         dataUsuario dt;
         if (user instanceof proveedor) {
@@ -240,12 +240,12 @@ public class UsuarioController implements IUsuarioController {
             return;
         }
 
-        imagen imagen = new imagen(true, user, imageData);
+        imagen imagen = new imagen(true, imageData);
         im.addImagen(imagen);
 
         log.info("ID IMAGEN: " + imagen.getId());
 
-        // user.setImagen(imagen);
+        user.setImagen(imagen);
         user.setNombre(nombre);
         user.setApellido(apellido);
         user.setNacimiento(nacimiento);
@@ -264,14 +264,21 @@ public class UsuarioController implements IUsuarioController {
 			return null;
 		}
         for(usuario user: LUsuarios){
+
+            // Hacemos el encode para que el datatype no tenga que hacerlo :D
+		    String imagenBase64 = "";
+		    if (user.getImagen() != null) {
+		    	imagenBase64 = Base64.getEncoder().encodeToString(user.getImagen().getData());
+		    }
+            
         	if(user instanceof turista){
         		turista tur = (turista) user;
-        		dataUsuario DtUsuario = new dataUsuario(tur.getNickname(), tur.getNombre(),tur.getApellido(),tur.getEmail(),tur.getNacionalidad(),tur.getNacimiento(),false,null,null,null,null);
+        		dataUsuario DtUsuario = new dataUsuario(tur.getNickname(), tur.getNombre(),tur.getApellido(),tur.getEmail(),tur.getNacionalidad(),tur.getNacimiento(),false,null,null, imagenBase64, null,null);
         		LDataUsuarios.add(DtUsuario);
         	}
         	if(user instanceof proveedor){
         		proveedor prov = (proveedor) user;
-        		dataUsuario DtUsuario = new dataUsuario(prov.getNickname(),prov.getNombre(),prov.getApellido(),prov.getEmail(),null,prov.getNacimiento(),true,prov.getDescripcion(),prov.getUrl(),null,null);
+        		dataUsuario DtUsuario = new dataUsuario(prov.getNickname(),prov.getNombre(),prov.getApellido(),prov.getEmail(),null,prov.getNacimiento(),true,prov.getDescripcion(),prov.getUrl(), imagenBase64, null,null);
         		LDataUsuarios.add(DtUsuario);
         	}
         	

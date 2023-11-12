@@ -32,6 +32,7 @@ import turismouy.svcentral.datatypes.dataActividad;
 import turismouy.svcentral.datatypes.dataCategoria;
 import turismouy.svcentral.datatypes.dataDepartamento;
 import turismouy.svcentral.datatypes.dataPaquete;
+import turismouy.svcentral.datatypes.dataUsuario;
 import turismouy.svcentral.entidades.actividad;
 import turismouy.svcentral.entidades.categoria;
 import turismouy.svcentral.entidades.compra;
@@ -58,6 +59,14 @@ public class Main {
         IDepartamentoController IDC = fabrica.getIDepartamentoController();
         IInscripcionController IIC = fabrica.getIInscripcionController();
 
+
+        List<dataUsuario> usuarios = IUC.listarUsuarios();
+
+        log.info("Usuarios: ");
+        for (dataUsuario usuario : usuarios) {
+            log.info("  " + usuario.getNombre());
+        }
+
         // cargarTuristas();
         // log.warning("########################################################");
         // cargarProveedores();
@@ -80,28 +89,28 @@ public class Main {
         // log.warning("###################################3");
 
         // CompraManejador cm = CompraManejador.getinstance();
-        ImagenManejador im = ImagenManejador.getinstance();
-        UsuarioManejador um = UsuarioManejador.getinstance();
+        // ImagenManejador im = ImagenManejador.getinstance();
+        // UsuarioManejador um = UsuarioManejador.getinstance();
 
 
-        usuario usuario = um.getUsuario("sofiareyes");
+        // usuario usuario = um.getUsuario("sofiareyes");
 
-        log.info("Existe usuario? " + (usuario == null ? "no" : "si"));
+        // log.info("Existe usuario? " + (usuario == null ? "no" : "si"));
         
-        String imagenBase64 = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAZElEQVR42mP8z/CfAQwAZ9AIbfm/w5B+LgCJGwYPQRIAAAAASUVORK5CYII=";
+        // String imagenBase64 = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAZElEQVR42mP8z/CfAQwAZ9AIbfm/w5B+LgCJGwYPQRIAAAAASUVORK5CYII=";
         
-        byte[] imagenData = java.util.Base64.getDecoder().decode(imagenBase64);
+        // byte[] imagenData = java.util.Base64.getDecoder().decode(imagenBase64);
 
-        imagen imagen = new imagen(true, null, imagenData);
-        // imagen.setUsuario(usuario);
+        // imagen imagen = new imagen(true, imagenData);
+        // // imagen.setUsuario(usuario);
 
-        im.addImagen(imagen);
+        // im.addImagen(imagen);
 
-        // // log.info("Hola " + usuario.getNombre());
-        usuario.setNombre("lucia");
-        usuario.setImagen(imagen);
+        // // // log.info("Hola " + usuario.getNombre());
+        // usuario.setNombre("lucia");
+        // usuario.setImagen(imagen);
 
-        um.updateUsuario(usuario);
+        // um.updateUsuario(usuario);
 
         // im.updateImagen(imagen);
 

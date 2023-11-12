@@ -8,6 +8,7 @@ public class dataUsuario {
     private String nombre;
     private String apellido;
     private String email;
+    private String imagenBase64;
     private String nacionalidad;
     private LocalDate nacimiento;
     private boolean isProveedor;
@@ -23,6 +24,7 @@ public class dataUsuario {
                             LocalDate nacimiento, boolean isProveedor,
                             String descripcion,
                             String url,
+                            String imagen,
                             List<dataActividad> actividades,
                             List<dataSalida> salidas
                         ) {
@@ -35,6 +37,7 @@ public class dataUsuario {
         this.isProveedor = isProveedor;
         this.descripcion = descripcion;
         this.url = url;
+        this.imagenBase64 = imagen;
         this.actividades = actividades;
         this.salidas = salidas;
     };
@@ -73,6 +76,10 @@ public class dataUsuario {
 
     public String getUrl(){
         return this.url;
+    };
+
+    public String getImagenBase64() {
+        return this.imagenBase64;
     };
 
     public List<dataActividad> getActividades(){

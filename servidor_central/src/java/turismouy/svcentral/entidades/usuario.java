@@ -28,7 +28,7 @@ public class usuario{
 	// @OneToOne(mappedBy = "usuario", targetEntity = imagen.class)
 	@OneToOne
 	@JoinColumn(name = "imagen_id")
-	private imagen imagen;
+	protected imagen imagen;
 	
 	// Constructor vacio pedido por JPA.
 	public usuario(){};
@@ -101,5 +101,9 @@ public class usuario{
 
 	public void setImagen(imagen imagen) {
 		this.imagen = imagen;
+	}
+
+	public imagen getImagen() {
+		return this.imagen;
 	}
 }

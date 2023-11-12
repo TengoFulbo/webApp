@@ -2,6 +2,7 @@ package turismouy.svcentral.entidades;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import javax.persistence.*;
 
@@ -68,6 +69,12 @@ import turismouy.svcentral.datatypes.dataUsuario;
             dataSalidas = null;
         }
 
+		// Hacemos el encode para que el datatype no tenga que hacerlo :D
+		String imagenBase64 = "";
+		if (this.imagen != null) {
+			imagenBase64 = Base64.getEncoder().encodeToString(this.imagen.getData());
+		}
+        
         dataUsuario dt = new dataUsuario(
                             this.nickname,
                             this.nombre,
@@ -76,7 +83,9 @@ import turismouy.svcentral.datatypes.dataUsuario;
                             this.nacionalidad,
                             this.nacimiento,
                             false, 
-                            null, null,
+                            null,
+                            null,
+                            imagenBase64,
                             null,
                             dataSalidas);
 
