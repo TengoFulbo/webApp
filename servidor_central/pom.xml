@@ -48,7 +48,13 @@
         <groupId>org.mindrot</groupId>
         <artifactId>jbcrypt</artifactId>
         <version>0.4</version>
-    </dependency>    
+    </dependency>
+    <!-- Web Service -->
+    <dependency>
+        <groupId>com.sun.xml.ws</groupId>
+        <artifactId>jaxws-rt</artifactId>
+        <version>2.3.3</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -60,6 +66,24 @@
     </resources>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>jaxb2-maven-plugin</artifactId>
+            <version>2.5.0</version>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>xjc</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <!-- <configuration>
+                <sources>
+                    <source>src/main/resources/xsd</source>
+                </sources>
+                <packageName>com.ejemplo.saludo</packageName>
+            </configuration> -->
+        </plugin>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
@@ -88,9 +112,10 @@
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.0</version>
-	          <!-- or whatever version you use -->
-	          <!-- <source>1.8</source> -->
-	          <!-- <target>1.8</target> -->
+            <configuration>
+                <source>1.8</source> <!-- Ajusta según la versión de Java que estás utilizando -->
+                <target>1.8</target> <!-- Ajusta según la versión de Java que estás utilizando -->
+            </configuration>
         </plugin>
         <!-- <plugin> -->
           <!-- <artifactId>maven-surefire-plugin</artifactId> -->

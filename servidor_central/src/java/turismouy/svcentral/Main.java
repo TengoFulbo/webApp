@@ -25,6 +25,9 @@ import turismouy.svcentral.manejadores.ImagenManejador;
 import turismouy.svcentral.manejadores.InscripcionManejador;
 import turismouy.svcentral.manejadores.PaqueteManejador;
 import turismouy.svcentral.manejadores.UsuarioManejador;
+import turismouy.svcentral.middlewares.controladores.HoraWebService;
+import turismouy.svcentral.middlewares.interfaces.IHoraWebService;
+import turismouy.svcentral.middlewares.interfaces.MonitoreoWeb;
 import turismouy.svcentral.utilidades.estadoActividad;
 import turismouy.svcentral.controladores.CompraController;
 import turismouy.svcentral.controladores.InscripcionController;
@@ -60,12 +63,18 @@ public class Main {
         IInscripcionController IIC = fabrica.getIInscripcionController();
 
 
-        List<dataUsuario> usuarios = IUC.listarUsuarios();
+        MonitoreoWeb mw = new MonitoreoWeb();
+        mw.publicar();
 
-        log.info("Usuarios: ");
-        for (dataUsuario usuario : usuarios) {
-            log.info("  " + usuario.getNombre());
-        }
+        HoraWebService hws = new HoraWebService();
+        hws.publicar();
+
+        // List<dataUsuario> usuarios = IUC.listarUsuarios();
+
+        // log.info("Usuarios: ");
+        // for (dataUsuario usuario : usuarios) {
+        //     log.info("  " + usuario.getNombre());
+        // }
 
         // cargarTuristas();
         // log.warning("########################################################");
