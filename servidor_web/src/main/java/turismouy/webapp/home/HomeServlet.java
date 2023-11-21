@@ -1,6 +1,9 @@
 package turismouy.webapp.home;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -9,8 +12,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import turismouy.svcentral.middlewares.controladores.HoraWebService;
-import turismouy.svcentral.middlewares.controladores.HoraWebServiceService;
+// import turismouy.svcentral.controladores.ActividadController;
+// import turismouy.svcentral.controladores.ActividadControllerService;
+// import turismouy.svcentral.middlewares.controladores.ActividadService;
+// import turismouy.svcentral.middlewares.controladores.HoraWebService;
+// import turismouy.svcentral.middlewares.controladores.HoraWebServiceService;
+// import turismouy.svcentral.middlewares.controladores.ActividadService;
+// import turismouy.svcentral.middlewares.controladores.ActividadServiceService;
+// import turismouy.svcentral.middlewares.interfaces.IActividadService;
+// import turismouy.svcentral.middlewares.interfaces.IActividadService;
 
 @WebServlet("/home")
 public class HomeServlet extends HttpServlet {
@@ -28,21 +38,27 @@ public class HomeServlet extends HttpServlet {
         request.setAttribute("compras", "12");
         request.setAttribute("actividades", "100");
 
-        // Crea una instancia del servicio cliente
-        HoraWebService cliente = new HoraWebServiceService().getHoraWebServicePort();
+        // ActividadController cliente = new ActividadControllerService().getActividadControllerPort();
+        
+        // ActividadService cliente = new ActividadServiceService().getActividadServicePort();
 
-        System.out.println("Hola....");
+        
+        // System.out.println("Ejecutando el serivicio web...");
+        // List<String> listString = new ArrayList<String>();
+        // 
+        // cliente.crearActividad("a", "b", "c", "d", 1, 2, "e", listString);
+        
 
-        // Llama al servicio
-        String resultado = cliente.obtenerHoraActual();
-        System.out.println("Resultado del web service: " + resultado);
+        // TODO: Asi se consume un serivico web 
+        // Asi se consume un servicio web
+        // // Crea una instancia del servicio cliente
+        // HoraWebService cliente = new HoraWebServiceService().getHoraWebServicePort();
 
-        // Crea una instancia del servicio        MonitoreoWebService service = new MonitoreoWebService();
+        // System.out.println("Hola....");
 
-        // Obtén un puerto para la comunicación
-        // MonitoreoWeb port = service.getMonitoreoWebPort();
-
-        // MonitoreoWeb monitor = new MonitoreoWeb()
+        // // Llama al servicio
+        // String resultado = cliente.obtenerHoraActual();
+        // System.out.println("Resultado del web service: " + resultado);
 
         // Redireciona
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/home.jsp");

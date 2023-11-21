@@ -25,9 +25,24 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
+@WebService
 public class ActividadController implements IActividadController {
 
-	public void crearActividad(String nombreDepto, String nombreProv, String nombre, String desc, int duracion, int costoUni, String ciudad, LocalDate fechaCrea, List<String> sCategorias) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion, UsuarioNoExisteExcepcion{
+    @Override
+	public void crearActividad(
+        @WebParam(name = "nombreDeptos")    String nombreDepto,
+        @WebParam(name = "nombreProv")      String nombreProv,
+        @WebParam(name = "nombre")          String nombre,
+        @WebParam(name = "desc")            String desc,
+        @WebParam(name = "duracion")        int duracion,
+        @WebParam(name = "costoUni")        int costoUni,
+        @WebParam(name = "ciudad")          String ciudad,
+        @WebParam(name = "fechaCrea")       LocalDate fechaCrea,
+        @WebParam(name = "categorias")      List<String> sCategorias
+        ) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion, UsuarioNoExisteExcepcion{
 		
         // Validaciones sobre parametros.
         if (!validarTexto(nombreDepto, 1) || !validarTexto(nombre, 1) || !validarTexto(desc, 1) || !validarTexto(ciudad, 1)) {
@@ -107,7 +122,8 @@ public class ActividadController implements IActividadController {
         }
 	}
 	
-	public dataActividad mostrarDatos(String nombreAct) throws UsuarioNoExisteExcepcion{
+    @Override
+	public dataActividad mostrarDatos(@WebParam(name = "nombreAct") String nombreAct) throws UsuarioNoExisteExcepcion{
 		ActividadManejador am = ActividadManejador.getinstance();
 		actividad act = am.getActividad(nombreAct);		
 		if (act == null) {
@@ -118,7 +134,15 @@ public class ActividadController implements IActividadController {
 		return DTAct;		
 	};
 	
-	public void modificarActividad(String nombreAct, String desc, int duracion, int costoUni, String ciudad, LocalDate fechaCrea)throws ParametrosInvalidosExcepcion, UsuarioNoExisteExcepcion, UsuarioYaExisteExcepcion{
+    @Override
+	public void modificarActividad(
+            @WebParam(name = "nombreAct") String nombreAct,
+            @WebParam(name = "desc") String desc,
+            @WebParam(name = "duracion") int duracion,
+            @WebParam(name = "costoUni") int costoUni,
+            @WebParam(name = "ciudad") String ciudad,
+            @WebParam(name = "fechaCrea") LocalDate fechaCrea
+        ) throws ParametrosInvalidosExcepcion, UsuarioNoExisteExcepcion, UsuarioYaExisteExcepcion{
         if (!validarTexto(nombreAct, 1) || !validarTexto(desc, 1) || !validarTexto(ciudad, 1)) {
             log.error("Parametros invalidos.");
             throw new ParametrosInvalidosExcepcion();
@@ -151,6 +175,7 @@ public class ActividadController implements IActividadController {
         }    
 	}  
 	
+    @Override
     public List<dataActividad> getAllActividades() {      
         List<dataActividad> LDtAct = new ArrayList<>();
         DepartamentoManejador dm = DepartamentoManejador.getinstance();
@@ -173,7 +198,8 @@ public class ActividadController implements IActividadController {
      return LDtAct;
     }
 
-    public List<dataActividad> getAllActividadesDepartamento(String nombreDep) {
+    @Override
+    public List<dataActividad> getAllActividadesDepartamento(@WebParam(name = "nombreDep") String nombreDep) {
         List<dataActividad> LDtAct = new ArrayList<>();
            DepartamentoManejador dm = DepartamentoManejador.getinstance();
         List<departamento> deptos = dm.getAllDepartamentos();
@@ -196,7 +222,8 @@ public class ActividadController implements IActividadController {
         return LDtAct;
     }
     
-    public List<dataActividad> getAllActividadesConfirmadasDepartamento(String nombreDep) {
+    @Override
+    public List<dataActividad> getAllActividadesConfirmadasDepartamento(@WebParam(name = "nombreDep") String nombreDep) {
         List<dataActividad> LDtAct = new ArrayList<>();
            DepartamentoManejador dm = DepartamentoManejador.getinstance();
         List<departamento> deptos = dm.getAllDepartamentos();
@@ -221,6 +248,7 @@ public class ActividadController implements IActividadController {
         return LDtAct;
     }
     
+    @Override
     public List<dataActividad> getAllActividadesAgregadas() {
         List<dataActividad> LDtAct = new ArrayList<>();
            DepartamentoManejador dm = DepartamentoManejador.getinstance();
@@ -242,8 +270,12 @@ public class ActividadController implements IActividadController {
             return null; 
         return LDtAct;
     }
-
-    public List<dataActividad> getActividadesDepartamentoNoPaquete(String nombrePaquete, String nombreDepartamento ) throws UsuarioNoExisteExcepcion{
+    
+    @Override
+    public List<dataActividad> getActividadesDepartamentoNoPaquete(
+            @WebParam(name = "nombrePaquete")       String nombrePaquete,
+            @WebParam(name = "nombreDepartamento")  String nombreDepartamento
+        ) throws UsuarioNoExisteExcepcion{
     	
         PaqueteManejador pm = PaqueteManejador.getinstance();
         DepartamentoManejador dm = DepartamentoManejador.getinstance();
@@ -294,7 +326,8 @@ public class ActividadController implements IActividadController {
 
     }
     
-    public List <dataActividad> getActividadesPorCategoria(String nombreCategoria) throws NoExisteExcepcion {
+    @Override
+     public List <dataActividad> getActividadesPorCategoria(@WebParam(name = "nombreCategoria") String nombreCategoria) throws NoExisteExcepcion {
     	CategoriaManejador cm = CategoriaManejador.getInstance();    	
     	categoria categoria = cm.getCategoria(nombreCategoria);
     	
@@ -315,7 +348,8 @@ public class ActividadController implements IActividadController {
     	return LDtAct;
     }
     
-    public void modificarEstadoActividad(String nombre, estadoActividad estado) throws NoExisteExcepcion, ParametrosInvalidosExcepcion, YaExisteExcepcion {
+    @Override
+    public void modificarEstadoActividad(@WebParam(name = "nombre") String nombre, @WebParam(name = "estado") estadoActividad estado) throws NoExisteExcepcion, ParametrosInvalidosExcepcion, YaExisteExcepcion {
         if (estado != estadoActividad.CONFIRMADA && estado != estadoActividad.RECHAZADA) {
             log.error("Parametros invalidos por primero.");
             throw new ParametrosInvalidosExcepcion();

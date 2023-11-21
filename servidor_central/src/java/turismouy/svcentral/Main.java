@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.ws.Endpoint;
+
 import turismouy.svcentral.excepciones.NoExisteExcepcion;
 import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
 import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
@@ -25,6 +27,7 @@ import turismouy.svcentral.manejadores.ImagenManejador;
 import turismouy.svcentral.manejadores.InscripcionManejador;
 import turismouy.svcentral.manejadores.PaqueteManejador;
 import turismouy.svcentral.manejadores.UsuarioManejador;
+import turismouy.svcentral.middlewares.controladores.ActividadService;
 import turismouy.svcentral.middlewares.controladores.HoraWebService;
 import turismouy.svcentral.middlewares.interfaces.IHoraWebService;
 import turismouy.svcentral.middlewares.interfaces.MonitoreoWeb;
@@ -62,12 +65,23 @@ public class Main {
         IDepartamentoController IDC = fabrica.getIDepartamentoController();
         IInscripcionController IIC = fabrica.getIInscripcionController();
 
+        // IActividadController actividadController
 
-        MonitoreoWeb mw = new MonitoreoWeb();
-        mw.publicar();
+        // Configuración para el publicador.
+        String ipServidor = "http://localhost";
+        String puerto = ":5000";
+        String uri = "/API/";
 
-        HoraWebService hws = new HoraWebService();
-        hws.publicar();
+        // URL por interfaz
+        String IActividadURL = ipServidor + puerto + uri + "IActividadController";
+
+        Endpoint.publish(IActividadURL, IAC);
+        log.info("[Publicador] Nueva publicación: " + IActividadURL);
+        
+        // new MonitoreoWeb().publicar();
+        // new HoraWebService().publicar();
+        // new ActividadService().publicar();
+
 
         // List<dataUsuario> usuarios = IUC.listarUsuarios();
 

@@ -2,6 +2,12 @@ package turismouy.svcentral.interfaces;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebResult;
+import javax.jws.WebService;
+
 import turismouy.svcentral.datatypes.dataActividad;
 import turismouy.svcentral.excepciones.NoExisteExcepcion;
 import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
@@ -10,6 +16,7 @@ import turismouy.svcentral.excepciones.UsuarioYaExisteExcepcion;
 import turismouy.svcentral.excepciones.YaExisteExcepcion;
 import turismouy.svcentral.utilidades.estadoActividad;
 
+@WebService
 public interface IActividadController {
     /**
      * Caso de uso:
@@ -25,7 +32,18 @@ public interface IActividadController {
      * @throws UsuarioYaExisteExcepcion
      * @throws UsuarioNoExisteExcepcion
      */
-    public abstract void crearActividad(String nombreDepto, String nombreProv, String nombre, String desc, int duracion, int costoUni, String ciudad, LocalDate fechaCrea, List<String> categorias) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion, UsuarioNoExisteExcepcion;
+    @WebMethod
+    public abstract void crearActividad(
+        String nombreDepto,
+        String nombreProv,
+        String nombre,
+        String desc,
+        int duracion,
+        int costoUni,
+        String ciudad,
+        LocalDate fechaCrea,
+        List<String> categorias
+    ) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion, UsuarioNoExisteExcepcion;
     
     /**
      * Caso de uso:
@@ -33,6 +51,8 @@ public interface IActividadController {
      * @return dataActividad
      * @throws UsuarioNoExisteExcepcion
      */
+    @WebMethod
+    @WebResult(name = "dataActividad")
     public abstract dataActividad mostrarDatos(String nombreAct) throws UsuarioNoExisteExcepcion;
     /**
      * Caso de uso:
