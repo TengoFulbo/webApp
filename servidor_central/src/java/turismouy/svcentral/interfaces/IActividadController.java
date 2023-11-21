@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.jws.WebMethod;
-import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 
@@ -66,14 +65,18 @@ public interface IActividadController {
      * @throws UsuarioYaExisteExcepcion
      * @throws UsuarioNoExisteExcepcion
      */
-     public abstract void modificarActividad(String nombre, String desc, int duracion, int costoUni, String ciudad, LocalDate fechaCrea) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion, UsuarioNoExisteExcepcion;
-
+    @WebMethod
+    public abstract void modificarActividad(String nombre, String desc, int duracion, int costoUni, String ciudad, LocalDate fechaCrea) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion, UsuarioNoExisteExcepcion;
+    
+    @WebMethod
     public abstract void modificarEstadoActividad(String nombre, estadoActividad estado) throws NoExisteExcepcion, ParametrosInvalidosExcepcion, YaExisteExcepcion;;
 
     /**
      * Lista todas las actividades.
      * @return Lista de dataActividad
      */
+    @WebMethod
+    @WebResult(name = "dataActividad")
     public abstract List<dataActividad> getAllActividades();
 
     /**
@@ -81,9 +84,23 @@ public interface IActividadController {
      * @param nombreDep String
      * @return Lista de dataActividad
      */
+    @WebMethod
+    @WebResult(name = "dataActividad")
     public abstract List<dataActividad> getAllActividadesDepartamento(String nombreDep);
+
+    @WebMethod
+    @WebResult(name = "dataActividad")
     public abstract List<dataActividad> getAllActividadesConfirmadasDepartamento(String nombreDep);
+
+    @WebMethod
+    @WebResult(name = "dataActividad")
     public abstract List<dataActividad> getActividadesDepartamentoNoPaquete(String nombrePaquete, String nombreDepartamento) throws UsuarioNoExisteExcepcion;
+
+    @WebMethod
+    @WebResult(name = "dataActividad")
     public abstract List<dataActividad> getAllActividadesAgregadas();
+
+    @WebMethod
+    @WebResult(name = "dataActividad")
     public abstract List<dataActividad> getActividadesPorCategoria(String nombreCategoria) throws NoExisteExcepcion;
 }

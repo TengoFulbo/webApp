@@ -12,15 +12,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-// import turismouy.svcentral.controladores.ActividadController;
-// import turismouy.svcentral.controladores.ActividadControllerService;
-// import turismouy.svcentral.middlewares.controladores.ActividadService;
+import turismouy.svcentral.controladores.ActividadController;
+import turismouy.svcentral.controladores.ActividadControllerService;
+import turismouy.svcentral.middlewares.controladores.ActividadService;
 // import turismouy.svcentral.middlewares.controladores.HoraWebService;
 // import turismouy.svcentral.middlewares.controladores.HoraWebServiceService;
 // import turismouy.svcentral.middlewares.controladores.ActividadService;
 // import turismouy.svcentral.middlewares.controladores.ActividadServiceService;
 // import turismouy.svcentral.middlewares.interfaces.IActividadService;
-// import turismouy.svcentral.middlewares.interfaces.IActividadService;
+import turismouy.svcentral.middlewares.interfaces.IActividadService;
 
 @WebServlet("/home")
 public class HomeServlet extends HttpServlet {
@@ -38,7 +38,7 @@ public class HomeServlet extends HttpServlet {
         request.setAttribute("compras", "12");
         request.setAttribute("actividades", "100");
 
-        // ActividadController cliente = new ActividadControllerService().getActividadControllerPort();
+        ActividadController cliente = new ActividadControllerService().getActividadControllerPort();
         
         // ActividadService cliente = new ActividadServiceService().getActividadServicePort();
 

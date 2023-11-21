@@ -3,6 +3,9 @@ package turismouy.svcentral.controladores;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
 import turismouy.svcentral.datatypes.dataCategoria;
 import turismouy.svcentral.entidades.categoria;
 import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
@@ -11,9 +14,11 @@ import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.manejadores.CategoriaManejador;
 import turismouy.svcentral.utilidades.log;
 
+@WebService
 public class CategoriaController implements ICategoriaController {
     
-    public void crearCategoria(String nombre) throws YaExisteExcepcion, ParametrosInvalidosExcepcion {
+    @Override
+    public void crearCategoria(@WebParam(name = "nombre") String nombre) throws YaExisteExcepcion, ParametrosInvalidosExcepcion {
         if (!validarTexto(nombre, 1)) {
             log.error("[crearCategoria] Parametros invalidos.");
             throw new ParametrosInvalidosExcepcion();
@@ -30,7 +35,8 @@ public class CategoriaController implements ICategoriaController {
         categoria categoria = new categoria(nombre);
         cm.addCategoria(categoria);
     };
-
+    
+    @Override
     public List<dataCategoria> listarCategorias() {
         CategoriaManejador cm = CategoriaManejador.getInstance();
         List<categoria> categorias = cm.getAllCategorias();

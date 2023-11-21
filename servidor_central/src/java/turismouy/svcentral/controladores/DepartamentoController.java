@@ -2,6 +2,10 @@ package turismouy.svcentral.controladores;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
 import turismouy.svcentral.datatypes.dataDepartamento;
 import turismouy.svcentral.entidades.departamento;
 import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
@@ -11,9 +15,15 @@ import turismouy.svcentral.manejadores.DepartamentoManejador;
 import turismouy.svcentral.utilidades.log;
 import turismouy.svcentral.entidades.actividad;
 
+@WebService
 public class DepartamentoController implements IDepartamentoController {
 
-    public void crearDepartamento(String nombre, String descripcion, String url) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion{
+    @Override
+    public void crearDepartamento(
+            @WebParam(name = "nombre")      String nombre,
+            @WebParam(name = "descripcion") String descripcion,
+            @WebParam(name = "url")         String url
+        ) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion{
         // Validaciones sobre parametros.
         if (!validarTexto(nombre, 1) ||
             !validarTexto(descripcion, 1) ||
@@ -35,6 +45,7 @@ public class DepartamentoController implements IDepartamentoController {
         dm.addDepartamento(depto);
     };
 
+    @Override
     public List<dataDepartamento> listarDepartamentos(){
         DepartamentoManejador dm = DepartamentoManejador.getinstance();
         List<departamento> deptos = dm.getAllDepartamentos();

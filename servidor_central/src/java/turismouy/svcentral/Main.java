@@ -72,11 +72,33 @@ public class Main {
         String puerto = ":5000";
         String uri = "/API/";
 
-        // URL por interfaz
-        String IActividadURL = ipServidor + puerto + uri + "IActividadController";
+        // URL por interfaz.
+        String IActividadURL    = ipServidor + puerto + uri + "IActividadController";
+        String ICategoriaURL    = ipServidor + puerto + uri + "ICategoriaController";
+        String ICompraURL       = ipServidor + puerto + uri + "ICompraController";
+        String IDepartamentoURL = ipServidor + puerto + uri + "IDepartamentoController";
+        String IInscripcionURL  = ipServidor + puerto + uri + "IInscripcionController";
+        String IPaqueteURL      = ipServidor + puerto + uri + "IPaqueteController";
 
+        // Publicador por interfaz.
         Endpoint.publish(IActividadURL, IAC);
+        Endpoint.publish(ICategoriaURL, ICC);
+        Endpoint.publish(ICompraURL, ICoC);
+        Endpoint.publish(IDepartamentoURL, IDC);
+        Endpoint.publish(IInscripcionURL, IIC);
+        Endpoint.publish(IPaqueteURL, IPC);
+        
+        // Log por publicador.
         log.info("[Publicador] Nueva publicación: " + IActividadURL);
+        log.info("[Publicador] Nueva publicación: " + ICategoriaURL);
+        log.info("[Publicador] Nueva publicación: " + ICompraURL);
+        log.info("[Publicador] Nueva publicación: " + IDepartamentoURL);
+        log.info("[Publicador] Nueva publicación: " + IInscripcionURL);
+        log.info("[Publicador] Nueva publicación: ");
+        log.info("[Publicador] Nueva publicación: ");
+        log.info("[Publicador] Nueva publicación: ");
+
+
         
         // new MonitoreoWeb().publicar();
         // new HoraWebService().publicar();

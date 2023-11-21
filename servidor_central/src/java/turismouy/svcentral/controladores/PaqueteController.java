@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
 import turismouy.svcentral.datatypes.dataPaquete;
 import turismouy.svcentral.entidades.actividad;
 import turismouy.svcentral.entidades.paquete;
@@ -19,9 +22,17 @@ import turismouy.svcentral.utilidades.log;
 
 // import turismouy.svcentral.utilidades.validaciones;
 
+@WebService
 public class PaqueteController implements IPaqueteController {
     
-    public void crearPaquete(String nombre, String descripcion, int periodoVal, int descuento, LocalDate fechaAlta) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion{
+	@Override
+    public void crearPaquete(
+            @WebParam(name = "nombre")		String nombre,
+            @WebParam(name = "descripcion")	String descripcion,
+            @WebParam(name = "periodoVal")	int periodoVal,
+            @WebParam(name = "descuento")	int descuento,
+            @WebParam(name = "fechaAlta")	LocalDate fechaAlta
+        ) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion{
         // Code
 
         if(!validarTexto(nombre, 1) ||
@@ -45,6 +56,7 @@ public class PaqueteController implements IPaqueteController {
         pm.addPaquete(paquete);
     };
 
+	@Override
     public List<String> obtenerNombresPaquetes() {
         PaqueteManejador pm = PaqueteManejador.getinstance();
         List<paquete> paquetes = pm.getAllPaquetes();
@@ -62,8 +74,11 @@ public class PaqueteController implements IPaqueteController {
         return nombresPaquetes;
     }
     
-
-    public void agregarActividadPaquete(String nombrePaquete, String nombreActividad) throws NoExisteExcepcion, YaExisteExcepcion {
+	@Override
+    public void agregarActividadPaquete(
+			@WebParam(name = "nombrePaquete")	String nombrePaquete,
+			@WebParam(name = "nombreActividad")	String nombreActividad
+		) throws NoExisteExcepcion, YaExisteExcepcion {
         PaqueteManejador pm = PaqueteManejador.getinstance();
 
         paquete paquete = pm.getPaquete(nombrePaquete);
@@ -108,8 +123,8 @@ public class PaqueteController implements IPaqueteController {
         pm.updatePaquete(paquete);
     }
 
-
-    public dataPaquete mostrarInfo(String nombre) throws UsuarioNoExisteExcepcion {
+	@Override
+    public dataPaquete mostrarInfo(@WebParam(name = "nombre") String nombre) throws UsuarioNoExisteExcepcion {
         PaqueteManejador pm = PaqueteManejador.getinstance();
 
         paquete paquete = pm.getPaquete(nombre);
@@ -122,6 +137,7 @@ public class PaqueteController implements IPaqueteController {
         return dp;
     };
 
+	@Override
     public List<dataPaquete> listarPaquetes() {
         PaqueteManejador pm = PaqueteManejador.getinstance();
 
@@ -139,6 +155,7 @@ public class PaqueteController implements IPaqueteController {
         return dataPaquetes;
     }
     
+	@Override
     public List<dataPaquete> listarPaquetesSinComprar() {
         PaqueteManejador pm = PaqueteManejador.getinstance();
 

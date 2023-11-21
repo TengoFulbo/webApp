@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
 import turismouy.svcentral.entidades.actividad;
 import turismouy.svcentral.entidades.compra;
 import turismouy.svcentral.entidades.compra_cupo;
@@ -23,9 +27,16 @@ import turismouy.svcentral.manejadores.PaqueteManejador;
 import turismouy.svcentral.manejadores.UsuarioManejador;
 import turismouy.svcentral.utilidades.log;
 
+@WebService
 public class CompraController implements ICompraController{
 	
-	public void crearCompraV2(String nombreTurista, String nombreActividad, String nombrePaquete, int cantidad) throws ParametrosInvalidosExcepcion, YaExisteExcepcion, NoExisteExcepcion {
+	@WebMethod
+	public void crearCompraV2(
+			@WebParam(name = "nombreTurista")	String nombreTurista,
+			@WebParam(name = "nombreActividad")	String nombreActividad,
+			@WebParam(name = "nombrePaquete")	String nombrePaquete,
+			@WebParam(name = "cantidad")		int cantidad
+		) throws ParametrosInvalidosExcepcion, YaExisteExcepcion, NoExisteExcepcion {
 		Boolean debug = true; String debugMsg = "[crearCompraV2] ";
 		UsuarioManejador 		um = UsuarioManejador.getinstance();
 		ActividadManejador 		am = ActividadManejador.getinstance();
@@ -103,8 +114,15 @@ public class CompraController implements ICompraController{
 		}
 	}
 
-	public void crearCompra (LocalDate fecha, int cantTotal, int costoTotal, LocalDate vencimiento, String nombrePaquete, String nombreTurista)throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion, UsuarioNoExisteExcepcion{
-		
+	@WebMethod
+	public void crearCompra (
+			@WebParam(name = "fecha")			LocalDate fecha,
+			@WebParam(name = "cantTotal")		int cantTotal,
+			@WebParam(name = "costoTotal")		int costoTotal,
+			@WebParam(name = "vencimiento")		LocalDate vencimiento,
+			@WebParam(name = "nombrePaquete")	String nombrePaquete,
+			@WebParam(name = "nombreTurista")	String nombreTurista
+		) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion, UsuarioNoExisteExcepcion{
 		PaqueteManejador pm = PaqueteManejador.getinstance();
 		UsuarioManejador um = UsuarioManejador.getinstance();
 		CompraManejador cm = CompraManejador.getinstance();
