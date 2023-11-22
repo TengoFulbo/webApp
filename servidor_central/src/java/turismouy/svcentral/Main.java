@@ -64,6 +64,7 @@ public class Main {
         IPaqueteController IPC = fabrica.getIPaqueteController();
         IDepartamentoController IDC = fabrica.getIDepartamentoController();
         IInscripcionController IIC = fabrica.getIInscripcionController();
+        ISalidaController ISC = fabrica.getISalidaController();
 
         // IActividadController actividadController
 
@@ -79,6 +80,9 @@ public class Main {
         String IDepartamentoURL = ipServidor + puerto + uri + "IDepartamentoController";
         String IInscripcionURL  = ipServidor + puerto + uri + "IInscripcionController";
         String IPaqueteURL      = ipServidor + puerto + uri + "IPaqueteController";
+        String ISalidaURL       = ipServidor + puerto + uri + "ISalidaController";
+        String HoraWebURL       = ipServidor + puerto + uri + "HoraWebController";
+
 
         // Publicador por interfaz.
         Endpoint.publish(IActividadURL, IAC);
@@ -87,6 +91,7 @@ public class Main {
         Endpoint.publish(IDepartamentoURL, IDC);
         Endpoint.publish(IInscripcionURL, IIC);
         Endpoint.publish(IPaqueteURL, IPC);
+        Endpoint.publish(ISalidaURL, ISC);
         
         // Log por publicador.
         log.info("[Publicador] Nueva publicación: " + IActividadURL);
@@ -94,15 +99,15 @@ public class Main {
         log.info("[Publicador] Nueva publicación: " + ICompraURL);
         log.info("[Publicador] Nueva publicación: " + IDepartamentoURL);
         log.info("[Publicador] Nueva publicación: " + IInscripcionURL);
-        log.info("[Publicador] Nueva publicación: ");
+        log.info("[Publicador] Nueva publicación: " + ISalidaURL);
         log.info("[Publicador] Nueva publicación: ");
         log.info("[Publicador] Nueva publicación: ");
 
 
         
         // new MonitoreoWeb().publicar();
-        // new HoraWebService().publicar();
-        // new ActividadService().publicar();
+        new HoraWebService().publicar();
+        new ActividadService().publicar();
 
 
         // List<dataUsuario> usuarios = IUC.listarUsuarios();

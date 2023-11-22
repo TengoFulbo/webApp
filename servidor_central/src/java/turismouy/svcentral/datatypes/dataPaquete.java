@@ -1,9 +1,16 @@
 package turismouy.svcentral.datatypes;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-public class dataPaquete {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "dataPaquete")
+public class dataPaquete implements Serializable {
 	private String nombre;
 	private int descuento;
 	private String descripcion;
@@ -20,6 +27,8 @@ public class dataPaquete {
         this.fechaAlta = fechaAlta;
         this.actividades = actividades;
     }
+
+    public dataPaquete() {};
 
     public String getNombre() {
         return this.nombre;

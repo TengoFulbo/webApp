@@ -1,9 +1,18 @@
 package turismouy.svcentral.datatypes;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-public class dataUsuario {
+import javax.xml.bind.annotation.XmlRootElement;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "dataUsuario")
+public class dataUsuario implements Serializable {
     private String nickname;
     private String nombre;
     private String apellido;
@@ -41,6 +50,8 @@ public class dataUsuario {
         this.actividades = actividades;
         this.salidas = salidas;
     };
+
+    public dataUsuario() {};
 
     public String getNickname(){
         return this.nickname;

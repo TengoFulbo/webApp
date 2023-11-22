@@ -1,8 +1,15 @@
 package turismouy.svcentral.datatypes;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class dataDepartamento {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "dataDepartamento")
+public class dataDepartamento implements Serializable {
     private String nombre;
     private String descripcion;
     private String url;
@@ -14,6 +21,8 @@ public class dataDepartamento {
         this.url = url;
         this.actividades = actividades;
     }
+
+    public dataDepartamento() {};
 
     public String getNombre() {
         return this.nombre;

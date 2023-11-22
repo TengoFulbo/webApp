@@ -2,11 +2,17 @@ package turismouy.svcentral.interfaces;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import javax.jws.WebMethod;
+import javax.jws.WebResult;
+import javax.jws.WebService;
+
 import turismouy.svcentral.datatypes.dataUsuario;
 import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
 import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
 import turismouy.svcentral.excepciones.UsuarioYaExisteExcepcion;
 
+@WebService
 public interface IUsuarioController {
 
      /**
@@ -65,5 +71,7 @@ public interface IUsuarioController {
     
     public abstract List<String> listarTuristas();
 
+    @WebMethod
+    @WebResult(name = "valido")
     public abstract boolean login(String usuario, String password);
 }

@@ -1,11 +1,15 @@
 package turismouy.svcentral.datatypes;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import turismouy.svcentral.utilidades.estadoActividad;
 
-public class dataActividad {
+@XmlRootElement
+public class dataActividad implements Serializable {
 	private String nombre;
 	private String desc;
 	private int duracion;
@@ -35,6 +39,7 @@ public class dataActividad {
 		this.dtCategorias = dtCategorias;
 	}
 
+	public dataActividad() {};
 
 	public String getNombre() {
 		return nombre;

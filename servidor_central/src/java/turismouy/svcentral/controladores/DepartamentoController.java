@@ -19,11 +19,7 @@ import turismouy.svcentral.entidades.actividad;
 public class DepartamentoController implements IDepartamentoController {
 
     @Override
-    public void crearDepartamento(
-            @WebParam(name = "nombre")      String nombre,
-            @WebParam(name = "descripcion") String descripcion,
-            @WebParam(name = "url")         String url
-        ) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion{
+    public void crearDepartamento(@WebParam(name = "nombre") String nombre, @WebParam(name = "descripcion") String descripcion, @WebParam(name = "url") String url) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion{
         // Validaciones sobre parametros.
         if (!validarTexto(nombre, 1) ||
             !validarTexto(descripcion, 1) ||

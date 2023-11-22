@@ -12,15 +12,22 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import turismouy.svcentral.controladores.ActividadController;
-import turismouy.svcentral.controladores.ActividadControllerService;
-import turismouy.svcentral.middlewares.controladores.ActividadService;
+import turismouy.svcentral.controladores.DataDepartamento;
+// import turismouy.svcentral.controladores.ActividadController;
+// import turismouy.svcentral.controladores.ActividadControllerService;
+import turismouy.svcentral.controladores.DepartamentoController;
+// import turismouy.svcentral.controladores.DepartamentoControllerService;
+// import turismouy.svcentral.middlewares.controladores.ActividadService;
 // import turismouy.svcentral.middlewares.controladores.HoraWebService;
 // import turismouy.svcentral.middlewares.controladores.HoraWebServiceService;
 // import turismouy.svcentral.middlewares.controladores.ActividadService;
 // import turismouy.svcentral.middlewares.controladores.ActividadServiceService;
 // import turismouy.svcentral.middlewares.interfaces.IActividadService;
-import turismouy.svcentral.middlewares.interfaces.IActividadService;
+// import turismouy.svcentral.middlewares.interfaces.IActividadService;
+// import turismouy.svcentral.middlewares.controladores.HoraWebService;
+// import turismouy.svcentral.middlewares.controladores.HoraWebServiceService;
+import turismouy.svcentral.controladores.DepartamentoControllerService;
+import turismouy.svcentral.datatypes.dataDepartamento;
 
 @WebServlet("/home")
 public class HomeServlet extends HttpServlet {
@@ -38,7 +45,13 @@ public class HomeServlet extends HttpServlet {
         request.setAttribute("compras", "12");
         request.setAttribute("actividades", "100");
 
-        ActividadController cliente = new ActividadControllerService().getActividadControllerPort();
+
+        // DepartamentoController cliente = new DepartamentoControllerService().getDepartamentoControllerPort();
+
+
+        // List<> = cliente.listarDepartamentos();
+
+        // ActividadController cliente = new ActividadControllerService().getActividadControllerPort();
         
         // ActividadService cliente = new ActividadServiceService().getActividadServicePort();
 
@@ -54,7 +67,16 @@ public class HomeServlet extends HttpServlet {
         // // Crea una instancia del servicio cliente
         // HoraWebService cliente = new HoraWebServiceService().getHoraWebServicePort();
 
-        // System.out.println("Hola....");
+        DepartamentoController DC = new DepartamentoControllerService().getDepartamentoControllerPort();
+
+        List<DataDepartamento> departamentos = DC.listarDepartamentos();
+
+        System.out.println("Imprimiendo los departamentos...");
+        for (DataDepartamento departamento : departamentos) {
+            System.out.println("Departamento: " + departamento.getNombre());
+        }
+
+        System.out.println("Hola....");
 
         // // Llama al servicio
         // String resultado = cliente.obtenerHoraActual();

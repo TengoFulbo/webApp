@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.jws.WebParam;
+
 import turismouy.svcentral.datatypes.dataUsuario;
 import turismouy.svcentral.entidades.imagen;
 import turismouy.svcentral.entidades.proveedor;
@@ -330,7 +332,11 @@ public class UsuarioController implements IUsuarioController {
         return LNicknamesTuristas;
     }
     
-    public boolean login(String usuario, String password) {
+
+    public boolean login(
+			@WebParam(name = "usuario")		String usuario,
+			@WebParam(name = "password")	String password
+        ) {
         if (!validarTexto(usuario, 1) || !validarTexto(password, 1)) {
             log.error("Parametros invalidos.");
             return false;

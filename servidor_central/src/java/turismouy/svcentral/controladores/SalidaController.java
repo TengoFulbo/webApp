@@ -3,6 +3,10 @@ package turismouy.svcentral.controladores;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
 import turismouy.svcentral.datatypes.dataSalida;
 import turismouy.svcentral.entidades.actividad;
 import turismouy.svcentral.entidades.departamento;
@@ -16,9 +20,18 @@ import turismouy.svcentral.manejadores.DepartamentoManejador;
 import turismouy.svcentral.manejadores.SalidaManejador;
 import turismouy.svcentral.utilidades.log;
 
+@WebService
 public class SalidaController implements ISalidaController {
 
-	public  void crearSalida(String nombre, int capacidad, LocalDate fechaAlta, LocalDate fechaSalida, String lugarSalida, String nombreActividad) throws UsuarioYaExisteExcepcion, ParametrosInvalidosExcepcion, UsuarioNoExisteExcepcion {
+    @Override
+	public void crearSalida(
+			@WebParam(name = "")	String nombre,
+			@WebParam(name = "")	int capacidad,
+			@WebParam(name = "")	LocalDate fechaAlta,
+			@WebParam(name = "")	LocalDate fechaSalida,
+			@WebParam(name = "")	String lugarSalida,
+			@WebParam(name = "")	String nombreActividad
+		) throws UsuarioYaExisteExcepcion, ParametrosInvalidosExcepcion, UsuarioNoExisteExcepcion {
 		// Validaciones sobre parámetros.
 	    if (!validarTexto(nombre, 1) ||
 	        capacidad <= 0 ||
@@ -72,7 +85,7 @@ public class SalidaController implements ISalidaController {
 	    System.out.println("La actividad " + a.getNombre() + " no se remplazo");
 	   
 	}
-	
+	@Override
 	public List<dataSalida> getAllSalidas(){
         List<dataSalida> dataSalidas = new ArrayList<dataSalida>();
 		
@@ -127,7 +140,8 @@ public class SalidaController implements ISalidaController {
         // return LDtSalida;
     }
     
-    public dataSalida mostrarDatosSalida(String NombreSalida) {
+	@Override
+    public dataSalida mostrarDatosSalida(@WebParam(name = "NombreSalida") String NombreSalida) {
     	SalidaManejador sm = SalidaManejador.getInstance();
     	salida salida = sm.getSalida(NombreSalida);
         if (salida == null)
@@ -143,7 +157,8 @@ public class SalidaController implements ISalidaController {
 		return nombresActividades;
 	}
 */
-	public List<dataSalida> obtenerSalidasVigentesPorActividad(String nombreActividad) {
+	@Override
+	public List<dataSalida> obtenerSalidasVigentesPorActividad(@WebParam(name = "nombreActividad") String nombreActividad) {
 	    List<dataSalida> listaSalidasPorActividad = new ArrayList<>();
 	    ActividadManejador am = ActividadManejador.getinstance();
 	    actividad actividad = am.getActividad(nombreActividad);
@@ -173,6 +188,7 @@ public class SalidaController implements ISalidaController {
 	    
 	}
 
+	@Override
 	public void eliminarSalida(String salida){
 		
 		SalidaManejador sm = SalidaManejador.getInstance();

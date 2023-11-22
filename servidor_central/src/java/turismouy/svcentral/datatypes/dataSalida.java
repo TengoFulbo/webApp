@@ -1,11 +1,20 @@
 package turismouy.svcentral.datatypes;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import turismouy.svcentral.entidades.actividad;
 
-public class dataSalida {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "dataSalida")
+public class dataSalida implements Serializable {
     private String nombre;
     private int capacidad;
     private LocalDate fechaAlta;
@@ -21,6 +30,8 @@ public class dataSalida {
         this.lugarSalida = lugarSalida;
         this.actividades = actividades;
     }
+
+    public dataSalida() {};
 
     public String getNombre() {
         return this.nombre;
