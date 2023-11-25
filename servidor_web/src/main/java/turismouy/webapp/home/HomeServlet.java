@@ -76,7 +76,7 @@ public class HomeServlet extends HttpServlet {
             System.out.println("Departamento: " + departamento.getNombre());
         }
 
-        System.out.println("Hola....");
+        System.out.println("Hola...."); 
 
         // // Llama al servicio
         // String resultado = cliente.obtenerHoraActual();

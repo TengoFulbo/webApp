@@ -106,8 +106,8 @@ public class Main {
 
         
         // new MonitoreoWeb().publicar();
-        new HoraWebService().publicar();
-        new ActividadService().publicar();
+        // new HoraWebService().publicar();
+        // new ActividadService().publicar();
 
 
         // List<dataUsuario> usuarios = IUC.listarUsuarios();

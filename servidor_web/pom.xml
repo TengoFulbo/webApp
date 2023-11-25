@@ -117,14 +117,14 @@
           <plugin>
             <artifactId>maven-clean-plugin</artifactId>
             <version>3.1.0</version>
-            <!-- <configuration> -->
-                <!-- <filesets> -->
-                    <!-- <fileset> -->
-                        <!-- <directory>${project.basedir}/src/main/java/turismouy/svcentral</directory> -->
+            <configuration>
+                <filesets>
+                    <fileset>
+                        <directory>${project.basedir}/src/main/java/turismouy/svcentral</directory>
                         <!-- Puedes agregar más configuraciones según sea necesario -->
-                    <!-- </fileset> -->
-                <!-- </filesets> -->
-            <!-- </configuration> -->
+                    </fileset>
+                </filesets>
+            </configuration>
           </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
