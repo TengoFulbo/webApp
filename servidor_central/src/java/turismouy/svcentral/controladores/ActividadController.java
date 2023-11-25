@@ -24,6 +24,8 @@ import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -121,6 +123,112 @@ public class ActividadController implements IActividadController {
             cm.updateCategoria(categoria);
         }
 	}
+    
+
+    public void crearActividad(
+        @WebParam(name = "nombreDeptos")    String nombreDepto,
+        @WebParam(name = "nombreProv")      String nombreProv,
+        @WebParam(name = "nombre")          String nombre,
+        @WebParam(name = "desc")            String desc,
+        @WebParam(name = "duracion")        int duracion,
+        @WebParam(name = "costoUni")        int costoUni,
+        @WebParam(name = "ciudad")          String ciudad,
+        @WebParam(name = "urlVideo")        String video,
+        @WebParam(name = "fechaCrea")       LocalDate fechaCrea,
+        @WebParam(name = "categorias")      List<String> sCategorias
+        ) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion, UsuarioNoExisteExcepcion{
+		
+        // Validaciones sobre parametros.
+        if (!validarTexto(nombreDepto, 1) || !validarTexto(nombre, 1) || !validarTexto(desc, 1) || !validarTexto(ciudad, 1)) {
+            // log.error("Parametros invalidos.");
+            // return;
+            throw new ParametrosInvalidosExcepcion();
+        }
+        
+        DepartamentoManejador dm = DepartamentoManejador.getinstance();
+        departamento depto = dm.getDepartamento(nombreDepto);
+        
+        if(depto == null) {
+        	// log.error("El departamento " + nombreDepto + "no existe");
+        	throw new UsuarioNoExisteExcepcion("El departamento " + nombreDepto + " no existe");
+        }
+        
+		ActividadManejador am = ActividadManejador.getinstance();
+
+        actividad actividad = am.getActividad(nombre);
+
+        if(actividad != null) {
+            if (actividad.getEstado() == estadoActividad.AGREGADA || actividad.getEstado() == estadoActividad.CONFIRMADA) {
+                log.error("1 La actividad '" + actividad.getNombre() + "' ya existe.");
+                throw new UsuarioYaExisteExcepcion("La actividad " + nombre + " ya existe");
+            }
+        	log.error("2 La actividad '" + nombre + "' ya existe pero se crea de igual manera, ya que está rechazada.");
+        }
+        
+        // if(am.getActividad(nombre) != null){
+        // 	// log.error("La actividad '" + nombre + "' ya existe.");
+        // 	throw new UsuarioYaExisteExcepcion("La actividad " + nombre + " ya existe");
+        // }
+        
+        UsuarioManejador um = UsuarioManejador.getinstance();
+        usuario user = um.getUsuario(nombreProv);
+        proveedor prov = (proveedor) user;
+        
+        if(prov == null) {
+        	log.error("El proveedor " + nombreProv + " no existe");
+        	throw new UsuarioNoExisteExcepcion("El proveedor " + nombreProv + " no existe");
+        }
+        
+        List<categoria> categorias = new ArrayList<categoria>();
+
+        CategoriaManejador cm = CategoriaManejador.getInstance();
+
+        for (String sCategoria : sCategorias) {
+            categoria categoria = cm.getCategoria(sCategoria);
+            if (categoria != null) {
+                categorias.add(categoria);
+                log.warning("Se agrega la categoría: " + categoria.getNombre());
+            } else {
+                log.error("[ActividadController] [altaActividad] Error: No se encuentra la categoria '" + sCategoria + "' en el sistema.");
+                throw new UsuarioNoExisteExcepcion("La categoria '" + sCategoria + "' no existe en el sistema");
+            }
+        }
+
+        if(video != null && video != "") { 
+            String patron = "^(https?\\:\\/\\/)?(www\\.)?(youtube\\.com\\/|youtu\\.be\\/).+$";
+            Pattern pattern = Pattern.compile(patron);
+            Matcher matcher = pattern.matcher(video);
+
+            if(!matcher.matches()){
+            	log.error("La URL del video: " + video + " No coincide con el patron valido");
+                throw new ParametrosInvalidosExcepcion();
+            }
+        }else{
+            log.error("La URL del video no puede ser vacia");
+            throw new ParametrosInvalidosExcepcion(); 
+        }
+        
+		actividad act = new actividad(nombre, desc, duracion, costoUni, ciudad, video, fechaCrea, categorias);
+
+        act.setDepartamento(depto);
+        act.setProveedor(prov);
+
+        prov.addActividad(act);
+
+        am.addActividad(act);
+        um.updateUsuario(prov);
+
+        depto.agregarActividad(act);
+        dm.updateDepartamento(depto);
+
+        // Se trae el objeto luego de guardarlo.
+        act = am.getActividad(nombre);
+
+        for (categoria categoria : categorias) {
+            categoria.addActividad(act);
+            cm.updateCategoria(categoria);
+        }
+	}
 	
     @Override
 	public dataActividad mostrarDatos(@WebParam(name = "nombreAct") String nombreAct) throws UsuarioNoExisteExcepcion{
@@ -174,8 +282,7 @@ public class ActividadController implements IActividadController {
         	}
         }    
 	}  
-	
-    @Override
+
     public List<dataActividad> getAllActividades() {      
         List<dataActividad> LDtAct = new ArrayList<>();
         DepartamentoManejador dm = DepartamentoManejador.getinstance();

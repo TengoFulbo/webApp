@@ -27,6 +27,8 @@ public class actividad {
 	private int costeUni;
 	@Column
 	private String ciudad;
+	@Column
+	private String urlVideo;
 	private LocalDate fechaCrea;
 	estadoActividad estado;
 	@ManyToOne() // Un proveedor puede tener muchas actividades.
@@ -66,6 +68,22 @@ public class actividad {
 		this.costeUni = costeUni;
 		this.ciudad = ciudad;
 		this.fechaCrea = fechaCrea;
+		this.urlVideo = "https://www.youtube.com/watch?v=uZZMZ4PyOfw&ab_channel=EngagementHub";
+		// this.paquetes = new ArrayList<paquete>();
+		// this.salidas = new ArrayList<salida>();
+		this.estado = estadoActividad.AGREGADA;
+		this.categorias = categorias;
+	}
+
+	public actividad(String nombre, String descripcion, int duracion, int costeUni, String ciudad, String video, LocalDate fechaCrea, List<categoria> categorias) {
+		super();
+		this.nombreA = nombre;
+		this.descripcion = descripcion;
+		this.duracion = duracion;
+		this.costeUni = costeUni;
+		this.ciudad = ciudad;
+		this.fechaCrea = fechaCrea;
+		this.urlVideo = video;
 		// this.paquetes = new ArrayList<paquete>();
 		// this.salidas = new ArrayList<salida>();
 		this.estado = estadoActividad.AGREGADA;

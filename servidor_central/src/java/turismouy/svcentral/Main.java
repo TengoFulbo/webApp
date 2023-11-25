@@ -2,6 +2,7 @@ package turismouy.svcentral;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.ws.Endpoint;
@@ -66,9 +67,92 @@ public class Main {
         IInscripcionController IIC = fabrica.getIInscripcionController();
         ISalidaController ISC = fabrica.getISalidaController();
 
-        // IActividadController actividadController
+//   public void crearActividad(
+//         @WebParam(name = "nombreDeptos")    String nombreDepto,
+//         @WebParam(name = "nombreProv")      String nombreProv,
+//         @WebParam(name = "nombre")          String nombre,
+//         @WebParam(name = "desc")            String desc,
+//         @WebParam(name = "duracion")        int duracion,
+//         @WebParam(name = "costoUni")        int costoUni,
+//         @WebParam(name = "ciudad")          String ciudad,
+//         @WebParam(name = "video")           String urlVideo,
+//         @WebParam(name = "fechaCrea")       LocalDate fechaCrea,
+//         @WebParam(name = "categorias")      List<String> sCategorias
 
-        // Configuración para el publicador.
+// public void registrarProveedor(String nickname, String nombre, String apellido, String email, String descripcion, String url, LocalDate nacimiento)
+
+        // try {
+		// 	IUC.registrarProveedor("miprov", "jorge", "jorge", "aaa@gmail.com", "aaa", "jorge.com", LocalDate.of(2000, 1, 1));
+		// } catch (ParametrosInvalidosExcepcion e) {
+		// 	// TODO Bloque catch generado automáticamente
+		// 	e.printStackTrace();
+		// } catch (UsuarioYaExisteExcepcion e) {
+		// 	// TODO Bloque catch generado automáticamente
+		// 	e.printStackTrace();
+		// }
+
+        // try {
+		// 	IDC.crearDepartamento("San Jose", "aaa", "aaa.com");
+		// } catch (ParametrosInvalidosExcepcion e) {
+		// 	// TODO Bloque catch generado automáticamente
+		// 	e.printStackTrace();
+		// } catch (UsuarioYaExisteExcepcion e) {
+		// 	// TODO Bloque catch generado automáticamente
+		// 	e.printStackTrace();
+		// }
+
+        // try {
+		// 	ICC.crearCategoria("Outdoor");
+		// 	ICC.crearCategoria("Camping");
+		// } catch (YaExisteExcepcion e) {
+		// 	// TODO Bloque catch generado automáticamente
+		// 	e.printStackTrace();
+		// } catch (ParametrosInvalidosExcepcion e) {
+		// 	// TODO Bloque catch generado automáticamente
+		// 	e.printStackTrace();
+		// }
+        
+
+        // List<String> listaCategorias = new ArrayList<>();
+
+        // listaCategorias.add("Outdoor");
+        // listaCategorias.add("Camping");
+    
+        // try {
+        //     IAC.crearActividad("San Jose", "miprov", "TestSinUrl", "desc", 5, 5, "SJDM", LocalDate.of(2000, 1, 1), listaCategorias);
+		// 	IAC.crearActividad("San Jose", "miprov", "TestConUrl", "desc", 5, 5, "SJDM", "https://www.youtube.com/watch?v=GOqYM1eR6bg&pp=ygUFbmFzaGU%3D", LocalDate.of(2000, 1, 1), listaCategorias);
+		// } catch (ParametrosInvalidosExcepcion e) {
+		// 	// TODO Bloque catch generado automáticamente
+		// 	e.printStackTrace();
+		// } catch (UsuarioYaExisteExcepcion e) {
+		// 	// TODO Bloque catch generado automáticamente
+		// 	e.printStackTrace();
+		// } catch (UsuarioNoExisteExcepcion e) {
+		// 	// TODO Bloque catch generado automáticamente
+		// 	e.printStackTrace();
+		// }
+        try {
+			IAC.modificarEstadoActividad("TestSinUrl", estadoActividad.CONFIRMADA);
+			IAC.modificarEstadoActividad("TestConUrl", estadoActividad.CONFIRMADA);
+		} catch (NoExisteExcepcion e) {
+			// TODO Bloque catch generado automáticamente
+			e.printStackTrace();
+		} catch (ParametrosInvalidosExcepcion e) {
+			// TODO Bloque catch generado automáticamente
+			e.printStackTrace();
+		} catch (YaExisteExcepcion e) {
+			// TODO Bloque catch generado automáticamente
+			e.printStackTrace();
+		}
+        
+        List<dataActividad> listAct = IAC.getAllActividades();
+        
+        for (dataActividad act : listAct) {
+			System.out.println(act.getNombre());
+		}
+        
+        // // IActividadController actividadControlle
+     // Configuración para el publicador.
         String ipServidor = "http://localhost";
         String puerto = ":5000";
         String uri = "/API/";
@@ -81,8 +165,6 @@ public class Main {
         String IInscripcionURL  = ipServidor + puerto + uri + "IInscripcionController";
         String IPaqueteURL      = ipServidor + puerto + uri + "IPaqueteController";
         String ISalidaURL       = ipServidor + puerto + uri + "ISalidaController";
-        String HoraWebURL       = ipServidor + puerto + uri + "HoraWebController";
-
 
         // Publicador por interfaz.
         Endpoint.publish(IActividadURL, IAC);
@@ -103,19 +185,14 @@ public class Main {
         log.info("[Publicador] Nueva publicación: ");
         log.info("[Publicador] Nueva publicación: ");
 
-
-        
-        // new MonitoreoWeb().publicar();
-        // new HoraWebService().publicar();
-        // new ActividadService().publicar();
-
-
-        // List<dataUsuario> usuarios = IUC.listarUsuarios();
-
-        // log.info("Usuarios: ");
-        // for (dataUsuario usuario : usuarios) {
-        //     log.info("  " + usuario.getNombre());
-        // }
+        //  new MonitoreoWeb().publicar();
+        //  new HoraWebService().publicar();
+        //  new ActividadService().publicar()
+        //  List<dataUsuario> usuarios = IUC.listarUsuarios()
+        //  log.info("Usuarios: ");
+        //  for (dataUsuario usuario : usuarios) {
+        //      log.info("  " + usuario.getNombre());
+        //  }
 
         // cargarTuristas();
         // log.warning("########################################################");

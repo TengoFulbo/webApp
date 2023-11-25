@@ -43,7 +43,20 @@ public interface IActividadController {
         LocalDate fechaCrea,
         List<String> categorias
     ) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion, UsuarioNoExisteExcepcion;
-    
+        
+    public abstract void crearActividad(
+        String nombreDepto,
+        String nombreProv,
+        String nombre,
+        String desc,
+        int duracion,
+        int costoUni,
+        String ciudad,
+        String urlVideo,
+        LocalDate fechaCrea,
+        List<String> categorias
+    ) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion, UsuarioNoExisteExcepcion;
+        
     /**
      * Caso de uso:
      * @param nombreAct String
