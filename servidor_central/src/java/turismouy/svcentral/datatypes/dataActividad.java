@@ -4,11 +4,14 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 import turismouy.svcentral.utilidades.estadoActividad;
 
-@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "dataActividad")
 public class dataActividad implements Serializable {
 	private String nombre;
 	private String desc;
