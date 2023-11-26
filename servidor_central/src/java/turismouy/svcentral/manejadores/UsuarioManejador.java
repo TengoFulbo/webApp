@@ -11,6 +11,7 @@ import turismouy.svcentral.datatypes.dataUsuario;
 import turismouy.svcentral.entidades.proveedor;
 import turismouy.svcentral.entidades.usuario;
 import turismouy.svcentral.utilidades.log;
+import turismouy.svcentral.entidades.actividad;
 import turismouy.svcentral.entidades.compra;
 import turismouy.svcentral.entidades.inscripcion;
 import turismouy.svcentral.entidades.salida;
@@ -131,6 +132,11 @@ public class UsuarioManejador {
             proveedor proveedorWithActividades = em.createQuery("SELECT p FROM proveedor p LEFT JOIN FETCH p.actividades WHERE p.nickname = :nickname", proveedor.class)
                 .setParameter("nickname", usuario.getNickname())
                 .getSingleResult();
+
+            for (actividad actividad : proveedorWithActividades.getActividades()) {
+                actividad actividadWithSalidas = ActividadManejador.getinstance().getActividad(actividad.getNombre());
+                actividad.setSalidas(actividadWithSalidas.getSalidas());
+            } 
 
             proveedor.setActividades(proveedorWithActividades.getActividades());
 
