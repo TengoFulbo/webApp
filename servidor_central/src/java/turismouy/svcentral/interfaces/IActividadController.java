@@ -116,4 +116,8 @@ public interface IActividadController {
     @WebMethod
     @WebResult(name = "dataActividad")
     public abstract List<dataActividad> getActividadesPorCategoria(String nombreCategoria) throws NoExisteExcepcion;
+    
+    @WebMethod
+    @WebResult(name = "dataActividad")
+    public abstract void finalizarActividad(String nombreAct)throws NoExisteExcepcion;
 }

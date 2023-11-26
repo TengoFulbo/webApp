@@ -34,7 +34,6 @@ public class LoginServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-
         // Validaciones sobre parametros.
         if (!validarTexto(username, 1) || !validarTexto(password, 1)) {
             session.setAttribute("errorLogin", "El usuario / contraseña no son correctos.");
@@ -53,7 +52,11 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("username", username);
 
             try {
+                log.info("Antes Username: "+ username);
+                log.info("Password: "+ password);
                 dataUsuario usuario = IUC.mostrarInfo(username);
+                log.info("Despues Username: "+ username);
+                log.info("Password: "+ password);
                 session.setAttribute("dataUsuario", usuario);
                 System.out.println(usuario.getNombre());
             } catch (Exception e) {
