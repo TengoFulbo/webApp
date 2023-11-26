@@ -17,8 +17,18 @@
         <div class="container center-align">
             <div class="row center-align">
                 <div class="row">
-                    <h4>Consulta de Actividad</h4> 
-                    <% String embedURL = "https://www.youtube.com/embed/" + obtenerIDdeVideo("https://www.youtube.com/watch?v=uZZMZ4PyOfw&ab_channel=EngagementHub") + "?autoplay=1"; %>
+                    <h4>Consulta de Actividad</h4>
+                    <% String videoUrl = ""; %> 
+                    <% if (actividad != null) {
+                        if (actividad.getUrl() != null) {
+                            if (actividad.getUrl() != "") {
+                                videoUrl = actividad.getUrl();
+                            }
+                        }
+                    }%>
+
+                    <% if(videoUrl == "") { videoUrl = "https://www.youtube.com/watch?v=uZZMZ4PyOfw&ab_channel=EngagementHub"; } %>
+                    <% String embedURL = "https://www.youtube.com/embed/" + obtenerIDdeVideo(videoUrl) + "?autoplay=1"; %>
                     <%-- Inserta el iframe con la URL del reproductor de YouTube --%>
                     <iframe width="100%" height="315" src="<%= embedURL %>" frameborder="0" allowfullscreen></iframe>
                     
