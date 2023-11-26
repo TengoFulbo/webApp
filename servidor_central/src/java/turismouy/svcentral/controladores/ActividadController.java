@@ -303,6 +303,26 @@ public class ActividadController implements IActividadController {
          return null; 
      return LDtAct;
     }
+    
+    public List<dataActividad> getAllActividadesTodas() {      
+        List<dataActividad> LDtAct = new ArrayList<>();
+        DepartamentoManejador dm = DepartamentoManejador.getinstance();
+     List<departamento> deptos = dm.getAllDepartamentos();
+     
+         for (departamento depto : deptos) {
+             if (depto != null && depto.getNombre() != null) {
+                 List<actividad> LAct = depto.getActividades();
+                 if (LAct != null) {
+                     for (actividad act : LAct) {
+                     	LDtAct.add(act.toDataType());
+                     }
+                 }
+             }
+         }
+     if (LDtAct.isEmpty())
+         return null; 
+     return LDtAct;
+    }
 
     @Override
     public List<dataActividad> getAllActividadesDepartamento(@WebParam(name = "nombreDep") String nombreDep) {

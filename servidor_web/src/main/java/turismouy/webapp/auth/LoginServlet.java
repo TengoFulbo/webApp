@@ -61,6 +61,7 @@ public class LoginServlet extends HttpServlet {
                 System.out.println(usuario.getNombre());
             } catch (Exception e) {
                 log.error("[LoginServlet] Error con el usuario");
+                e.printStackTrace();
             }
 
             // Redirigimos al home.

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ page import="turismouy.svcentral.datatypes.dataActividad" %>
+<%@ page import="turismouy.svcentral.utilidades.estadoActividad" %>
 <%@ page import="java.util.List" %>
 
 <%@ include file="./utils/head.jsp" %>
@@ -131,8 +132,22 @@
               <!-- <p><%= actividad.getNombre() %></p> -->
               <li class="collection-item">
                 <div><%= actividad.getNombre() %>
-                  <a href="#!" class="secondary-content"></a>
-                </div>
+					<span class="new badge <%= (actividad.getEstado() == estadoActividad.FINALIZADA) ? "pink darken-3" : "indigo darken-3" %>" data-badge-caption="">
+					    <% 
+					        String estadoCaption = "";
+					        if (actividad.getEstado() == estadoActividad.AGREGADA) {
+					            estadoCaption = "Agregada";
+					        } else if (actividad.getEstado() == estadoActividad.FINALIZADA) {
+					            estadoCaption = "Finalizada";
+					        } else if (actividad.getEstado() == estadoActividad.CONFIRMADA){
+					            estadoCaption = "Confirmada";
+					        } else{
+					        	estadoCaption = "Rechazada";
+					        }
+					    %>
+					    <%= estadoCaption %>
+					</span>                
+				</div>
               </li>
           <%
               }
