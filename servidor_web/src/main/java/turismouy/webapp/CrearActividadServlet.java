@@ -78,6 +78,7 @@ public class CrearActividadServlet extends HttpServlet {
         dataUsuario usuario = (dataUsuario) session.getAttribute("dataUsuario");
         String proveedor            = usuario.getNickname();
         String ciudad               = jsonObject.get("ciudad").getAsString();
+        String url               	= jsonObject.get("urlVid").getAsString();
         String departamento         = jsonObject.get("departamento").getAsString();
         int duracion                = jsonObject.get("duracion").getAsInt();
         String nombre               = jsonObject.get("nombre").getAsString();
@@ -94,6 +95,7 @@ public class CrearActividadServlet extends HttpServlet {
         }
 
         System.out.println(ciudad);
+        System.out.println(url);
         System.out.println(departamento);
         System.out.println(duracion);
         System.out.println(nombre);
@@ -105,7 +107,15 @@ public class CrearActividadServlet extends HttpServlet {
 
         try {
             IActividadController IAC = Fabrica.getInstance().getIActividadController();
-            IAC.crearActividad(departamento, proveedor, nombre, desc, duracion, precio, ciudad, LocalDate.now(), categorias);
+            System.out.println("Valor de url antes de la evaluación del if: " + url);
+
+            if (url == null || url.trim().isEmpty()) {
+                System.out.println("Entre a sin URL");
+                IAC.crearActividad(departamento, proveedor, nombre, desc, duracion, precio, ciudad, LocalDate.now(), categorias);
+            } else {
+                System.out.println("Entre a con URL");
+                IAC.crearActividadUrl(departamento, proveedor, nombre, desc, duracion, precio, ciudad, url, LocalDate.now(), categorias);
+            }
         } catch (Exception e) {
             System.out.println("Error crearActividad");
             e.printStackTrace();

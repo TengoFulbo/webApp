@@ -196,6 +196,10 @@
                     <input id="ciudadAlta" type="text" class="validate" value="">
                     <label for="ciudad" class="active">Ciudad</label>
                 </div>
+                <div class="input-field">
+                    <input id="urlAlta" type="text" class="validate" value="">
+                    <label for="url" class="active">URL del Video</label>
+                </div>
                 <div class="input-field col s12" id="contenedorCheckbox">
                     <!-- Las casillas de verificación de Materialize se agregarán aquí de forma dinámica -->
                 </div>
@@ -455,21 +459,32 @@
             event.preventDefault()
 
             // Obtener los valores de los campos del formulario
-            var departamento    = document.getElementById('departamentosAlta').value;
-            var nombre          = document.getElementById('nombreAlta').value;
-            var desc            = document.getElementById('descAlta').value;
-            var duracion        = document.getElementById('duraAlta').value;
-            var precio          = document.getElementById('precioAlta').value;
-            var ciudad          = document.getElementById('ciudadAlta').value;
-            var categorias      = $("input[name='categorias']:checked")
-                                    .map(function() {
-                                        return $(this).val();
-                                    }).get()
+            var departamento = document.getElementById('departamentosAlta').value;
+            var nombre = document.getElementById('nombreAlta').value;
+            var desc = document.getElementById('descAlta').value;
+            var duracion = document.getElementById('duraAlta').value;
+            var precio = document.getElementById('precioAlta').value;
+            var ciudad = document.getElementById('ciudadAlta').value;
+            var urlVid = document.getElementById('urlAlta').value;
+            var categorias = $("input[name='categorias']:checked")
+                .map(function () {
+                    return $(this).val();
+                }).get();
             console.log(categorias);
 
+            console.log("================ Video =================");
+            console.log(urlVid);
+            console.log("========================================");
+
             // Realizar comprobaciones de validación
-            if (departamento === "" || nombre === "" || duracion === "" || precio === "" || ciudad === "") {
-                alert('Por favor, complete todos los campos antes de enviar.');
+            if (
+                departamento === "" ||
+                nombre === "" ||
+                duracion === "" ||
+                precio === "" ||
+                ciudad === ""
+            ) {
+                alert('Por favor, complete todos los campos obligatorios antes de enviar.');
                 return;
             }
 
@@ -481,6 +496,7 @@
                 duracion: duracion,
                 precio: precio,
                 ciudad: ciudad,
+                urlVid: urlVid,
                 categorias: categorias
             };
 

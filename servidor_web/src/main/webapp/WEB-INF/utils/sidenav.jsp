@@ -31,6 +31,7 @@
             if (usuario.getisProveedor() == true) { %>
                 <div class="divider"></div>
                 <li><a href="./misActividades">Mis Actividades</a></li>
+                <li><a href="./misSalidas">Mis Salidas</a></li>
             <% } else { %>
                 <div class="divider"></div>
                 <li><a href="./misSalidas">Mis Salidas</a></li>

@@ -12,12 +12,19 @@ import jakarta.servlet.http.HttpSession;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import turismouy.svcentral.interfaces.IUsuarioController;
+import turismouy.svcentral.interfaces.IInscripcionController;
 import turismouy.svcentral.interfaces.ISalidaController;
 import turismouy.svcentral.Fabrica;
 import turismouy.svcentral.datatypes.dataUsuario;
+import turismouy.svcentral.entidades.actividad;
+import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
+import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
+import turismouy.svcentral.excepciones.UsuarioYaExisteExcepcion;
 import turismouy.svcentral.datatypes.dataSalida;
+import turismouy.svcentral.datatypes.dataActividad;
 import turismouy.svcentral.utilidades.log;
 
 @WebServlet("/insSalida")
@@ -62,12 +69,36 @@ public class InscripcionSalidaServlet extends HttpServlet {
         System.out.println("Usuario nickname: " + usuario.getNickname());
         System.out.println("Nombre de la salida: " + nSalida);
         log.info("--------------------------------------------------------------");
+        // public abstract void crearInscripcion(LocalDate fecha, int cant, String nombreTursita, String nombreSalida, String nombreAct
+        ISalidaController ISC = Fabrica.getInstance().getISalidaController();
+        IInscripcionController IIC = Fabrica.getInstance().getIInscripcionController();
+        LocalDate fecha = LocalDate.now();
+        
+        dataSalida salida = ISC.mostrarDatosSalida(nSalida);
+        List<actividad> listActividad = salida.getActividades();
+        
+        String actividadNombre = "";
+        
+        if(listActividad != null) {
+        	for(actividad act : listActividad) {
+        		actividadNombre = act.getNombre();
+        	}
+        }
 
-        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        try {
+			IIC.crearInscripcion(fecha, cantidadIns, usuario.getNickname(), nSalida, actividadNombre);
+		} catch (ParametrosInvalidosExcepcion e) {
+			// TODO Bloque catch generado automáticamente
+			e.printStackTrace();
+		} catch (UsuarioYaExisteExcepcion e) {
+			// TODO Bloque catch generado automáticamente
+			e.printStackTrace();
+		} catch (UsuarioNoExisteExcepcion e) {
+			// TODO Bloque catch generado automáticamente
+			e.printStackTrace();
+		}
 
-        // LocalDate fechaSalida = LocalDate.parse(fechaSalidaString, formatter);
 
-        // ISalidaController ISC = Fabrica.getInstance().getISalidaController();
 
         // try {
         //     // void crearSalida(String nombre, int capacidad, LocalDate fechaAlta, LocalDate fechaSalida, String lugarSalida, String nombreActividad)

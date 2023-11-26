@@ -124,8 +124,7 @@ public class ActividadController implements IActividadController {
         }
 	}
     
-
-    public void crearActividad(
+    public void crearActividadUrl(
         @WebParam(name = "nombreDeptos")    String nombreDepto,
         @WebParam(name = "nombreProv")      String nombreProv,
         @WebParam(name = "nombre")          String nombre,
@@ -296,6 +295,26 @@ public class ActividadController implements IActividadController {
                      	if(act.getEstado().equals(estadoActividad.CONFIRMADA)){
                      		LDtAct.add(act.toDataType());
                      	}
+                     }
+                 }
+             }
+         }
+     if (LDtAct.isEmpty())
+         return null; 
+     return LDtAct;
+    }
+    
+    public List<dataActividad> getAllActividadesTodas() {      
+        List<dataActividad> LDtAct = new ArrayList<>();
+        DepartamentoManejador dm = DepartamentoManejador.getinstance();
+     List<departamento> deptos = dm.getAllDepartamentos();
+     
+         for (departamento depto : deptos) {
+             if (depto != null && depto.getNombre() != null) {
+                 List<actividad> LAct = depto.getActividades();
+                 if (LAct != null) {
+                     for (actividad act : LAct) {
+                     	LDtAct.add(act.toDataType());
                      }
                  }
              }

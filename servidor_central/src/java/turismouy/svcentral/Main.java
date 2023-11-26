@@ -81,42 +81,42 @@ public class Main {
 
 // public void registrarProveedor(String nickname, String nombre, String apellido, String email, String descripcion, String url, LocalDate nacimiento)
 
-        // try {
-		// 	IUC.registrarProveedor("miprov", "jorge", "jorge", "aaa@gmail.com", "aaa", "jorge.com", LocalDate.of(2000, 1, 1));
-		// } catch (ParametrosInvalidosExcepcion e) {
-		// 	// TODO Bloque catch generado automáticamente
-		// 	e.printStackTrace();
-		// } catch (UsuarioYaExisteExcepcion e) {
-		// 	// TODO Bloque catch generado automáticamente
-		// 	e.printStackTrace();
-		// }
+        try {
+			IUC.registrarProveedor("miprov", "jorge", "jorge", "aaa@gmail.com", "aaa", "jorge.com", LocalDate.of(2000, 1, 1));
+		} catch (ParametrosInvalidosExcepcion e) {
+			// TODO Bloque catch generado automáticamente
+			e.printStackTrace();
+		} catch (UsuarioYaExisteExcepcion e) {
+			// TODO Bloque catch generado automáticamente
+			e.printStackTrace();
+		}
 
-        // try {
-		// 	IDC.crearDepartamento("San Jose", "aaa", "aaa.com");
-		// } catch (ParametrosInvalidosExcepcion e) {
-		// 	// TODO Bloque catch generado automáticamente
-		// 	e.printStackTrace();
-		// } catch (UsuarioYaExisteExcepcion e) {
-		// 	// TODO Bloque catch generado automáticamente
-		// 	e.printStackTrace();
-		// }
+        try {
+			IDC.crearDepartamento("San Jose", "aaa", "aaa.com");
+		} catch (ParametrosInvalidosExcepcion e) {
+			// TODO Bloque catch generado automáticamente
+			e.printStackTrace();
+		} catch (UsuarioYaExisteExcepcion e) {
+			// TODO Bloque catch generado automáticamente
+			e.printStackTrace();
+		}
 
-        // try {
-		// 	ICC.crearCategoria("Outdoor");
-		// 	ICC.crearCategoria("Camping");
-		// } catch (YaExisteExcepcion e) {
-		// 	// TODO Bloque catch generado automáticamente
-		// 	e.printStackTrace();
-		// } catch (ParametrosInvalidosExcepcion e) {
-		// 	// TODO Bloque catch generado automáticamente
-		// 	e.printStackTrace();
-		// }
+        try {
+			ICC.crearCategoria("Outdoor");
+			ICC.crearCategoria("Camping");
+		} catch (YaExisteExcepcion e) {
+			// TODO Bloque catch generado automáticamente
+			e.printStackTrace();
+		} catch (ParametrosInvalidosExcepcion e) {
+			// TODO Bloque catch generado automáticamente
+			e.printStackTrace();
+		}
         
 
-        // List<String> listaCategorias = new ArrayList<>();
+        List<String> listaCategorias = new ArrayList<>();
 
-        // listaCategorias.add("Outdoor");
-        // listaCategorias.add("Camping");
+        listaCategorias.add("Outdoor");
+        listaCategorias.add("Camping");
     
         // try {
         //     IAC.crearActividad("San Jose", "miprov", "TestSinUrl", "desc", 5, 5, "SJDM", LocalDate.of(2000, 1, 1), listaCategorias);

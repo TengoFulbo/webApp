@@ -126,6 +126,27 @@
                     <div id="consultaModal" class="modal">
                       <div class="modal-content">
                         <h4>Consulta de Actividad</h4> 
+                              <% String embedURL = "https://www.youtube.com/embed/" + obtenerIDdeVideo("https://www.youtube.com/watch?v=uZZMZ4PyOfw&ab_channel=EngagementHub") + "?autoplay=1"; %>
+						      <%-- Inserta el iframe con la URL del reproductor de YouTube --%>
+						      <iframe width="100%" height="315" src="<%= embedURL %>" frameborder="0" allowfullscreen></iframe>
+						
+						      <%-- Función para extraer el ID del video desde la URL completa --%>
+						      <%!
+						      	public String obtenerIDdeVideo(String url) {
+						            String videoID = "";
+						            if (url != null && url.contains("youtube.com/watch?v=")) {
+						                int index = url.indexOf("youtube.com/watch?v=");
+						                videoID = url.substring(index + 20);
+
+						                // Elimina el parámetro "ab_channel" si está presente
+						                int abChannelIndex = videoID.indexOf("&ab_channel=");
+						                if (abChannelIndex != -1) {
+						                    videoID = videoID.substring(0, abChannelIndex);
+						                }
+						            }
+						            return videoID;
+						        }
+						      %>
                         <form>
                             <div class="input-field">
                                 <input id="modalNombre" type="text" class="validate" readonly value=" " />
