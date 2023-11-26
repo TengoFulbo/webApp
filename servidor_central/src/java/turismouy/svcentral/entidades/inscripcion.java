@@ -1,6 +1,9 @@
 package turismouy.svcentral.entidades;
 
 import javax.persistence.*;
+
+import turismouy.svcentral.datatypes.dataInscripcion;
+
 import java.time.LocalDate;
 
 @Entity
@@ -81,5 +84,16 @@ public class inscripcion {
 
     public void setSalida(salida salida) {
         this.salida = salida;
+    }
+    
+    public dataInscripcion toDatatype(inscripcion inscripcion) {
+    	dataInscripcion dtInscripcion =  new dataInscripcion(this.fecha,
+    														 this.canT,
+    														 this.costo,
+    														 this.salida,
+    														 this.turista);
+    	
+    	return dtInscripcion;
+    	
     }
 }

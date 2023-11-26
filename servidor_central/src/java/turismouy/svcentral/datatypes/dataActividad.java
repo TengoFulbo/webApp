@@ -20,6 +20,7 @@ public class dataActividad implements Serializable {
 	private String ciudad;
 	private LocalDate fechaCrea;
 	private estadoActividad estado;
+	private String url;
 	private dataDepartamento departamento;
 	private dataUsuario proveedor;
 	private List<dataSalida>DtSalidas;
@@ -27,7 +28,7 @@ public class dataActividad implements Serializable {
 	private List<String> dtCategorias;
 	
 	
-	public dataActividad(String nombre, String desc, int duracion, int costoUni, String ciudad, LocalDate fechaCrea, estadoActividad estado, dataDepartamento departamento, dataUsuario proveedor, List<dataSalida>DtSalidas, List<dataPaquete>DtPaquetes, List<String> dtCategorias) {
+	public dataActividad(String nombre, String desc, int duracion, int costoUni, String ciudad, LocalDate fechaCrea, estadoActividad estado,String url, dataDepartamento departamento, dataUsuario proveedor, List<dataSalida>DtSalidas, List<dataPaquete>DtPaquetes, List<String> dtCategorias) {
 		this.nombre = nombre;
 		this.desc = desc;
 		this.duracion = duracion;
@@ -35,6 +36,7 @@ public class dataActividad implements Serializable {
 		this.ciudad = ciudad;
 		this.fechaCrea = fechaCrea;
 		this.estado = estado;
+		this.url = url;
 		this.departamento = departamento;
 		this.proveedor = proveedor;
 		this.DtSalidas = DtSalidas;
@@ -74,6 +76,10 @@ public class dataActividad implements Serializable {
 
 	public estadoActividad getEstado() {
 		return this.estado;
+	}
+	
+	public String getUrl() {
+		return this.url;
 	}
 
 	public dataDepartamento getDepartamento() {
