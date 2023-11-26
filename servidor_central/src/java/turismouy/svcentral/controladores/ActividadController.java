@@ -506,6 +506,24 @@ public class ActividadController implements IActividadController {
         am.updateActividad(actividad);
         
     } 
+    
+    public void finalizarActividad(@WebParam(name = "nombreAct") String nombreAct)throws NoExisteExcepcion {
+    	ActividadManejador am = ActividadManejador.getinstance();
+    	actividad act = am.getActividad(nombreAct);
+    	
+    	if(act == null) {
+        	log.error("La actividad '" + nombreAct + "' no existe.");
+        	throw new NoExisteExcepcion("La actividad " + nombreAct + " no existe");
+    	}
+    	
+    	if(act.getEstado().equals(estadoActividad.RECHAZADA) || act.getEstado().equals(estadoActividad.AGREGADA) || act.getEstado().equals(estadoActividad.FINALIZADA)) {
+        	log.error("El estado de la actividad '" + nombreAct + "' no puede modificarse.");
+        	throw new NoExisteExcepcion("El estado de la actividad '" + nombreAct + "' no puede modificarse.");
+    	}
+    	
+    	act.setEstado(estadoActividad.FINALIZADA);
+    	am.updateActividad(act);
+    }
 	
     private static boolean validarTexto(String texto, int nivel) {
         switch (nivel) {

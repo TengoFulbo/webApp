@@ -118,68 +118,45 @@ public class Main {
         listaCategorias.add("Outdoor");
         listaCategorias.add("Camping");
     
-        try {
-            IAC.crearActividad("San Jose", "miprov", "TestSinUrl", "desc", 5, 5, "SJDM", LocalDate.of(2000, 1, 1), listaCategorias);
-			IAC.crearActividadUrl("San Jose", "miprov", "TestConUrl", "desc", 5, 5, "SJDM", "https://www.youtube.com/watch?v=GOqYM1eR6bg&pp=ygUFbmFzaGU%3D", LocalDate.of(2000, 1, 1), listaCategorias);
-			IAC.crearActividadUrl("San Jose ", "miprov", "TestError1", "desc", 5, 5, "SJDM", "", LocalDate.of(2000, 1, 1), listaCategorias);
-			IAC.crearActividadUrl("San Jose", "miprov", "TestError2", "desc", 5, 5, "SJDM", "https://www.tube.uy/watch?v=GOqYM1eR6bg&pp=ygUFbmFzaGU%3D", LocalDate.of(2000, 1, 1), listaCategorias);
-		} catch (ParametrosInvalidosExcepcion e) {
-			// TODO Bloque catch generado automáticamente
-			e.printStackTrace();
-		} catch (UsuarioYaExisteExcepcion e) {
-			// TODO Bloque catch generado automáticamente
-			e.printStackTrace();
-		} catch (UsuarioNoExisteExcepcion e) {
-			// TODO Bloque catch generado automáticamente
-			e.printStackTrace();
-		}
-
-        try {
-            IAC.crearActividadUrl("San Jose", "miprov", "TestError1", "desc", 5, 5, "SJDM", "", LocalDate.of(2000, 1, 1), listaCategorias);
-		} catch (ParametrosInvalidosExcepcion e) {
-			// TODO Bloque catch generado automáticamente
-			e.printStackTrace();
-		} catch (UsuarioYaExisteExcepcion e) {
-			// TODO Bloque catch generado automáticamente
-			e.printStackTrace();
-		} catch (UsuarioNoExisteExcepcion e) {
-			// TODO Bloque catch generado automáticamente
-			e.printStackTrace();
-		}
-        
-        try {
-            IAC.crearActividadUrl("San Jose", "miprov", "TestError2", "desc", 5, 5, "SJDM", "https://www.tube.uy/watch?v=GOqYM1eR6bg&pp=ygUFbmFzaGU%3D", LocalDate.of(2000, 1, 1), listaCategorias);
-		} catch (ParametrosInvalidosExcepcion e) {
-			// TODO Bloque catch generado automáticamente
-			e.printStackTrace();
-		} catch (UsuarioYaExisteExcepcion e) {
-			// TODO Bloque catch generado automáticamente
-			e.printStackTrace();
-		} catch (UsuarioNoExisteExcepcion e) {
-			// TODO Bloque catch generado automáticamente
-			e.printStackTrace();
-		}
-        
-        
-        try {
-			IAC.modificarEstadoActividad("TestSinUrl", estadoActividad.CONFIRMADA);
-			IAC.modificarEstadoActividad("TestConUrl", estadoActividad.CONFIRMADA);
-		} catch (NoExisteExcepcion e) {
-			// TODO Bloque catch generado automáticamente
-			e.printStackTrace();
-		} catch (ParametrosInvalidosExcepcion e) {
-			// TODO Bloque catch generado automáticamente
-			e.printStackTrace();
-		} catch (YaExisteExcepcion e) {
-			// TODO Bloque catch generado automáticamente
-			e.printStackTrace();
-		}
-        
-        List<dataActividad> listAct = IAC.getAllActividades();
-        
-        for (dataActividad act : listAct) {
-			System.out.println(act.getNombre());
-		}
+        // try {
+        //     IAC.crearActividad("San Jose", "miprov", "TestSinUrl", "desc", 5, 5, "SJDM", LocalDate.of(2000, 1, 1), listaCategorias);
+		// 	IAC.crearActividad("San Jose", "miprov", "TestConUrl", "desc", 5, 5, "SJDM", "https://www.youtube.com/watch?v=GOqYM1eR6bg&pp=ygUFbmFzaGU%3D", LocalDate.of(2000, 1, 1), listaCategorias);
+		// } catch (ParametrosInvalidosExcepcion e) {
+		// 	// TODO Bloque catch generado automáticamente
+		// 	e.printStackTrace();
+		// } catch (UsuarioYaExisteExcepcion e) {
+		// 	// TODO Bloque catch generado automáticamente
+		// 	e.printStackTrace();
+		// } catch (UsuarioNoExisteExcepcion e) {
+		// 	// TODO Bloque catch generado automáticamente
+		// 	e.printStackTrace();
+		// }
+//        try {
+//			IAC.modificarEstadoActividad("TestSinUrl", estadoActividad.CONFIRMADA);
+//			IAC.modificarEstadoActividad("TestConUrl", estadoActividad.CONFIRMADA);
+//		} catch (NoExisteExcepcion e) {
+//			// TODO Bloque catch generado automáticamente
+//			e.printStackTrace();
+//		} catch (ParametrosInvalidosExcepcion e) {
+//			// TODO Bloque catch generado automáticamente
+//			e.printStackTrace();
+//		} catch (YaExisteExcepcion e) {
+//			// TODO Bloque catch generado automáticamente
+//			e.printStackTrace();
+//		}
+//        
+//        try {
+//			IAC.finalizarActividad("TestSinUrl");
+//		} catch (NoExisteExcepcion e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//        
+//        List<dataActividad> listAct = IAC.getAllActividades();
+//        
+//        for (dataActividad act : listAct) {
+//			System.out.println(act.getNombre());
+//		}
         
         // // IActividadController actividadControlle
      // Configuración para el publicador.
@@ -197,7 +174,7 @@ public class Main {
         String ISalidaURL       = ipServidor + puerto + uri + "ISalidaController";
 
         // Publicador por interfaz.
-     //   Endpoint.publish(IActividadURL, IAC);
+        //Endpoint.publish(IActividadURL, IAC);
         Endpoint.publish(ICategoriaURL, ICC);
         Endpoint.publish(ICompraURL, ICoC);
         Endpoint.publish(IDepartamentoURL, IDC);

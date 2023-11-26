@@ -67,15 +67,23 @@ public class HomeServlet extends HttpServlet {
         // // Crea una instancia del servicio cliente
         // HoraWebService cliente = new HoraWebServiceService().getHoraWebServicePort();
 
-        DepartamentoController DC = new DepartamentoControllerService().getDepartamentoControllerPort();
 
-        List<DataDepartamento> departamentos = DC.listarDepartamentos();
 
-        System.out.println("Imprimiendo los departamentos...");
-        for (DataDepartamento departamento : departamentos) {
-            System.out.println("Departamento: " + departamento.getNombre());
-        }
 
+
+        // DepartamentoController DC = new DepartamentoControllerService().getDepartamentoControllerPort();
+
+        // List<DataDepartamento> departamentos = DC.listarDepartamentos();
+
+        // System.out.println("Imprimiendo los departamentos...");
+        // for (DataDepartamento departamento : departamentos) {
+        //     System.out.println("Departamento: " + departamento.getNombre());
+        // }
+
+
+
+
+        
         System.out.println("Hola...."); 
 
         // // Llama al servicio

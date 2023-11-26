@@ -91,7 +91,7 @@ public class UsuarioController implements IUsuarioController {
         UsuarioManejador um = UsuarioManejador.getinstance();
 
         usuario user = um.getUsuario(nickname);
-
+        log.info("llego");
         // Si por nickname no lo encuentra, va por el correo.
         if (user == null) {
             // Probamos con el email.
@@ -110,6 +110,7 @@ public class UsuarioController implements IUsuarioController {
             turista usert = (turista) user;
             dt = usert.toDataType();
         }
+        log.info("return?");
         return dt;
     };
 
