@@ -220,11 +220,19 @@ public class UsuarioManejador {
 	    EntityManager em = factory.createEntityManager();
 	    // EntityTransaction tx = em.getTransaction();
 
-        TypedQuery<Long> query = em.createQuery("SELECT COUNT(e) FROM usuario e WHERE e.email = :email", Long.class);
-        query.setParameter("email", email);
+	    Long count = null;
 
-        Long count = query.getSingleResult();
-        em.close();
+        try {
+        	TypedQuery<Long> query = em.createQuery("SELECT COUNT(e) FROM usuario e WHERE e.email = :email", Long.class);
+            query.setParameter("email", email);
+            
+            count = query.getSingleResult();
+        
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        } finally {
+            em.close();
+        }
 
         return count > 0;
     }

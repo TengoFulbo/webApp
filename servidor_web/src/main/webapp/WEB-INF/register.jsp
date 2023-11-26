@@ -90,17 +90,24 @@
     <script src="./src/js/register.js"></script>
 
     <script>
-	    function validarNick() {
-	        // Obtener el valor actual del input
-	        var valorInputTurista = $("#nickIdT").val();
-	        var valorInputProveedor = $("#nickIdP").val();
+	    var cooldownTime = 1000; // Tiempo en milisegundos (1 segundo en este ejemplo)
+	    var cooldownTimerP, cooldownTimerT;
 	
-	        if (valorInputTurista !== "") {
-	            valorInput = valorInputTurista;
+	    // Función para manejar la respuesta del servidor
+	    function otraFuncion(respuesta) {
+	        // Acceder al elemento span en tu HTML
+	        var spanResultado = $("#spanResultado");
+	
+	        // Actualizar el contenido del span según la respuesta del servidor
+	        if (respuesta.valido) {
+	            spanResultado.text("El nick es válido");
 	        } else {
-	            valorInput = valorInputProveedor;
+	            spanResultado.text("El nick NO es válido");
 	        }
+	    }
 	
+	    // Función para validar el nick con un "cooldown"
+	    function validarNickConCooldown(valorInput) {
 	        // Realizar la solicitud AJAX
 	        $.ajax({
 	            type: "POST",
@@ -114,8 +121,7 @@
 	            }
 	        });
 	    }
-	
-	    // Función para manejar la respuesta del servidor
+	    
 	    function otraFuncion(respuesta) {
 	        var spanResultadoT = $("#spanResultadoT");
 	        var spanResultadoP = $("#spanResultadoP");
@@ -131,14 +137,48 @@
 	        }
 	    }
 	
-	    // Asociar el evento oninput al input
+	    // Asociar el evento oninput al input con cooldown para #nickIdP
 	    $("#nickIdP").on("input", function () {
-	        // Llamar a la función ejecutarConAjax cada vez que cambia el valor
-	        validarNick();
+	        // Limpiar el temporizador si existe
+	        clearTimeout(cooldownTimerP);
+	
+	        // Configurar un nuevo temporizador
+	        cooldownTimerP = setTimeout(function () {
+	            // Obtener el valor actual del input
+	            var valorInputTurista = $("#nickIdT").val();
+	            var valorInputProveedor = $("#nickIdP").val();
+	
+	            if (valorInputProveedor !== "") {
+	                valorInput = valorInputProveedor;
+	            } else {
+	                valorInput = valorInputTurista;
+	            }
+	
+	            // Llamar a la función ejecutarConAjax después del "cooldown"
+	            validarNickConCooldown(valorInput);
+	        }, cooldownTime);
 	    });
+	
+	    // Asociar el evento oninput al input con cooldown para #nickIdT
 	    $("#nickIdT").on("input", function () {
-	        // Llamar a la función ejecutarConAjax cada vez que cambia el valor
-	        validarNick();
+	        // Limpiar el temporizador si existe
+	        clearTimeout(cooldownTimerT);
+	
+	        // Configurar un nuevo temporizador
+	        cooldownTimerT = setTimeout(function () {
+	            // Obtener el valor actual del input
+	            var valorInputTurista = $("#nickIdT").val();
+	            var valorInputProveedor = $("#nickIdP").val();
+	
+	            if (valorInputTurista !== "") {
+	                valorInput = valorInputTurista;
+	            } else {
+	                valorInput = valorInputProveedor;
+	            }
+	
+	            // Llamar a la función ejecutarConAjax después del "cooldown"
+	            validarNickConCooldown(valorInput);
+	        }, cooldownTime);
 	    });
 	</script>
   </body>
