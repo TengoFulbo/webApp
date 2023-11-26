@@ -28,6 +28,7 @@ import turismouy.svcentral.manejadores.ImagenManejador;
 import turismouy.svcentral.manejadores.InscripcionManejador;
 import turismouy.svcentral.manejadores.PaqueteManejador;
 import turismouy.svcentral.manejadores.UsuarioManejador;
+import turismouy.svcentral.middlewares.publicador;
 import turismouy.svcentral.middlewares.controladores.ActividadService;
 import turismouy.svcentral.middlewares.controladores.HoraWebService;
 import turismouy.svcentral.middlewares.interfaces.IHoraWebService;
@@ -67,130 +68,44 @@ public class Main {
         IInscripcionController IIC = fabrica.getIInscripcionController();
         ISalidaController ISC = fabrica.getISalidaController();
 
-//   public void crearActividad(
-//         @WebParam(name = "nombreDeptos")    String nombreDepto,
-//         @WebParam(name = "nombreProv")      String nombreProv,
-//         @WebParam(name = "nombre")          String nombre,
-//         @WebParam(name = "desc")            String desc,
-//         @WebParam(name = "duracion")        int duracion,
-//         @WebParam(name = "costoUni")        int costoUni,
-//         @WebParam(name = "ciudad")          String ciudad,
-//         @WebParam(name = "video")           String urlVideo,
-//         @WebParam(name = "fechaCrea")       LocalDate fechaCrea,
-//         @WebParam(name = "categorias")      List<String> sCategorias
+    publicador services = new publicador();
 
-// public void registrarProveedor(String nickname, String nombre, String apellido, String email, String descripcion, String url, LocalDate nacimiento)
+    services.publicar();
 
-        try {
-			IUC.registrarProveedor("miprov", "jorge", "jorge", "aaa@gmail.com", "aaa", "jorge.com", LocalDate.of(2000, 1, 1));
-		} catch (ParametrosInvalidosExcepcion e) {
-			// TODO Bloque catch generado automáticamente
-			e.printStackTrace();
-		} catch (UsuarioYaExisteExcepcion e) {
-			// TODO Bloque catch generado automáticamente
-			e.printStackTrace();
-		}
+    //  // Configuración para el publicador.
+    //     String ipServidor = "http://localhost";
+    //     String puerto = ":5000";
+    //     String uri = "/API/";
 
-        try {
-			IDC.crearDepartamento("San Jose", "aaa", "aaa.com");
-		} catch (ParametrosInvalidosExcepcion e) {
-			// TODO Bloque catch generado automáticamente
-			e.printStackTrace();
-		} catch (UsuarioYaExisteExcepcion e) {
-			// TODO Bloque catch generado automáticamente
-			e.printStackTrace();
-		}
+    //     // // URL por interfaz.
+    //     String IActividadURL    = ipServidor + puerto + uri + "IActividadController";
+    //     String ICategoriaURL    = ipServidor + puerto + uri + "ICategoriaController";
+    //     String ICompraURL       = ipServidor + puerto + uri + "ICompraController";
+    //     String IDepartamentoURL = ipServidor + puerto + uri + "IDepartamentoController";
+    //     String IInscripcionURL  = ipServidor + puerto + uri + "IInscripcionController";
+    //     String IPaqueteURL      = ipServidor + puerto + uri + "IPaqueteController";
+    //     String ISalidaURL       = ipServidor + puerto + uri + "ISalidaController";
+    //     String IUsuarioURL      = ipServidor + puerto + uri + "IUsuarioController";
 
-        try {
-			ICC.crearCategoria("Outdoor");
-			ICC.crearCategoria("Camping");
-		} catch (YaExisteExcepcion e) {
-			// TODO Bloque catch generado automáticamente
-			e.printStackTrace();
-		} catch (ParametrosInvalidosExcepcion e) {
-			// TODO Bloque catch generado automáticamente
-			e.printStackTrace();
-		}
-        
-
-        List<String> listaCategorias = new ArrayList<>();
-
-        listaCategorias.add("Outdoor");
-        listaCategorias.add("Camping");
-    
-        // try {
-        //     IAC.crearActividad("San Jose", "miprov", "TestSinUrl", "desc", 5, 5, "SJDM", LocalDate.of(2000, 1, 1), listaCategorias);
-		// 	IAC.crearActividad("San Jose", "miprov", "TestConUrl", "desc", 5, 5, "SJDM", "https://www.youtube.com/watch?v=GOqYM1eR6bg&pp=ygUFbmFzaGU%3D", LocalDate.of(2000, 1, 1), listaCategorias);
-		// } catch (ParametrosInvalidosExcepcion e) {
-		// 	// TODO Bloque catch generado automáticamente
-		// 	e.printStackTrace();
-		// } catch (UsuarioYaExisteExcepcion e) {
-		// 	// TODO Bloque catch generado automáticamente
-		// 	e.printStackTrace();
-		// } catch (UsuarioNoExisteExcepcion e) {
-		// 	// TODO Bloque catch generado automáticamente
-		// 	e.printStackTrace();
-		// }
-//        try {
-//			IAC.modificarEstadoActividad("TestSinUrl", estadoActividad.CONFIRMADA);
-//			IAC.modificarEstadoActividad("TestConUrl", estadoActividad.CONFIRMADA);
-//		} catch (NoExisteExcepcion e) {
-//			// TODO Bloque catch generado automáticamente
-//			e.printStackTrace();
-//		} catch (ParametrosInvalidosExcepcion e) {
-//			// TODO Bloque catch generado automáticamente
-//			e.printStackTrace();
-//		} catch (YaExisteExcepcion e) {
-//			// TODO Bloque catch generado automáticamente
-//			e.printStackTrace();
-//		}
-//        
-//        try {
-//			IAC.finalizarActividad("TestSinUrl");
-//		} catch (NoExisteExcepcion e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//        
-//        List<dataActividad> listAct = IAC.getAllActividades();
-//        
-//        for (dataActividad act : listAct) {
-//			System.out.println(act.getNombre());
-//		}
-        
-        // // IActividadController actividadControlle
-     // Configuración para el publicador.
-        String ipServidor = "http://localhost";
-        String puerto = ":5000";
-        String uri = "/API/";
-
-        // URL por interfaz.
-        String IActividadURL    = ipServidor + puerto + uri + "IActividadController";
-        String ICategoriaURL    = ipServidor + puerto + uri + "ICategoriaController";
-        String ICompraURL       = ipServidor + puerto + uri + "ICompraController";
-        String IDepartamentoURL = ipServidor + puerto + uri + "IDepartamentoController";
-        String IInscripcionURL  = ipServidor + puerto + uri + "IInscripcionController";
-        String IPaqueteURL      = ipServidor + puerto + uri + "IPaqueteController";
-        String ISalidaURL       = ipServidor + puerto + uri + "ISalidaController";
-
-        // Publicador por interfaz.
+        // // Publicador por interfaz.
         //Endpoint.publish(IActividadURL, IAC);
-        Endpoint.publish(ICategoriaURL, ICC);
-        Endpoint.publish(ICompraURL, ICoC);
-        Endpoint.publish(IDepartamentoURL, IDC);
-        Endpoint.publish(IInscripcionURL, IIC);
-        Endpoint.publish(IPaqueteURL, IPC);
-        Endpoint.publish(ISalidaURL, ISC);
+        // Endpoint.publish(ICategoriaURL, ICC);
+        // Endpoint.publish(ICompraURL, ICoC);
+        // Endpoint.publish(IDepartamentoURL, IDC);
+        // Endpoint.publish(IInscripcionURL, IIC);
+        // Endpoint.publish(IPaqueteURL, IPC);
+        // Endpoint.publish(ISalidaURL, ISC);
+        // Endpoint.publish(IUsuarioURL, IUC);
         
-        // Log por publicador.
-        log.info("[Publicador] Nueva publicación: " + IActividadURL);
-        log.info("[Publicador] Nueva publicación: " + ICategoriaURL);
-        log.info("[Publicador] Nueva publicación: " + ICompraURL);
-        log.info("[Publicador] Nueva publicación: " + IDepartamentoURL);
-        log.info("[Publicador] Nueva publicación: " + IInscripcionURL);
-        log.info("[Publicador] Nueva publicación: " + ISalidaURL);
-        log.info("[Publicador] Nueva publicación: ");
-        log.info("[Publicador] Nueva publicación: ");
+        // // // Log por publicador.
+        // log.info("[Publicador] Nueva publicación: " + IActividadURL);
+        // log.info("[Publicador] Nueva publicación: " + ICategoriaURL);
+        // log.info("[Publicador] Nueva publicación: " + ICompraURL);
+        // log.info("[Publicador] Nueva publicación: " + IDepartamentoURL);
+        // log.info("[Publicador] Nueva publicación: " + IInscripcionURL);
+        // log.info("[Publicador] Nueva publicación: " + ISalidaURL);
+        // log.info("[Publicador] Nueva publicación: " + IUsuarioURL);
+        // log.info("[Publicador] Nueva publicación: ");
 
         //  new MonitoreoWeb().publicar();
         //  new HoraWebService().publicar();
@@ -212,6 +127,8 @@ public class Main {
         // cargarPaquetes();
         // log.warning("########################################################");
         // cargarActividades();
+        // log.warning("########################################################");
+        // cargarEstadoActividad();
         // log.warning("########################################################");
         // cargarActividadesPaquetes();
         // log.warning("########################################################");

@@ -27,6 +27,7 @@ public class publicador {
     String ipServidor = "http://localhost";
     String puerto = ":5000";
     String uri = "/API/Servicios";
+	Boolean debug = true;
 
     IUsuarioController 		IUC = Fabrica.getInstance().getIUsuarioController();
 	IActividadController 	IAC = Fabrica.getInstance().getIActividadController();
@@ -39,7 +40,7 @@ public class publicador {
     @WebMethod(exclude = true)
     public void publicar() {
         endpoint = Endpoint.publish(ipServidor + puerto + uri, this);
-        System.out.println("Publicando en la direccion: " + ipServidor + puerto + uri);
+        log.info("Publicando en la direccion: " + ipServidor + puerto + uri);
     };
 
     @WebMethod(exclude = true)
@@ -53,6 +54,7 @@ public class publicador {
 			@WebParam(name = "password")	String password
 		) {
 		boolean valid = false;
+		if (debug) log.info("[Publicador] Recibiendo UsuarioLogin");
 
 		try {
             valid = IUC.login(usuario, password);
@@ -66,7 +68,8 @@ public class publicador {
 	@WebMethod
 	public dataUsuario UsuarioMostrarInfo(@WebParam(name = "nickname") String nickname) {
 		dataUsuario usuario = null;
-		
+		if (debug) log.info("[Publicador] Recibiendo UsuarioMostrarInfo");
+
 		try {
 			usuario = IUC.mostrarInfo(nickname);
 		} catch (Exception e) {
@@ -83,6 +86,8 @@ public class publicador {
 		@WebParam(name = "apellido")	String apellido,
 		@WebParam(name = "nacimiento")	LocalDate nacimiento
 	) {
+		if (debug) log.info("[Publicador] Recibiendo UsuarioModificarUsuario");
+
 		try {
 			IUC.modificarUsuario(nickname, nombre, apellido, nacimiento);
 		} catch (Exception e) {
@@ -98,6 +103,8 @@ public class publicador {
 		@WebParam(name = "nacimiento")	LocalDate nacimiento,
 		@WebParam(name = "imageData") 	byte[] imageData
 	) {
+		if (debug) log.info("[Publicador] Recibiendo UsuarioModificarUsuarioImagen");
+
 		try {
 			IUC.modificarUsuario(nickname, nombre, apellido, nacimiento, imageData);
 		} catch (Exception e) {
@@ -115,6 +122,8 @@ public class publicador {
 			@WebParam(name = "nacimiento")		LocalDate nacimiento,
 			@WebParam(name = "password")		String password
 		) {
+		if (debug) log.info("[Publicador] Recibiendo UsuarioRegistrarTuristaPassword");
+
         try {
             IUC.registrarTurista(nickname, nombre, apellido, email, nacionalidad, nacimiento, password);
         } catch (Exception e) {
@@ -133,6 +142,8 @@ public class publicador {
 		@WebParam(name = "nacimiento")	LocalDate nacimiento, 
 		@WebParam(name = "password")	String password
     ) {
+		if (debug) log.info("[Publicador] Recibiendo UsuarioRegistrarProveedorPassword");
+		
 		try {
 			IUC.registrarProveedor(nickname, nombre, apellido, email, descripcion, url, nacimiento, password);
 		} catch (Exception e) {
@@ -143,6 +154,7 @@ public class publicador {
 	@WebMethod
 	public List<dataUsuario> UsuarioListarUsuarios() {
 		List<dataUsuario> usuarios = new ArrayList<dataUsuario>();
+		if (debug) log.info("[Publicador] Recibiendo UsuarioListarUsuarios");
 
 		try {
 			usuarios = IUC.listarUsuarios();
@@ -157,6 +169,8 @@ public class publicador {
 	@WebMethod
 	public List<dataActividad> ActividadGetAllActividades() {
 		List<dataActividad> actividades = new ArrayList<dataActividad>();
+		if (debug) log.info("[Publicador] Recibiendo ActividadGetAllActividades");
+
 
 		try {
 			actividades = IAC.getAllActividades();
@@ -168,8 +182,24 @@ public class publicador {
 	}
 
 	@WebMethod
+	public dataActividad ActividadGetActividad(String nombreActividad) {
+		if (debug) log.info("[Publicador] Recibiendo ActividadGetActividad");
+		dataActividad actividad = null;
+
+		try {
+			actividad = IAC.mostrarDatos(nombreActividad);
+		} catch (Exception e) {
+            log.error("[Publicador] Error: ActividadGetAllActividadesDepartamento");
+		}
+
+		return actividad;
+	}
+
+	@WebMethod
 	public List<dataActividad> ActividadGetAllActividadesDepartamento(@WebParam(name = "nombreDep") String nombreDep) {
 		List<dataActividad> actividades = new ArrayList<dataActividad>();
+		if (debug) log.info("[Publicador] Recibiendo ActividadGetAllActividadesDepartamento");
+
 
 		try {
 			actividades = IAC.getAllActividadesDepartamento(nombreDep);
@@ -183,6 +213,7 @@ public class publicador {
 	@WebMethod
 	public List<dataDepartamento> DepartamentoListarDepartamentos() {
 		List<dataDepartamento> departamentos = new ArrayList<dataDepartamento>();
+		if (debug) log.info("[Publicador] Recibiendo DepartamentoListarDepartamentos");
 
 		try {
 			departamentos = IDC.listarDepartamentos();
@@ -196,6 +227,7 @@ public class publicador {
 	@WebMethod
 	public List<dataCategoria> CategoriaListarCategorias() {
 		List<dataCategoria> categorias = new ArrayList<dataCategoria>();
+		if (debug) log.info("[Publicador] Recibiendo CategoriaListarCategorias");
 
 		try {
 			categorias = ICC.listarCategorias();
@@ -215,6 +247,8 @@ public class publicador {
 			@WebParam(name = "lugarSalida")		String lugarSalida,
 			@WebParam(name = "nombreActividad")	String nombreActividad
 	) {
+		if (debug) log.info("[Publicador] Recibiendo SalidaCrearSalida");
+
 		try {
 			ISC.crearSalida(nombre, capacidad, fechaAlta, fechaSalida, lugarSalida, nombreActividad);
 		} catch (Exception e) {
@@ -225,6 +259,8 @@ public class publicador {
 	@WebMethod
 	public List<dataSalida> SalidaGetAllSalidas() {
 		List<dataSalida> salidas = new ArrayList<dataSalida>();
+		if (debug) log.info("[Publicador] Recibiendo SalidaGetAllSalidas");
+
 
 		try {
 			salidas = ISC.getAllSalidas();
