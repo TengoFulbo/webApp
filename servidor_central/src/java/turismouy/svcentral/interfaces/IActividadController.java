@@ -44,7 +44,7 @@ public interface IActividadController {
         List<String> categorias
     ) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion, UsuarioNoExisteExcepcion;
         
-    public abstract void crearActividad(
+    public abstract void crearActividadUrl(
         String nombreDepto,
         String nombreProv,
         String nombre,

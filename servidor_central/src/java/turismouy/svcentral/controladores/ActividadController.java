@@ -124,8 +124,7 @@ public class ActividadController implements IActividadController {
         }
 	}
     
-
-    public void crearActividad(
+    public void crearActividadUrl(
         @WebParam(name = "nombreDeptos")    String nombreDepto,
         @WebParam(name = "nombreProv")      String nombreProv,
         @WebParam(name = "nombre")          String nombre,

@@ -102,7 +102,6 @@
                       <configuration>
                           <wsdlUrls>
                               <!-- <wsdlUrl>http://localhost:5000/API/Monitoreo?wsdl</wsdlUrl> -->
-                              <wsdlUrl>http://localhost:5000/API/IActividadController?wsdl</wsdlUrl>
                               <wsdlUrl>http://localhost:5000/API/IDepartamentoController?wsdl</wsdlUrl>
                               <!-- <wsdlUrl>plantilla</wsdlUrl> -->
                           </wsdlUrls>
