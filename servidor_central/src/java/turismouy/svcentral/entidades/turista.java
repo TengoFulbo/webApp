@@ -6,6 +6,7 @@ import java.util.Base64;
 import java.util.List;
 import javax.persistence.*;
 
+import turismouy.svcentral.datatypes.dataInscripcion;
 import turismouy.svcentral.datatypes.dataSalida;
 import turismouy.svcentral.datatypes.dataUsuario;
 
@@ -60,10 +61,12 @@ import turismouy.svcentral.datatypes.dataUsuario;
 
     public dataUsuario toDataType() {
         List<dataSalida> dataSalidas = new ArrayList<dataSalida>();
-        if (this.inscripciones != null) {
+        List<dataInscripcion> dataInscripciones = new ArrayList<dataInscripcion>();
+        if (this.inscripciones != null){
             for (inscripcion inscripcion : this.inscripciones) {
                 dataSalida dtSalida = inscripcion.getSalida().toDataTypeWithoutActividades();
                 dataSalidas.add(dtSalida);
+                dataInscripciones.add(inscripcion.toDatatype(inscripcion));
             }
         } else {
             dataSalidas = null;
