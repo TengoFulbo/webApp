@@ -126,27 +126,7 @@
                     <div id="consultaModal" class="modal">
                       <div class="modal-content">
                         <h4>Consulta de Actividad</h4> 
-                              <% String embedURL = "https://www.youtube.com/embed/" + obtenerIDdeVideo("https://www.youtube.com/watch?v=uZZMZ4PyOfw&ab_channel=EngagementHub") + "?autoplay=1"; %>
-						      <%-- Inserta el iframe con la URL del reproductor de YouTube --%>
-						      <iframe width="100%" height="315" src="<%= embedURL %>" frameborder="0" allowfullscreen></iframe>
-						
-						      <%-- Función para extraer el ID del video desde la URL completa --%>
-						      <%!
-						      	public String obtenerIDdeVideo(String url) {
-						            String videoID = "";
-						            if (url != null && url.contains("youtube.com/watch?v=")) {
-						                int index = url.indexOf("youtube.com/watch?v=");
-						                videoID = url.substring(index + 20);
-
-						                // Elimina el parámetro "ab_channel" si está presente
-						                int abChannelIndex = videoID.indexOf("&ab_channel=");
-						                if (abChannelIndex != -1) {
-						                    videoID = videoID.substring(0, abChannelIndex);
-						                }
-						            }
-						            return videoID;
-						        }
-						      %>
+                        <iframe id="miIframe" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
                         <form>
                             <div class="input-field">
                                 <input id="modalNombre" type="text" class="validate" readonly value=" " />
@@ -212,8 +192,36 @@
                                     document.getElementById("modalCiudad").value = dataActividad.departamento.nombre;
                                     document.getElementById("modalCosto").value = dataActividad.costoUni;
                                     document.getElementById("modalDuracion").value = dataActividad.duracion;
+                                    console.log("URL DEL VIDEO --> ", dataActividad.url);
                                     // document.getElementById("")
                                     // document.getElementById("modalActividadDescripcion").textContent = actividadDescripcion;
+
+                                    var url = dataActividad.url;
+                                    var videoID = obtenerIDdeVideo(url);
+                                    var embedURL = "https://www.youtube.com/embed/" + videoID + "?autoplay=1";
+
+                                    // Imprime la nueva URL en la consola para verificar
+                                    console.log("Nuevo src del iframe: " + embedURL);
+
+                                    // Lógica para establecer el iframe o cualquier otra acción necesaria
+                                    var iframe = document.getElementById('miIframe');
+                                    iframe.src = embedURL;
+
+                                    // Función para extraer el ID del video desde la URL completa
+                                    function obtenerIDdeVideo(url) {
+                                        var videoID = "";
+                                        if (url != null && url.includes("youtube.com/watch?v=")) {
+                                            var index = url.indexOf("youtube.com/watch?v=");
+                                            videoID = url.substring(index + 20);
+
+                                            // Elimina el parámetro "ab_channel" si está presente
+                                            var abChannelIndex = videoID.indexOf("&ab_channel=");
+                                            if (abChannelIndex !== -1) {
+                                                videoID = videoID.substring(0, abChannelIndex);
+                                            }
+                                        }
+                                        return videoID;
+                                    }
 
                                     var categoriasList = dataActividad.dtCategorias;
                                     var salidasList = dataActividad.DtSalidas;
