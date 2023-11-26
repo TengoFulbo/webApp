@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 import turismouy.svcentral.entidades.actividad;
 
 import javax.xml.bind.annotation.XmlAccessType;
