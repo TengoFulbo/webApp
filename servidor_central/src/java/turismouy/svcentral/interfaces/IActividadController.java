@@ -43,7 +43,20 @@ public interface IActividadController {
         LocalDate fechaCrea,
         List<String> categorias
     ) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion, UsuarioNoExisteExcepcion;
-    
+        
+    public abstract void crearActividad(
+        String nombreDepto,
+        String nombreProv,
+        String nombre,
+        String desc,
+        int duracion,
+        int costoUni,
+        String ciudad,
+        String urlVideo,
+        LocalDate fechaCrea,
+        List<String> categorias
+    ) throws ParametrosInvalidosExcepcion, UsuarioYaExisteExcepcion, UsuarioNoExisteExcepcion;
+        
     /**
      * Caso de uso:
      * @param nombreAct String
@@ -103,4 +116,8 @@ public interface IActividadController {
     @WebMethod
     @WebResult(name = "dataActividad")
     public abstract List<dataActividad> getActividadesPorCategoria(String nombreCategoria) throws NoExisteExcepcion;
+    
+    @WebMethod
+    @WebResult(name = "dataActividad")
+    public abstract void finalizarActividad(String nombreAct)throws NoExisteExcepcion;
 }

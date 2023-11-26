@@ -117,9 +117,6 @@ public class proveedor extends usuario {
 			imagenBase64 = Base64.getEncoder().encodeToString(this.imagen.getData());
 		}
 
-		log.warning("imagenBase64: " + imagenBase64);
-		log.warning("imagendata: " + this.imagen.getData());
-
 		dataUsuario dt = new dataUsuario(	this.nickname,
 											this.nombre,
 											this.apellido,
