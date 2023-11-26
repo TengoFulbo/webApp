@@ -120,10 +120,137 @@
                             </section>
                         </div>
                     </div>
+                    <!-- MODALS -->
+
+                    <!-- Modal Structure -->
+                    <div id="consultaModal" class="modal">
+                      <div class="modal-content">
+                        <h4>Consulta de Actividad</h4> 
+                        <iframe id="miIframe" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
+                        <form>
+                            <div class="input-field">
+                                <input id="modalNombre" type="text" class="validate" readonly value=" " />
+                                <label for="nombre" class="active">Nombre</label>
+                            </div>
+                            <div class="input-field">
+                                <input id="modalDescripcion" type="text" class="validate" readonly value=" " />
+                                <label for="desc" class="active">Descripción</label>
+                            </div>
+                            <div class="input-field">
+                                <input id="modalCiudad" type="text" class="validate" readonly value=" " />
+                                <label for="ciudad" class="active">Ciudad</label>
+                            </div>
+                            <div class="input-field">
+                                <input id="modalCosto" type="text" class="validate" readonly value=" " />
+                                <label for="costo" class="active">Costo Unitario</label>
+                            </div>
+                            <div class="input-field">
+                                <input id="modalDuracion" type="text" class="validate" readonly value=" " />
+                                <label for="duracion" class="active">Duración</label>
+                            </div>
+                            <div class="input-field">
+                                <input id="modalFecha" type="date" class="validate" readonly value="" />
+                                <label for="fecha" class="active">Fecha</label>
+                            </div>
+                            <div class="divider"></div>
+                            <h4>Categorias</h4>
+                            <ul class="collection" id="listaCategorias">
+                                
+                            </ul>
+                            <div class="divider"></div>
+                            <h4>Salidas</h4>
+                            <ul class="collection" id="listaSalidas">
+                                
+                            </ul>
+                        </form>
+                    </div>
+                        <div class="modal-footer">
+                            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+                        </div>
+                    </div>
 
                     <%@ include file="./utils/footer.jsp" %>
 
                         <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                var modal = M.Modal.init(document.getElementById("consultaModal"));
+                            });
+
+                            // Agrega un evento de clic al botón "Consultar" (delegación de eventos)
+                            document.addEventListener("click", function (event) {
+                                if (event.target.classList.contains("abrirModalBtn")) {
+                                    // Obtiene los datos de la actividad
+                                    var objeto = event.target.getAttribute("dataActividad");
+                                    var dataActividad = JSON.parse(objeto)
+                                    // var actividadDescripcion = event.target.getAttribute("data-desc");
+                                
+                                    // Llena el modal con los datos de la actividad
+                                    document.getElementById("modalNombre").value = dataActividad.nombre;
+                                    // console.log(dataActividad);
+                                    document.getElementById("modalFecha").value = dataActividad.fechaCrea;
+                                    document.getElementById("modalDescripcion").value = dataActividad.desc;
+                                    document.getElementById("modalCiudad").value = dataActividad.departamento.nombre;
+                                    document.getElementById("modalCosto").value = dataActividad.costoUni;
+                                    document.getElementById("modalDuracion").value = dataActividad.duracion;
+                                    console.log("URL DEL VIDEO --> ", dataActividad.url);
+                                    // document.getElementById("")
+                                    // document.getElementById("modalActividadDescripcion").textContent = actividadDescripcion;
+
+                                    var url = dataActividad.url;
+                                    var videoID = obtenerIDdeVideo(url);
+                                    var embedURL = "https://www.youtube.com/embed/" + videoID + "?autoplay=1";
+
+                                    // Imprime la nueva URL en la consola para verificar
+                                    console.log("Nuevo src del iframe: " + embedURL);
+
+                                    // Lógica para establecer el iframe o cualquier otra acción necesaria
+                                    var iframe = document.getElementById('miIframe');
+                                    iframe.src = embedURL;
+
+                                    // Función para extraer el ID del video desde la URL completa
+                                    function obtenerIDdeVideo(url) {
+                                        var videoID = "";
+                                        if (url != null && url.includes("youtube.com/watch?v=")) {
+                                            var index = url.indexOf("youtube.com/watch?v=");
+                                            videoID = url.substring(index + 20);
+
+                                            // Elimina el parámetro "ab_channel" si está presente
+                                            var abChannelIndex = videoID.indexOf("&ab_channel=");
+                                            if (abChannelIndex !== -1) {
+                                                videoID = videoID.substring(0, abChannelIndex);
+                                            }
+                                        }
+                                        return videoID;
+                                    }
+
+                                    var categoriasList = dataActividad.dtCategorias;
+                                    var salidasList = dataActividad.DtSalidas;
+                                    var contCat = document.getElementById("listaCategorias");
+                                    var contSal = document.getElementById("listaSalidas");
+
+                                    contCat.innerHTML = "";
+                                    contSal.innerHTML = "";
+
+                                    categoriasList.forEach(categoria => {
+                                        let cat = document.createElement("li");
+                                        cat.className = "collection-item";
+                                        cat.textContent = categoria;
+                                        contCat.appendChild(cat);
+                                    });
+
+                                    salidasList.forEach(salida => {
+                                        let sal = document.createElement("li");
+                                        sal.className = "collection-item";
+                                        sal.textContent = salida.nombre + " - " + salida.fechaSalida;
+                                        contSal.appendChild(sal);
+                                    });
+                                
+                                    // Abre el modal
+                                    var modal = M.Modal.init(document.getElementById("consultaModal"));
+                                    modal.open();
+                                }
+                            });
+
                             $(document).ready(function () {
                                 var departamento = document.getElementById("departamentos").value;
                                 var categoria = document.getElementById("categorias").value;
