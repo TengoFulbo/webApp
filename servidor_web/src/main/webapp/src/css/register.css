@@ -145,7 +145,7 @@ input {
 	overflow: hidden;
 	width: 768px;
 	max-width: 100%;
-	min-height: 560px;
+	min-height: 610px;
 }
 
 .form-container {
@@ -315,7 +315,7 @@ input {
 	overflow: hidden;
 	width: 768px;
 	max-width: 100%;
-	min-height: 560px;
+	min-height: 610px;
 	display: flex;
 	flex-direction: column;
 }

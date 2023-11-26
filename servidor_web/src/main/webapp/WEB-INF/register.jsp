@@ -30,7 +30,7 @@
       </a>
     </div>
     <div class="main">
-      <div class="container" id="container">
+      <div class="container" id="container" style="min-height: 610px !important;">
         <div class="form-container sign-up-container">
 			<form name="registroFormProveedor" action="./registerProveedor" method="post" onsubmit="return validarFormularioProveedor();">            <input type="hidden" name="isProveedor" value="true">
             <h1>Proveedor</h1>
@@ -43,7 +43,7 @@
             <input name="desc" type="text" placeholder="Descripcion" />
             <input name="url" type="text" placeholder="Sitio Web" />
             <input name="password" type="password" placeholder="Password" />
-            <input name="repitPassword" type="password" placeholder="Password" />
+            <input name="repitPassword" type="password" placeholder="Repite Password" />
             <button>Registrarse</button>
           </form>
         </div>
@@ -114,8 +114,8 @@
     	    var repitPassword = document.forms["registroFormProveedor"]["repitPassword"].value;
 
     	    if (password !== repitPassword) {
-    	      console.log("Las contraseñas no coinciden.");
-    	      alert("Las contraseñas no coinciden.");
+    	      console.log("Las contraseï¿½as no coinciden.");
+    	      alert("Las contraseï¿½as no coinciden.");
     	      return false;
     	    }
 
