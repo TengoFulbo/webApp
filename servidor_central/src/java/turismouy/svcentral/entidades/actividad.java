@@ -194,6 +194,7 @@ public class actividad {
 			this.ciudad,
 			this.fechaCrea,
 			this.estado,
+			this.urlVideo,
 			this.departamento.toDataTypeWithoutActividades(),
 			this.proveedor.toDataTypeWithoutCollections(),
 			DtSalidas,

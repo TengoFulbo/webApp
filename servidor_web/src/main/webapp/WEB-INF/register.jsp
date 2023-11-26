@@ -30,10 +30,9 @@
       </a>
     </div>
     <div class="main">
-      <div class="container" id="container">
+      <div class="container" id="container" style="min-height: 610px !important;">
         <div class="form-container sign-up-container">
-          <form action="./registerProveedor" method="post">
-            <input type="hidden" name="isProveedor" value="true">
+			<form name="registroFormProveedor" action="./registerProveedor" method="post" onsubmit="return validarFormularioProveedor();">            <input type="hidden" name="isProveedor" value="true">
             <h1>Proveedor</h1>
             <span>Registrate como proveedor</span>
             <input name="nickname" type="text" placeholder="Nickname" />
@@ -44,6 +43,7 @@
             <input name="desc" type="text" placeholder="Descripcion" />
             <input name="url" type="text" placeholder="Sitio Web" />
             <input name="password" type="password" placeholder="Password" />
+            <input name="repitPassword" type="password" placeholder="Repite Password" />
             <button>Registrarse</button>
           </form>
         </div>
@@ -108,6 +108,25 @@
         showToast(notificacion);
         '<% request.getSession().removeAttribute("errorRegister"); %>'
       }
+      
+      function validarFormularioProveedor() {
+    	    var password = document.forms["registroFormProveedor"]["password"].value;
+    	    var repitPassword = document.forms["registroFormProveedor"]["repitPassword"].value;
+
+    	    if (password !== repitPassword) {
+    	      console.log("Las contrase�as no coinciden.");
+    	      alert("Las contrase�as no coinciden.");
+    	      return false;
+    	    }
+
+    	    return true;
+    	  }
+      
+      //function validarVacio(){
+    //	  var campo = document.forms["registroFromProveedor"]["nickname"].value;
+    	  
+      //}
+      
     </script>
   </body>
 </html>

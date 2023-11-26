@@ -111,7 +111,7 @@
     <div id="consultaModal" class="modal">
         <div class="modal-content">
           <h4>Consulta de Actividad</h4> 
-          <form>
+          <form >
               <div class="input-field">
                   <input id="modalNombre" type="text" class="validate" readonly value=" " />
                   <label for="nombre" class="active">Nombre</label>
@@ -146,11 +146,15 @@
               <ul class="collection" id="listaSalidas">
                   
               </ul>
+              <button class="btn waves-effect waves-light modal__inscribirse--submit" type="submit" name="action" onclick="bajaActividad()">
+                Dar por finalizada
+                </button>
+              <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+              </div>
           </form>
       </div>
-          <div class="modal-footer">
-              <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
-          </div>
+          
       </div>
 
     <div id="modalNuevaActividad" class="modal">
@@ -518,6 +522,41 @@
                     // Manejar errores aquí
                     console.error('Error al crear la actividad: ' + error);
                     alert("Hubo un error al crear la actividad.")
+                }
+                });
+        }
+
+        function bajaActividad() {
+            event.preventDefault()
+
+            // Obtener los valores de los campos del formulario
+            var nombre = document.getElementById('modalNombre').value;
+
+            console.log(nombre);
+
+            // Crear un objeto con los datos
+            var actividadData = {
+                nombre: nombre
+            };
+
+            console.log(actividadData);
+
+            $.ajax({
+                url: './bajaActividad',
+                type: 'POST',
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify(actividadData),
+                success: function (data, status, xhr) {
+                    if (xhr.status === 200) {
+                    // La solicitud se completó con éxito, puedes realizar acciones adicionales si es necesario.
+                    console.log('Actividad finalizada con éxito.');
+                    alert("La actividad se ha finalizado correctamente.")
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // Manejar errores aquí
+                    console.error('Error al finalizar la actividad: ' + error);
+                    alert("Hubo un error al finalizar la actividad.")
                 }
                 });
         }

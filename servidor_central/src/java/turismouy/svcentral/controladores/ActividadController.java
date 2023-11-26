@@ -263,6 +263,11 @@ public class ActividadController implements IActividadController {
         	throw new UsuarioNoExisteExcepcion("La actividad " + nombreAct + " no existe");
         }
         
+        if(act.getEstado().equals(estadoActividad.FINALIZADA)) {
+        	log.error("No se puede modificar una actividad Finalizada");
+            throw new ParametrosInvalidosExcepcion();
+        }
+        
         DepartamentoManejador dm = DepartamentoManejador.getinstance();
         List <departamento> LDepto = dm.getAllDepartamentos();
         //Recorro todos los departamentos para poder buscar la actividad que
