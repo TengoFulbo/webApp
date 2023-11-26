@@ -13,6 +13,7 @@
         }
       %>
     </title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="./src/css/register.css">
   </head>
   <body>
@@ -30,12 +31,13 @@
       </a>
     </div>
     <div class="main">
-      <div class="container" id="container" style="min-height: 610px !important;">
+      <div class="container" id="container" style="min-height: 640px !important;">
         <div class="form-container sign-up-container">
 			<form name="registroFormProveedor" action="./registerProveedor" method="post" onsubmit="return validarFormularioProveedor();">            <input type="hidden" name="isProveedor" value="true">
             <h1>Proveedor</h1>
             <span>Registrate como proveedor</span>
-            <input name="nickname" type="text" placeholder="Nickname" />
+            <input id="nickIdP" name="nickname" type="text" placeholder="Nickname" />
+            <span id="spanResultadoP"></span>
             <input name="nombre" type="text" placeholder="Nombre" />
             <input name="apellido" type="text" placeholder="Apellido" />
             <input name="email" type="email" placeholder="Email" />
@@ -56,7 +58,8 @@
               <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
             </div>
             <span>Quieres registrarte como turista? hazlo!</span>
-            <input name="nickname" type="text" placeholder="Nickname" />
+            <input id="nickIdT" name="nickname" type="text" placeholder="Nickname" />
+            <span id="spanResultadoT"></span>
             <input name="nombre" type="text" placeholder="Nombre" />
             <input name="apellido" type="text" placeholder="Apellido" />
             <input name="email" type="email" placeholder="Email" />
@@ -87,46 +90,56 @@
     <script src="./src/js/register.js"></script>
 
     <script>
-      function showToast(message) {
-        var toast = document.createElement("div");
-        toast.className = "toast";
-        toast.textContent = message;
-        document.body.appendChild(toast);
-      
-        setTimeout(function () {
-          toast.classList.add("show");
-          setTimeout(function () {
-            toast.classList.remove("show");
-            document.body.removeChild(toast);
-          }, 3000); 
-        }, 100);
-      }
-    
-      var notificacion = '<%= request.getSession().getAttribute("errorRegister") %>';
-    
-      if (notificacion && notificacion !== 'null' && notificacion !== 'undefined') {
-        showToast(notificacion);
-        '<% request.getSession().removeAttribute("errorRegister"); %>'
-      }
-      
-      function validarFormularioProveedor() {
-    	    var password = document.forms["registroFormProveedor"]["password"].value;
-    	    var repitPassword = document.forms["registroFormProveedor"]["repitPassword"].value;
+	    function validarNick() {
+	        // Obtener el valor actual del input
+	        var valorInputTurista = $("#nickIdT").val();
+	        var valorInputProveedor = $("#nickIdP").val();
+	
+	        if (valorInputTurista !== "") {
+	            valorInput = valorInputTurista;
+	        } else {
+	            valorInput = valorInputProveedor;
+	        }
+	
+	        // Realizar la solicitud AJAX
+	        $.ajax({
+	            type: "POST",
+	            url: "validarNickname", // Ajusta la URL según tu configuración
+	            data: {valor: valorInput},
+	            success: function (respuesta) {
+	                // Manejar la respuesta del servidor
+	                console.log(respuesta);
+	                // Aquí puedes ejecutar otra función con la respuesta
+	                otraFuncion(respuesta);
+	            }
+	        });
+	    }
+	
+	    // Función para manejar la respuesta del servidor
+	    function otraFuncion(respuesta) {
+	        var spanResultadoT = $("#spanResultadoT");
+	        var spanResultadoP = $("#spanResultadoP");
 
-    	    if (password !== repitPassword) {
-    	      console.log("Las contraseï¿½as no coinciden.");
-    	      alert("Las contraseï¿½as no coinciden.");
-    	      return false;
-    	    }
-
-    	    return true;
-    	  }
-      
-      //function validarVacio(){
-    //	  var campo = document.forms["registroFromProveedor"]["nickname"].value;
-    	  
-      //}
-      
-    </script>
+	        if (respuesta.valido) {
+	            spanResultadoT.text("El nick es válido");
+	            spanResultadoP.text("El nick es válido");
+	            console.log("El nick es válido");
+	        } else {
+	            spanResultadoT.text("El nick NO es válido");
+	            spanResultadoP.text("El nick NO es válido");
+	            console.log("El nick NO es válido");
+	        }
+	    }
+	
+	    // Asociar el evento oninput al input
+	    $("#nickIdP").on("input", function () {
+	        // Llamar a la función ejecutarConAjax cada vez que cambia el valor
+	        validarNick();
+	    });
+	    $("#nickIdT").on("input", function () {
+	        // Llamar a la función ejecutarConAjax cada vez que cambia el valor
+	        validarNick();
+	    });
+	</script>
   </body>
 </html>
