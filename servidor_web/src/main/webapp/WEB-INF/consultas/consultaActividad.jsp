@@ -71,7 +71,7 @@
                             <label for="duracion" class="active">Duración</label>
                         </div>
                         <div class="input-field">
-                            <input id="modalFecha" type="date" class="validate" readonly value="<%= (actividad != null) ? actividad.getFechaCrea() : "" %>" />
+                            <input id="modalFecha" type="date" class="validate" value="<%= (actividad != null) ? actividad.getFechaCrea() : "" %>" />
                             <label for="fecha" class="active">Fecha</label>
                         </div>
                         <div class="divider"></div>
