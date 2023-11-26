@@ -4,6 +4,7 @@ import turismouy.svcentral.entidades.actividad;
 import turismouy.svcentral.entidades.categoria;
 import turismouy.svcentral.entidades.departamento;
 import turismouy.svcentral.entidades.proveedor;
+import turismouy.svcentral.entidades.salida;
 // import turismouy.svcentral.entidades.salida;
 import turismouy.svcentral.entidades.usuario;
 import turismouy.svcentral.entidades.paquete;
@@ -532,13 +533,21 @@ public class ActividadController implements IActividadController {
         
     } 
     
-    public void finalizarActividad(@WebParam(name = "nombreAct") String nombreAct)throws NoExisteExcepcion {
+    public void finalizarActividad(@WebParam(name = "nombreAct") String nombreAct)throws NoExisteExcepcion, ParametrosInvalidosExcepcion {
     	ActividadManejador am = ActividadManejador.getinstance();
     	actividad act = am.getActividad(nombreAct);
     	
     	if(act == null) {
         	log.error("La actividad '" + nombreAct + "' no existe.");
         	throw new NoExisteExcepcion("La actividad " + nombreAct + " no existe");
+    	}
+    	
+    	List<salida> salidas = act.getSalidas();
+    	
+    	for(salida salida: salidas) {
+    		if(salida.getFechaSalida().isAfter(LocalDate.now()));
+    		log.info("La Salida "+ salida.getNombre() + " todavia es vigente");
+    		throw new ParametrosInvalidosExcepcion();
     	}
     	
     	if(act.getEstado().equals(estadoActividad.RECHAZADA) || act.getEstado().equals(estadoActividad.AGREGADA) || act.getEstado().equals(estadoActividad.FINALIZADA)) {

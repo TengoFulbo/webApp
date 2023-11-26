@@ -117,6 +117,8 @@ public class Main {
 
         listaCategorias.add("Outdoor");
         listaCategorias.add("Camping");
+        
+        
     
         // try {
         //     IAC.crearActividad("San Jose", "miprov", "TestSinUrl", "desc", 5, 5, "SJDM", LocalDate.of(2000, 1, 1), listaCategorias);

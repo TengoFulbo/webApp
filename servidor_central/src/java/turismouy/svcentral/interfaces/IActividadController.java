@@ -119,7 +119,7 @@ public interface IActividadController {
     
     @WebMethod
     @WebResult(name = "dataActividad")
-    public abstract void finalizarActividad(String nombreAct)throws NoExisteExcepcion;
+    public abstract void finalizarActividad(String nombreAct)throws NoExisteExcepcion, ParametrosInvalidosExcepcion;
     
     @WebMethod
     @WebResult(name = "dataActividad")
