@@ -1,4 +1,5 @@
     <!-- NAVBAR -->
+    
     <nav class="navbar">
         <div class="nav-wrapper navbar__wrap">
             <div class="navbar__leftwrap">
@@ -7,6 +8,8 @@
                     <a href="./">TurismoUY</a>
                 </div>
             </div>
+            
+            
             <ul class="right aside_trigger">
                 <li>
                     <a href="#" data-target="slide-out" class="sidenav-trigger navbar__sideopen"><i
@@ -15,3 +18,5 @@
             </ul>
         </div>
     </nav>
+
+    

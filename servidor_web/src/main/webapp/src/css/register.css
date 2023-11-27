@@ -8,14 +8,13 @@
 }
 
 body{
-	background: #f6f5f7;
+	background: #EBE4C9;
 	background-image: url(../img/road3.gif);
 	background-size: cover;
 	background-repeat: no-repeat;
 	backdrop-filter: blur(2px);
 	background-position: center ;
 	height: 100vh;	
-	overflow: hidden;
 }
 
 .topButtons{

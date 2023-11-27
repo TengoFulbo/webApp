@@ -301,7 +301,7 @@
       // Enviar la solicitud con los datos del formulario y la imagen
       xhr.send(formData);
     }
-
+    
   </script>
 </body>
 

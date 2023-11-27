@@ -11,10 +11,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import turismouy.svcentral.Fabrica;
-import turismouy.svcentral.interfaces.IUsuarioController;
-import turismouy.svcentral.datatypes.dataUsuario;
-import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
+//import turismouy.svcentral.Fabrica;
+//import turismouy.svcentral.interfaces.IUsuarioController;
+import turismouy.svcentral.middlewares.DataUsuario;
+import turismouy.svcentral.middlewares.NoExisteExcepcion_Exception;
+import turismouy.svcentral.middlewares.Publicador;
+import turismouy.svcentral.middlewares.PublicadorService;
+//import turismouy.svcentral.datatypes.dataUsuario;
+//import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
 
 @WebServlet("/validarCorreo")
 public class ValidarCorreoServlet extends HttpServlet {
@@ -26,12 +30,17 @@ public class ValidarCorreoServlet extends HttpServlet {
 
         System.out.println("Valor recibido desde la solicitud AJAX: " + valorInput);
 
-        IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+        //IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+        
+        Publicador API = new PublicadorService().getPublicadorPort();
 
-        dataUsuario tmp;
+        //dataUsuario tmp;
+        DataUsuario tmp;
         try {
-            tmp = IUC.mostrarInfo(valorInput);
-        } catch (UsuarioNoExisteExcepcion e) {
+            //tmp = IUC.mostrarInfo(valorInput);
+        	tmp = API.usuarioMostrarInfo(valorInput);
+        //} catch (UsuarioNoExisteExcepcion e) {
+        } catch (NoExisteExcepcion_Exception e) {
             tmp = null;
         }
 

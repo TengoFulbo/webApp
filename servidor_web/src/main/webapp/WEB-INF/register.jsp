@@ -16,7 +16,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="./src/css/register.css">
   </head>
-  <body>
+  <body style="overflow: scroll !important; background-color: #EBE4C9 !important;">
     <div class="topButtons">
       <a href="./" class="return">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -107,30 +107,30 @@
 	    var cooldownTime = 1000; // Tiempo en milisegundos (1 segundo en este ejemplo)
 	    var cooldownTimerP, cooldownTimerT;
 	
-	    // Función para manejar la respuesta del servidor
+	    // Funciï¿½n para manejar la respuesta del servidor
 	    function otraFuncion(respuesta) {
 	        // Acceder al elemento span en tu HTML
 	        var spanResultado = $("#spanResultado");
 	
-	        // Actualizar el contenido del span según la respuesta del servidor
+	        // Actualizar el contenido del span segï¿½n la respuesta del servidor
 	        if (respuesta.valido) {
-	            spanResultado.text("El nick es válido");
+	            spanResultado.text("El nick es vï¿½lido");
 	        } else {
-	            spanResultado.text("El nick NO es válido");
+	            spanResultado.text("El nick NO es vï¿½lido");
 	        }
 	    }
 	
-	    // Función para validar el nick con un "cooldown"
+	    // Funciï¿½n para validar el nick con un "cooldown"
 	    function validarNickConCooldown(valorInput) {
 	        // Realizar la solicitud AJAX
 	        $.ajax({
 	            type: "POST",
-	            url: "validarNickname", // Ajusta la URL según tu configuración
+	            url: "validarNickname", // Ajusta la URL segï¿½n tu configuraciï¿½n
 	            data: {valor: valorInput},
 	            success: function (respuesta) {
 	                // Manejar la respuesta del servidor
 	                console.log(respuesta);
-	                // Aquí puedes ejecutar otra función con la respuesta
+	                // Aquï¿½ puedes ejecutar otra funciï¿½n con la respuesta
 	                otraFuncion(respuesta);
 	            }
 	        });
@@ -141,13 +141,13 @@
 	        var spanResultadoP = $("#spanResultadoP");
 
 	        if (respuesta.valido) {
-	            spanResultadoT.text("El nick es válido");
-	            spanResultadoP.text("El nick es válido");
-	            console.log("El nick es válido");
+	            spanResultadoT.text("El nick es valido");
+	            spanResultadoP.text("El nick es valido");
+	            console.log("El nick es valido");
 	        } else {
-	            spanResultadoT.text("El nick NO es válido. Sugerencia: " + $("#nickIdT").val() + Math.floor(1000 + Math.random() * 9000));
-	            spanResultadoP.text("El nick NO es válido. Sugerencia: " + $("#nickIdP").val() + Math.floor(1000 + Math.random() * 9000));
-	            console.log("El nick NO es válido");
+	            spanResultadoT.text("El nick NO es valido. Sugerencia: " + $("#nickIdT").val() + Math.floor(1000 + Math.random() * 9000));
+	            spanResultadoP.text("El nick NO es valido. Sugerencia: " + $("#nickIdP").val() + Math.floor(1000 + Math.random() * 9000));
+	            console.log("El nick NO es valido");
 	        }
 	    }
 	
@@ -168,7 +168,7 @@
 	                valorInput = valorInputTurista;
 	            }
 	
-	            // Llamar a la función ejecutarConAjax después del "cooldown"
+	            // Llamar a la funciï¿½n ejecutarConAjax despuï¿½s del "cooldown"
 	            validarNickConCooldown(valorInput);
 	        }, cooldownTime);
 	    });
@@ -190,7 +190,7 @@
 	                valorInput = valorInputProveedor;
 	            }
 	
-	            // Llamar a la función ejecutarConAjax después del "cooldown"
+	            // Llamar a la funciï¿½n ejecutarConAjax despuï¿½s del "cooldown"
 	            validarNickConCooldown(valorInput);
 	        }, cooldownTime);
 	    });
@@ -198,31 +198,31 @@
 	    
 	    
 	    
-	    // Función para manejar la respuesta del servidor
+	    // Funciï¿½n para manejar la respuesta del servidor
 	    function otraFuncionParaMail(respuesta) {
 	        // Acceder al elemento span en tu HTML
 	        var spanResultadoCorreo = $("#spanResultadoCorreo");
 	
-	        // Actualizar el contenido del span según la respuesta del servidor
+	        // Actualizar el contenido del span segï¿½n la respuesta del servidor
 	        if (respuesta.valido) {
-	            spanResultado.text("El email es válido");
+	            spanResultado.text("El email es vï¿½lido");
 	        } else {
-	            spanResultado.text("El email NO es válido");
+	            spanResultado.text("El email NO es vï¿½lido");
 	        }
 	    }
 	    
-	 // Función para validar el email con un "cooldown"
+	 // Funciï¿½n para validar el email con un "cooldown"
 	    function validarEmailConCooldown(valorInput) {
 		 
 	        // Realizar la solicitud AJAX
 	        $.ajax({
 	            type: "POST",
-	            url: "validarCorreo", // Ajusta la URL según tu configuración
+	            url: "validarCorreo", // Ajusta la URL segï¿½n tu configuraciï¿½n
 	            data: {valor: valorInput},
 	            success: function (respuesta) {
 	                // Manejar la respuesta del servidor
 	                console.log(respuesta);
-	                // Aquí puedes ejecutar otra función con la respuesta
+	                // Aquï¿½ puedes ejecutar otra funciï¿½n con la respuesta
 	                otraFuncionParaEmail(respuesta);
 	            }
 	        });
@@ -233,21 +233,21 @@
 	        var spanResultadoCorreoP = $("#spanResultadoCorreoP");
 	        if (respuesta.valido) {
 		    	var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-		    	// Verificar si el nombre cumple con la expresión regular y no es vacío
+		    	// Verificar si el nombre cumple con la expresiï¿½n regular y no es vacï¿½o
 		        var esEmailValido = regex.test(valorInput) && valorInput.trim() !== '';
 		        if (esEmailValido) {
-		            spanResultadoCorreoP.text("El email es válido");
-		            spanResultadoCorreoT.text("El email es válido");
-		            console.log("El email es válido");
+		            spanResultadoCorreoP.text("El email es vï¿½lido");
+		            spanResultadoCorreoT.text("El email es vï¿½lido");
+		            console.log("El email es vï¿½lido");
 		        } else {
-		            spanResultadoCorreoP.text("El email NO es válido (debe de tener un fromato parecido a este: prueba@gmail.com, y no puede ser vacio)");
-		            spanResultadoCorreoT.text("El email NO es válido (debe de tener un fromato parecido a este: prueba@gmail.com, y no puede ser vacio)");
-		            console.log("El email NO es válido");
+		            spanResultadoCorreoP.text("El email NO es vï¿½lido (debe de tener un fromato parecido a este: prueba@gmail.com, y no puede ser vacio)");
+		            spanResultadoCorreoT.text("El email NO es vï¿½lido (debe de tener un fromato parecido a este: prueba@gmail.com, y no puede ser vacio)");
+		            console.log("El email NO es vï¿½lido");
 		        }
 	        } else {
-	            spanResultadoCorreoT.text("El email NO es válido (debe de tener un fromato parecido a este: prueba@gmail.com, y no puede ser vacio)");
-	            spanResultadoCorreoP.text("El email NO es válido (debe de tener un fromato parecido a este: prueba@gmail.com, y no puede ser vacio)");
-	            console.log("El email NO es válido");
+	            spanResultadoCorreoT.text("El email NO es vï¿½lido (debe de tener un fromato parecido a este: prueba@gmail.com, y no puede ser vacio)");
+	            spanResultadoCorreoP.text("El email NO es vï¿½lido (debe de tener un fromato parecido a este: prueba@gmail.com, y no puede ser vacio)");
+	            console.log("El email NO es vï¿½lido");
 	        }
 	    }
 	    
@@ -268,7 +268,7 @@
 	                valorInput = valorInputCorreoTurista;
 	            }
 	
-	            // Llamar a la función ejecutarConAjax después del "cooldown"
+	            // Llamar a la funciï¿½n ejecutarConAjax despuï¿½s del "cooldown"
 	            validarEmailConCooldown(valorInput);
 	        }, cooldownTime);
 	    });
@@ -290,30 +290,30 @@
 	                valorInput = valorInputCorreoProveedor;
 	            }
 	
-	            // Llamar a la función ejecutarConAjax después del "cooldown"
+	            // Llamar a la funciï¿½n ejecutarConAjax despuï¿½s del "cooldown"
 	            validarEmailConCooldown(valorInput);
 	        }, cooldownTime);
 	    });
 	    
-	    // Función para validar el nombre con un "cooldown"
+	    // Funciï¿½n para validar el nombre con un "cooldown"
 	    function validarNombreConCooldown(valorInput) {
-	        // Expresión regular para permitir solo letras y espacios, sin comillas
+	        // Expresiï¿½n regular para permitir solo letras y espacios, sin comillas
 	        var regex = /^[a-zA-Z\s]+$/;
 
-	        // Verificar si el nombre cumple con la expresión regular y no es vacío
+	        // Verificar si el nombre cumple con la expresiï¿½n regular y no es vacï¿½o
 	        var esNombreValido = regex.test(valorInput) && valorInput.trim() !== '';
 
 	        // Acceder al elemento span correspondiente en tu HTML
 	        var spanResultadoNombreP = $("#spanResultadoNombreP");
 	        var spanResultadoNombreT = $("#spanResultadoNombreT");
 
-	        // Actualizar el contenido del span según la validación
+	        // Actualizar el contenido del span segï¿½n la validaciï¿½n
 	        if (esNombreValido) {
-	            spanResultadoNombreP.text("El nombre es válido");
-	            spanResultadoNombreT.text("El nombre es válido");
+	            spanResultadoNombreP.text("El nombre es vï¿½lido");
+	            spanResultadoNombreT.text("El nombre es vï¿½lido");
 	        } else {
-	            spanResultadoNombreP.text("El nombre NO es válido (solo letras y espacios, no puede estar vacío)");
-	            spanResultadoNombreT.text("El nombre NO es válido (solo letras y espacios, no puede estar vacío)");
+	            spanResultadoNombreP.text("El nombre NO es vï¿½lido (solo letras y espacios, no puede estar vacï¿½o)");
+	            spanResultadoNombreT.text("El nombre NO es vï¿½lido (solo letras y espacios, no puede estar vacï¿½o)");
 	        }
 	    }
 
@@ -327,7 +327,7 @@
 	            // Obtener el valor actual del input
 	            var valorInputNombre = $("input[name='nombreP']").val();
 
-	            // Llamar a la función validarNombreConCooldown después del "cooldown"
+	            // Llamar a la funciï¿½n validarNombreConCooldown despuï¿½s del "cooldown"
 	            validarNombreConCooldown(valorInputNombre);
 	        }, cooldownTime);
 	    });
@@ -342,30 +342,30 @@
 	            // Obtener el valor actual del input
 	            var valorInputNombre = $("input[name='nombreT']").val();
 
-	            // Llamar a la función validarNombreConCooldown después del "cooldown"
+	            // Llamar a la funciï¿½n validarNombreConCooldown despuï¿½s del "cooldown"
 	            validarNombreConCooldown(valorInputNombre);
 	        }, cooldownTime);
 	    });
 	    
-	    // Función para validar el apellido con un "cooldown"
+	    // Funciï¿½n para validar el apellido con un "cooldown"
 	    function validarApellidoConCooldown(valorInput) {
-	        // Expresión regular para permitir solo letras y espacios
+	        // Expresiï¿½n regular para permitir solo letras y espacios
 	        var regex = /^[a-zA-Z\s']+$/;
 
-	        // Verificar si el apellido cumple con la expresión regular y no es vacío
+	        // Verificar si el apellido cumple con la expresiï¿½n regular y no es vacï¿½o
 	        var esApellidoValido = regex.test(valorInput) && valorInput.trim() !== '';
 
 	        // Acceder al elemento span correspondiente en tu HTML
 	        var spanResultadoApellidoP = $("#spanResultadoApellidoP");
 	        var spanResultadoApellidoT = $("#spanResultadoApellidoT");
 
-	        // Actualizar el contenido del span según la validación
+	        // Actualizar el contenido del span segï¿½n la validaciï¿½n
 	        if (esApellidoValido) {
-	            spanResultadoApellidoP.text("El apellido es válido");
-	            spanResultadoApellidoT.text("El apellido es válido");
+	            spanResultadoApellidoP.text("El apellido es vï¿½lido");
+	            spanResultadoApellidoT.text("El apellido es vï¿½lido");
 	        } else {
-	            spanResultadoApellidoP.text("El apellido NO es válido (solo letras y espacios, no puede estar vacío)");
-	            spanResultadoApellidoT.text("El apellido NO es válido (solo letras y espacios, no puede estar vacío)");
+	            spanResultadoApellidoP.text("El apellido NO es vï¿½lido (solo letras y espacios, no puede estar vacï¿½o)");
+	            spanResultadoApellidoT.text("El apellido NO es vï¿½lido (solo letras y espacios, no puede estar vacï¿½o)");
 	        }
 	    }
 
@@ -379,7 +379,7 @@
 	            // Obtener el valor actual del input
 	            var valorInputApellido = $("input[name='apellidoP']").val();
 
-	            // Llamar a la función validarApellidoConCooldown después del "cooldown"
+	            // Llamar a la funciï¿½n validarApellidoConCooldown despuï¿½s del "cooldown"
 	            validarApellidoConCooldown(valorInputApellido);
 	        }, cooldownTime);
 	    });
@@ -394,22 +394,22 @@
 	            // Obtener el valor actual del input
 	            var valorInputApellido = $("input[name='apellidoT']").val();
 
-	            // Llamar a la función validarApellidoConCooldown después del "cooldown"
+	            // Llamar a la funciï¿½n validarApellidoConCooldown despuï¿½s del "cooldown"
 	            validarApellidoConCooldown(valorInputApellido);
 	        }, cooldownTime);
 	    });
 	    
-	    // Función para validar la descripción solo cuando está vacía
+	    // Funciï¿½n para validar la descripciï¿½n solo cuando estï¿½ vacï¿½a
 	    function validarDescripcionConCooldown(valorInput) {
-	        // Verificar si la descripción está vacía
+	        // Verificar si la descripciï¿½n estï¿½ vacï¿½a
 	        var esDescripcionVacia = valorInput.trim() === '';
 
 	        // Acceder al elemento span correspondiente en tu HTML
 	        var spanResultadoDescP = $("#spanResultadoDescP");
 
-	        // Actualizar el contenido del span solo si la descripción está vacía
+	        // Actualizar el contenido del span solo si la descripciï¿½n estï¿½ vacï¿½a
 	        if (esDescripcionVacia) {
-	            spanResultadoDescP.text("La descripción no puede estar vacía");
+	            spanResultadoDescP.text("La descripciï¿½n no puede estar vacï¿½a");
 	        } else {
 	            spanResultadoDescP.text("La descripcion es valida");
 	        }
@@ -425,22 +425,22 @@
 	            // Obtener el valor actual del input
 	            var valorInputDesc = $("input[name='descP']").val();
 
-	            // Llamar a la función validarDescripcionConCooldown después del "cooldown"
+	            // Llamar a la funciï¿½n validarDescripcionConCooldown despuï¿½s del "cooldown"
 	            validarDescripcionConCooldown(valorInputDesc);
 	        }, cooldownTime);
 	    });
 	    
-	    // Función para validar la URL solo cuando está vacía
+	    // Funciï¿½n para validar la URL solo cuando estï¿½ vacï¿½a
 	    function validarUrlConCooldown(valorInput) {
-	        // Verificar si la URL está vacía
+	        // Verificar si la URL estï¿½ vacï¿½a
 	        var esUrlVacia = valorInput.trim() === '';
 
 	        // Acceder al elemento span correspondiente en tu HTML
 	        var spanResultadoUrlP = $("#spanResultadoUrlP");
 
-	        // Actualizar el contenido del span solo si la URL está vacía
+	        // Actualizar el contenido del span solo si la URL estï¿½ vacï¿½a
 	        if (esUrlVacia) {
-	            spanResultadoUrlP.text("La URL no puede estar vacía");
+	            spanResultadoUrlP.text("La URL no puede estar vacï¿½a");
 	        } else {
 	            spanResultadoUrlP.text("La URL es valida");
 	        }
@@ -456,22 +456,22 @@
 	            // Obtener el valor actual del input
 	            var valorInputUrl = $("input[name='urlP']").val();
 
-	            // Llamar a la función validarUrlConCooldown después del "cooldown"
+	            // Llamar a la funciï¿½n validarUrlConCooldown despuï¿½s del "cooldown"
 	            validarUrlConCooldown(valorInputUrl);
 	        }, cooldownTime);
 	    });
 	    
-	    // Función para validar la nacionalidad solo cuando está vacía
+	    // Funciï¿½n para validar la nacionalidad solo cuando estï¿½ vacï¿½a
 	    function validarNacionalidadConCooldown(valorInput) {
-	        // Verificar si la nacionalidad está vacía
+	        // Verificar si la nacionalidad estï¿½ vacï¿½a
 	        var esNacionalidadVacia = valorInput.trim() === '';
 
 	        // Acceder al elemento span correspondiente en tu HTML
 	        var spanResultadoNacionalidadT = $("#spanResultadoNacionalidadT");
 
-	        // Actualizar el contenido del span solo si la nacionalidad está vacía
+	        // Actualizar el contenido del span solo si la nacionalidad estï¿½ vacï¿½a
 	        if (esNacionalidadVacia) {
-	            spanResultadoNacionalidadT.text("La nacionalidad no puede estar vacía");
+	            spanResultadoNacionalidadT.text("La nacionalidad no puede estar vacï¿½a");
 	        } else {
 	            spanResultadoNacionalidadT.text("La nacionalidad es valida");
 	        }
@@ -487,7 +487,7 @@
 	            // Obtener el valor actual del input
 	            var valorInputNacionalidad = $("input[name='nacionalidadT']").val();
 
-	            // Llamar a la función validarNacionalidadConCooldown después del "cooldown"
+	            // Llamar a la funciï¿½n validarNacionalidadConCooldown despuï¿½s del "cooldown"
 	            validarNacionalidadConCooldown(valorInputNacionalidad);
 	        }, cooldownTime);
 	    });
@@ -503,10 +503,10 @@
 
 	        // Check if the passwords match
 	        if (password === repeatPassword) {
-	            spanResultadoPasswordT.text("Las contraseñas coinciden");
+	            spanResultadoPasswordT.text("Las contraseÃ±as coinciden");
 	            document.getElementById("botonIdT").disabled = false;
 	        } else {
-	            spanResultadoPasswordT.text("Las contraseñas no coinciden");
+	            spanResultadoPasswordT.text("Las contraseÃ±as no coinciden");
 	            document.getElementById("botonIdT").disabled = true;
 	        }
 	    }
@@ -529,10 +529,10 @@
 
 	        // Check if the passwords match
 	        if (passwordP === repeatPasswordP) {
-	            spanResultadoPasswordP.text("Las contraseñas coinciden");
+	            spanResultadoPasswordP.text("Las contraseÃ±as coinciden");
 	            document.getElementById("botonIdP").disabled = false;
 	        } else {
-	            spanResultadoPasswordP.text("Las contraseñas no coinciden");
+	            spanResultadoPasswordP.text("Las contraseÃ±as no coinciden");
 	            document.getElementById("botonIdP").disabled = true;
 	        }
 	    }
@@ -544,24 +544,24 @@
 	        cooldownTimerT = setTimeout(validarPasswordProveedor, cooldownTime);
 	    });
 	    
-	 // Función para validar el nombre con un "cooldown"
+	 // Funciï¿½n para validar el nombre con un "cooldown"
 	    function validarFechaConCooldown(valorInput) {
-	        // Expresión regular para permitir solo letras y espacios, sin comillas
+	        // Expresiï¿½n regular para permitir solo letras y espacios, sin comillas
 
-	        // Verificar si el nombre cumple con la expresión regular y no es vacío
+	        // Verificar si el nombre cumple con la expresiï¿½n regular y no es vacï¿½o
 	        var esFechaValida = valorInput.trim() !== '';
 
 	        // Acceder al elemento span correspondiente en tu HTML
 	        var spanResultadoFechaP = $("#spanResultadoFechaP");
 	        var spanResultadoFechaT = $("#spanResultadoFechaT");
 
-	        // Actualizar el contenido del span según la validación
+	        // Actualizar el contenido del span segï¿½n la validaciï¿½n
 	        if (esFechaValida) {
-	            spanResultadoFechaP.text("La fecha es válida");
-	            spanResultadoFechaT.text("La fecha es válida");
+	            spanResultadoFechaP.text("La fecha es vï¿½lida");
+	            spanResultadoFechaT.text("La fecha es vï¿½lida");
 	        } else {
-	            spanResultadoFechaP.text("La fecha NO es válida (no puede estar vacío)");
-	            spanResultadoFechaT.text("La fecha NO es válida (no puede estar vacío)");
+	            spanResultadoFechaP.text("La fecha NO es vï¿½lida (no puede estar vacï¿½o)");
+	            spanResultadoFechaT.text("La fecha NO es vï¿½lida (no puede estar vacï¿½o)");
 	        }
 	    }
 
@@ -575,7 +575,7 @@
 	            // Obtener el valor actual del input
 	            var valorInputFecha = $("input[name='fechaNP']").val();
 
-	            // Llamar a la función validarNombreConCooldown después del "cooldown"
+	            // Llamar a la funciï¿½n validarNombreConCooldown despuï¿½s del "cooldown"
 	            validarFechaConCooldown(valorInputFecha);
 	        }, cooldownTime);
 	    });
@@ -590,7 +590,7 @@
 	            // Obtener el valor actual del input
 	            var valorInputFecha = $("input[name='fechaNT']").val();
 
-	            // Llamar a la función validarNombreConCooldown después del "cooldown"
+	            // Llamar a la funciï¿½n validarNombreConCooldown despuï¿½s del "cooldown"
 	            validarFechaConCooldown(valorInputFecha);
 	        }, cooldownTime);
 	    });
