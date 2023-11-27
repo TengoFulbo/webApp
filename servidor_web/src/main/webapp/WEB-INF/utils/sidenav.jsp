@@ -3,7 +3,7 @@
 <%@ page import="turismouy.svcentral.datatypes.dataUsuario" %>
 
 <% dataUsuario usuario = (dataUsuario) session.getAttribute("dataUsuario"); %>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
     <!-- SIDENAV -->
     <ul id="slide-out" class="sidenav home_side sidenav-fixed">
         <li>
@@ -82,13 +82,23 @@
 
         <script>
             $(document).ready(function(){
-                $('input.autocomplete').autocomplete({
-                data: {
-                    "Apple": null,
-                    "Microsoft": null,
-                    "Google": 'https://placehold.it/250x250'
-                },
+                $.ajax({
+                    url: "autoCompleteServ",
+                    dataType: "json",
+                    success: function(data) {
+                        $('input.autocomplete').autocomplete({
+                            data: obtenerDatosAutocomplete(data),
+                        });
+                    }
                 });
+        
+                function obtenerDatosAutocomplete(data) {
+                    var autocompleteData = {};
+                    for (var i = 0; i < data.length; i++) {
+                        autocompleteData[data[i]] = null;
+                    }
+                    return autocompleteData;
+                }
             });
         </script>
     </ul>
