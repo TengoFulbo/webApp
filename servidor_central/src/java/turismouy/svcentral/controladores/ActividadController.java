@@ -236,7 +236,7 @@ public class ActividadController implements IActividadController {
 		actividad act = am.getActividad(nombreAct);		
 		if (act == null) {
         	log.error("La actividad '" + nombreAct + "' ya existe.");
-        	throw new UsuarioNoExisteExcepcion("La actividad " + nombreAct + " ya existe");
+        	throw new UsuarioNoExisteExcepcion("La actividad " + nombreAct + " no existe");
 		}
 		dataActividad DTAct = act.toDataType();		
 		return DTAct;		

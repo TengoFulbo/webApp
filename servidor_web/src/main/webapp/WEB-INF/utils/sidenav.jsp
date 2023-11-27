@@ -37,7 +37,7 @@
         <li><a href="./home">Inicio</a></li>
         <li><a href="./homeSalidas">Salidas</a></li>
         <li><a href="./homeActividades">Actividades</a></li>
-        <li><a href="./homePaquete">Paquetes</a></li>
+        <li><a href="./homePaquetes">Paquetes</a></li>
         <li><a href="./homeUsuarios">Usuarios</a></li>
 
         <%

@@ -7,6 +7,9 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import turismouy.svcentral.utilidades.LocalDateAdapter;
 
 import turismouy.svcentral.entidades.inscripcion;
 
@@ -19,6 +22,7 @@ public class dataUsuario implements Serializable {
     private String email;
     private String imagenBase64;
     private String nacionalidad;
+	@XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate nacimiento;
     private boolean isProveedor;
     private String descripcion;

@@ -1,405 +1,257 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-    <%@ page import="java.util.List" %>
-    <%@ page import="turismouy.svcentral.datatypes.dataActividad" %>
-    <%@ page import="turismouy.svcentral.datatypes.dataDepartamento" %>
-    <%@ page import="turismouy.svcentral.datatypes.dataCategoria" %>
+<%@ page import="java.util.List" %>
+<%@ page import="turismouy.svcentral.datatypes.dataActividad" %>
+<%@ page import="turismouy.svcentral.datatypes.dataDepartamento" %>
+<%@ page import="turismouy.svcentral.datatypes.dataCategoria" %>
 
-        <%@ include file="./utils/head.jsp" %>
+<%@ include file="./utils/head.jsp" %>
 
-            <head>
-                <link rel="stylesheet" href="./src/css/homeMulti.css" />
-                <!-- MATERIALIZE JS -->
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-                <!-- MATERIALIZE LOCAL JS -->
-                <script src="src/js/materialize.js"></script>
-            </head>
+<head>
+    <link rel="stylesheet" href="./src/css/homeMulti.css" />
+    <!-- MATERIALIZE JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- MATERIALIZE LOCAL JS -->
+    <script src="src/js/materialize.js"></script>
+</head>
 
-            <body>
-                <!-- NAVBAR -->
-                <nav class="navbar">
-                    <div class="nav-wrapper navbar__wrap">
-                        <div class="navbar__leftwrap">
-                            <div class="brand-logo">
-                                <img src="src/img/kombi.png" alt="Imagen de una combi" class="navbar__logo--img" />
-                                <a href="./index.html">TurismoUY</a>
-                            </div>
-                        </div>
-                        <ul class="right aside_trigger">
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-wrapper navbar__wrap">
+            <div class="navbar__leftwrap">
+                <div class="brand-logo">
+                    <img src="src/img/kombi.png" alt="Imagen de una combi" class="navbar__logo--img" />
+                    <a href="./index.html">TurismoUY</a>
+                </div>
+            </div>
+            <ul class="right aside_trigger">
+                <li>
+                    <a href="#" data-target="slide-out" class="sidenav-trigger navbar__sideopen"><i
+                            class="material-icons">arrow_forward</i></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <%@ include file="./utils/sidenav.jsp" %>
+        <!-- MAIN -->
+        <div class="main">
+            <div class="mainWrap">
+                <div class="mainWrap__pagination">
+                    <ul class="pagination">
+                        <li class="waves-effect"><a href="./homeSalidas">Salidas</a></li>
+                        <li class="active"><a href="./homeActividades">Actividades</a></li>
+                        <li class="waves-effect"><a href="./homePaquetes">Paquetes</a></li>
+                    </ul>
+
+                    <ul id="dropdown1" class="dropdown-content">
+                        <li><a href="#!">Caminata</a></li>
+                        <li><a href="#!">Camping</a></li>
+                        <li><a href="#!">Ruta</a></li>
+                        <li><a href="#!">Trecking</a></li>
+                        <li><a href="#!">Historia</a></li>
+                    </ul>
+                </div>
+
+                <!-- page -->
+                <section class="page">
+                    <div class="page__texto">
+                        <h1 class="page__title">Actividades</h1>
+                        <p class="page__p">
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Qui
+                            incidunt numquam tempora dolorem vel, facere necessitatibus ullam
+                            ratione laudantium in, eaque assumenda omnis. Cum vitae eaque hic
+                            minus corrupti tenetur?
+                        </p>
+                    </div>
+                    <div class="page__filter">
+                        <h3 class="page__filter--title">Filtros:</h3>
+                        <ul class="pagination page__filter--list">
                             <li>
-                                <a href="#" data-target="slide-out" class="sidenav-trigger navbar__sideopen"><i
-                                        class="material-icons">arrow_forward</i></a>
+                                <div class="input-field col s12">
+                                    <select id="categorias">
+                                        <option value="" disabled selected>No seleccionado</option>
+                                        <% List<dataCategoria> categorias = (List<dataCategoria>) request.getAttribute("categorias"); %>
+                                            <%
+                                            int value = 1;
+                                            if (categorias != null) {
+                                                if (!categorias.isEmpty()) {
+                                                    for (dataCategoria categoria : categorias) {
+                                            %>
+                                                        <option value="<%= categoria.getNombre() %>"><%= value %> - <%= categoria.getNombre() %></option>
+                                            <%
+                                                        value++;
+                                                    }
+                                                }
+                                            }
+                                            %>
+                                    </select>
+                                    <label>Categorias</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="input-field col s12">
+                                    <select id="departamentos">
+                                        <option value="" disabled selected>No seleccionado</option>
+                                        <% List<dataDepartamento> departamentos = (List<dataDepartamento>) request.getAttribute("departamentos"); %>
+                                        <%
+                                        int value2 = 1;
+                                        if (departamentos != null) {
+                                            if (!departamentos.isEmpty()) {
+                                                for (dataDepartamento departamento : departamentos) {
+                                        %>
+                                                    <option value="<%= departamento.getNombre() %>"> <%= value2 %> - <%= departamento.getNombre() %></option>
+                                        <%
+                                                    value2++;
+                                                }
+                                            }
+                                        }
+                                        %>
+                                    </select>
+                                    <label>Departamentos</label>
+                                </div>
                             </li>
                         </ul>
                     </div>
-                </nav>
-
-                <%@ include file="./utils/sidenav.jsp" %>
-
-                    <!-- MAIN -->
-                    <div class="main">
-                        <div class="mainWrap">
-                            <div class="mainWrap__pagination">
-                                <ul class="pagination">
-                                    <li class="waves-effect"><a href="./homeSalidas">Salidas</a></li>
-                                    <li class="active"><a href="./homeActividades">Actividades</a></li>
-                                    <li class="waves-effect"><a href="./homePaquete">Paquetes</a></li>
-                                </ul>
-
-                                <ul id="dropdown1" class="dropdown-content">
-                                    <li><a href="#!">Caminata</a></li>
-                                    <li><a href="#!">Camping</a></li>
-                                    <li><a href="#!">Ruta</a></li>
-                                    <li><a href="#!">Trecking</a></li>
-                                    <li><a href="#!">Historia</a></li>
-                                </ul>
-                            </div>
-
-                            <!-- page -->
-                            <section class="page">
-                                <div class="page__texto">
-                                    <h1 class="page__title">Actividades</h1>
-                                    <p class="page__p">
-                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Qui
-                                        incidunt numquam tempora dolorem vel, facere necessitatibus ullam
-                                        ratione laudantium in, eaque assumenda omnis. Cum vitae eaque hic
-                                        minus corrupti tenetur?
-                                    </p>
-                                </div>
-                                <div class="page__filter">
-                                    <h3 class="page__filter--title">Filtros:</h3>
-                                    <ul class="pagination page__filter--list">
-                                        <li>
-                                            <div class="input-field col s12">
-                                                <select id="categorias">
-                                                    <option value="" disabled selected>No seleccionado</option>
-                                                    <% List<dataCategoria> categorias = (List<dataCategoria>) request.getAttribute("categorias"); %>
-                                                        <%
-                                                        int value = 1;
-                                                        if (categorias != null) {
-                                                            if (!categorias.isEmpty()) {
-                                                                for (dataCategoria categoria : categorias) {
-                                                        %>
-                                                                    <option value="<%= categoria.getNombre() %>"><%= value %> - <%= categoria.getNombre() %></option>
-                                                        <%
-                                                                    value++;
-                                                                }
-                                                            }
-                                                        }
-                                                        %>
-                                                </select>
-                                                <label>Categorias</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="input-field col s12">
-                                                <select id="departamentos">
-                                                    <option value="" disabled selected>No seleccionado</option>
-                                                    <% List<dataDepartamento> departamentos = (List<dataDepartamento>) request.getAttribute("departamentos"); %>
-                                                    <%
-                                                    int value2 = 1;
-                                                    if (departamentos != null) {
-                                                        if (!departamentos.isEmpty()) {
-                                                            for (dataDepartamento departamento : departamentos) {
-                                                    %>
-                                                                <option value="<%= departamento.getNombre() %>"> <%= value2 %> - <%= departamento.getNombre() %></option>
-                                                    <%
-                                                                value2++;
-                                                            }
-                                                        }
-                                                    }
-                                                    %>
-                                                </select>
-                                                <label>Departamentos</label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="page__wrap" id="actividades">
-                                    <!-- Esto se llena con JS. -->
-                                </div>
-                            </section>
-                        </div>
+                    <div class="page__wrap" id="actividades">
+                        <!-- Esto se llena con JS. -->
                     </div>
-                    <!-- MODALS -->
+                    </section>
+                </div>
+            </div>
+        <%@ include file="./utils/footer.jsp" %>
 
-                    <!-- Modal Structure -->
-                    <div id="consultaModal" class="modal">
-                      <div class="modal-content">
-                        <h4>Consulta de Actividad</h4> 
-                        <iframe id="miIframe" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
-                        <form>
-                            <div class="input-field">
-                                <input id="modalNombre" type="text" class="validate" readonly value=" " />
-                                <label for="nombre" class="active">Nombre</label>
-                            </div>
-                            <div class="input-field">
-                                <input id="modalDescripcion" type="text" class="validate" readonly value=" " />
-                                <label for="desc" class="active">Descripción</label>
-                            </div>
-                            <div class="input-field">
-                                <input id="modalCiudad" type="text" class="validate" readonly value=" " />
-                                <label for="ciudad" class="active">Ciudad</label>
-                            </div>
-                            <div class="input-field">
-                                <input id="modalCosto" type="text" class="validate" readonly value=" " />
-                                <label for="costo" class="active">Costo Unitario</label>
-                            </div>
-                            <div class="input-field">
-                                <input id="modalDuracion" type="text" class="validate" readonly value=" " />
-                                <label for="duracion" class="active">Duración</label>
-                            </div>
-                            <div class="input-field">
-                                <input id="modalFecha" type="date" class="validate" readonly value="" />
-                                <label for="fecha" class="active">Fecha</label>
-                            </div>
-                            <div class="divider"></div>
-                            <h4>Categorias</h4>
-                            <ul class="collection" id="listaCategorias">
-                                
-                            </ul>
-                            <div class="divider"></div>
-                            <h4>Salidas</h4>
-                            <ul class="collection" id="listaSalidas">
-                                
-                            </ul>
-                        </form>
-                    </div>
-                        <div class="modal-footer">
-                            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
-                        </div>
-                    </div>
+        <script>
+            $(document).ready(function () {
+                var departamento = document.getElementById("departamentos").value;
+                var categoria = document.getElementById("categorias").value;
+                actualizarActividades(categoria, departamento);
+            });
 
-                    <%@ include file="./utils/footer.jsp" %>
+            $("#categorias").change(function () {
+                var departamento = document.getElementById("departamentos").value;
+                var categoria = document.getElementById("categorias").value;
+                actualizarActividades(categoria, departamento);
+            });
 
-                        <script>
-                            document.addEventListener("DOMContentLoaded", function () {
-                                var modal = M.Modal.init(document.getElementById("consultaModal"));
-                            });
+            $("#departamentos").change(function () {
+                var departamento = document.getElementById("departamentos").value;
+                var categoria = document.getElementById("categorias").value;
+                actualizarActividades(categoria, departamento);
+            });
 
-                            // Agrega un evento de clic al botón "Consultar" (delegación de eventos)
-                            document.addEventListener("click", function (event) {
-                                if (event.target.classList.contains("abrirModalBtn")) {
-                                    // Obtiene los datos de la actividad
-                                    var objeto = event.target.getAttribute("dataActividad");
-                                    var dataActividad = JSON.parse(objeto)
-                                    // var actividadDescripcion = event.target.getAttribute("data-desc");
-                                
-                                    // Llena el modal con los datos de la actividad
-                                    document.getElementById("modalNombre").value = dataActividad.nombre;
-                                    // console.log(dataActividad);
-                                    document.getElementById("modalFecha").value = dataActividad.fechaCrea;
-                                    document.getElementById("modalDescripcion").value = dataActividad.desc;
-                                    document.getElementById("modalCiudad").value = dataActividad.departamento.nombre;
-                                    document.getElementById("modalCosto").value = dataActividad.costoUni;
-                                    document.getElementById("modalDuracion").value = dataActividad.duracion;
-                                    console.log("URL DEL VIDEO --> ", dataActividad.url);
-                                    // document.getElementById("")
-                                    // document.getElementById("modalActividadDescripcion").textContent = actividadDescripcion;
+            function actualizarActividades(categoria, departamento) {
+                // Realiza una solicitud POST al Servlet con el valor seleccionado.
+                $.ajax({
+                    type: "POST",
+                    url: "./homeActividades",
+                    data: { departamento: departamento, categoria: categoria },
+                    dataType: "json",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    error: function () {
+                        var lista = document.getElementById("actividades");
 
-                                    var url = dataActividad.url;
-                                    var videoID = obtenerIDdeVideo(url);
-                                    var embedURL = "https://www.youtube.com/embed/" + videoID + "?autoplay=1";
+                        // Limpia la lista antes de agregar nuevos elementos.
+                        lista.innerHTML = "";
 
-                                    // Imprime la nueva URL en la consola para verificar
-                                    console.log("Nuevo src del iframe: " + embedURL);
+                        var row = document.createElement("div");
+                        row.className = "row";
 
-                                    // Lógica para establecer el iframe o cualquier otra acción necesaria
-                                    var iframe = document.getElementById('miIframe');
-                                    iframe.src = embedURL;
+                        var h2 = document.createElement("h2");
+                        h2.className = "center-align"
+                        h2.innerHTML = "No se encontraron actividades ☹️";
 
-                                    // Función para extraer el ID del video desde la URL completa
-                                    function obtenerIDdeVideo(url) {
-                                        var videoID = "";
-                                        if (url != null && url.includes("youtube.com/watch?v=")) {
-                                            var index = url.indexOf("youtube.com/watch?v=");
-                                            videoID = url.substring(index + 20);
+                        row.appendChild(h2)
 
-                                            // Elimina el parámetro "ab_channel" si está presente
-                                            var abChannelIndex = videoID.indexOf("&ab_channel=");
-                                            if (abChannelIndex !== -1) {
-                                                videoID = videoID.substring(0, abChannelIndex);
-                                            }
-                                        }
-                                        return videoID;
-                                    }
-
-                                    var categoriasList = dataActividad.dtCategorias;
-                                    var salidasList = dataActividad.DtSalidas;
-                                    var contCat = document.getElementById("listaCategorias");
-                                    var contSal = document.getElementById("listaSalidas");
-
-                                    contCat.innerHTML = "";
-                                    contSal.innerHTML = "";
-
-                                    categoriasList.forEach(categoria => {
-                                        let cat = document.createElement("li");
-                                        cat.className = "collection-item";
-                                        cat.textContent = categoria;
-                                        contCat.appendChild(cat);
-                                    });
-
-                                    salidasList.forEach(salida => {
-                                        let sal = document.createElement("li");
-                                        sal.className = "collection-item";
-                                        sal.textContent = salida.nombre + " - " + salida.fechaSalida;
-                                        contSal.appendChild(sal);
-                                    });
-                                
-                                    // Abre el modal
-                                    var modal = M.Modal.init(document.getElementById("consultaModal"));
-                                    modal.open();
-                                }
-                            });
-
-                            $(document).ready(function () {
-                                var departamento = document.getElementById("departamentos").value;
-                                var categoria = document.getElementById("categorias").value;
-                                actualizarActividades(categoria, departamento);
-
-                                // $('#actividades').on('click', '.abrir-modal-btn', function () {
-                                //     console.log("Click");
-                                // });
-                            });
-
-                            $("#categorias").change(function () {
-                                var departamento = document.getElementById("departamentos").value;
-                                var categoria = document.getElementById("categorias").value;
-                                actualizarActividades(categoria, departamento);
-                            });
-
-                            $("#departamentos").change(function () {
-                                var departamento = document.getElementById("departamentos").value;
-                                var categoria = document.getElementById("categorias").value;
-                                actualizarActividades(categoria, departamento);
-                            });
-
-                            function actualizarActividades(categoria, departamento) {
-                                // Realiza una solicitud POST al Servlet con el valor seleccionado.
-                                $.ajax({
-                                    type: "POST",
-                                    url: "./homeActividades",
-                                    data: { departamento: departamento, categoria: categoria },
-                                    dataType: "json",
-                                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-                                    error: function () {
-                                        var lista = document.getElementById("actividades");
-
-                                        // Limpia la lista antes de agregar nuevos elementos.
-                                        lista.innerHTML = "";
-
-                                        var row = document.createElement("div");
-                                        row.className = "row";
-
-                                        var h2 = document.createElement("h2");
-                                        h2.className = "center-align"
-                                        h2.innerHTML = "No se encontraron actividades ☹️";
-
-                                        row.appendChild(h2)
-
-                                        lista.appendChild(row);
-                                        return;
-                                    },
-                                    success: function (actividades) {
-                                        // Procesa la respuesta del Servlet y llena la lista.
-                                        var lista = document.getElementById("actividades");
+                        lista.appendChild(row);
+                        return;
+                    },
+                    success: function (actividades) {
+                        // Procesa la respuesta del Servlet y llena la lista.
+                        var lista = document.getElementById("actividades");
                                         
-                                        // Limpia la lista antes de agregar nuevos elementos.
-                                        lista.innerHTML = "";
+                        // Limpia la lista antes de agregar nuevos elementos.
+                        lista.innerHTML = "";
 
-                                        if (actividades.length == 0) {
-                                            var row = document.createElement("div");
-                                            row.className = "row";
+                        if (actividades.length == 0) {
+                            var row = document.createElement("div");
+                            row.className = "row";
 
-                                            var h2 = document.createElement("h2");
-                                            h2.className = "center-align"
-                                            h2.innerHTML = "No se encontraron actividades ☹️";
+                            var h2 = document.createElement("h2");
+                            h2.className = "center-align"
+                            h2.innerHTML = "No se encontraron actividades ☹️";
 
-                                            row.appendChild(h2)
+                            row.appendChild(h2)
 
-                                            lista.appendChild(row);
-                                            return;
-                                        }
+                            lista.appendChild(row);
+                            return;
+                        }
 
-                                        actividades.forEach(actividad => {
+                        actividades.forEach(actividad => {
+                            // Creamos los elementos HTML.
+                            var row = document.createElement("div");
+                            row.className = "row";
 
-                                            console.log(actividad)
-                                            console.log(actividad.proveedor)
-                                            console.log(actividad.dtCategorias)
-                                            console.log(actividad.DtPaquetes)
-                                            console.log(actividad.DtSalidas)
+                            var col = document.createElement("div");
+                            col.className = "col s12 m6 page__card";
 
-                                            // Creamos los elementos HTML.
-                                            var row = document.createElement("div");
-                                            row.className = "row";
+                            var card = document.createElement("div");
+                            card.className = "card";
 
-                                            var col = document.createElement("div");
-                                            col.className = "col s12 m6 page__card";
+                            var cardImage = document.createElement("div");
+                            cardImage.className = "card-image";
 
-                                            var card = document.createElement("div");
-                                            card.className = "card";
+                            var img = document.createElement("img");
+                            img.src = "src/img/blurry-gradient1.svg";
+                            img.className = "page__card--img";
 
-                                            var cardImage = document.createElement("div");
-                                            cardImage.className = "card-image";
+                            var title = document.createElement("span");
+                            title.className = "card-title page__card--title";
+                            title.textContent = actividad.nombre;
 
-                                            var img = document.createElement("img");
-                                            img.src = "src/img/blurry-gradient1.svg";
-                                            img.className = "page__card--img";
+                            var cardContent = document.createElement("div");
+                            cardContent.className = "card-content page__card--contenido";
 
-                                            var title = document.createElement("span");
-                                            title.className = "card-title page__card--title";
-                                            title.textContent = actividad.nombre;
+                            var paragraph = document.createElement("p");
+                            paragraph.textContent = actividad.desc;
 
-                                            var cardContent = document.createElement("div");
-                                            cardContent.className = "card-content page__card--contenido";
+                            var btnDiv = document.createElement("div");
+                            btnDiv.className = "page__card--btns";
 
-                                            var paragraph = document.createElement("p");
-                                            paragraph.textContent = actividad.desc;
+                            var btn = document.createElement("button");
+                            btn.className = "btn abrirModalBtn";
+                            // btn.href = "#modalConsulta";
+                            // btn.id = "abrirModalBtn"
+                            btn.setAttribute("dataActividad", JSON.stringify(actividad));
+                            btn.textContent = "Consultar";
+                            btn.onclick = function() { consultarActividad(actividad.nombre); };
 
-                                            var btnDiv = document.createElement("div");
-                                            btnDiv.className = "page__card--btns";
-
-                                            var btn = document.createElement("button");
-                                            btn.className = "btn abrirModalBtn";
-                                            // btn.href = "#modalConsulta";
-                                            // btn.id = "abrirModalBtn"
-                                            btn.setAttribute("dataActividad", JSON.stringify(actividad));
-                                            btn.textContent = "Consultar";
-
-                                            // var categoriasList = actividad.dtCategorias;
-                                            // var contCat = document.getElementById("listaCategorias");
-
-                                            // categoriasList.forEach(categoria => {
-                                            //     let cat = document.createElement("li");
-                                            //     cat.className = "collection-item";
-                                            //     cat.textContent = categoria;
-                                            //     contCat.appendChild(cat);
-                                            // });
-                                            // <!-- Modal Trigger -->
-                                                // <button data-target="modal1" class="btn modal-trigger">Modal</button>
-
-                                            // Agrupa los elementos en la estructura deseada
-                                            cardImage.appendChild(img);
-                                            cardImage.appendChild(title);
-                                                                                
-                                            cardContent.appendChild(paragraph);
-                                            cardContent.appendChild(btnDiv);
-                                            btnDiv.appendChild(btn);
-                                                                                
-                                            card.appendChild(cardImage);
-                                            card.appendChild(cardContent);
-                                                                                
-                                            col.appendChild(card);
-                                            row.appendChild(col);
-                                                                                
-                                            // Agrega la fila al contenedor de actividades
-                                            // console.log("Llenando..");
-                                            lista.appendChild(row);
-                                        });
-                                        
-                                    }
-                                });
-                            }   
-                        </script>
-            </body>
-
-            </html>
+                            // Agrupa los elementos en la estructura deseada
+                            cardImage.appendChild(img);
+                            cardImage.appendChild(title);
+                                                                
+                            cardContent.appendChild(paragraph);
+                            cardContent.appendChild(btnDiv);
+                            btnDiv.appendChild(btn);
+                                                                
+                            card.appendChild(cardImage);
+                            card.appendChild(cardContent);
+                                                                
+                            col.appendChild(card);
+                            row.appendChild(col);
+                                                                
+                            // Agrega la fila al contenedor de actividades
+                            // console.log("Llenando..");
+                            lista.appendChild(row);
+                        });
+                        
+                    }
+                });
+            }
+        function consultarActividad(nombreActividad) {
+            console.log("ajnsdonasodnoasndoansdojnasodnaosd", nombreActividad)
+            window.location.href = './consultaActividad?nombreActividad=' + encodeURIComponent(nombreActividad);
+        }
+    </script>
+</body>
+</html>

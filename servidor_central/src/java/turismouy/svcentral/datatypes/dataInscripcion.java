@@ -2,17 +2,19 @@ package turismouy.svcentral.datatypes;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 import turismouy.svcentral.entidades.salida;
 import turismouy.svcentral.entidades.turista;
+import turismouy.svcentral.utilidades.LocalDateAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "dataInscripcion")
 public class dataInscripcion implements Serializable{
+	@XmlJavaTypeAdapter(LocalDateAdapter.class)
 	private LocalDate fecha;
 	private int cant;
 	private int costo;

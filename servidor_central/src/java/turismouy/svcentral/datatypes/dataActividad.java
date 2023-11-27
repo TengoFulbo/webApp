@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import turismouy.svcentral.utilidades.LocalDateAdapter;
 import turismouy.svcentral.utilidades.estadoActividad;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "dataActividad")
@@ -18,6 +20,7 @@ public class dataActividad implements Serializable {
 	private int duracion;
 	private int costoUni;
 	private String ciudad;
+	@XmlJavaTypeAdapter(LocalDateAdapter.class)
 	private LocalDate fechaCrea;
 	private estadoActividad estado;
 	private String url;
