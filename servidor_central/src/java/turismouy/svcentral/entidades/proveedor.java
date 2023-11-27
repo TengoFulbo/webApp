@@ -127,6 +127,7 @@ public class proveedor extends usuario {
 											this.descripcion,
 											this.url,
 											imagenBase64,
+											null,
 											dataActividades,
 											dataSalidas);
 		return dt;
@@ -149,6 +150,7 @@ public class proveedor extends usuario {
 											this.descripcion,
 											this.url,
 											imagenBase64,
+											null,
 											null,
 											null);
 		return dt;

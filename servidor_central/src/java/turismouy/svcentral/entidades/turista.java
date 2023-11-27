@@ -66,7 +66,7 @@ import turismouy.svcentral.datatypes.dataUsuario;
             for (inscripcion inscripcion : this.inscripciones) {
                 dataSalida dtSalida = inscripcion.getSalida().toDataTypeWithoutActividades();
                 dataSalidas.add(dtSalida);
-                dataInscripciones.add(inscripcion.toDatatype(inscripcion));
+                dataInscripciones.add(inscripcion.toDatatype());
             }
         } else {
             dataSalidas = null;
@@ -89,6 +89,7 @@ import turismouy.svcentral.datatypes.dataUsuario;
                             null,
                             null,
                             imagenBase64,
+                            dataInscripciones,
                             null,
                             dataSalidas);
 
