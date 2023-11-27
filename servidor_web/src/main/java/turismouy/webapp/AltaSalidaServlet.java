@@ -59,7 +59,7 @@ public class AltaSalidaServlet extends HttpServlet {
 
         //ISalidaController ISC = Fabrica.getInstance().getISalidaController();
         Publicador API = new PublicadorService().getPublicadorPort();
-        API.salidaCrearSalida(nombreSalida, capacidad, LocalDate.now(), fechaSalida, lugarSalida, nombreActividad);
+        //API.salidaCrearSalida(nombreSalida, capacidad, LocalDate.now(), fechaSalida, lugarSalida, nombreActividad);
         try {
             // void crearSalida(String nombre, int capacidad, LocalDate fechaAlta, LocalDate fechaSalida, String lugarSalida, String nombreActividad)
         	//ISC.crearSalida(nombreSalida, capacidad, LocalDate.now(), fechaSalida, lugarSalida, nombreActividad);

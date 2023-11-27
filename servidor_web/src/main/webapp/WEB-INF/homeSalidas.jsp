@@ -1,14 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ page import="java.util.List" %>
-<%@ page import="turismouy.svcentral.datatypes.dataActividad" %>
-<%@ page import="turismouy.svcentral.datatypes.dataDepartamento" %>
-<%@ page import="turismouy.svcentral.datatypes.dataCategoria" %>
-<%@ page import="turismouy.svcentral.datatypes.dataSalida" %>
-<%@ page import="turismouy.svcentral.interfaces.IActividadController" %>
-<%@ page import="turismouy.svcentral.interfaces.ISalidaController" %>
-<%@ page import="turismouy.svcentral.interfaces.IDepartamentoController" %>
-<%@ page import="turismouy.svcentral.interfaces.ICategoriaController" %>
+<%@ page import="turismouy.svcentral.middlewares.Publicador" %>
+<%@ page import="turismouy.svcentral.middlewares.PublicadorService" %>
+<%@ page import="turismouy.svcentral.middlewares.DataActividad" %>
+<%@ page import="turismouy.svcentral.middlewares.DataDepartamento" %>
+<%@ page import="turismouy.svcentral.middlewares.DataCategoria" %>
+<%@ page import="turismouy.svcentral.middlewares.DataSalida" %>
 
 <%@ include file="./utils/head.jsp" %>
 
@@ -49,12 +47,12 @@
               <div class="input-field col s12">
                 <select id="categorias" >
                   <option value="" disabled selected>No seleccionado</option>
-                  <% List<dataCategoria> categorias = (List<dataCategoria>) request.getAttribute("categorias"); %>
+                  <% List<DataCategoria> categorias = (List<DataCategoria>) request.getAttribute("categorias"); %>
                   <%
                   int value = 1;
                   if (categorias != null) {
                       if (!categorias.isEmpty()) {
-                          for (dataCategoria categoria : categorias) {
+                          for (DataCategoria categoria : categorias) {
                   %>
                               <option value="<%= categoria.getNombre() %>"><%= value %> - <%= categoria.getNombre() %></option>
                   <%
@@ -71,12 +69,12 @@
               <div class="input-field col s12">
                 <select id="departamentos">
                   <option value="" disabled selected>No seleccionado</option>
-                  <% List<dataDepartamento> departamentos = (List<dataDepartamento>) request.getAttribute("departamentos"); %>
+                  <% List<DataDepartamento> departamentos = (List<DataDepartamento>) request.getAttribute("departamentos"); %>
                   <%
                   int value2 = 1;
                   if (departamentos != null) {
                       if (!departamentos.isEmpty()) {
-                          for (dataDepartamento departamento : departamentos) {
+                          for (DataDepartamento departamento : departamentos) {
                   %>
                               <option value="<%= departamento.getNombre() %>"> <%= value2 %> - <%= departamento.getNombre() %></option>
                   <%
@@ -94,12 +92,12 @@
               <div class="input-field col s12">
                 <select id="actividades">
                   <option value="" disabled selected>No seleccionado</option>
-                  <% List<dataActividad> listActividades = (List<dataActividad>) request.getAttribute("actividades"); %>
+                  <% List<DataActividad> listActividades = (List<DataActividad>) request.getAttribute("actividades"); %>
                   <%
                   int value3 = 1;
                   if (listActividades != null) {
                       if (!listActividades.isEmpty()) {
-                          for (dataActividad act : listActividades) {
+                          for (DataActividad act : listActividades) {
                   %>
                               <option value="<%= act.getNombre() %>"> <%= value3 %> - <%= act.getNombre() %></option>
                   <%
@@ -316,68 +314,107 @@
                     return;
                 }
 
-                salidas.forEach(salida => {
-                    // Crea los elementos HTML para cada salida.
-                    var row = document.createElement("div");
-                    row.className = "row";
+                function actualizarActividades(categoria, departamento, actividad) {
+                    // Realiza una solicitud POST al Servlet con el valor seleccionado.
+                    $.ajax({
+                        type: "POST",
+                        url: "./homeSalidas",
+                        data: { departamento: departamento, categoria: categoria, actividad: actividad },
+                        dataType: "json",
+                        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                        success: function (salidas) {
+                            // Procesa la respuesta del Servlet y llena la lista.
+                            var lista = document.getElementById("salidas");
 
-                    var col = document.createElement("div");
-                    col.className = "col s12 m6 page__card";
+                            // Limpia la lista antes de agregar nuevos elementos.
+                            lista.innerHTML = "";
 
-                    var card = document.createElement("div");
-                    card.className = "card";
+                            if (salidas.length == 0) {
+                                var row = document.createElement("div");
+                                row.className = "row";
 
-                    var cardImage = document.createElement("div");
-                    cardImage.className = "card-image";
+                                var h2 = document.createElement("h2");
+                                h2.className = "center-align"
+                                h2.innerHTML = "No se encontraron salidas ☹️";
 
-                    var img = document.createElement("img");
-                    img.src = "src/img/blurry-gradient1.svg";
-                    img.className = "page__card--img";
+                                row.appendChild(h2)
 
-                    var title = document.createElement("span");
-                    title.className = "card-title page__card--title";
-                    title.textContent = salida.nombre;
+                                lista.appendChild(row);
+                                return;
+                            }
 
-                    var cardContent = document.createElement("div");
-                    cardContent.className = "card-content page__card--contenido";
+                            salidas.forEach(salida => {
+                                // Crea los elementos HTML para cada salida.
+                                var row = document.createElement("div");
+                                row.className = "row";
 
-                    var paragraph = document.createElement("p");
-                    paragraph.textContent = salida.lugarSalida;
+                                var col = document.createElement("div");
+                                col.className = "col s12 m6 page__card";
 
-                    var btnDiv = document.createElement("div");
-                    btnDiv.className = "page__card--btns";
+                                var card = document.createElement("div");
+                                card.className = "card";
 
-                    var btn = document.createElement("button");
-                    btn.className = "btn abrirModalBtn";
-                    btn.setAttribute("dataSalida", JSON.stringify(salida));
-                    btn.textContent = "Consultar";
+                                var cardImage = document.createElement("div");
+                                cardImage.className = "card-image";
 
-                    var btnRegistro = document.createElement("button");
-                    btnRegistro.className = "btn abrirRegistrar";
-                    btnRegistro.setAttribute("dataSalida", JSON.stringify(salida));
-                    btnRegistro.textContent = "Resgistrarse";
-                    btnRegistro.style.marginLeft = "10px";
+                                var img = document.createElement("img");
+                                img.src = "src/img/blurry-gradient1.svg";
+                                img.className = "page__card--img";
 
-                    // Agrupa los elementos en la estructura deseada
-                    cardImage.appendChild(img);
-                    cardImage.appendChild(title);
-                                                                
-                    cardContent.appendChild(paragraph);
-                    cardContent.appendChild(btnDiv);
-                    btnDiv.appendChild(btn);
-                    btnDiv.appendChild(btnRegistro);
-                                                                
-                    card.appendChild(cardImage);
-                    card.appendChild(cardContent);
-                                                                
-                    col.appendChild(card);
-                    row.appendChild(col);
-                                                                
-                    // Agrega la fila al contenedor de salidas
-                    lista.appendChild(row);
-                });
-                
-            }
+                                var title = document.createElement("span");
+                                title.className = "card-title page__card--title";
+                                title.textContent = salida.nombre;
+
+                                var cardContent = document.createElement("div");
+                                cardContent.className = "card-content page__card--contenido";
+
+                                var paragraph = document.createElement("p");
+                                paragraph.textContent = salida.lugarSalida;
+
+                                var btnDiv = document.createElement("div");
+                                btnDiv.className = "page__card--btns";
+
+                                var btn = document.createElement("button");
+                                btn.className = "btn abrirModalBtn";
+                                btn.setAttribute("dataSalida", JSON.stringify(salida));
+                                btn.textContent = "Consultar";
+
+                                var btnRegistro = document.createElement("button");
+                                btnRegistro.className = "btn abrirRegistrar";
+                                btnRegistro.setAttribute("dataSalida", JSON.stringify(salida));
+                                btnRegistro.textContent = "Resgistrarse";
+                                btnRegistro.style.marginLeft = "10px";
+
+                                // Agrupa los elementos en la estructura deseada
+                                cardImage.appendChild(img);
+                                cardImage.appendChild(title);
+
+                                cardContent.appendChild(paragraph);
+                                cardContent.appendChild(btnDiv);
+                                btnDiv.appendChild(btn);
+                                btnDiv.appendChild(btnRegistro);
+
+                                card.appendChild(cardImage);
+                                card.appendChild(cardContent);
+
+                                col.appendChild(card);
+                                row.appendChild(col);
+
+                                // Agrega la fila al contenedor de salidas
+                                lista.appendChild(row);
+                            });
+
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error en la solicitud AJAX:", status, error);
+                            // Puedes agregar lógica adicional para manejar el error aquí, por ejemplo, mostrar un mensaje de error al usuario.
+                        },
+                        complete: function (xhr, status) {
+                            console.log("Solicitud AJAX completada:", status);
+                        }
+                    });
+                }
+
         });
     }   
 </script>

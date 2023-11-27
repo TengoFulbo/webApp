@@ -15,14 +15,19 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import turismouy.svcentral.interfaces.IActividadController;
-import turismouy.svcentral.interfaces.ICategoriaController;
-import turismouy.svcentral.interfaces.IDepartamentoController;
-import turismouy.svcentral.Fabrica;
-import turismouy.svcentral.datatypes.dataActividad;
-import turismouy.svcentral.datatypes.dataCategoria;
-import turismouy.svcentral.datatypes.dataDepartamento;
-import turismouy.svcentral.utilidades.log;
+//import turismouy.svcentral.interfaces.IActividadController;
+//import turismouy.svcentral.interfaces.IDepartamentoController;
+//import turismouy.svcentral.Fabrica;
+//import turismouy.svcentral.interfaces.ICategoriaController;
+//import turismouy.svcentral.datatypes.dataActividad;
+//import turismouy.svcentral.datatypes.dataCategoria;
+//import turismouy.svcentral.datatypes.dataDepartamento;
+import turismouy.webapp.utils.log;
+import turismouy.svcentral.middlewares.DataActividad;
+import turismouy.svcentral.middlewares.DataCategoria;
+import turismouy.svcentral.middlewares.DataDepartamento;
+import turismouy.svcentral.middlewares.Publicador;
+import turismouy.svcentral.middlewares.PublicadorService;
 import turismouy.webapp.utils.LocalDateAdapter;
 
 @WebServlet("/homeActividades")
@@ -30,16 +35,21 @@ public class HomeActividades extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         request.setAttribute("pageTitle", "Actividades - TurismoUY");
+        
+        Publicador API = new PublicadorService().getPublicadorPort();
 
-        IActividadController IAC = Fabrica.getInstance().getIActividadController();
-        IDepartamentoController IAD = Fabrica.getInstance().getIDepartamentoController();
-        ICategoriaController ICC = Fabrica.getInstance().getICategoriaController();
+        //IActividadController IAC = Fabrica.getInstance().getIActividadController();
+        //IDepartamentoController IAD = Fabrica.getInstance().getIDepartamentoController();
+        //ICategoriaController ICC = Fabrica.getInstance().getICategoriaController();
 
-        List<dataActividad> actividadesList = IAC.getAllActividades();
+        //List<DataActividad> actividadesList = IAC.getAllActividades();
+        List<DataActividad> actividadesList = API.actividadGetAllActividades();
 
-        List<dataDepartamento> departamentos = IAD.listarDepartamentos();
+        //List<DataDepartamento> departamentos = IAD.listarDepartamentos();
+        List<DataDepartamento> departamentos = API.departamentoListarDepartamentos();
 
-        List<dataCategoria> categorias = ICC.listarCategorias();
+        //List<DataCategoria> categorias = ICC.listarCategorias();
+        List<DataCategoria> categorias = API.categoriaListarCategorias();
 
         request.setAttribute("actividades", actividadesList);
         request.setAttribute("departamentos", departamentos);
@@ -63,9 +73,11 @@ public class HomeActividades extends HttpServlet {
 
         log.info("[homeActividades Post]");
 
-        IActividadController IAC = Fabrica.getInstance().getIActividadController();
+        //IActividadController IAC = Fabrica.getInstance().getIActividadController();
+        Publicador API = new PublicadorService().getPublicadorPort();
         
-        List<dataActividad> actividadesList = IAC.getAllActividades();
+        // List<dataActividad> actividadesList = IAC.getAllActividades();
+        List<DataActividad> actividadesList = API.actividadGetAllActividades();
 
         if (actividadesList == null) {
             System.out.println("[homeActividades] No hay actividades");
@@ -75,11 +87,12 @@ public class HomeActividades extends HttpServlet {
         }
 
         // Creamos una lista que contendrá las actividades a eliminar
-        List<dataActividad> actEliminar = new ArrayList<dataActividad>();
+        // List<dataActividad> actEliminar = new ArrayList<dataActividad>();
+        List<DataActividad> actEliminar = new ArrayList<DataActividad>();
         
         // Filtramos departamento
         if (!departamento.equals("")) {
-            for (dataActividad actividad : actividadesList) {
+            for (DataActividad actividad : actividadesList) {
                 if (!actividad.getDepartamento().getNombre().equals(departamento)) {
                     actEliminar.add(actividad);
                     // log.info("[homeActividades] Actividad: " + actividad.getNombre() + " se elimina por el filtro departamento");
@@ -89,7 +102,7 @@ public class HomeActividades extends HttpServlet {
 
         // Filtramos por categoria
         if (!categoria.equals("")) {
-            for(dataActividad actividad : actividadesList) {
+            for(DataActividad actividad : actividadesList) {
                 if (!actividad.getDtCategorias().contains(categoria)) {
                     actEliminar.add(actividad);
                     // log.info("[homeActividades] Actividad: " + actividad.getNombre() + " se elimina por el filtro categoria");
