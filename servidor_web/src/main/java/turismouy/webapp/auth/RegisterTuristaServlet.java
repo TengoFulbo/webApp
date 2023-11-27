@@ -32,12 +32,12 @@ public class RegisterTuristaServlet extends HttpServlet {
         String nacionalidad = null; // Requiere turista.
 
         nickname        = request.getParameter("nickname");
-        nombre          = request.getParameter("nombre");
-        apellido        = request.getParameter("apellido");
+        nombre          = request.getParameter("nombreT");
+        apellido        = request.getParameter("apellidoT");
         email           = request.getParameter("email");
-        fechaN          = request.getParameter("fechaN");
-        nacionalidad    = request.getParameter("nacionalidad");
-        password        = request.getParameter("password");
+        fechaN          = request.getParameter("fechaNT");
+        nacionalidad    = request.getParameter("nacionalidadT");
+        password        = request.getParameter("passwordT");
 
         if (nickname == null || nickname == "" ||
             nombre == null || nombre == "" ||

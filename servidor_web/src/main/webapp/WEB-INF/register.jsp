@@ -38,14 +38,20 @@
             <span>Registrate como proveedor</span>
             <input id="nickIdP" name="nickname" type="text" placeholder="Nickname" />
             <span id="spanResultadoP"></span>
-            <input name="nombre" type="text" placeholder="Nombre" />
-            <input name="apellido" type="text" placeholder="Apellido" />
-            <input name="email" type="email" placeholder="Email" />
-            <input name="fechaN" type="date" placeholder="Fecha de nacimiento" />
-            <input name="desc" type="text" placeholder="Descripcion" />
-            <input name="url" type="text" placeholder="Sitio Web" />
-            <input name="password" type="password" placeholder="Password" />
-            <input name="repitPassword" type="password" placeholder="Repite Password" />
+            <input name="nombreP" type="text" placeholder="Nombre" />
+            <span id="spanResultadoNombreP"></span>        
+            <input name="apellidoP" type="text" placeholder="Apellido" />
+            <span id="spanResultadoApellidoP"></span>          
+            <input id="emailIdP" name="email" type="email" placeholder="Email" />
+            <span id="spanResultadoCorreoP"></span>
+            <input name="fechaNP" type="date" placeholder="Fecha de nacimiento" />
+            <input name="descP" type="text" placeholder="Descripcion" />
+            <span id="spanResultadoDescP"></span>
+            <input name="urlP" type="text" placeholder="Sitio Web" />
+            <span id="spanResultadoUrlP"></span>
+            <input name="passwordP" type="password" placeholder="Password" />
+            <input name="repitPasswordP" type="password" placeholder="Repite Password" />
+            <span id="spanResultadoPasswordP"></span>
             <button>Registrarse</button>
           </form>
         </div>
@@ -60,13 +66,20 @@
             <span>Quieres registrarte como turista? hazlo!</span>
             <input id="nickIdT" name="nickname" type="text" placeholder="Nickname" />
             <span id="spanResultadoT"></span>
-            <input name="nombre" type="text" placeholder="Nombre" />
-            <input name="apellido" type="text" placeholder="Apellido" />
-            <input name="email" type="email" placeholder="Email" />
-            <input name="fechaN" type="date" placeholder="Fecha de nacimiento" />
-            <input name="nacionalidad" type="text" placeholder="Nacionalidad" />
-            <input name="password" type="password" placeholder="Password" /> 
-            <button>Registrarse</button>
+            <input name="nombreT" type="text" placeholder="Nombre" />
+            <span id="spanResultadoNombreT"></span>
+            <input name="apellidoT" type="text" placeholder="Apellido" />
+            <span id="spanResultadoApellidoT"></span>
+            <input id="emailIdT" name="email" type="email" placeholder="Email" />
+            <span id="spanResultadoCorreoT"></span>
+            <input name="fechaNT" type="date" placeholder="Fecha de nacimiento" />
+            <input name="nacionalidadT" type="text" placeholder="Nacionalidad" />
+            <span id="spanResultadoNacionalidadT"></span>
+            <input name="passwordT" type="password" placeholder="Password" /> 
+            <input name="repitPasswordT" type="password" placeholder="Repite password" />
+			<span id="spanResultadoPasswordT"></span>
+			<button>Registrarse</button>
+            <!--<button id="botonId">Registrarse</button>-->
           </form>
         </div>
         <div class="overlay-container">
@@ -180,6 +193,357 @@
 	            validarNickConCooldown(valorInput);
 	        }, cooldownTime);
 	    });
+	    
+	    
+	    
+	    
+	    // Función para manejar la respuesta del servidor
+	    function otraFuncionParaMail(respuesta) {
+	        // Acceder al elemento span en tu HTML
+	        var spanResultadoCorreo = $("#spanResultadoCorreo");
+	
+	        // Actualizar el contenido del span según la respuesta del servidor
+	        if (respuesta.valido) {
+	            spanResultado.text("El email es válido");
+	        } else {
+	            spanResultado.text("El email NO es válido");
+	        }
+	    }
+	    
+	 // Función para validar el email con un "cooldown"
+	    function validarEmailConCooldown(valorInput) {
+		 
+	        // Realizar la solicitud AJAX
+	        $.ajax({
+	            type: "POST",
+	            url: "validarCorreo", // Ajusta la URL según tu configuración
+	            data: {valor: valorInput},
+	            success: function (respuesta) {
+	                // Manejar la respuesta del servidor
+	                console.log(respuesta);
+	                // Aquí puedes ejecutar otra función con la respuesta
+	                otraFuncionParaEmail(respuesta);
+	            }
+	        });
+	    }
+	 
+	    function otraFuncionParaEmail(respuesta) {
+	        var spanResultadoCorreoT = $("#spanResultadoCorreoT");
+	        var spanResultadoCorreoP = $("#spanResultadoCorreoP");
+	        if (respuesta.valido) {
+		    	var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+		    	// Verificar si el nombre cumple con la expresión regular y no es vacío
+		        var esEmailValido = regex.test(valorInput) && valorInput.trim() !== '';
+		        if (esEmailValido) {
+		            spanResultadoCorreoP.text("El email es válido");
+		            spanResultadoCorreoT.text("El email es válido");
+		            console.log("El email es válido");
+		        } else {
+		            spanResultadoCorreoP.text("El email NO es válido (debe de tener un fromato parecido a este: prueba@gmail.com, y no puede ser vacio)");
+		            spanResultadoCorreoT.text("El email NO es válido (debe de tener un fromato parecido a este: prueba@gmail.com, y no puede ser vacio)");
+		            console.log("El email NO es válido");
+		        }
+	        } else {
+	            spanResultadoCorreoT.text("El email NO es válido (debe de tener un fromato parecido a este: prueba@gmail.com, y no puede ser vacio)");
+	            spanResultadoCorreoP.text("El email NO es válido (debe de tener un fromato parecido a este: prueba@gmail.com, y no puede ser vacio)");
+	            console.log("El email NO es válido");
+	        }
+	    }
+	    
+	    // Asociar el evento oninput al input con cooldown para #nickIdP
+	    $("#emailIdP").on("input", function () {
+	        // Limpiar el temporizador si existe
+	        clearTimeout(cooldownTimerP);
+	
+	        // Configurar un nuevo temporizador
+	        cooldownTimerP = setTimeout(function () {
+	            // Obtener el valor actual del input
+	            var valorInputCorreoTurista = $("#emailIdT").val();
+	            var valorInputCorreoProveedor = $("#emailIdP").val();
+	
+	            if (valorInputCorreoProveedor !== "") {
+	                valorInput = valorInputCorreoProveedor;
+	            } else {
+	                valorInput = valorInputCorreoTurista;
+	            }
+	
+	            // Llamar a la función ejecutarConAjax después del "cooldown"
+	            validarEmailConCooldown(valorInput);
+	        }, cooldownTime);
+	    });
+	    
+	    // Asociar el evento oninput al input con cooldown para #nickIdT
+	    $("#emailIdT").on("input", function () {
+	        // Limpiar el temporizador si existe
+	        clearTimeout(cooldownTimerT);
+	
+	        // Configurar un nuevo temporizador
+	        cooldownTimerT = setTimeout(function () {
+	            // Obtener el valor actual del input
+	            var valorInputCorreoTurista = $("#emailIdT").val();
+	            var valorInputCorreoProveedor = $("#emailIdP").val();
+	
+	            if (valorInputCorreoTurista !== "") {
+	                valorInput = valorInputCorreoTurista;
+	            } else {
+	                valorInput = valorInputCorreoProveedor;
+	            }
+	
+	            // Llamar a la función ejecutarConAjax después del "cooldown"
+	            validarEmailConCooldown(valorInput);
+	        }, cooldownTime);
+	    });
+	    
+	    // Función para validar el nombre con un "cooldown"
+	    function validarNombreConCooldown(valorInput) {
+	        // Expresión regular para permitir solo letras y espacios, sin comillas
+	        var regex = /^[a-zA-Z\s]+$/;
+
+	        // Verificar si el nombre cumple con la expresión regular y no es vacío
+	        var esNombreValido = regex.test(valorInput) && valorInput.trim() !== '';
+
+	        // Acceder al elemento span correspondiente en tu HTML
+	        var spanResultadoNombreP = $("#spanResultadoNombreP");
+	        var spanResultadoNombreT = $("#spanResultadoNombreT");
+
+	        // Actualizar el contenido del span según la validación
+	        if (esNombreValido) {
+	            spanResultadoNombreP.text("El nombre es válido");
+	            spanResultadoNombreT.text("El nombre es válido");
+	        } else {
+	            spanResultadoNombreP.text("El nombre NO es válido (solo letras y espacios, no puede estar vacío)");
+	            spanResultadoNombreT.text("El nombre NO es válido (solo letras y espacios, no puede estar vacío)");
+	        }
+	    }
+
+	    // Asociar el evento oninput al input con cooldown para #nombre en proveedor
+	    $("input[name='nombreP']").on("input", function () {
+	        // Limpiar el temporizador si existe
+	        clearTimeout(cooldownTimerP);
+
+	        // Configurar un nuevo temporizador
+	        cooldownTimerP = setTimeout(function () {
+	            // Obtener el valor actual del input
+	            var valorInputNombre = $("input[name='nombreP']").val();
+
+	            // Llamar a la función validarNombreConCooldown después del "cooldown"
+	            validarNombreConCooldown(valorInputNombre);
+	        }, cooldownTime);
+	    });
+
+	    // Asociar el evento oninput al input con cooldown para #nombre en turista
+	    $("input[name='nombreT']").on("input", function () {
+	        // Limpiar el temporizador si existe
+	        clearTimeout(cooldownTimerT);
+
+	        // Configurar un nuevo temporizador
+	        cooldownTimerT = setTimeout(function () {
+	            // Obtener el valor actual del input
+	            var valorInputNombre = $("input[name='nombreT']").val();
+
+	            // Llamar a la función validarNombreConCooldown después del "cooldown"
+	            validarNombreConCooldown(valorInputNombre);
+	        }, cooldownTime);
+	    });
+	    
+	    // Función para validar el apellido con un "cooldown"
+	    function validarApellidoConCooldown(valorInput) {
+	        // Expresión regular para permitir solo letras y espacios
+	        var regex = /^[a-zA-Z\s']+$/;
+
+	        // Verificar si el apellido cumple con la expresión regular y no es vacío
+	        var esApellidoValido = regex.test(valorInput) && valorInput.trim() !== '';
+
+	        // Acceder al elemento span correspondiente en tu HTML
+	        var spanResultadoApellidoP = $("#spanResultadoApellidoP");
+	        var spanResultadoApellidoT = $("#spanResultadoApellidoT");
+
+	        // Actualizar el contenido del span según la validación
+	        if (esApellidoValido) {
+	            spanResultadoApellidoP.text("El apellido es válido");
+	            spanResultadoApellidoT.text("El apellido es válido");
+	        } else {
+	            spanResultadoApellidoP.text("El apellido NO es válido (solo letras y espacios, no puede estar vacío)");
+	            spanResultadoApellidoT.text("El apellido NO es válido (solo letras y espacios, no puede estar vacío)");
+	        }
+	    }
+
+	    // Asociar el evento oninput al input con cooldown para #apellido en proveedor
+	    $("input[name='apellidoP']").on("input", function () {
+	        // Limpiar el temporizador si existe
+	        clearTimeout(cooldownTimerP);
+
+	        // Configurar un nuevo temporizador
+	        cooldownTimerP = setTimeout(function () {
+	            // Obtener el valor actual del input
+	            var valorInputApellido = $("input[name='apellidoP']").val();
+
+	            // Llamar a la función validarApellidoConCooldown después del "cooldown"
+	            validarApellidoConCooldown(valorInputApellido);
+	        }, cooldownTime);
+	    });
+
+	    // Asociar el evento oninput al input con cooldown para #apellido en turista
+	    $("input[name='apellidoT']").on("input", function () {
+	        // Limpiar el temporizador si existe
+	        clearTimeout(cooldownTimerT);
+
+	        // Configurar un nuevo temporizador
+	        cooldownTimerT = setTimeout(function () {
+	            // Obtener el valor actual del input
+	            var valorInputApellido = $("input[name='apellidoT']").val();
+
+	            // Llamar a la función validarApellidoConCooldown después del "cooldown"
+	            validarApellidoConCooldown(valorInputApellido);
+	        }, cooldownTime);
+	    });
+	    
+	    // Función para validar la descripción solo cuando está vacía
+	    function validarDescripcionConCooldown(valorInput) {
+	        // Verificar si la descripción está vacía
+	        var esDescripcionVacia = valorInput.trim() === '';
+
+	        // Acceder al elemento span correspondiente en tu HTML
+	        var spanResultadoDescP = $("#spanResultadoDescP");
+
+	        // Actualizar el contenido del span solo si la descripción está vacía
+	        if (esDescripcionVacia) {
+	            spanResultadoDescP.text("La descripción no puede estar vacía");
+	        } else {
+	            spanResultadoDescP.text("La descripcion es valida");
+	        }
+	    }
+
+	    // Asociar el evento oninput al input con cooldown para #descP
+	    $("input[name='descP']").on("input", function () {
+	        // Limpiar el temporizador si existe
+	        clearTimeout(cooldownTimerP);
+
+	        // Configurar un nuevo temporizador
+	        cooldownTimerP = setTimeout(function () {
+	            // Obtener el valor actual del input
+	            var valorInputDesc = $("input[name='descP']").val();
+
+	            // Llamar a la función validarDescripcionConCooldown después del "cooldown"
+	            validarDescripcionConCooldown(valorInputDesc);
+	        }, cooldownTime);
+	    });
+	    
+	    // Función para validar la URL solo cuando está vacía
+	    function validarUrlConCooldown(valorInput) {
+	        // Verificar si la URL está vacía
+	        var esUrlVacia = valorInput.trim() === '';
+
+	        // Acceder al elemento span correspondiente en tu HTML
+	        var spanResultadoUrlP = $("#spanResultadoUrlP");
+
+	        // Actualizar el contenido del span solo si la URL está vacía
+	        if (esUrlVacia) {
+	            spanResultadoUrlP.text("La URL no puede estar vacía");
+	        } else {
+	            spanResultadoUrlP.text("La URL es valida");
+	        }
+	    }
+
+	    // Asociar el evento oninput al input con cooldown para #urlP
+	    $("input[name='urlP']").on("input", function () {
+	        // Limpiar el temporizador si existe
+	        clearTimeout(cooldownTimerP);
+
+	        // Configurar un nuevo temporizador
+	        cooldownTimerP = setTimeout(function () {
+	            // Obtener el valor actual del input
+	            var valorInputUrl = $("input[name='urlP']").val();
+
+	            // Llamar a la función validarUrlConCooldown después del "cooldown"
+	            validarUrlConCooldown(valorInputUrl);
+	        }, cooldownTime);
+	    });
+	    
+	    // Función para validar la nacionalidad solo cuando está vacía
+	    function validarNacionalidadConCooldown(valorInput) {
+	        // Verificar si la nacionalidad está vacía
+	        var esNacionalidadVacia = valorInput.trim() === '';
+
+	        // Acceder al elemento span correspondiente en tu HTML
+	        var spanResultadoNacionalidadT = $("#spanResultadoNacionalidadT");
+
+	        // Actualizar el contenido del span solo si la nacionalidad está vacía
+	        if (esNacionalidadVacia) {
+	            spanResultadoNacionalidadT.text("La nacionalidad no puede estar vacía");
+	        } else {
+	            spanResultadoNacionalidadT.text("La nacionalidad es valida");
+	        }
+	    }
+
+	    // Asociar el evento oninput al input con cooldown para #nacionalidadT
+	    $("input[name='nacionalidadT']").on("input", function () {
+	        // Limpiar el temporizador si existe
+	        clearTimeout(cooldownTimerT);
+
+	        // Configurar un nuevo temporizador
+	        cooldownTimerT = setTimeout(function () {
+	            // Obtener el valor actual del input
+	            var valorInputNacionalidad = $("input[name='nacionalidadT']").val();
+
+	            // Llamar a la función validarNacionalidadConCooldown después del "cooldown"
+	            validarNacionalidadConCooldown(valorInputNacionalidad);
+	        }, cooldownTime);
+	    });
+	    
+	 // Function to validate if the password and repeat password fields are equal
+	    function validarPasswordTurista() {
+	        // Get the values of password and repeat password fields
+	        var password = $("input[name='passwordT']").val();
+	        var repeatPassword = $("input[name='repitPasswordT']").val();
+
+	        // Access the span element for displaying the validation result
+	        var spanResultadoPasswordT = $("#spanResultadoPasswordT");
+
+	        // Check if the passwords match
+	        if (password === repeatPassword) {
+	            spanResultadoPasswordT.text("Las contraseñas coinciden");
+	            ocument.getElementById("botonId").disabled = false;
+	        } else {
+	            spanResultadoPasswordT.text("Las contraseñas no coinciden");
+	            document.getElementById("botonId").disabled = true;
+	        }
+	    }
+
+	    // Associate the event oninput to the input fields for password and repeat password for Turista
+	    $("input[name='passwordT'], input[name='repitPasswordT']").on("input", function () {
+	        // Call the validation function after a brief cooldown
+	        clearTimeout(cooldownTimerT);
+	        cooldownTimerT = setTimeout(validarPasswordTurista, cooldownTime);
+	    });
+	    
+		 // Function to validate if the password and repeat password fields are equal
+	    function validarPasswordProveedor() {
+	        // Get the values of password and repeat password fields
+	        var passwordP = $("input[name='passwordP']").val();
+	        var repeatPasswordP = $("input[name='repitPasswordP']").val();
+
+	        // Access the span element for displaying the validation result
+	        var spanResultadoPasswordP = $("#spanResultadoPasswordP");
+
+	        // Check if the passwords match
+	        if (passwordP === repeatPasswordP) {
+	            spanResultadoPasswordP.text("Las contraseñas coinciden");
+	            ocument.getElementById("botonId").disabled = false;
+	        } else {
+	            spanResultadoPasswordP.text("Las contraseñas no coinciden");
+	            document.getElementById("botonId").disabled = true;
+	        }
+	    }
+
+	    // Associate the event oninput to the input fields for password and repeat password for Turista
+	    $("input[name='passwordP'], input[name='repitPasswordP']").on("input", function () {
+	        // Call the validation function after a brief cooldown
+	        clearTimeout(cooldownTimerT);
+	        cooldownTimerT = setTimeout(validarPasswordProveedor, cooldownTime);
+	    });
+	    
+	    
 	</script>
   </body>
 </html>
