@@ -13,11 +13,13 @@ import turismouy.svcentral.Fabrica;
 import turismouy.svcentral.datatypes.dataActividad;
 import turismouy.svcentral.datatypes.dataCategoria;
 import turismouy.svcentral.datatypes.dataDepartamento;
+import turismouy.svcentral.datatypes.dataPaquete;
 import turismouy.svcentral.datatypes.dataSalida;
 import turismouy.svcentral.datatypes.dataUsuario;
 import turismouy.svcentral.interfaces.IActividadController;
 import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.interfaces.IDepartamentoController;
+import turismouy.svcentral.interfaces.IPaqueteController;
 import turismouy.svcentral.interfaces.ISalidaController;
 import turismouy.svcentral.interfaces.IUsuarioController;
 import turismouy.svcentral.utilidades.log;
@@ -34,6 +36,7 @@ public class publicador {
 	IDepartamentoController IDC = Fabrica.getInstance().getIDepartamentoController();
 	ICategoriaController 	ICC = Fabrica.getInstance().getICategoriaController();
 	ISalidaController 		ISC = Fabrica.getInstance().getISalidaController();
+	IPaqueteController 		IPC = Fabrica.getInstance().getIPaqueteController();
 
     private Endpoint endpoint = null;
 
@@ -270,4 +273,17 @@ public class publicador {
 
 		return salidas;
 	}
+
+	@WebMethod
+	public List<dataPaquete> paqueteGetAllPaquetes() {
+		List<dataPaquete> paquetes = new ArrayList<dataPaquete>();
+
+		try {
+			paquetes = IPC.listarPaquetes();
+		} catch (Exception e) {
+            log.error("[Publicador] Error: paqueteGetAllPaquetes");
+		}
+
+		return paquetes;
+	};
 }

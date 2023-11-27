@@ -41,7 +41,7 @@
                     <ul class="pagination">
                         <li class="waves-effect"><a href="./homeSalidas">Salidas</a></li>
                         <li class="active"><a href="./homeActividades">Actividades</a></li>
-                        <li class="waves-effect"><a href="./homePaquete">Paquetes</a></li>
+                        <li class="waves-effect"><a href="./homePaquetes">Paquetes</a></li>
                     </ul>
 
                     <ul id="dropdown1" class="dropdown-content">
