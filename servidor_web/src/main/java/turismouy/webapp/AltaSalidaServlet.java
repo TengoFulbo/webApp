@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import turismouy.svcentral.middlewares.Publicador;
+import turismouy.svcentral.middlewares.PublicadorService;
 //import turismouy.svcentral.interfaces.IUsuarioController;
 //import turismouy.svcentral.interfaces.ISalidaController;
 //import turismouy.svcentral.Fabrica;
@@ -55,11 +57,12 @@ public class AltaSalidaServlet extends HttpServlet {
 
         LocalDate fechaSalida = LocalDate.parse(fechaSalidaString, formatter);
 
-        ISalidaController ISC = Fabrica.getInstance().getISalidaController();
-
+        //ISalidaController ISC = Fabrica.getInstance().getISalidaController();
+        Publicador API = new PublicadorService().getPublicadorPort();
+        API.salidaCrearSalida(nombreSalida, capacidad, LocalDate.now(), fechaSalida, lugarSalida, nombreActividad);
         try {
             // void crearSalida(String nombre, int capacidad, LocalDate fechaAlta, LocalDate fechaSalida, String lugarSalida, String nombreActividad)
-            ISC.crearSalida(nombreSalida, capacidad, LocalDate.now(), fechaSalida, lugarSalida, nombreActividad);
+        	//ISC.crearSalida(nombreSalida, capacidad, LocalDate.now(), fechaSalida, lugarSalida, nombreActividad);
         }catch (Exception e){
             log.error("[AltaSalidaServlet] Error al crear salida");
         }
