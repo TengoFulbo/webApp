@@ -9,10 +9,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
-import turismouy.svcentral.interfaces.IUsuarioController;
-import turismouy.svcentral.Fabrica;
-import turismouy.svcentral.datatypes.dataUsuario;
+import turismouy.svcentral.middlewares.DataUsuario;
+import turismouy.svcentral.middlewares.Publicador;
+import turismouy.svcentral.middlewares.PublicadorService;
+//import turismouy.svcentral.interfaces.IUsuarioController;
+//import turismouy.svcentral.Fabrica;
+//import turismouy.svcentral.datatypes.dataUsuario;
 import turismouy.svcentral.utilidades.log;
 
 @WebServlet("/login")
@@ -44,9 +46,12 @@ public class LoginServlet extends HttpServlet {
         }
 
 
-        IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+        //IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
         
-        if (IUC.login(username, password)) {
+        // Llamamos al web service.
+        Publicador API = new PublicadorService().getPublicadorPort();
+        
+        if (API.usuarioLogin(username, password)) {
 
             // Creamos la sesión.
             session.setAttribute("username", username);
@@ -54,7 +59,8 @@ public class LoginServlet extends HttpServlet {
             try {
                 log.info("Antes Username: "+ username);
                 log.info("Password: "+ password);
-                dataUsuario usuario = IUC.mostrarInfo(username);
+                //dataUsuario usuario = IUC.mostrarInfo(username);
+                DataUsuario usuario = API.usuarioMostrarInfo(username);
                 log.info("Despues Username: "+ username);
                 log.info("Password: "+ password);
                 session.setAttribute("dataUsuario", usuario);

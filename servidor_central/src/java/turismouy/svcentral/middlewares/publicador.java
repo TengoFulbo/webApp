@@ -16,6 +16,11 @@ import turismouy.svcentral.datatypes.dataDepartamento;
 import turismouy.svcentral.datatypes.dataPaquete;
 import turismouy.svcentral.datatypes.dataSalida;
 import turismouy.svcentral.datatypes.dataUsuario;
+import turismouy.svcentral.excepciones.NoExisteExcepcion;
+import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
+import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
+import turismouy.svcentral.excepciones.UsuarioYaExisteExcepcion;
+import turismouy.svcentral.excepciones.YaExisteExcepcion;
 import turismouy.svcentral.interfaces.IActividadController;
 import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.interfaces.IDepartamentoController;
@@ -249,11 +254,15 @@ public class publicador {
 			@WebParam(name = "fechaSalida")		LocalDate fechaSalida,
 			@WebParam(name = "lugarSalida")		String lugarSalida,
 			@WebParam(name = "nombreActividad")	String nombreActividad
-	) {
+	) throws ParametrosInvalidosExcepcion, YaExisteExcepcion, NoExisteExcepcion {
 		if (debug) log.info("[Publicador] Recibiendo SalidaCrearSalida");
 
 		try {
 			ISC.crearSalida(nombre, capacidad, fechaAlta, fechaSalida, lugarSalida, nombreActividad);
+		} catch (ParametrosInvalidosExcepcion e) {
+			throw new ParametrosInvalidosExcepcion();
+		} catch (UsuarioNoExisteExcepcion e) {
+			throw new NoExisteExcepcion(e.getMessage());
 		} catch (Exception e) {
             log.error("[Publicador] Error: SalidaCrearSalida");
 		}
