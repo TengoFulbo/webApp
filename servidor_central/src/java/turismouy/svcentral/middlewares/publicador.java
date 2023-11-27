@@ -16,6 +16,8 @@ import turismouy.svcentral.datatypes.dataDepartamento;
 import turismouy.svcentral.datatypes.dataPaquete;
 import turismouy.svcentral.datatypes.dataSalida;
 import turismouy.svcentral.datatypes.dataUsuario;
+import turismouy.svcentral.excepciones.NoExisteExcepcion;
+import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
 import turismouy.svcentral.interfaces.IActividadController;
 import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.interfaces.IDepartamentoController;
@@ -69,12 +71,15 @@ public class publicador {
 	};
 
 	@WebMethod
-	public dataUsuario UsuarioMostrarInfo(@WebParam(name = "nickname") String nickname) {
+	public dataUsuario UsuarioMostrarInfo(@WebParam(name = "nickname") String nickname) throws NoExisteExcepcion {
 		dataUsuario usuario = null;
 		if (debug) log.info("[Publicador] Recibiendo UsuarioMostrarInfo");
 
 		try {
 			usuario = IUC.mostrarInfo(nickname);
+		} catch (UsuarioNoExisteExcepcion e) {
+			log.error("[Publicador] Error: UsuarioMostrarInfo");
+			throw new NoExisteExcepcion(e.getMessage());
 		} catch (Exception e) {
             log.error("[Publicador] Error: UsuarioMostrarInfo");
 		}

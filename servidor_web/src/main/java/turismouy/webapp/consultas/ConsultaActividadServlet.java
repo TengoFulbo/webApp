@@ -28,6 +28,7 @@ public class ConsultaActividadServlet extends HttpServlet {
 
         DataActividad actividad = API.actividadGetActividad(nombreActividad);
 
+
         if (debug) log.info("-------------------------------");
         if (debug) log.info("Actividad: " + actividad.getNombre());
         if (debug) log.info("Descripcion: " + actividad.getDesc());
