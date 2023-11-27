@@ -50,7 +50,8 @@
             <input name="urlP" type="text" placeholder="Sitio Web" />
             <span id="spanResultadoUrlP"></span>
             <input name="passwordP" type="password" placeholder="Password" />
-            <input name="repitPassword" type="password" placeholder="Repite Password" />
+            <input name="repitPasswordP" type="password" placeholder="Repite Password" />
+            <span id="spanResultadoPasswordP"></span>
             <button>Registrarse</button>
           </form>
         </div>
@@ -75,6 +76,8 @@
             <input name="nacionalidadT" type="text" placeholder="Nacionalidad" />
             <span id="spanResultadoNacionalidadT"></span>
             <input name="passwordT" type="password" placeholder="Password" /> 
+            <input name="repitPasswordT" type="password" placeholder="Repite password" />
+			<span id="spanResultadoPasswordT"></span>
             <button>Registrarse</button>
           </form>
         </div>
@@ -476,6 +479,56 @@
 	            validarNacionalidadConCooldown(valorInputNacionalidad);
 	        }, cooldownTime);
 	    });
+	    
+	 // Function to validate if the password and repeat password fields are equal
+	    function validarPasswordTurista() {
+	        // Get the values of password and repeat password fields
+	        var password = $("input[name='passwordT']").val();
+	        var repeatPassword = $("input[name='repitPasswordT']").val();
+
+	        // Access the span element for displaying the validation result
+	        var spanResultadoPasswordT = $("#spanResultadoPasswordT");
+
+	        // Check if the passwords match
+	        if (password === repeatPassword) {
+	            spanResultadoPasswordT.text("Las contraseñas coinciden");
+	        } else {
+	            spanResultadoPasswordT.text("Las contraseñas no coinciden");
+	        }
+	    }
+
+	    // Associate the event oninput to the input fields for password and repeat password for Turista
+	    $("input[name='passwordT'], input[name='repitPasswordT']").on("input", function () {
+	        // Call the validation function after a brief cooldown
+	        clearTimeout(cooldownTimerT);
+	        cooldownTimerT = setTimeout(validarPasswordTurista, cooldownTime);
+	    });
+	    
+		 // Function to validate if the password and repeat password fields are equal
+	    function validarPasswordProveedor() {
+	        // Get the values of password and repeat password fields
+	        var passwordP = $("input[name='passwordP']").val();
+	        var repeatPasswordP = $("input[name='repitPasswordP']").val();
+
+	        // Access the span element for displaying the validation result
+	        var spanResultadoPasswordP = $("#spanResultadoPasswordP");
+
+	        // Check if the passwords match
+	        if (passwordP === repeatPasswordP) {
+	            spanResultadoPasswordP.text("Las contraseñas coinciden");
+	        } else {
+	            spanResultadoPasswordP.text("Las contraseñas no coinciden");
+	        }
+	    }
+
+	    // Associate the event oninput to the input fields for password and repeat password for Turista
+	    $("input[name='passwordP'], input[name='repitPasswordP']").on("input", function () {
+	        // Call the validation function after a brief cooldown
+	        clearTimeout(cooldownTimerT);
+	        cooldownTimerT = setTimeout(validarPasswordProveedor, cooldownTime);
+	    });
+	    
+	    
 	</script>
   </body>
 </html>
