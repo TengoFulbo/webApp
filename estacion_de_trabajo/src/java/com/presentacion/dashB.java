@@ -113,7 +113,7 @@ public class dashB extends JFrame {
 		JPanel menu = new JPanel();
 		menu.setBounds(20, 93, 192, 418);
 		contentPane.add(menu);
-		menu.setLayout(new GridLayout(7, 1, 0, 20));
+		menu.setLayout(new GridLayout(8, 1, 0, 20));
 
 		JPanel contenido = new JPanel();
 		contenido.setBounds(210, 93, 874, 588);
@@ -261,6 +261,26 @@ public class dashB extends JFrame {
 		categorias.putClientProperty("JButton.buttonType", "roundRect");
 		categorias.putClientProperty("FlatLaf.styleClass", "h3");
 		menu.add(categorias);
+		
+		JButton asmv = new JButton("Mas Visitadas");
+		asmv.setLocation(18, 352);
+		asmv.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		asmv.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				contenido.removeAll();
+
+				masVisitasVista v = new masVisitasVista((String) temas.getSelectedItem());
+				contenido.setLayout(new BorderLayout());
+				contenido.add(v, BorderLayout.CENTER);
+
+				contenido.revalidate();
+				contenido.repaint();
+			}
+		});
+		asmv.putClientProperty("JButton.buttonType", "roundRect");
+		asmv.putClientProperty("FlatLaf.styleClass", "h3");
+		menu.add(asmv);
 
 
 		JButton btnPrecarga = new JButton();
