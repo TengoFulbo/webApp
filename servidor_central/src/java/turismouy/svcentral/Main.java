@@ -68,9 +68,48 @@ public class Main {
         IInscripcionController IIC = fabrica.getIInscripcionController();
         ISalidaController ISC = fabrica.getISalidaController();
 
-    publicador services = new publicador();
+    //     try { IUC.registrarTurista("jorge_23", "Jorge", "Blandin", "jorge_23@gmail.com", "Uruguay",  LocalDate.of(2000, 05, 20), "jorge_23");
+    //         } catch (Exception e) { log.error("Error: " + e.toString()); }
 
-    services.publicar();
+        // try { IUC.registrarProveedor("roberto", "Roberto", "Carlos", "robertito@roberto.com", "Roberto el vendedor do macoña", "maco.com", LocalDate.of(2000, 05, 20));
+        // } catch (Exception e) { log.error("Error: " + e.toString()); }
+
+    //    List<String> categorias1 = new ArrayList<String>();
+    //    categorias1.add("Paseo");
+
+    //    try { IAC.crearActividad("Canelones", "roberto", "Tour por la casa", "Recorrido por la house.", 120, 50, "Canelones", LocalDate.now(), categorias1);
+    //        } catch (Exception e) { log.error("Error: " + e.toString()); }
+    
+        // try {
+        //     IAC.modificarEstadoActividad("Tour por la casa", estadoActividad.RECHAZADA);
+        // } catch (Exception e) {
+        //     e.printStackTrace();
+        // }
+
+    //    List<String> categorias1 = new ArrayList<String>();
+    //    categorias1.add("fulbo");
+
+    //    try { IAC.crearActividad("Canelones", "homeSolutions", "Tour de Vinos en Bodegas", "Recorrido por las mejores bodegas de la región.", 120, 50, "Canelones", LocalDate.now(), categorias1);
+    //        } catch (Exception e) { log.error("Error: " + e.toString()); }
+
+
+        // boolean valido = IUC.login("roberto", "roberto");
+
+        // log.info("Es valido: " + valido);
+
+
+
+    // List<dataActividad> actividades = IAC.getAllActividades();
+
+    // for (dataActividad actividad : actividades) {
+    //     log.info("Actividad: " + actividad.getNombre());
+    // }
+
+
+
+    // publicador services = new publicador();
+
+    // services.publicar();
 
     //  // Configuración para el publicador.
     //     String ipServidor = "http://localhost";
@@ -115,27 +154,6 @@ public class Main {
         //  for (dataUsuario usuario : usuarios) {
         //      log.info("  " + usuario.getNombre());
         //  }
-
-        // cargarTuristas();
-        // log.warning("########################################################");
-        // cargarProveedores();
-        // log.warning("########################################################");
-        // cargarDepartamentos();
-        // log.warning("########################################################");
-        // cargarCategorias();
-        // log.warning("########################################################");
-        // cargarPaquetes();
-        // log.warning("########################################################");
-        // cargarActividades();
-        // log.warning("########################################################");
-        // cargarEstadoActividad();
-        // log.warning("########################################################");
-        // cargarActividadesPaquetes();
-        // log.warning("########################################################");
-        // cargarSalidas();
-        // log.warning("########################################################");
-        // cargarInscripcionSalida();
-        // log.warning("########################################################");
 
         // log.warning("###################################3");
 

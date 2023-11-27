@@ -35,6 +35,8 @@ public class actividad {
 	private proveedor proveedor;
 	@ManyToOne() // Un departamento puede tener muchas actividades.
 	private departamento departamento;
+	@OneToOne()
+	private visita visita;
 
 	@ManyToMany(mappedBy = "actividades")
 	private List<paquete> paquetes = new ArrayList<paquete>();
@@ -167,6 +169,12 @@ public class actividad {
 	}
 	public List<categoria> getCategorias() {
 		return this.categorias;
+	}
+	public visita getVisita() {
+		return this.visita;
+	}
+	public void setVisita(visita visita) {
+		this.visita = visita;
 	}
 	public dataActividad toDataType() {
 		
