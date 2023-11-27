@@ -109,6 +109,7 @@ public class UsuarioManejador {
 
 
     public usuario getUsuario(String nickname) {
+        boolean debug = false;
 	    EntityManager em = factory.createEntityManager();
 
         usuario usuario;
@@ -119,45 +120,56 @@ public class UsuarioManejador {
                 .setParameter("nickname", nickname.toLowerCase())
                 .getSingleResult();
 
+            if (debug) log.info("[getUsuario] traemos al usuario por el nickname? " + (usuario == null ? "No" : "Si"));
+
             usuario usuariowithimg = em.createQuery("SELECT u FROM usuario u LEFT JOIN FETCH u.imagen WHERE LOWER(u.nickname) = :nickname", usuario.class)
                 .setParameter("nickname", nickname.toLowerCase())
                 .getSingleResult();
 
+            if (debug) log.info("[getUsuario] traemos al usuario con imagen? " + (usuariowithimg == null ? "No" : "Si"));
+
             usuario.setImagen(usuariowithimg.getImagen());
 
 
-        if (usuario instanceof proveedor) {
-            proveedor proveedor = (proveedor) usuario;
+            if (usuario instanceof proveedor) {
+                proveedor proveedor = (proveedor) usuario;
 
-            proveedor proveedorWithActividades = em.createQuery("SELECT p FROM proveedor p LEFT JOIN FETCH p.actividades WHERE p.nickname = :nickname", proveedor.class)
-                .setParameter("nickname", usuario.getNickname())
-                .getSingleResult();
+                proveedor proveedorWithActividades = em.createQuery("SELECT p FROM proveedor p LEFT JOIN FETCH p.actividades WHERE p.nickname = :nickname", proveedor.class)
+                    .setParameter("nickname", usuario.getNickname())
+                    .getSingleResult();
 
-            for (actividad actividad : proveedorWithActividades.getActividades()) {
-                actividad actividadWithSalidas = ActividadManejador.getinstance().getActividad(actividad.getNombre());
-                actividad.setSalidas(actividadWithSalidas.getSalidas());
-            } 
+                if (debug) log.info("[getUsuario] traemos al proveedor con actividades? " + (proveedorWithActividades == null ? "No" : "Si"));
 
-            proveedor.setActividades(proveedorWithActividades.getActividades());
+                if (debug) log.info("[getUsuario] Cantidad de actividades de proveedorWithActividades: " + proveedorWithActividades.getActividades().size());
 
-        } else if (usuario instanceof turista) {
-            turista turista = (turista) usuario;
-            // compra e inscripciones
+                for (actividad actividad : proveedorWithActividades.getActividades()) {
+                    if (debug) log.info("[getUsuario] Actividad: " + actividad.getNombre());                    
+                    actividad actividadWithSalidas = ActividadManejador.getinstance().getActividadWithoutEstado(actividad.getNombre());
+                    if (debug) log.info("[getUsuario] actividadWithSalidas: " + actividadWithSalidas.getNombre());
+                    actividad.setSalidas(actividadWithSalidas.getSalidas());
+                } 
 
-            turista turistaWithInscripciones = em.createQuery("SELECT t FROM turista t LEFT JOIN FETCH t.inscripciones WHERE t.nickname = :nickname", turista.class)
-                .setParameter("nickname", nickname)
-                .getSingleResult();
-            
-            turista turistaWithCompra = em.createQuery("SELECT t FROM turista t LEFT JOIN FETCH t.compra WHERE t.nickname = :nickname", turista.class)
-                .setParameter("nickname", nickname)
-                .getSingleResult();
+                proveedor.setActividades(proveedorWithActividades.getActividades());
 
-            turista.setInscripciones(turistaWithInscripciones.getInscripciones());
-            turista.setCompra(turistaWithCompra.getCompras());
-        }
+            } else if (usuario instanceof turista) {
+                turista turista = (turista) usuario;
+                // compra e inscripciones
+
+                turista turistaWithInscripciones = em.createQuery("SELECT t FROM turista t LEFT JOIN FETCH t.inscripciones WHERE t.nickname = :nickname", turista.class)
+                    .setParameter("nickname", nickname)
+                    .getSingleResult();
+                
+                turista turistaWithCompra = em.createQuery("SELECT t FROM turista t LEFT JOIN FETCH t.compra WHERE t.nickname = :nickname", turista.class)
+                    .setParameter("nickname", nickname)
+                    .getSingleResult();
+
+                turista.setInscripciones(turistaWithInscripciones.getInscripciones());
+                turista.setCompra(turistaWithCompra.getCompras());
+            }
 
         } catch (Exception e) {
             // log.error(e.getMessage());
+            e.printStackTrace();
             return null;
         } finally {
             em.close();

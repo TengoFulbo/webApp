@@ -98,7 +98,7 @@ public class DepartamentoManejador {
                 for (actividad act : departamento.getActividades()) {
 
                     // Se obtiene la actividad y la guarda en la lista de actividades.
-                    actividad actividad = am.getActividad(act.getNombre());
+                    actividad actividad = am.getActividadWithoutEstado(act.getNombre());
                     actividades.add(actividad);
                 }
 

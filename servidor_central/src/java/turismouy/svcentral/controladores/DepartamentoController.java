@@ -43,26 +43,38 @@ public class DepartamentoController implements IDepartamentoController {
 
     @Override
     public List<dataDepartamento> listarDepartamentos(){
-        DepartamentoManejador dm = DepartamentoManejador.getinstance();
-        List<departamento> deptos = dm.getAllDepartamentos();
+        boolean debug = true; String functionName = "[listarDepartamentos] ";
+        DepartamentoManejador DM = DepartamentoManejador.getinstance();
+        List<dataDepartamento> dtDepartamentos = new ArrayList<dataDepartamento>();
+        List<departamento> departamentos = DM.getAllDepartamentos();
 
-        if (deptos == null) {
-            return null;
-        };
-
-        List<dataDepartamento> listaDT = new ArrayList<>();
-
-        for (departamento dep : deptos) {
-            List<String> actividades = new ArrayList<String>();
-            for (actividad act : dep.getActividades()) {
-                actividades.add(act.getNombre());
-            }
-            listaDT.add(dep.toDataType());
+        for (departamento departamento : departamentos) {
+            dtDepartamentos.add(departamento.toDataType());
         }
-        if(listaDT.isEmpty()) {
-        	return null;
-        }
-        return listaDT;
+        
+        return dtDepartamentos;
+
+
+        // DepartamentoManejador dm = DepartamentoManejador.getinstance();
+        // List<departamento> deptos = dm.getAllDepartamentos();
+
+        // if (deptos == null) {
+        //     return null;
+        // };
+
+        // List<dataDepartamento> listaDT = new ArrayList<>();
+
+        // for (departamento dep : deptos) {
+        //     List<String> actividades = new ArrayList<String>();
+        //     for (actividad act : dep.getActividades()) {
+        //         actividades.add(act.getNombre());
+        //     }
+        //     listaDT.add(dep.toDataType());
+        // }
+        // if(listaDT.isEmpty()) {
+        // 	return null;
+        // }
+        // return listaDT;
     };
 
     /*

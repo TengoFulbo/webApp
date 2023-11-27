@@ -86,7 +86,7 @@ public class inscripcion {
         this.salida = salida;
     }
     
-    public dataInscripcion toDatatype(inscripcion inscripcion) {
+    public dataInscripcion toDatatype() {
     	dataInscripcion dtInscripcion =  new dataInscripcion(this.fecha,
     														 this.canT,
     														 this.costo,

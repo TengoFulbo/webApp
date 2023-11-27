@@ -7,6 +7,9 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import turismouy.svcentral.utilidades.LocalDateAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "dataPaquete")
@@ -15,6 +18,7 @@ public class dataPaquete implements Serializable {
 	private int descuento;
 	private String descripcion;
 	private int validez;
+	@XmlJavaTypeAdapter(LocalDateAdapter.class)
 	private LocalDate fechaAlta;
     private List<dataActividad> actividades;
 

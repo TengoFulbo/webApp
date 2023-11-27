@@ -5,17 +5,21 @@ import java.time.LocalDate;
 import java.util.List;
 
 import turismouy.svcentral.entidades.actividad;
+import turismouy.svcentral.utilidades.LocalDateAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "dataSalida")
 public class dataSalida implements Serializable {
     private String nombre;
     private int capacidad;
+	@XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate fechaAlta;
+	@XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate fechaSalida;
     private String lugarSalida;
     private List<actividad> actividades;

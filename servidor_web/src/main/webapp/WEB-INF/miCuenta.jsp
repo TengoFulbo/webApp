@@ -1,8 +1,12 @@
+<%@page import="turismouy.svcentral.Fabrica"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ page import="turismouy.svcentral.datatypes.dataActividad" %>
 <%@ page import="turismouy.svcentral.datatypes.dataSalida" %>
+<%@ page import="turismouy.svcentral.datatypes.dataInscripcion" %>
 <%@ page import="turismouy.svcentral.utilidades.estadoActividad" %>
+<%@ page import="turismouy.svcentral.interfaces.IInscripcionController" %>
+<%@ page import="turismouy.svcentral.interfaces.IUsuarioController" %>
 <%@ page import="java.util.List" %>
 
 <%@ include file="./utils/head.jsp" %>
@@ -50,20 +54,22 @@
                   <div id="uploadStatus"></div>
                 </div>
 
-                <% if(user.getNombre() == usuario.getNombre()){ %>
-                  <div class="row">
-                    <div class="input-field col s12">
-                      <div class="file-field input-field">
-                        <div class="btn">
-                          <span>File</span>
-                          <input type="file" id="imageInput" name="file" accept="image/png, image/jpeg">
-                        </div>
-                        <div class="file-path-wrapper">
-                          <input class="file-path validate" type="text">
+                <% if(usuario != null ){ %>
+                  <% if(user.getNombre() == usuario.getNombre()){ %>
+                     <div class="row">
+                      <div class="input-field col s12">
+                        <div class="file-field input-field">
+                          <div class="btn">
+                            <span>File</span>
+                            <input type="file" id="imageInput" name="file" accept="image/png, image/jpeg">
+                          </div>
+                          <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  <% } %>
                 <% } %>
                 
                 <div class="row">
@@ -120,15 +126,18 @@
                 }%>
                 <!-- <input type="btn waves-effect waves-light" value="Subir" onclick="subirDatos()"> -->
                 <!-- <a type="btn waves-effect waves-light" onclick="subirDatos()">Subir</a> -->
-                <% if(user.getNombre() == usuario.getNombre()){ %>
-                  <button class="btn waves-effect waves-light" name="action" onclick="subirDatos()">Guardar
-                    <i class="material-icons right">send</i>
-                  </button>
+                <% if(usuario != null ){ %>
+                  <% if(user.getNombre() == usuario.getNombre()){ %>
+                    <button class="btn waves-effect waves-light" name="action" onclick="subirDatos()">Guardar
+                      <i class="material-icons right">send</i>
+                    </button>
+                  <% } %>
                 <% } %>
               </form>
             </div>
           </div>
-          <% if(user.getNombre() == usuario.getNombre()){ %>
+          <% if(usuario != null ){ %>
+            <% if(user.getNombre() == usuario.getNombre()){ %>
               <% if(user.getisProveedor()){ %>
                 <h4>Actividades</h4>
                 <ul class="collection">
@@ -169,12 +178,30 @@
             <%
             if (user != null) {
               if (user.getSalidas() != null) {
-                for (dataSalida salida : user.getSalidas()) {
+                IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+            	dataUsuario miuserDt = IUC.mostrarInfo(user.getNickname());
+            	List<dataInscripcion> inscripciones = miuserDt.getInscripciones(); 
+                
+                for (dataInscripcion ins : inscripciones) {
             %>
-                <li class="collection-item">
-                  <div><%= salida.getNombre() %>               
-            </div>
-                  </li>
+                <li class="collection-item" style="border-bottom: 3px dashed #ccc;">
+                	<div>
+                	<%= ins.getSalida().getNombre() %>               
+            		</div>
+            		<div class="row">
+            			<ul class="collection">
+            				<li class="collection-item">
+            					Cantidad Boletos: <%= ins.getCant() %>
+            				</li>
+            				<li class="collection-item">            				
+            					Costo: <%= ins.getCosto() %>
+            				</li>
+            				<li class="collection-item">            				
+            					fecha: <%= ins.getFecha().toString() %>
+            				</li>
+            			</ul>
+            		</div>
+                </li>
               <%
                   }
                 }
@@ -185,6 +212,8 @@
           } 
         } 
         %>
+          
+        <% } %>
         
 
         </div>

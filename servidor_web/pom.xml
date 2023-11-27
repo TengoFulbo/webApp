@@ -99,14 +99,15 @@
                       <goals>
                           <goal>wsimport</goal>
                       </goals>
-                      <!-- <configuration> -->
-                          <!-- <wsdlUrls> -->
+                      <configuration>
+                          <wsdlUrls>
                               <!-- <wsdlUrl>http://localhost:5000/API/Monitoreo?wsdl</wsdlUrl> -->
                               <!-- <wsdlUrl>http://localhost:5000/API/IDepartamentoController?wsdl</wsdlUrl> -->
                               <!-- <wsdlUrl>plantilla</wsdlUrl> -->
-                          <!-- </wsdlUrls> -->
-                          <!-- <sourceDestDir>${project.basedir}/src/main/java</sourceDestDir> -->
-                      <!-- </configuration> -->
+                              <wsdlUrl>http://localhost:5000/API/Servicios?wsdl</wsdlUrl>
+                          </wsdlUrls>
+                          <sourceDestDir>${project.basedir}/src/main/java</sourceDestDir>
+                      </configuration>
                   </execution>
               </executions>
           </plugin>

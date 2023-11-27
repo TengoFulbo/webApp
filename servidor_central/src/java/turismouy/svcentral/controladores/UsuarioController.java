@@ -8,8 +8,10 @@ import java.util.List;
 
 import javax.jws.WebParam;
 
+import turismouy.svcentral.datatypes.dataInscripcion;
 import turismouy.svcentral.datatypes.dataUsuario;
 import turismouy.svcentral.entidades.imagen;
+import turismouy.svcentral.entidades.inscripcion;
 import turismouy.svcentral.entidades.proveedor;
 import turismouy.svcentral.entidades.turista;
 import turismouy.svcentral.entidades.usuario;
@@ -276,12 +278,20 @@ public class UsuarioController implements IUsuarioController {
             
         	if(user instanceof turista){
         		turista tur = (turista) user;
-        		dataUsuario DtUsuario = new dataUsuario(tur.getNickname(), tur.getNombre(),tur.getApellido(),tur.getEmail(),tur.getNacionalidad(),tur.getNacimiento(),false,null,null, imagenBase64, null,null);
+        		
+        		List<dataInscripcion> inscripciones = new ArrayList<dataInscripcion>();
+        		
+        		for (inscripcion inscripcion : tur.getInscripciones()) {
+        			dataInscripcion dtInsc = inscripcion.toDatatype();
+        			inscripciones.add(dtInsc);
+        		}
+        		
+        		dataUsuario DtUsuario = new dataUsuario(tur.getNickname(),tur.getNombre(),tur.getApellido(),tur.getEmail(),tur.getNacionalidad(),tur.getNacimiento(),false,null,null,imagenBase64,inscripciones,null,null);
         		LDataUsuarios.add(DtUsuario);
         	}
         	if(user instanceof proveedor){
         		proveedor prov = (proveedor) user;
-        		dataUsuario DtUsuario = new dataUsuario(prov.getNickname(),prov.getNombre(),prov.getApellido(),prov.getEmail(),null,prov.getNacimiento(),true,prov.getDescripcion(),prov.getUrl(), imagenBase64, null,null);
+        		dataUsuario DtUsuario = new dataUsuario(prov.getNickname(),prov.getNombre(),prov.getApellido(),prov.getEmail(),null,prov.getNacimiento(),true,prov.getDescripcion(),prov.getUrl(), imagenBase64, null, null,null);
         		LDataUsuarios.add(DtUsuario);
         	}
         	
@@ -338,6 +348,7 @@ public class UsuarioController implements IUsuarioController {
 			@WebParam(name = "usuario")		String usuario,
 			@WebParam(name = "password")	String password
         ) {
+        boolean debug = false;
         if (!validarTexto(usuario, 1) || !validarTexto(password, 1)) {
             log.error("Parametros invalidos.");
             return false;
@@ -345,8 +356,11 @@ public class UsuarioController implements IUsuarioController {
         
         
 
+        if (debug) log.info("[Login] Ahora validamos por usuario.");
+
         UsuarioManejador um = UsuarioManejador.getinstance();
         usuario user = um.getUsuario(usuario);
+        if (debug) log.info("[Login] getUsuario trae un usuario? " + (user == null ? "No" : "Si"));
 
         if (user != null) {
             if (utilPassword.checkPassword(password, user.getPassword())) {
@@ -356,7 +370,10 @@ public class UsuarioController implements IUsuarioController {
             }
         }
 
+        if (debug) log.info("[Login] Ahora validamos por correo.");
+
         user = um.getUsuarioEmail(usuario);
+        if (debug) log.info("[Login] getUsuarioEmail trae un usuario? " + (user == null ? "No" : "Si"));
 
         if (user != null) {
             if (utilPassword.checkPassword(password, user.getPassword())) {
