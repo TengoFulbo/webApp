@@ -342,6 +342,8 @@ public class UsuarioController implements IUsuarioController {
             log.error("Parametros invalidos.");
             return false;
         }
+        
+        
 
         UsuarioManejador um = UsuarioManejador.getinstance();
         usuario user = um.getUsuario(usuario);
@@ -366,6 +368,7 @@ public class UsuarioController implements IUsuarioController {
 
         return false;
     }
+    
 
     /*
         * Level 1: Textos simples. Valida que no sea vacio, que no empiece o termine con espacio y que al menos tenga 1 letra o número.

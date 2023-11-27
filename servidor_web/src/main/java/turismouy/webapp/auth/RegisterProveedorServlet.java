@@ -34,13 +34,13 @@ public class RegisterProveedorServlet extends HttpServlet {
 
         // nombreyapellido = request.getParameter("nombreyapellido");
         nickname        = request.getParameter("nickname");
-        nombre          = request.getParameter("nombre");   
-        apellido        = request.getParameter("apellido");   
+        nombre          = request.getParameter("nombreP");   
+        apellido        = request.getParameter("apellidoP");   
         email           = request.getParameter("email");
-        fechaN          = request.getParameter("fechaN");
-        desc            = request.getParameter("desc");
-        url             = request.getParameter("url");
-        password        = request.getParameter("password");
+        fechaN          = request.getParameter("fechaNP");
+        desc            = request.getParameter("descP");
+        url             = request.getParameter("urlP");
+        password        = request.getParameter("passwordP");
 
         if (nickname == null || nickname == "" ||
             nombre == null || nombre == "" ||
