@@ -78,7 +78,8 @@
             <input name="passwordT" type="password" placeholder="Password" /> 
             <input name="repitPasswordT" type="password" placeholder="Repite password" />
 			<span id="spanResultadoPasswordT"></span>
-            <button>Registrarse</button>
+			<button>Registrarse</button>
+            <!--<button id="botonId">Registrarse</button>-->
           </form>
         </div>
         <div class="overlay-container">
@@ -211,6 +212,7 @@
 	    
 	 // Función para validar el email con un "cooldown"
 	    function validarEmailConCooldown(valorInput) {
+		 
 	        // Realizar la solicitud AJAX
 	        $.ajax({
 	            type: "POST",
@@ -229,12 +231,21 @@
 	        var spanResultadoCorreoT = $("#spanResultadoCorreoT");
 	        var spanResultadoCorreoP = $("#spanResultadoCorreoP");
 	        if (respuesta.valido) {
-	            spanResultadoCorreoT.text("El email es válido");
-	            spanResultadoCorreoP.text("El email es válido");
-	            console.log("El email es válido");
+		    	var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+		    	// Verificar si el nombre cumple con la expresión regular y no es vacío
+		        var esEmailValido = regex.test(valorInput) && valorInput.trim() !== '';
+		        if (esEmailValido) {
+		            spanResultadoCorreoP.text("El email es válido");
+		            spanResultadoCorreoT.text("El email es válido");
+		            console.log("El email es válido");
+		        } else {
+		            spanResultadoCorreoP.text("El email NO es válido (debe de tener un fromato parecido a este: prueba@gmail.com, y no puede ser vacio)");
+		            spanResultadoCorreoT.text("El email NO es válido (debe de tener un fromato parecido a este: prueba@gmail.com, y no puede ser vacio)");
+		            console.log("El email NO es válido");
+		        }
 	        } else {
-	            spanResultadoCorreoT.text("El email NO es válido");
-	            spanResultadoCorreoP.text("El email NO es válido");
+	            spanResultadoCorreoT.text("El email NO es válido (debe de tener un fromato parecido a este: prueba@gmail.com, y no puede ser vacio)");
+	            spanResultadoCorreoP.text("El email NO es válido (debe de tener un fromato parecido a este: prueba@gmail.com, y no puede ser vacio)");
 	            console.log("El email NO es válido");
 	        }
 	    }
@@ -492,8 +503,10 @@
 	        // Check if the passwords match
 	        if (password === repeatPassword) {
 	            spanResultadoPasswordT.text("Las contraseñas coinciden");
+	            ocument.getElementById("botonId").disabled = false;
 	        } else {
 	            spanResultadoPasswordT.text("Las contraseñas no coinciden");
+	            document.getElementById("botonId").disabled = true;
 	        }
 	    }
 
@@ -516,8 +529,10 @@
 	        // Check if the passwords match
 	        if (passwordP === repeatPasswordP) {
 	            spanResultadoPasswordP.text("Las contraseñas coinciden");
+	            ocument.getElementById("botonId").disabled = false;
 	        } else {
 	            spanResultadoPasswordP.text("Las contraseñas no coinciden");
+	            document.getElementById("botonId").disabled = true;
 	        }
 	    }
 
