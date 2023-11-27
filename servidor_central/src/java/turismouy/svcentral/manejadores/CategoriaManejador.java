@@ -68,7 +68,7 @@ public class CategoriaManejador {
             List<actividad> actividades = new ArrayList<actividad>();
 
             for (actividad act : categoria.getActividades()) {
-                actividades.add(am.getActividad(act.getNombre()));
+                actividades.add(am.getActividadWithoutEstado(act.getNombre()));
             }
 
             categoria.setActividades(actividades);
