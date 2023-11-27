@@ -145,8 +145,8 @@
 	            spanResultadoP.text("El nick es válido");
 	            console.log("El nick es válido");
 	        } else {
-	            spanResultadoT.text("El nick NO es válido");
-	            spanResultadoP.text("El nick NO es válido");
+	            spanResultadoT.text("El nick NO es válido. Sugerencia: " + $("#nickIdT").val() + Math.floor(1000 + Math.random() * 9000));
+	            spanResultadoP.text("El nick NO es válido. Sugerencia: " + $("#nickIdP").val() + Math.floor(1000 + Math.random() * 9000));
 	            console.log("El nick NO es válido");
 	        }
 	    }
