@@ -175,7 +175,7 @@ public class actividad {
 		List<dataPaquete> DtPaquetes = this.crearListaPaqueteParaDt(this);
 		List<String> dtCategorias = new ArrayList<String>();
 
-		actividad actividad = ActividadManejador.getinstance().getActividad(this.nombreA);
+		actividad actividad = ActividadManejador.getinstance().getActividadWithoutEstado(this.nombreA);
 		// List<categoria> categorias = null;
 		// if (this.categorias == null) {
 		// 	categorias = actividad.getCategorias();

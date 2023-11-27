@@ -90,7 +90,7 @@ public class ActividadManejador {
                 .getResultList();
 
             for (actividad actividad : acts) {
-                actividades.add(getActividad(actividad.getNombre()));
+                actividades.add(getActividadWithoutEstado(actividad.getNombre()));
             }
         } catch (NoResultException e) {
             log.error("Error: " + e.getMessage());
@@ -130,6 +130,45 @@ public class ActividadManejador {
                                 "WHERE a.nombreA = :nombre AND a.estado <> :estadoRechazada", actividad.class)
                 .setParameter("nombre", nombreAct)
                 .setParameter("estadoRechazada", estadoActividad.RECHAZADA.ordinal())                
+                .getSingleResult();
+
+            actividad.setPaquetes(actividadWithPaquetes.getPaquetes());
+            actividad.setSalidas(actividadWithSalidas.getSalidas());
+
+        } catch (NoResultException e) {
+            actividad = null;
+        } finally {
+            em.close();
+        }
+    	return actividad;
+    }
+
+    public actividad getActividadWithoutEstado(String nombreAct) {
+    	EntityManager em = factory.createEntityManager();
+
+        // Actividad necesita paquetes, salidas, categorias
+
+        actividad actividad;
+        try {
+            actividad = em
+                .createQuery(   "SELECT DISTINCT a FROM actividad a " + 
+                                "LEFT JOIN FETCH a.categorias " +
+                                "WHERE a.nombreA = :nombre",actividad.class)
+                .setParameter("nombre", nombreAct)                
+                .getSingleResult();
+
+            actividad actividadWithSalidas = em
+                .createQuery(   "SELECT DISTINCT a FROM actividad a " +
+                                "LEFT JOIN FETCH a.salidas " +
+                                "WHERE a.nombreA = :nombre", actividad.class)
+                .setParameter("nombre", nombreAct)                
+                .getSingleResult();
+
+            actividad actividadWithPaquetes = em
+                .createQuery(   "SELECT DISTINCT a FROM actividad a " +
+                                "LEFT JOIN FETCH a.paquetes " +
+                                "WHERE a.nombreA = :nombre", actividad.class)
+                .setParameter("nombre", nombreAct)                
                 .getSingleResult();
 
             actividad.setPaquetes(actividadWithPaquetes.getPaquetes());

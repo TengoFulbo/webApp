@@ -348,13 +348,17 @@ public class UsuarioController implements IUsuarioController {
 			@WebParam(name = "usuario")		String usuario,
 			@WebParam(name = "password")	String password
         ) {
+        boolean debug = false;
         if (!validarTexto(usuario, 1) || !validarTexto(password, 1)) {
             log.error("Parametros invalidos.");
             return false;
         }
 
+        if (debug) log.info("[Login] Ahora validamos por usuario.");
+
         UsuarioManejador um = UsuarioManejador.getinstance();
         usuario user = um.getUsuario(usuario);
+        if (debug) log.info("[Login] getUsuario trae un usuario? " + (user == null ? "No" : "Si"));
 
         if (user != null) {
             if (utilPassword.checkPassword(password, user.getPassword())) {
@@ -364,7 +368,10 @@ public class UsuarioController implements IUsuarioController {
             }
         }
 
+        if (debug) log.info("[Login] Ahora validamos por correo.");
+
         user = um.getUsuarioEmail(usuario);
+        if (debug) log.info("[Login] getUsuarioEmail trae un usuario? " + (user == null ? "No" : "Si"));
 
         if (user != null) {
             if (utilPassword.checkPassword(password, user.getPassword())) {

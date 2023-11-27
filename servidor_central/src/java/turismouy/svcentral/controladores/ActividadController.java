@@ -289,25 +289,20 @@ public class ActividadController implements IActividadController {
 	}  
 
     public List<dataActividad> getAllActividades() {      
-        List<dataActividad> LDtAct = new ArrayList<>();
-        DepartamentoManejador dm = DepartamentoManejador.getinstance();
-     List<departamento> deptos = dm.getAllDepartamentos();
-     
-         for (departamento depto : deptos) {
-             if (depto != null && depto.getNombre() != null) {
-                 List<actividad> LAct = depto.getActividades();
-                 if (LAct != null) {
-                     for (actividad act : LAct) {
-                     	if(act.getEstado().equals(estadoActividad.CONFIRMADA)){
-                     		LDtAct.add(act.toDataType());
-                     	}
-                     }
-                 }
-             }
-         }
-     if (LDtAct.isEmpty())
-         return null; 
-     return LDtAct;
+        boolean debug = false; String functionName = "[getAllActividades] ";
+        ActividadManejador AM = ActividadManejador.getinstance();
+        List<actividad> actividades = AM.getAllActividades();
+        List<dataActividad> dtActividades = new ArrayList<dataActividad>();
+
+        if (debug) log.info(functionName + "Cantidad de actividades: " + actividades.size());
+        for (actividad actividad : actividades) {
+            if (debug) log.info(functionName + (actividades.indexOf(actividad) + 1) + " Actividad: " + actividad.getNombre() + " Estado: " + actividad.getEstado());
+            if (actividad.getEstado().equals(estadoActividad.CONFIRMADA)) {
+                dtActividades.add(actividad.toDataType());
+            }
+        }
+
+        return dtActividades;
     }
     
     public List<dataActividad> getAllActividadesTodas() {      
