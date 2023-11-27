@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
+import turismouy.svcentral.entidades.inscripcion;
+
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "dataUsuario")
 public class dataUsuario implements Serializable {
@@ -21,6 +23,7 @@ public class dataUsuario implements Serializable {
     private boolean isProveedor;
     private String descripcion;
     private String url;
+    private List<dataInscripcion> inscripciones;
     private List<dataActividad> actividades;
     private List<dataSalida> salidas;
 
@@ -32,6 +35,7 @@ public class dataUsuario implements Serializable {
                             String descripcion,
                             String url,
                             String imagen,
+                            List<dataInscripcion> inscripciones,
                             List<dataActividad> actividades,
                             List<dataSalida> salidas
                         ) {
@@ -44,6 +48,7 @@ public class dataUsuario implements Serializable {
         this.isProveedor = isProveedor;
         this.descripcion = descripcion;
         this.url = url;
+        this.inscripciones = inscripciones;
         this.imagenBase64 = imagen;
         this.actividades = actividades;
         this.salidas = salidas;
@@ -93,6 +98,10 @@ public class dataUsuario implements Serializable {
 
     public List<dataActividad> getActividades(){
         return this.actividades;
+    };
+    
+    public List<dataInscripcion> getInscripciones(){
+        return this.inscripciones;
     };
 
     public List<dataSalida> getSalidas(){

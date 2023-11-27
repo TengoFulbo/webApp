@@ -8,8 +8,10 @@ import java.util.List;
 
 import javax.jws.WebParam;
 
+import turismouy.svcentral.datatypes.dataInscripcion;
 import turismouy.svcentral.datatypes.dataUsuario;
 import turismouy.svcentral.entidades.imagen;
+import turismouy.svcentral.entidades.inscripcion;
 import turismouy.svcentral.entidades.proveedor;
 import turismouy.svcentral.entidades.turista;
 import turismouy.svcentral.entidades.usuario;
@@ -276,12 +278,20 @@ public class UsuarioController implements IUsuarioController {
             
         	if(user instanceof turista){
         		turista tur = (turista) user;
-        		dataUsuario DtUsuario = new dataUsuario(tur.getNickname(), tur.getNombre(),tur.getApellido(),tur.getEmail(),tur.getNacionalidad(),tur.getNacimiento(),false,null,null, imagenBase64, null,null);
+        		
+        		List<dataInscripcion> inscripciones = new ArrayList<dataInscripcion>();
+        		
+        		for (inscripcion inscripcion : tur.getInscripciones()) {
+        			dataInscripcion dtInsc = inscripcion.toDatatype();
+        			inscripciones.add(dtInsc);
+        		}
+        		
+        		dataUsuario DtUsuario = new dataUsuario(tur.getNickname(),tur.getNombre(),tur.getApellido(),tur.getEmail(),tur.getNacionalidad(),tur.getNacimiento(),false,null,null,imagenBase64,inscripciones,null,null);
         		LDataUsuarios.add(DtUsuario);
         	}
         	if(user instanceof proveedor){
         		proveedor prov = (proveedor) user;
-        		dataUsuario DtUsuario = new dataUsuario(prov.getNickname(),prov.getNombre(),prov.getApellido(),prov.getEmail(),null,prov.getNacimiento(),true,prov.getDescripcion(),prov.getUrl(), imagenBase64, null,null);
+        		dataUsuario DtUsuario = new dataUsuario(prov.getNickname(),prov.getNombre(),prov.getApellido(),prov.getEmail(),null,prov.getNacimiento(),true,prov.getDescripcion(),prov.getUrl(), imagenBase64, null, null,null);
         		LDataUsuarios.add(DtUsuario);
         	}
         	
