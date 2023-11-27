@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ page import="turismouy.svcentral.middlewares.DataActividad" %>
+<%@ page import="turismouy.svcentral.middlewares.DataCategoria" %>
+<%@ page import="turismouy.svcentral.middlewares.DataSalida" %>
 <% DataActividad actividad = (DataActividad) request.getAttribute("actividad"); %>
 
 <%@ include file="../utils/head.jsp" %>
@@ -76,13 +78,29 @@
                         </div>
                         <div class="divider"></div>
 
-                        <h5>Categorias</h5>
-                        <ul class="collection" id="listaCategorias"></ul>
+                        <h4>Categorias</h4>
+                        <ul class="collection" id="listaCategorias">
+                            <% if (actividad != null) {
+                                if (actividad.getDtCategorias() != null) {
+                                    for (String categoria : actividad.getDtCategorias()) { %>
+                                        <li><%= categoria %></li>
+                                <%  }
+                                }
+                            } %>
+                        </ul>
 
                         <div class="divider"></div>
 
                         <h5>Salidas</h5>
-                        <ul class="collection" id="listaSalidas"></ul>
+                        <ul class="collection" id="listaSalidas">
+                        <%  if (actividad != null) {
+                                if (actividad.getDtSalidas() != null) {
+                                    for (DataSalida salida : actividad.getDtSalidas()) { %>
+                                    <li><%= salida.getNombre()%></li>
+                                <%  }
+                                }    
+                            } %>
+                        </ul>
                     </form>
                 </div>
             </div>
