@@ -134,7 +134,7 @@ public class publicador {
 			@WebParam(name = "apellido")		String apellido,
 			@WebParam(name = "email")			String email,
 			@WebParam(name = "nacionalidad")	String nacionalidad,
-			@WebParam(name = "nacimiento")		LocalDate nacimiento,
+			@WebParam(name = "nacimiento") @XmlJavaTypeAdapter(LocalDateAdapter.class)		LocalDate nacimiento,
 			@WebParam(name = "password")		String password
 		) {
 		if (debug) log.info("[Publicador] Recibiendo UsuarioRegistrarTuristaPassword");
@@ -154,7 +154,7 @@ public class publicador {
 		@WebParam(name = "email")		String email, 
 		@WebParam(name = "descripcion")	String descripcion, 
 		@WebParam(name = "url")			String url, 
-		@WebParam(name = "nacimiento")	LocalDate nacimiento, 
+		@WebParam(name = "nacimiento") @XmlJavaTypeAdapter(LocalDateAdapter.class)	LocalDate nacimiento, 
 		@WebParam(name = "password")	String password
     ) {
 		if (debug) log.info("[Publicador] Recibiendo UsuarioRegistrarProveedorPassword");
