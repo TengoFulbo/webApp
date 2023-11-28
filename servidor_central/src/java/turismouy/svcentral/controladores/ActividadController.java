@@ -7,6 +7,7 @@ import turismouy.svcentral.entidades.proveedor;
 import turismouy.svcentral.entidades.salida;
 // import turismouy.svcentral.entidades.salida;
 import turismouy.svcentral.entidades.usuario;
+import turismouy.svcentral.entidades.visita;
 import turismouy.svcentral.entidades.paquete;
 import turismouy.svcentral.excepciones.NoExisteExcepcion;
 import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
@@ -105,8 +106,11 @@ public class ActividadController implements IActividadController {
 
 		actividad act = new actividad(nombre, desc, duracion, costoUni, ciudad, fechaCrea, categorias);
 
+        visita visita = new visita(act);
+
         act.setDepartamento(depto);
         act.setProveedor(prov);
+        act.setVisita(visita);
 
         prov.addActividad(act);
 
