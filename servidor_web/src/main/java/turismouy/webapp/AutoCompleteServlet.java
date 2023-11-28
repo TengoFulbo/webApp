@@ -16,12 +16,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import com.google.gson.Gson;
 
-import turismouy.svcentral.interfaces.IActividadController;
-import turismouy.svcentral.interfaces.IPaqueteController;
-import turismouy.svcentral.Fabrica;
-import turismouy.svcentral.datatypes.dataActividad;
-import turismouy.svcentral.datatypes.dataPaquete;
-import turismouy.svcentral.utilidades.log;
+//import turismouy.svcentral.interfaces.IActividadController;
+//import turismouy.svcentral.interfaces.IPaqueteController;
+//import turismouy.svcentral.Fabrica;
+//import turismouy.svcentral.datatypes.dataActividad;
+//import turismouy.svcentral.datatypes.dataPaquete;
+import turismouy.webapp.utils.log;
+import turismouy.svcentral.middlewares.Publicador;
+import turismouy.svcentral.middlewares.PublicadorService;
+import turismouy.svcentral.middlewares.DataActividad;
+import turismouy.svcentral.middlewares.DataPaquete;
+
 
 @WebServlet("/autoCompleteServ")
 public class AutoCompleteServlet extends HttpServlet {
@@ -43,18 +48,21 @@ public class AutoCompleteServlet extends HttpServlet {
     private List<String> obtenerDatos() {
         List<String> datos = new ArrayList<>();
 
-        IActividadController IAC = Fabrica.getInstance().getIActividadController();
-        List<dataActividad> listaActividad = IAC.getAllActividades();  
+        //IActividadController IAC = Fabrica.getInstance().getIActividadController();
+        Publicador API = new PublicadorService().getPublicadorPort();
+        
+        List<DataActividad> listaActividad = API.actividadGetAllActividades();  
     	if (!listaActividad.isEmpty() && listaActividad != null) {
-    		for(dataActividad act : listaActividad) {
+    		for(DataActividad act : listaActividad) {
         		datos.add(act.getNombre());
         	}
     	}
     	
-    	IPaqueteController IPC = Fabrica.getInstance().getIPaqueteController();
-    	List<dataPaquete> listaPaquete = IPC.listarPaquetes();
+    	//IPaqueteController IPC = Fabrica.getInstance().getIPaqueteController();
+    	
+    	List<DataPaquete> listaPaquete = API.paqueteGetAllPaquetes();
     	if (!listaPaquete.isEmpty() && listaPaquete != null) {
-    		for(dataPaquete paq : listaPaquete) {
+    		for(DataPaquete paq : listaPaquete) {
         		datos.add(paq.getNombre());
         	}
     	}
