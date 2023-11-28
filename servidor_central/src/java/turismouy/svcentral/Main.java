@@ -77,8 +77,10 @@ public class Main {
     // }
 
         // configuracion.generarArchivoSiNoExiste();
-        configuracion.ejecutar();
-        // Properties configuracion = configuracion.obtenerConfiguracion();
+        // configuracion config = new configuracion();
+
+        publicador services = new publicador();
+        services.publicar();
 
 
         // ActividadManejador AM = ActividadManejador.getinstance();
@@ -111,10 +113,6 @@ public class Main {
 
     //     try { IUC.registrarTurista("jorge_23", "Jorge", "Blandin", "jorge_23@gmail.com", "Uruguay",  LocalDate.of(2000, 05, 20), "jorge_23");
     //         } catch (Exception e) { log.error("Error: " + e.toString()); }
-
-    publicador services = new publicador();
-
-    services.publicar();
 
     //  // Configuración para el publicador.
     //     String ipServidor = "http://localhost";

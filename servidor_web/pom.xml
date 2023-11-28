@@ -101,9 +101,6 @@
                       </goals>
                       <configuration>
                           <wsdlUrls>
-                              <!-- <wsdlUrl>http://localhost:5000/API/Monitoreo?wsdl</wsdlUrl> -->
-                              <!-- <wsdlUrl>http://localhost:5000/API/IDepartamentoController?wsdl</wsdlUrl> -->
-                              <!-- <wsdlUrl>plantilla</wsdlUrl> -->
                               <wsdlUrl>http://localhost:5000/API/Servicios?wsdl</wsdlUrl>
                           </wsdlUrls>
                           <sourceDestDir>${project.basedir}/src/main/java</sourceDestDir>

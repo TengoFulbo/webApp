@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.ws.Endpoint;
 
 import turismouy.svcentral.Fabrica;
+// import turismouy.svcentral.Configuracion;
 import turismouy.svcentral.datatypes.dataActividad;
 import turismouy.svcentral.datatypes.dataCategoria;
 import turismouy.svcentral.datatypes.dataDepartamento;
@@ -34,6 +35,10 @@ import turismouy.svcentral.utilidades.log;
 
 @WebService
 public class publicador {
+
+	// Configuracion config = new Configuracion();
+
+	// String URI = "http://" + config.getIP() + ":" + config.getPuerto() + config.getPath();
     String ipServidor = "http://localhost";
     String puerto = ":5000";
     String uri = "/API/Servicios";
@@ -52,7 +57,9 @@ public class publicador {
     @WebMethod(exclude = true)
     public void publicar() {
         endpoint = Endpoint.publish(ipServidor + puerto + uri, this);
+        // endpoint = Endpoint.publish(URI, this);
         log.info("Publicando en la direccion: " + ipServidor + puerto + uri);
+        // log.info("Publicando en la direccion: " + URI);
     };
 
     @WebMethod(exclude = true)
