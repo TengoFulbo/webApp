@@ -19,6 +19,7 @@ import turismouy.svcentral.manejadores.CategoriaManejador;
 import turismouy.svcentral.manejadores.DepartamentoManejador;
 import turismouy.svcentral.manejadores.PaqueteManejador;
 import turismouy.svcentral.manejadores.UsuarioManejador;
+import turismouy.svcentral.manejadores.VisitaManejador;
 import turismouy.svcentral.utilidades.estadoActividad;
 import turismouy.svcentral.utilidades.log;
 import turismouy.svcentral.datatypes.dataActividad;
@@ -106,13 +107,17 @@ public class ActividadController implements IActividadController {
 
 		actividad act = new actividad(nombre, desc, duracion, costoUni, ciudad, fechaCrea, categorias);
 
-        visita visita = new visita(act);
+        visita visita = new visita();
 
         act.setDepartamento(depto);
         act.setProveedor(prov);
-        act.setVisita(visita);
 
         prov.addActividad(act);
+
+        VisitaManejador vm = VisitaManejador.getinstance();
+        visita.setActividad(actividad);
+        vm.addVisita(visita);
+        act.setVisita(visita);
 
         am.addActividad(act);
         um.updateUsuario(prov);
@@ -121,7 +126,10 @@ public class ActividadController implements IActividadController {
         dm.updateDepartamento(depto);
 
         // Se trae el objeto luego de guardarlo.
-        act = am.getActividad(nombre);
+        act = am.getActividadWithoutEstado(nombre);
+
+        // act.setVisita(visita);
+        // am.updateActividad(actividad);
 
         for (categoria categoria : categorias) {
             categoria.addActividad(act);
@@ -214,10 +222,17 @@ public class ActividadController implements IActividadController {
         
 		actividad act = new actividad(nombre, desc, duracion, costoUni, ciudad, video, fechaCrea, categorias);
 
+        visita visita = new visita();
+
         act.setDepartamento(depto);
         act.setProveedor(prov);
 
         prov.addActividad(act);
+
+        VisitaManejador vm = VisitaManejador.getinstance();
+        visita.setActividad(actividad);
+        vm.addVisita(visita);
+        act.setVisita(visita);
 
         am.addActividad(act);
         um.updateUsuario(prov);

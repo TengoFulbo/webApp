@@ -1,11 +1,12 @@
 package turismouy.svcentral.entidades;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class visita {
@@ -13,11 +14,18 @@ public class visita {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int cantidad;
+    @OneToOne(mappedBy = "visita")
     private actividad actividad;
+    @OneToOne(mappedBy = "visita")
     private salida salida;
-    private LocalDate fechaUltima;
+    private LocalDateTime fechaUltima;
 
-    public visita() {};
+    public visita() {
+        this.cantidad = 0;
+        this.actividad = null;
+        this.salida = null;
+        this.fechaUltima = null;
+    };
 
     public visita(actividad actividad) {
         this.cantidad = 0;
@@ -49,7 +57,7 @@ public class visita {
         return this.salida;
     };
 
-    public LocalDate getFechaUltima() {
+    public LocalDateTime getFechaUltima() {
         return this.fechaUltima;
     };
 
@@ -61,11 +69,12 @@ public class visita {
         this.salida = salida;
     };
 
-    public void setFechaUltima(LocalDate fechaUltima) {
+    public void setFechaUltima(LocalDateTime fechaUltima) {
         this.fechaUltima = fechaUltima;
     }
 
     public void aumentarVisita() {
         this.cantidad = cantidad + 1;
+        this.fechaUltima = LocalDateTime.now();
     };
 }

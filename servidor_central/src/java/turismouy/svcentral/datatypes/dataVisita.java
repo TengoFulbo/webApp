@@ -1,14 +1,16 @@
 package turismouy.svcentral.datatypes;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import turismouy.svcentral.entidades.actividad;
 import turismouy.svcentral.entidades.salida;
+import turismouy.svcentral.utilidades.LocalDateTimeAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "dataVisita")
@@ -17,11 +19,12 @@ public class dataVisita implements Serializable {
     private int cantidad;
     private actividad actividad;
     private salida salida;
-    private LocalDate fechaUltima;
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    private LocalDateTime fechaUltima;
 
     public dataVisita() {};
 
-    public dataVisita(Long id, int cantidad, actividad actividad, LocalDate fechaUltima) {
+    public dataVisita(Long id, int cantidad, actividad actividad, LocalDateTime fechaUltima) {
         this.id = id;
         this.cantidad = cantidad;
         this.actividad = actividad;
@@ -29,7 +32,7 @@ public class dataVisita implements Serializable {
         this.fechaUltima = fechaUltima;
     };
 
-    public dataVisita(Long id, int cantidad, salida salida, LocalDate fechaUltima) {
+    public dataVisita(Long id, int cantidad, salida salida, LocalDateTime fechaUltima) {
         this.id = id;
         this.cantidad = cantidad;
         this.actividad = null;
@@ -53,7 +56,7 @@ public class dataVisita implements Serializable {
         return this.salida;
     };
 
-    public LocalDate getFechaUltima() {
+    public LocalDateTime getFechaUltima() {
         return this.fechaUltima;
     }
 }

@@ -49,7 +49,7 @@ public class UsuarioManejador {
                 tx.rollback();
             }
             log.error("Guardado de Usuario '" + usuario.getNickname() + "' errrono.");
-            e.printStackTrace();
+            // e.printStackTrace();
         } finally {
             em.close();
         }
@@ -75,7 +75,7 @@ public class UsuarioManejador {
                 tx.rollback();
             }
             log.error("Actualizado el Usuario '" + usuario.getNickname() + "' erroneo.");
-            e.printStackTrace();
+            // e.printStackTrace();
         } finally {
             em.close();
         }
@@ -168,8 +168,8 @@ public class UsuarioManejador {
             }
 
         } catch (Exception e) {
-            // log.error(e.getMessage());
-            e.printStackTrace();
+            log.error(e.getMessage());
+            // e.printStackTrace();
             return null;
         } finally {
             em.close();
