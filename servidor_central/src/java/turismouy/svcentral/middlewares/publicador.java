@@ -210,6 +210,20 @@ public class publicador {
 	}
 
 	@WebMethod
+	public void ActividadAumentarVisita(@WebParam(name = "nombreActividad") String nombreActividad) throws NoExisteExcepcion {
+		log.info("[Publicador] Recibiendo ActividadAumentarVisita");
+		
+		try {
+			IAC.aumentarVisita(nombreActividad);
+		} catch (NoExisteExcepcion e) {
+			log.error("[Publicador] Error: ActividadAumentarVisita");
+			throw new NoExisteExcepcion(e.getMessage());
+		} catch (Exception e) {
+			log.error("[Publicador] Error: ActividadAumentarVisita");
+		}
+	}; 
+
+	@WebMethod
 	public List<dataActividad> ActividadGetAllActividadesDepartamento(@WebParam(name = "nombreDep") String nombreDep) {
 		List<dataActividad> actividades = new ArrayList<dataActividad>();
 		if (debug) log.info("[Publicador] Recibiendo ActividadGetAllActividadesDepartamento");

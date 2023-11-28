@@ -30,6 +30,9 @@ public class salida {
     @OneToMany(mappedBy = "salida")
     private List<inscripcion> inscripciones;
 
+    @OneToOne()
+    private visita visita;
+
 
     public salida() {
         // Constructor vacío requerido por JPA

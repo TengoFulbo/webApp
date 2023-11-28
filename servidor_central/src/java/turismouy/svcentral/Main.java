@@ -28,6 +28,7 @@ import turismouy.svcentral.manejadores.ImagenManejador;
 import turismouy.svcentral.manejadores.InscripcionManejador;
 import turismouy.svcentral.manejadores.PaqueteManejador;
 import turismouy.svcentral.manejadores.UsuarioManejador;
+import turismouy.svcentral.manejadores.VisitaManejador;
 import turismouy.svcentral.middlewares.publicador;
 import turismouy.svcentral.middlewares.controladores.ActividadService;
 import turismouy.svcentral.middlewares.controladores.HoraWebService;
@@ -68,7 +69,39 @@ public class Main {
         IInscripcionController IIC = fabrica.getIInscripcionController();
         ISalidaController ISC = fabrica.getISalidaController();
 
-    publicador services = new publicador();
+        ActividadManejador AM = ActividadManejador.getinstance();
+        actividad actividad = AM.getActividadWithoutEstado("Visita a la Fortaleza de Santa Teresa");
+
+        log.info("Actividad " + actividad.getNombre() + " tiene " + actividad.getVisita().getCantidad() + " visitas " + (actividad.getVisita().getFechaUltima() != null ? actividad.getVisita().getFechaUltima().toString() : "No tiene ultima fecha"));
+        actividad.getVisita().aumentarVisita();
+        log.info("Actividad " + actividad.getNombre() + " tiene " + actividad.getVisita().getCantidad() + " visitas " + (actividad.getVisita().getFechaUltima() != null ? actividad.getVisita().getFechaUltima().toString() : "No tiene ultima fecha"));
+        VisitaManejador VM = VisitaManejador.getinstance();
+        VM.updateVisita(actividad.getVisita());
+
+
+        // cargarTuristas();
+        // log.warning("########################################################");
+        // cargarProveedores();
+        // log.warning("########################################################");
+        // cargarDepartamentos();
+        // log.warning("########################################################");
+        // cargarCategorias();
+        // log.warning("########################################################");
+        // cargarPaquetes();
+        // log.warning("########################################################");
+        // cargarActividades();
+        // log.warning("########################################################");
+        // cargarEstadoActividad();
+        // log.warning("########################################################");
+        // cargarActividadesPaquetes();
+        // log.warning("########################################################");
+        // cargarSalidas();
+        // log.warning("########################################################");
+        // cargarInscripcionSalida();
+        // log.warning("########################################################");
+
+    //     try { IUC.registrarTurista("jorge_23", "Jorge", "Blandin", "jorge_23@gmail.com", "Uruguay",  LocalDate.of(2000, 05, 20), "jorge_23");
+    //         } catch (Exception e) { log.error("Error: " + e.toString()); }
 
     services.publicar();
 

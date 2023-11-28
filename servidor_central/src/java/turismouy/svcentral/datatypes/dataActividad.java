@@ -29,9 +29,10 @@ public class dataActividad implements Serializable {
 	private List<dataSalida>DtSalidas;
 	private List<dataPaquete>DtPaquetes;
 	private List<String> dtCategorias;
+	// private dataVisita dtVisita;
 	
 	
-	public dataActividad(String nombre, String desc, int duracion, int costoUni, String ciudad, LocalDate fechaCrea, estadoActividad estado,String url, dataDepartamento departamento, dataUsuario proveedor, List<dataSalida>DtSalidas, List<dataPaquete>DtPaquetes, List<String> dtCategorias) {
+	public dataActividad(String nombre, String desc, int duracion, int costoUni, String ciudad, LocalDate fechaCrea, estadoActividad estado,String url, dataDepartamento departamento, dataUsuario proveedor, List<dataSalida>DtSalidas, List<dataPaquete>DtPaquetes, List<String> dtCategorias, dataVisita dtVisita) {
 		this.nombre = nombre;
 		this.desc = desc;
 		this.duracion = duracion;
@@ -45,6 +46,7 @@ public class dataActividad implements Serializable {
 		this.DtSalidas = DtSalidas;
 		this.DtPaquetes = DtPaquetes;
 		this.dtCategorias = dtCategorias;
+		// this.dtVisita = dtVisita;
 	}
 
 	public dataActividad() {};
@@ -131,4 +133,8 @@ public class dataActividad implements Serializable {
 	public List<String> getDtCategorias() {
 		return this.dtCategorias;
 	}
+
+	// public dataVisita getDtVisita() {
+	// 	return this.dtVisita;
+	// }
 }
