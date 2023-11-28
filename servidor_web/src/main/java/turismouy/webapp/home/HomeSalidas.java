@@ -18,20 +18,26 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import turismouy.svcentral.interfaces.IActividadController;
-import turismouy.svcentral.interfaces.ICategoriaController;
-import turismouy.svcentral.interfaces.IDepartamentoController;
-import turismouy.svcentral.interfaces.ISalidaController;
-import turismouy.svcentral.Fabrica;
-import turismouy.svcentral.datatypes.dataCategoria;
-import turismouy.svcentral.datatypes.dataActividad;
-import turismouy.svcentral.entidades.actividad;
-import turismouy.svcentral.entidades.departamento;
-import turismouy.svcentral.entidades.departamento;
-import turismouy.svcentral.entidades.categoria;
-import turismouy.svcentral.datatypes.dataSalida;
-import turismouy.svcentral.datatypes.dataDepartamento;
-import turismouy.svcentral.utilidades.log;
+// import turismouy.svcentral.interfaces.IActividadController;
+// import turismouy.svcentral.interfaces.ICategoriaController;
+// import turismouy.svcentral.interfaces.IDepartamentoController;
+// import turismouy.svcentral.interfaces.ISalidaController;
+// import turismouy.svcentral.Fabrica;
+// import turismouy.svcentral.datatypes.dataCategoria;
+// import turismouy.svcentral.datatypes.dataActividad;
+// import turismouy.svcentral.entidades.actividad;
+// import turismouy.svcentral.entidades.departamento;
+// import turismouy.svcentral.entidades.departamento;
+// import turismouy.svcentral.entidades.categoria;
+// import turismouy.svcentral.datatypes.dataSalida;
+// import turismouy.svcentral.datatypes.dataDepartamento;
+import turismouy.webapp.utils.log;
+import turismouy.svcentral.middlewares.DataActividad;
+import turismouy.svcentral.middlewares.DataCategoria;
+import turismouy.svcentral.middlewares.DataDepartamento;
+import turismouy.svcentral.middlewares.DataSalida;
+import turismouy.svcentral.middlewares.Publicador;
+import turismouy.svcentral.middlewares.PublicadorService;
 import turismouy.webapp.utils.LocalDateAdapter;
 
 @WebServlet("/homeSalidas")
@@ -40,15 +46,24 @@ public class HomeSalidas extends HttpServlet {
             throws ServletException, IOException {
         request.setAttribute("pageTitle", "Salidas - TurismoUY");
 
-        IActividadController IAC = Fabrica.getInstance().getIActividadController();
-        IDepartamentoController IAD = Fabrica.getInstance().getIDepartamentoController();
-        ICategoriaController ICC = Fabrica.getInstance().getICategoriaController();
-        ISalidaController ISC = Fabrica.getInstance().getISalidaController();
+//        IActividadController IAC = Fabrica.getInstance().getIActividadController();
+//        IDepartamentoController IAD = Fabrica.getInstance().getIDepartamentoController();
+//        ICategoriaController ICC = Fabrica.getInstance().getICategoriaController();
+//        ISalidaController ISC = Fabrica.getInstance().getISalidaController();
+        Publicador API = new PublicadorService().getPublicadorPort();
 
-        List<dataActividad> actividadesList = IAC.getAllActividades();
-        List<dataDepartamento> departamentos = IAD.listarDepartamentos();
-        List<dataCategoria> categorias = ICC.listarCategorias();
-        List<dataSalida> salidas = ISC.getAllSalidas();
+//        List<dataActividad> actividadesList = IAC.getAllActividades();
+        List<DataActividad> actividadesList = API.actividadGetAllActividades();
+    
+//        List<dataDepartamento> departamentos = IAD.listarDepartamentos();
+        List<DataDepartamento> departamentos = API.departamentoListarDepartamentos();
+        
+//        List<dataCategoria> categorias = ICC.listarCategorias();
+        List<DataCategoria> categorias = API.categoriaListarCategorias();
+
+        System.out.println("Hola XML");
+        List<DataSalida> salidas = API.salidaListarSalidas();
+        System.out.println("Chau XML");
 
 
         request.setAttribute("actividades", actividadesList);
@@ -64,9 +79,10 @@ public class HomeSalidas extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Gson gson = new Gson();
         Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+        //Publicador API = new PublicadorService().getPublicadorPort();
 
-        IActividadController IAC = Fabrica.getInstance().getIActividadController();
-        ISalidaController ISC = Fabrica.getInstance().getISalidaController();
+//        IActividadController IAC = Fabrica.getInstance().getIActividadController();
+//        ISalidaController ISC = Fabrica.getInstance().getISalidaController();
 
         String categoria    = request.getParameter("categoria");
         String departamento = request.getParameter("departamento");
@@ -78,7 +94,7 @@ public class HomeSalidas extends HttpServlet {
 
         log.warning("Entro aca klok");
 
-        List<dataSalida> salidas = null;
+        List<DataSalida> salidas = null;
 
         if (!actividad.equals("")){
             salidas = filtroA(actividad);
@@ -100,16 +116,17 @@ public class HomeSalidas extends HttpServlet {
         response.getWriter().write(resultadoJson);
     }
 
-    List<dataSalida> filtroA(String actividadName){
-        IActividadController IAC = Fabrica.getInstance().getIActividadController();
+    List<DataSalida> filtroA(String actividadName){
+//    	IActividadController IAC = Fabrica.getInstance().getIActividadController();
+        Publicador API = new PublicadorService().getPublicadorPort();
 
-        List<dataActividad> actividades = IAC.getAllActividades();
-        dataActividad actividad = null;
+        List<DataActividad> actividades = API.actividadGetAllActividades();
+        DataActividad actividad = null;
 
         // log.info(actividadName + " tamaño de actividades -> " + actividades.size());
         if (actividades != null){
             if (!actividades.isEmpty()){
-                for(dataActividad act : actividades){
+                for(DataActividad act : actividades){
                     // log.info("  -> " + act.getNombre());
                     if (act.getNombre().equals(actividadName)){
                         actividad = act;
@@ -122,37 +139,38 @@ public class HomeSalidas extends HttpServlet {
         if (actividad == null){
             return null;
         }else{
-            List<dataSalida> result = actividad.getDtSalidas();
+            List<DataSalida> result = actividad.getDtSalidas();
             return result;
         }
     }
 
-    List<dataSalida> filtroDC(String departamento, String categoria){
+    List<DataSalida> filtroDC(String departamento, String categoria){
 
-        IActividadController IAC = Fabrica.getInstance().getIActividadController();
-        ISalidaController ISC = Fabrica.getInstance().getISalidaController();
-        IDepartamentoController IDC = Fabrica.getInstance().getIDepartamentoController();
-        ICategoriaController ICC = Fabrica.getInstance().getICategoriaController();
-
-        List<dataDepartamento> departamentos = IDC.listarDepartamentos();
-        List<dataActividad> actividades = null;
-        List<dataCategoria> categorias = ICC.listarCategorias();
+//        IActividadController IAC = Fabrica.getInstance().getIActividadController();
+//        ISalidaController ISC = Fabrica.getInstance().getISalidaController();
+//        IDepartamentoController IDC = Fabrica.getInstance().getIDepartamentoController();
+//        ICategoriaController ICC = Fabrica.getInstance().getICategoriaController();
+        Publicador API = new PublicadorService().getPublicadorPort();
+    	
+        List<DataDepartamento> departamentos = API.departamentoListarDepartamentos();
+        List<DataActividad> actividades = null;
+        List<DataCategoria> categorias = API.categoriaListarCategorias();
 
         if (departamento.equals("") && categoria.equals("")){
-            actividades = IAC.getAllActividades();
+            actividades = API.actividadGetAllActividades();
         }
 
         if (!departamento.equals("")){
-            for(dataDepartamento dpto : departamentos){
+            for(DataDepartamento dpto : departamentos){
                 if(dpto.getNombre().equals(departamento)){
                     actividades = dpto.getActividades();
                     if(!categoria.equals("")){
-                        List<dataActividad> foo = new ArrayList<dataActividad>();;
-                        for(dataActividad act : actividades){
+                        List<DataActividad> foo = new ArrayList<DataActividad>();;
+                        for(DataActividad act : actividades){
                             foo.add(act);
                         }
                         // log.warning(actividades.size() + "");
-                        for(dataActividad act : foo){
+                        for(DataActividad act : foo){
                             if(!act.getDtCategorias().contains(categoria)){
                                 actividades.remove(act);
                             }
@@ -162,14 +180,14 @@ public class HomeSalidas extends HttpServlet {
             }
         }else{
             if(!categoria.equals("")){
-                actividades = IAC.getAllActividades();
-                List<dataActividad> foo = new ArrayList<dataActividad>();;
-                for(dataActividad act : actividades){
+                actividades = API.actividadGetAllActividades();
+                List<DataActividad> foo = new ArrayList<DataActividad>();;
+                for(DataActividad act : actividades){
                     foo.add(act);
                 }
 
                 // log.warning(actividades.size() + "");
-                for(dataActividad act : foo){
+                for(DataActividad act : foo){
                     if(!act.getDtCategorias().contains(categoria)){
                         actividades.remove(act);
                     }
@@ -180,11 +198,11 @@ public class HomeSalidas extends HttpServlet {
         if(actividades.isEmpty()){
             return null;
         }else{
-            List<dataSalida> salidas = new ArrayList<dataSalida>();
-            List<dataSalida> tmp = new ArrayList<dataSalida>();
-            for(dataActividad act : actividades){
+            List<DataSalida> salidas = new ArrayList<DataSalida>();
+            List<DataSalida> tmp = new ArrayList<DataSalida>();
+            for(DataActividad act : actividades){
                 tmp = act.getDtSalidas();
-                for(dataSalida salida : tmp){
+                for(DataSalida salida : tmp){
                     if(!salidas.contains(salida)){
                         salidas.add(salida);
                     }

@@ -28,6 +28,9 @@ import turismouy.svcentral.controladores.DepartamentoController;
 // import turismouy.svcentral.middlewares.controladores.HoraWebServiceService;
 // import turismouy.svcentral.controladores.DepartamentoControllerService;
 import turismouy.svcentral.datatypes.dataDepartamento;
+import turismouy.svcentral.middlewares.DataSalida;
+import turismouy.svcentral.middlewares.Publicador;
+import turismouy.svcentral.middlewares.PublicadorService;
 
 @WebServlet("/home")
 public class HomeServlet extends HttpServlet {
@@ -44,6 +47,13 @@ public class HomeServlet extends HttpServlet {
         request.setAttribute("salidas", "5");
         request.setAttribute("compras", "12");
         request.setAttribute("actividades", "100");
+        
+        Publicador API = new PublicadorService().getPublicadorPort();
+        List<DataSalida> salidas = API.salidaGetAllSalidas();
+        
+        for (DataSalida salida : salidas) {
+        	System.out.println("Salida: " + salida.getNombre());
+        }
 
 
         // DepartamentoController cliente = new DepartamentoControllerService().getDepartamentoControllerPort();

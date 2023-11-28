@@ -63,6 +63,7 @@ public class AltaSalidaServlet extends HttpServlet {
         try {
             // void crearSalida(String nombre, int capacidad, LocalDate fechaAlta, LocalDate fechaSalida, String lugarSalida, String nombreActividad)
         	//ISC.crearSalida(nombreSalida, capacidad, LocalDate.now(), fechaSalida, lugarSalida, nombreActividad);
+        	API.salidaCrearSalida(nombreSalida, capacidad, LocalDate.now().toString(), fechaSalida.toString(), lugarSalida, nombreActividad);
         }catch (Exception e){
             log.error("[AltaSalidaServlet] Error al crear salida");
         }

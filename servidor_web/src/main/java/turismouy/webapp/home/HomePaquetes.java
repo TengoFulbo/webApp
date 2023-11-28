@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import turismouy.svcentral.middlewares.DataPaquete;
 import turismouy.svcentral.middlewares.Publicador;
 import turismouy.svcentral.middlewares.PublicadorService;
-import turismouy.svcentral.utilidades.log;
+import turismouy.webapp.utils.log;
 import turismouy.webapp.utils.LocalDateAdapter;
 
 import java.util.List;

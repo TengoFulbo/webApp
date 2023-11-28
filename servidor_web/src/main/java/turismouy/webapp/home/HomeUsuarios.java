@@ -12,10 +12,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import turismouy.svcentral.interfaces.IUsuarioController;
-import turismouy.svcentral.Fabrica;
-import turismouy.svcentral.datatypes.dataUsuario;
-import turismouy.svcentral.utilidades.log;
+// import turismouy.svcentral.interfaces.IUsuarioController;
+// import turismouy.svcentral.Fabrica;
+// import turismouy.svcentral.datatypes.dataUsuario;
+import turismouy.svcentral.middlewares.Publicador;
+import turismouy.svcentral.middlewares.PublicadorService;
+import turismouy.svcentral.middlewares.DataUsuario;
+import turismouy.webapp.utils.log;
 
 @WebServlet("/homeUsuarios")
 public class HomeUsuarios extends HttpServlet {
@@ -26,9 +29,10 @@ public class HomeUsuarios extends HttpServlet {
 
         // List<dataUsuario> usuarios = new ArrayList<dataUsuario>();
         
-        IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
-
-        List<dataUsuario> usuarios = IUC.listarUsuarios();
+        // IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+        Publicador API = new PublicadorService().getPublicadorPort();
+        
+        List<DataUsuario> usuarios = API.usuarioListarUsuarios();
 
         request.setAttribute("usuarios", usuarios);
 

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ page import="java.util.List" %>
+<%@ page import="turismouy.svcentral.middlewares.Publicador" %>
+<%@ page import="turismouy.svcentral.middlewares.PublicadorService" %>
 <%@ page import="turismouy.svcentral.middlewares.DataActividad" %>
 <%@ page import="turismouy.svcentral.middlewares.DataDepartamento" %>
 <%@ page import="turismouy.svcentral.middlewares.DataCategoria" %>

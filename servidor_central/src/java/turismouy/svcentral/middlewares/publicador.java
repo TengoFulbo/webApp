@@ -312,8 +312,8 @@ public class publicador {
 	public void SalidaCrearSalida(
 			@WebParam(name = "nombre")			String nombre,
 			@WebParam(name = "capacidad")		int capacidad,
-			@WebParam(name = "fechaAlta")		LocalDate fechaAlta,
-			@WebParam(name = "fechaSalida")		LocalDate fechaSalida,
+			@WebParam(name = "fechaAlta") 	@XmlJavaTypeAdapter(LocalDateAdapter.class)		LocalDate fechaAlta,
+			@WebParam(name = "fechaSalida")	@XmlJavaTypeAdapter(LocalDateAdapter.class) 	LocalDate fechaSalida,
 			@WebParam(name = "lugarSalida")		String lugarSalida,
 			@WebParam(name = "nombreActividad")	String nombreActividad
 	) throws ParametrosInvalidosExcepcion, YaExisteExcepcion, NoExisteExcepcion {
@@ -337,13 +337,31 @@ public class publicador {
 
 
 		try {
+			log.info("[Publicador - getAllSalidas]  Antes");
 			salidas = ISC.getAllSalidas();
+			log.info("[Publicador - getAllSalidas]  Despues");
 		} catch (Exception e) {
             log.error("[Publicador] Error: SalidaGetAllSalidas");
+		}
+		
+		if(salidas == null) {
+			log.warning("[Publicador] - Salidas Vacio");
+		}else {
+			log.warning("[Publicador] - Salidas NO Vacio");
+			for(dataSalida ref : salidas) {
+				log.warning("[Publicador] - Salidas -> " + ref.getNombre());				
+			}
 		}
 
 		return salidas;
 	}
+	
+	public List<dataSalida> SalidaListarSalidas() {
+		if (debug) log.info("[Publicador] Recibiendo SalidaListarSalidas");
+		List<dataSalida> salidas = ISC.getAllSalidas();
+		
+		return salidas;
+	};
 
 	@WebMethod
 	public List<dataPaquete> paqueteGetAllPaquetes() {
