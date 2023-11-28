@@ -55,7 +55,7 @@ public class HomeActividades extends HttpServlet {
         request.setAttribute("departamentos", departamentos);
         request.setAttribute("categorias", categorias);
 
-        log.info("Se accedio a actividades");
+        // log.info("Se accedio a actividades");
         // Redireciona
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/homeActividades.jsp");
         dispatcher.forward(request, response);
@@ -71,7 +71,7 @@ public class HomeActividades extends HttpServlet {
 
         // log.info("Departamento: " + departamento);
 
-        log.info("[homeActividades Post]");
+        // log.info("[homeActividades Post]");
 
         //IActividadController IAC = Fabrica.getInstance().getIActividadController();
         Publicador API = new PublicadorService().getPublicadorPort();

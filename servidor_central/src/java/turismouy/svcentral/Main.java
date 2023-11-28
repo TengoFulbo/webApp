@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 import javax.xml.ws.Endpoint;
 
@@ -30,10 +31,6 @@ import turismouy.svcentral.manejadores.PaqueteManejador;
 import turismouy.svcentral.manejadores.UsuarioManejador;
 import turismouy.svcentral.manejadores.VisitaManejador;
 import turismouy.svcentral.middlewares.publicador;
-import turismouy.svcentral.middlewares.controladores.ActividadService;
-import turismouy.svcentral.middlewares.controladores.HoraWebService;
-import turismouy.svcentral.middlewares.interfaces.IHoraWebService;
-import turismouy.svcentral.middlewares.interfaces.MonitoreoWeb;
 import turismouy.svcentral.utilidades.estadoActividad;
 import turismouy.svcentral.controladores.CompraController;
 import turismouy.svcentral.controladores.InscripcionController;
@@ -69,14 +66,26 @@ public class Main {
         IInscripcionController IIC = fabrica.getIInscripcionController();
         ISalidaController ISC = fabrica.getISalidaController();
 
-        ActividadManejador AM = ActividadManejador.getinstance();
-        actividad actividad = AM.getActividadWithoutEstado("Visita a la Fortaleza de Santa Teresa");
+    // public static void main(String[] args) {
+    //     generarArchivoSiNoExiste();
+    //     Properties configuracion = obtenerConfiguracion();
+    //     System.out.println("Configuración obtenida:\n" + configuracion);
 
-        log.info("Actividad " + actividad.getNombre() + " tiene " + actividad.getVisita().getCantidad() + " visitas " + (actividad.getVisita().getFechaUltima() != null ? actividad.getVisita().getFechaUltima().toString() : "No tiene ultima fecha"));
-        actividad.getVisita().aumentarVisita();
-        log.info("Actividad " + actividad.getNombre() + " tiene " + actividad.getVisita().getCantidad() + " visitas " + (actividad.getVisita().getFechaUltima() != null ? actividad.getVisita().getFechaUltima().toString() : "No tiene ultima fecha"));
-        VisitaManejador VM = VisitaManejador.getinstance();
-        VM.updateVisita(actividad.getVisita());
+    //     // Si hay un error al obtener la configuración, se utiliza un conjunto de propiedades vacío
+    //     Properties configuracionConDefecto = obtenerConfiguracionConDefecto();
+    //     System.out.println("Configuración con defecto:\n" + configuracionConDefecto);
+    // }
+
+        // configuracion.generarArchivoSiNoExiste();
+        configuracion.ejecutar();
+        // Properties configuracion = configuracion.obtenerConfiguracion();
+
+
+        // ActividadManejador AM = ActividadManejador.getinstance();
+        // actividad actividad = AM.getActividadWithoutEstado("Visita a la Fortaleza de Santa Teresa");
+// 
+        // log.info("Actividad " + actividad.getNombre() + " tiene " + actividad.getVisita().getCantidad() + " visitas " + (actividad.getVisita().getFechaUltima() != null ? actividad.getVisita().getFechaUltima().toString() : "No tiene ultima fecha"));
+        // log.info("Actividad " + actividad.getNombre() + " tiene " + actividad.getVisita().getCantidad() + " visitas " + (actividad.getVisita().getFechaUltima() != null ? actividad.getVisita().getFechaUltima().toString() : "No tiene ultima fecha"));
 
 
         // cargarTuristas();
@@ -102,6 +111,8 @@ public class Main {
 
     //     try { IUC.registrarTurista("jorge_23", "Jorge", "Blandin", "jorge_23@gmail.com", "Uruguay",  LocalDate.of(2000, 05, 20), "jorge_23");
     //         } catch (Exception e) { log.error("Error: " + e.toString()); }
+
+    publicador services = new publicador();
 
     services.publicar();
 
