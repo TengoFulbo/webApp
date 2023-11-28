@@ -1,17 +1,18 @@
 <%@page import="turismouy.svcentral.Fabrica"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%@ page import="turismouy.svcentral.datatypes.dataActividad" %>
-<%@ page import="turismouy.svcentral.datatypes.dataSalida" %>
-<%@ page import="turismouy.svcentral.datatypes.dataInscripcion" %>
-<%@ page import="turismouy.svcentral.utilidades.estadoActividad" %>
-<%@ page import="turismouy.svcentral.interfaces.IInscripcionController" %>
-<%@ page import="turismouy.svcentral.interfaces.IUsuarioController" %>
+<%@ page import="turismouy.svcentral.middlewares.DataActividad" %>
+<%@ page import="turismouy.svcentral.middlewares.DataSalida" %>
+<%@ page import="turismouy.svcentral.middlewares.DataInscripcion" %>
+<%@ page import="turismouy.svcentral.middlewares.EstadoActividad" %>
+<%@ page import="turismouy.svcentral.middlewares.DataUsuario" %>
+<%@ page import="turismouy.svcentral.middlewares.Publicador"%>
+<%@ page import="turismouy.svcentral.middlewares.PublicadorService"%>
 <%@ page import="java.util.List" %>
 
 <%@ include file="./utils/head.jsp" %>
 <!-- <%
-    dataUsuario user = (dataUsuario) request.getAttribute("user");
+    DataUsuario user = (DataUsuario) request.getAttribute("user");
 %> -->
 <head>
   <link rel="stylesheet" href="./src/css/homeMulti.css" />
@@ -99,7 +100,7 @@
                   </div>
                 </div>
                 <%
-                if (user != null && user.getisProveedor()) { %>
+                if (user != null && user.isIsProveedor()) { %>
                     <div class="row">
                       <div class="input-field col s12">
                         <textarea id="descripcion" class="materialize-textarea" readonly><%= (user != null && user.getDescripcion() != null) ? user.getDescripcion() : "" %></textarea>
@@ -115,7 +116,7 @@
                 <%
                 } %>
                 <%
-                if (user != null && !user.getisProveedor()) { %>
+                if (user != null && !user.isIsProveedor()) { %>
                     <div class="row">
                       <div class="input-field col s12">
                         <input id="nacionalidad" readonly type="text" class="validate" value="<%= (user != null && user.getNacionalidad() != null) ? user.getNacionalidad() : "" %>">
@@ -138,25 +139,25 @@
           </div>
           <% if(usuario != null ){ %>
             <% if(user.getNombre() == usuario.getNombre()){ %>
-              <% if(user.getisProveedor()){ %>
+              <% if(user.isIsProveedor()){ %>
                 <h4>Actividades</h4>
                 <ul class="collection">
                 <%
                 if (user != null) {
                   if (user.getActividades() != null) {
-                    for (dataActividad actividad : user.getActividades()) {
+                    for (DataActividad actividad : user.getActividades()) {
                 %>
                     <!-- <p><%= actividad.getNombre() %></p> -->
                     <li class="collection-item">
                       <div><%= actividad.getNombre() %>
-                <span class="new badge <%= (actividad.getEstado() == estadoActividad.FINALIZADA) ? "pink darken-3" : "indigo darken-3" %>" data-badge-caption="">
+                <span class="new badge <%= (actividad.getEstado() == EstadoActividad.FINALIZADA) ? "pink darken-3" : "indigo darken-3" %>" data-badge-caption="">
                     <% 
                         String estadoCaption = "";
-                        if (actividad.getEstado() == estadoActividad.AGREGADA) {
+                        if (actividad.getEstado() == EstadoActividad.AGREGADA) {
                             estadoCaption = "Agregada";
-                        } else if (actividad.getEstado() == estadoActividad.FINALIZADA) {
+                        } else if (actividad.getEstado() == EstadoActividad.FINALIZADA) {
                             estadoCaption = "Finalizada";
-                        } else if (actividad.getEstado() == estadoActividad.CONFIRMADA){
+                        } else if (actividad.getEstado() == EstadoActividad.CONFIRMADA){
                             estadoCaption = "Confirmada";
                         } else{
                           estadoCaption = "Rechazada";
@@ -178,11 +179,12 @@
             <%
             if (user != null) {
               if (user.getSalidas() != null) {
-                IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
-            	dataUsuario miuserDt = IUC.mostrarInfo(user.getNickname());
-            	List<dataInscripcion> inscripciones = miuserDt.getInscripciones(); 
+                //IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+                Publicador API = new PublicadorService().getPublicadorPort();
+            	DataUsuario miuserDt = API.usuarioMostrarInfo(user.getNickname());
+            	List<DataInscripcion> inscripciones = miuserDt.getInscripciones(); 
                 
-                for (dataInscripcion ins : inscripciones) {
+                for (DataInscripcion ins : inscripciones) {
             %>
                 <li class="collection-item" style="border-bottom: 3px dashed #ccc;">
                 	<div>

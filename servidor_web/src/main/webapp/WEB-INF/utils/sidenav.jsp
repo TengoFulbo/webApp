@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- Importamos el datatype dataUsuario -->
-<%@ page import="turismouy.svcentral.datatypes.dataUsuario" %>
+<%@ page import="turismouy.svcentral.middlewares.DataUsuario" %>
 
-<% dataUsuario usuario = (dataUsuario) session.getAttribute("dataUsuario"); %>
+<% DataUsuario usuario = (DataUsuario) session.getAttribute("dataUsuario"); %>
 <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
     <!-- SIDENAV -->
     <ul id="slide-out" class="sidenav home_side sidenav-fixed">
@@ -42,7 +42,7 @@
 
         <%
         if (usuario != null) {
-            if (usuario.getisProveedor() == true) { %>
+            if (usuario.isIsProveedor() == true) { %>
                 <div class="divider"></div>
                 <li><a href="./misActividades">Mis Actividades</a></li>
                 <li><a href="./misSalidas">Mis Salidas</a></li>

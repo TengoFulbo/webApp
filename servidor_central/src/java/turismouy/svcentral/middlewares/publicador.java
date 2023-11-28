@@ -7,6 +7,7 @@ import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.ws.Endpoint;
 
 import turismouy.svcentral.Fabrica;
@@ -17,13 +18,16 @@ import turismouy.svcentral.datatypes.dataPaquete;
 import turismouy.svcentral.datatypes.dataSalida;
 import turismouy.svcentral.datatypes.dataUsuario;
 import turismouy.svcentral.excepciones.NoExisteExcepcion;
+import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
 import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
+import turismouy.svcentral.excepciones.YaExisteExcepcion;
 import turismouy.svcentral.interfaces.IActividadController;
 import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.interfaces.IDepartamentoController;
 import turismouy.svcentral.interfaces.IPaqueteController;
 import turismouy.svcentral.interfaces.ISalidaController;
 import turismouy.svcentral.interfaces.IUsuarioController;
+import turismouy.svcentral.utilidades.LocalDateAdapter;
 import turismouy.svcentral.utilidades.log;
 
 @WebService
@@ -92,7 +96,7 @@ public class publicador {
 		@WebParam(name = "nickname")	String nickname,
 		@WebParam(name = "nombre")		String nombre,
 		@WebParam(name = "apellido")	String apellido,
-		@WebParam(name = "nacimiento")	LocalDate nacimiento
+		@WebParam(name = "nacimiento")	@XmlJavaTypeAdapter(LocalDateAdapter.class) LocalDate nacimiento
 	) {
 		if (debug) log.info("[Publicador] Recibiendo UsuarioModificarUsuario");
 
@@ -108,7 +112,7 @@ public class publicador {
 		@WebParam(name = "nickname")	String nickname,
 		@WebParam(name = "nombre")		String nombre,
 		@WebParam(name = "apellido")	String apellido,
-		@WebParam(name = "nacimiento")	LocalDate nacimiento,
+		@WebParam(name = "nacimiento")	@XmlJavaTypeAdapter(LocalDateAdapter.class) LocalDate nacimiento,
 		@WebParam(name = "imageData") 	byte[] imageData
 	) {
 		if (debug) log.info("[Publicador] Recibiendo UsuarioModificarUsuarioImagen");
