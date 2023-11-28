@@ -14,18 +14,28 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import turismouy.svcentral.middlewares.DataActividad;
+import turismouy.svcentral.middlewares.DataSalida;
+import turismouy.svcentral.middlewares.DataUsuario;
+import turismouy.svcentral.middlewares.Publicador;
+import turismouy.svcentral.middlewares.PublicadorService;
+import turismouy.svcentral.middlewares.YaExisteExcepcion;
 import turismouy.svcentral.interfaces.IUsuarioController;
-import turismouy.svcentral.interfaces.IInscripcionController;
-import turismouy.svcentral.interfaces.ISalidaController;
-import turismouy.svcentral.Fabrica;
-import turismouy.svcentral.datatypes.dataUsuario;
-import turismouy.svcentral.entidades.actividad;
 import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
 import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
 import turismouy.svcentral.excepciones.UsuarioYaExisteExcepcion;
-import turismouy.svcentral.datatypes.dataSalida;
-import turismouy.svcentral.datatypes.dataActividad;
-import turismouy.svcentral.utilidades.log;
+import turismouy.svcentral.interfaces.IInscripcionController;
+import turismouy.svcentral.interfaces.ISalidaController;
+//import turismouy.svcentral.Fabrica;
+//import turismouy.svcentral.datatypes.dataUsuario;
+//import turismouy.svcentral.entidades.actividad;
+//import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
+//import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
+//import turismouy.svcentral.excepciones.UsuarioYaExisteExcepcion;
+//import turismouy.svcentral.datatypes.dataSalida;
+//import turismouy.svcentral.datatypes.dataActividad;
+//import turismouy.svcentral.utilidades.log;
+import turismouy.webapp.utils.log;
 
 @WebServlet("/insSalida")
 public class InscripcionSalidaServlet extends HttpServlet {
@@ -45,7 +55,7 @@ public class InscripcionSalidaServlet extends HttpServlet {
         log.warning("      /// Entro al post ///");
         HttpSession session = request.getSession();
 
-        dataUsuario usuario = (dataUsuario) session.getAttribute("dataUsuario");
+        DataUsuario usuario = (DataUsuario) session.getAttribute("dataUsuario");
         String datosInscripcion = (String) request.getSession().getAttribute("datosInscripcion");
 
         
@@ -70,38 +80,37 @@ public class InscripcionSalidaServlet extends HttpServlet {
         System.out.println("Nombre de la salida: " + nSalida);
         log.info("--------------------------------------------------------------");
         // public abstract void crearInscripcion(LocalDate fecha, int cant, String nombreTursita, String nombreSalida, String nombreAct
-        ISalidaController ISC = Fabrica.getInstance().getISalidaController();
-        IInscripcionController IIC = Fabrica.getInstance().getIInscripcionController();
+        Publicador API = new PublicadorService().getPublicadorPort();
         LocalDate fecha = LocalDate.now();
         
-        dataSalida salida = ISC.mostrarDatosSalida(nSalida);
-        List<dataActividad> listActividad = salida.getActividades();
+        //DataSalida salida = API.salidaMostrarDatosSalida(nSalida);
+        //List<DataActividad> listActividad = salida.getActividades();
         
         String actividadNombre = "";
         
-        if(listActividad != null) {
-        	for(dataActividad act : listActividad) {
-        		actividadNombre = act.getNombre();
-        	}
-        }
+//        if(listActividad != null) {
+//        	for(DataActividad act : listActividad) {
+//        		actividadNombre = act.getNombre();
+//        	}
+//        }
 
-        try {
-			IIC.crearInscripcion(fecha, cantidadIns, usuario.getNickname(), nSalida, actividadNombre);
-		} catch (ParametrosInvalidosExcepcion e) {
-			// TODO Bloque catch generado automáticamente
-			e.printStackTrace();
-		} catch (UsuarioYaExisteExcepcion e) {
-			// TODO Bloque catch generado automáticamente
-			e.printStackTrace();
-		} catch (UsuarioNoExisteExcepcion e) {
-			// TODO Bloque catch generado automáticamente
-			e.printStackTrace();
-		}
+//        try {
+//			//API.inscripcionCrearInscripcion(fecha.toString(), cantidadIns, usuario.getNickname(), nSalida, actividadNombre);
+//		} catch (ParametrosInvalidosExcepcion e) {
+//			// TODO Bloque catch generado automáticamente
+//			e.printStackTrace();
+//		} catch (UsuarioYaExisteExcepcion e) {
+//			// TODO Bloque catch generado automáticamente
+//			e.printStackTrace();
+//		} catch (UsuarioNoExisteExcepcion e) {
+//			// TODO Bloque catch generado automáticamente
+//			e.printStackTrace();
+//		}
 
 
 
         // try {
-        //     // void crearSalida(String nombre, int capacidad, LocalDate fechaAlta, LocalDate fechaSalida, String lugarSalida, String nombreActividad)
+        //     void crearSalida(String nombre, int capacidad, LocalDate fechaAlta, LocalDate fechaSalida, String lugarSalida, String nombreActividad)
         //     ISC.crearSalida(nombreSalida, capacidad, LocalDate.now(), fechaSalida, lugarSalida, nombreActividad);
         // }catch (Exception e){
         //     log.error("[AltaSalidaServlet] Error al crear salida");

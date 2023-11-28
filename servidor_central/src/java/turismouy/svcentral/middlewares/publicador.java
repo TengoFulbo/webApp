@@ -25,6 +25,7 @@ import turismouy.svcentral.excepciones.YaExisteExcepcion;
 import turismouy.svcentral.interfaces.IActividadController;
 import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.interfaces.IDepartamentoController;
+import turismouy.svcentral.interfaces.IInscripcionController;
 import turismouy.svcentral.interfaces.IPaqueteController;
 import turismouy.svcentral.interfaces.ISalidaController;
 import turismouy.svcentral.interfaces.IUsuarioController;
@@ -44,6 +45,7 @@ public class publicador {
 	ICategoriaController 	ICC = Fabrica.getInstance().getICategoriaController();
 	ISalidaController 		ISC = Fabrica.getInstance().getISalidaController();
 	IPaqueteController 		IPC = Fabrica.getInstance().getIPaqueteController();
+	IInscripcionController  IIC = Fabrica.getInstance().getIInscripcionController();
 
     private Endpoint endpoint = null;
 
@@ -355,13 +357,6 @@ public class publicador {
 
 		return salidas;
 	}
-	
-	public List<dataSalida> SalidaListarSalidas() {
-		if (debug) log.info("[Publicador] Recibiendo SalidaListarSalidas");
-		List<dataSalida> salidas = ISC.getAllSalidas();
-		
-		return salidas;
-	};
 
 	@WebMethod
 	public List<dataPaquete> paqueteGetAllPaquetes() {
@@ -374,5 +369,31 @@ public class publicador {
 		}
 
 		return paquetes;
-	};
+	}
+	
+	@WebMethod
+	public dataSalida salidaMostrarDatosSalida(@WebParam(name = "nombre") String nombre){
+		
+		return ISC.mostrarDatosSalida(nombre);
+	}
+	
+	@WebMethod
+	public void inscripcionCrearInscripcion(@WebParam(name = "fecha") @XmlJavaTypeAdapter(LocalDateAdapter.class) LocalDate fecha,
+											@WebParam(name = "cantInsc") int cantInsc,
+											@WebParam(name = "nickName") String nickName,
+											@WebParam(name = "nSalida") int nSalida,
+											@WebParam(name = "actividadNombre") String actividadNombre) throws ParametrosInvalidosExcepcion, YaExisteExcepcion, NoExisteExcepcion{
+		
+		try {
+			IIC.crearInscripcion(fecha, cantInsc, actividadNombre, nickName, actividadNombre);
+		} catch (ParametrosInvalidosExcepcion e) {
+			throw new ParametrosInvalidosExcepcion();
+		} catch (UsuarioYaExisteExcepcion e) {
+			throw new YaExisteExcepcion(e.getMessage());
+		} catch (UsuarioNoExisteExcepcion e) {
+			throw new NoExisteExcepcion(e.getMessage());
+		}
+		
+	}
 }
+
