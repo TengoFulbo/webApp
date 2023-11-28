@@ -75,12 +75,12 @@ public class InscripcionSalidaServlet extends HttpServlet {
         LocalDate fecha = LocalDate.now();
         
         dataSalida salida = ISC.mostrarDatosSalida(nSalida);
-        List<actividad> listActividad = salida.getActividades();
+        List<dataActividad> listActividad = salida.getActividades();
         
         String actividadNombre = "";
         
         if(listActividad != null) {
-        	for(actividad act : listActividad) {
+        	for(dataActividad act : listActividad) {
         		actividadNombre = act.getNombre();
         	}
         }
