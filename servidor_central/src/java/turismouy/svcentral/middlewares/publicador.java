@@ -254,11 +254,15 @@ public class publicador {
 			@WebParam(name = "fechaSalida")		LocalDate fechaSalida,
 			@WebParam(name = "lugarSalida")		String lugarSalida,
 			@WebParam(name = "nombreActividad")	String nombreActividad
-	) {
+	) throws ParametrosInvalidosExcepcion, YaExisteExcepcion, NoExisteExcepcion {
 		if (debug) log.info("[Publicador] Recibiendo SalidaCrearSalida");
 
 		try {
 			ISC.crearSalida(nombre, capacidad, fechaAlta, fechaSalida, lugarSalida, nombreActividad);
+		} catch (ParametrosInvalidosExcepcion e) {
+			throw new ParametrosInvalidosExcepcion();
+		} catch (UsuarioNoExisteExcepcion e) {
+			throw new NoExisteExcepcion(e.getMessage());
 		} catch (Exception e) {
             log.error("[Publicador] Error: SalidaCrearSalida");
 		}

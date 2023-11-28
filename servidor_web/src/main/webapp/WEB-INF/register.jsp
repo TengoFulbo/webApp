@@ -45,6 +45,7 @@
             <input id="emailIdP" name="email" type="email" placeholder="Email" />
             <span id="spanResultadoCorreoP"></span>
             <input name="fechaNP" type="date" placeholder="Fecha de nacimiento" />
+            <span id="spanResultadoFechaP"></span>
             <input name="descP" type="text" placeholder="Descripcion" />
             <span id="spanResultadoDescP"></span>
             <input name="urlP" type="text" placeholder="Sitio Web" />
@@ -52,7 +53,7 @@
             <input name="passwordP" type="password" placeholder="Password" />
             <input name="repitPasswordP" type="password" placeholder="Repite Password" />
             <span id="spanResultadoPasswordP"></span>
-            <button>Registrarse</button>
+            <button id="botonIdP">Registrarse</button>
           </form>
         </div>
         <div class="form-container sign-in-container">
@@ -73,13 +74,13 @@
             <input id="emailIdT" name="email" type="email" placeholder="Email" />
             <span id="spanResultadoCorreoT"></span>
             <input name="fechaNT" type="date" placeholder="Fecha de nacimiento" />
+            <span id="spanResultadoFechaT"></span>
             <input name="nacionalidadT" type="text" placeholder="Nacionalidad" />
             <span id="spanResultadoNacionalidadT"></span>
             <input name="passwordT" type="password" placeholder="Password" /> 
             <input name="repitPasswordT" type="password" placeholder="Repite password" />
 			<span id="spanResultadoPasswordT"></span>
-			<button>Registrarse</button>
-            <!--<button id="botonId">Registrarse</button>-->
+            <button id="botonIdT">Registrarse</button>
           </form>
         </div>
         <div class="overlay-container">
@@ -140,13 +141,13 @@
 	        var spanResultadoP = $("#spanResultadoP");
 
 	        if (respuesta.valido) {
-	            spanResultadoT.text("El nick es v�lido");
-	            spanResultadoP.text("El nick es v�lido");
-	            console.log("El nick es v�lido");
+	            spanResultadoT.text("El nick es valido");
+	            spanResultadoP.text("El nick es valido");
+	            console.log("El nick es valido");
 	        } else {
-	            spanResultadoT.text("El nick NO es v�lido");
-	            spanResultadoP.text("El nick NO es v�lido");
-	            console.log("El nick NO es v�lido");
+	            spanResultadoT.text("El nick NO es valido. Sugerencia: " + $("#nickIdT").val() + Math.floor(1000 + Math.random() * 9000));
+	            spanResultadoP.text("El nick NO es valido. Sugerencia: " + $("#nickIdP").val() + Math.floor(1000 + Math.random() * 9000));
+	            console.log("El nick NO es valido");
 	        }
 	    }
 	
@@ -502,11 +503,11 @@
 
 	        // Check if the passwords match
 	        if (password === repeatPassword) {
-	            spanResultadoPasswordT.text("Las contrase�as coinciden");
-	            ocument.getElementById("botonId").disabled = false;
+	            spanResultadoPasswordT.text("Las contraseñas coinciden");
+	            document.getElementById("botonIdT").disabled = false;
 	        } else {
-	            spanResultadoPasswordT.text("Las contrase�as no coinciden");
-	            document.getElementById("botonId").disabled = true;
+	            spanResultadoPasswordT.text("Las contraseñas no coinciden");
+	            document.getElementById("botonIdT").disabled = true;
 	        }
 	    }
 
@@ -528,11 +529,11 @@
 
 	        // Check if the passwords match
 	        if (passwordP === repeatPasswordP) {
-	            spanResultadoPasswordP.text("Las contrase�as coinciden");
-	            ocument.getElementById("botonId").disabled = false;
+	            spanResultadoPasswordP.text("Las contraseñas coinciden");
+	            document.getElementById("botonIdP").disabled = false;
 	        } else {
-	            spanResultadoPasswordP.text("Las contrase�as no coinciden");
-	            document.getElementById("botonId").disabled = true;
+	            spanResultadoPasswordP.text("Las contraseñas no coinciden");
+	            document.getElementById("botonIdP").disabled = true;
 	        }
 	    }
 
@@ -541,6 +542,57 @@
 	        // Call the validation function after a brief cooldown
 	        clearTimeout(cooldownTimerT);
 	        cooldownTimerT = setTimeout(validarPasswordProveedor, cooldownTime);
+	    });
+	    
+	 // Funci�n para validar el nombre con un "cooldown"
+	    function validarFechaConCooldown(valorInput) {
+	        // Expresi�n regular para permitir solo letras y espacios, sin comillas
+
+	        // Verificar si el nombre cumple con la expresi�n regular y no es vac�o
+	        var esFechaValida = valorInput.trim() !== '';
+
+	        // Acceder al elemento span correspondiente en tu HTML
+	        var spanResultadoFechaP = $("#spanResultadoFechaP");
+	        var spanResultadoFechaT = $("#spanResultadoFechaT");
+
+	        // Actualizar el contenido del span seg�n la validaci�n
+	        if (esFechaValida) {
+	            spanResultadoFechaP.text("La fecha es v�lida");
+	            spanResultadoFechaT.text("La fecha es v�lida");
+	        } else {
+	            spanResultadoFechaP.text("La fecha NO es v�lida (no puede estar vac�o)");
+	            spanResultadoFechaT.text("La fecha NO es v�lida (no puede estar vac�o)");
+	        }
+	    }
+
+	    // Asociar el evento oninput al input con cooldown para #nombre en proveedor
+	    $("input[name='fechaNP']").on("input", function () {
+	        // Limpiar el temporizador si existe
+	        clearTimeout(cooldownTimerP);
+
+	        // Configurar un nuevo temporizador
+	        cooldownTimerP = setTimeout(function () {
+	            // Obtener el valor actual del input
+	            var valorInputFecha = $("input[name='fechaNP']").val();
+
+	            // Llamar a la funci�n validarNombreConCooldown despu�s del "cooldown"
+	            validarFechaConCooldown(valorInputFecha);
+	        }, cooldownTime);
+	    });
+
+	    // Asociar el evento oninput al input con cooldown para #nombre en turista
+	    $("input[name='fechaNT']").on("input", function () {
+	        // Limpiar el temporizador si existe
+	        clearTimeout(cooldownTimerT);
+
+	        // Configurar un nuevo temporizador
+	        cooldownTimerT = setTimeout(function () {
+	            // Obtener el valor actual del input
+	            var valorInputFecha = $("input[name='fechaNT']").val();
+
+	            // Llamar a la funci�n validarNombreConCooldown despu�s del "cooldown"
+	            validarFechaConCooldown(valorInputFecha);
+	        }, cooldownTime);
 	    });
 	    
 	    
