@@ -7,6 +7,7 @@ import java.util.List;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
+import turismouy.svcentral.datatypes.dataActividad;
 import turismouy.svcentral.datatypes.dataSalida;
 import turismouy.svcentral.entidades.actividad;
 import turismouy.svcentral.entidades.departamento;
@@ -168,18 +169,24 @@ public class SalidaController implements ISalidaController {
 	            LocalDate fechaActual = LocalDate.now();
 
 	            for (salida s : salidas) {
-	                    // Validar si la salida está vigente (fechaActual >= fecha de alta y fechaActual <= fecha de salida)
-	                    if (fechaActual.compareTo(s.getFechaAlta()) >= 0 && fechaActual.compareTo(s.getFechaSalida()) <= 0) {
-	                            dataSalida ds = new dataSalida(
-	                                    s.getNombre(),
-	                                    s.getCapacidad(),
-	                                    s.getFechaAlta(),
-	                                    s.getFechaSalida(),
-	                                    s.getLugarSalida(),
-	                                    s.getActividades()
-	                            );
-	                            listaSalidasPorActividad.add(ds);
-	                    }
+	            	List<dataActividad> dtActividades = new ArrayList<dataActividad>();
+	                // Validar si la salida está vigente (fechaActual >= fecha de alta y fechaActual <= fecha de salida)
+                    if (fechaActual.compareTo(s.getFechaAlta()) >= 0 && fechaActual.compareTo(s.getFechaSalida()) <= 0) {
+                    	
+                    	for (actividad act : s.getActividades()) {
+                    		dtActividades.add(act.toDataType());
+                    	}
+                    	
+                        dataSalida ds = new dataSalida(
+                                s.getNombre(),
+                                s.getCapacidad(),
+                                s.getFechaAlta(),
+                                s.getFechaSalida(),
+                                s.getLugarSalida(),
+                                dtActividades
+                        );
+                        listaSalidasPorActividad.add(ds);
+                    }
 	            }
 	    }
 

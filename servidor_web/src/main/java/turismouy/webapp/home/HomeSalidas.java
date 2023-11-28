@@ -60,10 +60,10 @@ public class HomeSalidas extends HttpServlet {
         
 //        List<dataCategoria> categorias = ICC.listarCategorias();
         List<DataCategoria> categorias = API.categoriaListarCategorias();
-        
-//        List<dataSalida> salidas = ISC.getAllSalidas();
-        List<DataSalida> salidas = API.salidaGetAllSalidas();
+
         System.out.println("Hola XML");
+        List<DataSalida> salidas = API.salidaListarSalidas();
+        System.out.println("Chau XML");
 
 
         request.setAttribute("actividades", actividadesList);
@@ -79,7 +79,7 @@ public class HomeSalidas extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Gson gson = new Gson();
         Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
-        Publicador API = new PublicadorService().getPublicadorPort();
+        //Publicador API = new PublicadorService().getPublicadorPort();
 
 //        IActividadController IAC = Fabrica.getInstance().getIActividadController();
 //        ISalidaController ISC = Fabrica.getInstance().getISalidaController();

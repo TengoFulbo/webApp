@@ -1,6 +1,8 @@
 package turismouy.svcentral.entidades;
 
 import javax.persistence.*;
+
+import turismouy.svcentral.datatypes.dataActividad;
 import turismouy.svcentral.datatypes.dataSalida;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -110,11 +112,11 @@ public class salida {
     }
 
     public dataSalida toDataType() {
-        List<actividad> dataActividades = new ArrayList<actividad>();
+        List<dataActividad> dataActividades = new ArrayList<dataActividad>();
 
         if (this.actividades != null) {
             for (actividad actividad : this.actividades) {
-                dataActividades.add(actividad);
+                dataActividades.add(actividad.toDataType());
             }
         } else { dataActividades = null; }
 

@@ -314,107 +314,68 @@
                     return;
                 }
 
-                function actualizarActividades(categoria, departamento, actividad) {
-                    // Realiza una solicitud POST al Servlet con el valor seleccionado.
-                    $.ajax({
-                        type: "POST",
-                        url: "./homeSalidas",
-                        data: { departamento: departamento, categoria: categoria, actividad: actividad },
-                        dataType: "json",
-                        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-                        success: function (salidas) {
-                            // Procesa la respuesta del Servlet y llena la lista.
-                            var lista = document.getElementById("salidas");
+                salidas.forEach(salida => {
+                    // Crea los elementos HTML para cada salida.
+                    var row = document.createElement("div");
+                    row.className = "row";
 
-                            // Limpia la lista antes de agregar nuevos elementos.
-                            lista.innerHTML = "";
+                    var col = document.createElement("div");
+                    col.className = "col s12 m6 page__card";
 
-                            if (salidas.length == 0) {
-                                var row = document.createElement("div");
-                                row.className = "row";
+                    var card = document.createElement("div");
+                    card.className = "card";
 
-                                var h2 = document.createElement("h2");
-                                h2.className = "center-align"
-                                h2.innerHTML = "No se encontraron salidas ☹️";
+                    var cardImage = document.createElement("div");
+                    cardImage.className = "card-image";
 
-                                row.appendChild(h2)
+                    var img = document.createElement("img");
+                    img.src = "src/img/blurry-gradient1.svg";
+                    img.className = "page__card--img";
 
-                                lista.appendChild(row);
-                                return;
-                            }
+                    var title = document.createElement("span");
+                    title.className = "card-title page__card--title";
+                    title.textContent = salida.nombre;
 
-                            salidas.forEach(salida => {
-                                // Crea los elementos HTML para cada salida.
-                                var row = document.createElement("div");
-                                row.className = "row";
+                    var cardContent = document.createElement("div");
+                    cardContent.className = "card-content page__card--contenido";
 
-                                var col = document.createElement("div");
-                                col.className = "col s12 m6 page__card";
+                    var paragraph = document.createElement("p");
+                    paragraph.textContent = salida.lugarSalida;
 
-                                var card = document.createElement("div");
-                                card.className = "card";
+                    var btnDiv = document.createElement("div");
+                    btnDiv.className = "page__card--btns";
 
-                                var cardImage = document.createElement("div");
-                                cardImage.className = "card-image";
+                    var btn = document.createElement("button");
+                    btn.className = "btn abrirModalBtn";
+                    btn.setAttribute("dataSalida", JSON.stringify(salida));
+                    btn.textContent = "Consultar";
 
-                                var img = document.createElement("img");
-                                img.src = "src/img/blurry-gradient1.svg";
-                                img.className = "page__card--img";
+                    var btnRegistro = document.createElement("button");
+                    btnRegistro.className = "btn abrirRegistrar";
+                    btnRegistro.setAttribute("dataSalida", JSON.stringify(salida));
+                    btnRegistro.textContent = "Resgistrarse";
+                    btnRegistro.style.marginLeft = "10px";
 
-                                var title = document.createElement("span");
-                                title.className = "card-title page__card--title";
-                                title.textContent = salida.nombre;
-
-                                var cardContent = document.createElement("div");
-                                cardContent.className = "card-content page__card--contenido";
-
-                                var paragraph = document.createElement("p");
-                                paragraph.textContent = salida.lugarSalida;
-
-                                var btnDiv = document.createElement("div");
-                                btnDiv.className = "page__card--btns";
-
-                                var btn = document.createElement("button");
-                                btn.className = "btn abrirModalBtn";
-                                btn.setAttribute("dataSalida", JSON.stringify(salida));
-                                btn.textContent = "Consultar";
-
-                                var btnRegistro = document.createElement("button");
-                                btnRegistro.className = "btn abrirRegistrar";
-                                btnRegistro.setAttribute("dataSalida", JSON.stringify(salida));
-                                btnRegistro.textContent = "Resgistrarse";
-                                btnRegistro.style.marginLeft = "10px";
-
-                                // Agrupa los elementos en la estructura deseada
-                                cardImage.appendChild(img);
-                                cardImage.appendChild(title);
-
-                                cardContent.appendChild(paragraph);
-                                cardContent.appendChild(btnDiv);
-                                btnDiv.appendChild(btn);
-                                btnDiv.appendChild(btnRegistro);
-
-                                card.appendChild(cardImage);
-                                card.appendChild(cardContent);
-
-                                col.appendChild(card);
-                                row.appendChild(col);
-
-                                // Agrega la fila al contenedor de salidas
-                                lista.appendChild(row);
-                            });
-
-                        },
-                        error: function (xhr, status, error) {
-                            console.error("Error en la solicitud AJAX:", status, error);
-                            // Puedes agregar lógica adicional para manejar el error aquí, por ejemplo, mostrar un mensaje de error al usuario.
-                        },
-                        complete: function (xhr, status) {
-                            console.log("Solicitud AJAX completada:", status);
-                        }
-                    });
-                }
-
+                    // Agrupa los elementos en la estructura deseada
+                    cardImage.appendChild(img);
+                    cardImage.appendChild(title);
+                                                                
+                    cardContent.appendChild(paragraph);
+                    cardContent.appendChild(btnDiv);
+                    btnDiv.appendChild(btn);
+                    btnDiv.appendChild(btnRegistro);
+                                                                
+                    card.appendChild(cardImage);
+                    card.appendChild(cardContent);
+                                                                
+                    col.appendChild(card);
+                    row.appendChild(col);
+                                                                
+                    // Agrega la fila al contenedor de salidas
+                    lista.appendChild(row);
+                });
+                
+            }
         });
     }   
 </script>

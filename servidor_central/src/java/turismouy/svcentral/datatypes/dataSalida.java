@@ -15,16 +15,16 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "dataSalida")
 public class dataSalida implements Serializable {
-    private String nombre;
+	private String nombre;
     private int capacidad;
 	@XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate fechaAlta;
 	@XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate fechaSalida;
     private String lugarSalida;
-    private List<actividad> actividades;
+    private List<dataActividad> actividades;
 
-    public dataSalida(String nombre, int capacidad, LocalDate fechaAlta, LocalDate fechaSalida, String lugarSalida, List<actividad> actividades ) {
+    public dataSalida(String nombre, int capacidad, LocalDate fechaAlta, LocalDate fechaSalida, String lugarSalida, List<dataActividad> actividades) {
         this.nombre = nombre;
         this.capacidad = capacidad;
         this.fechaAlta = fechaAlta;
@@ -55,7 +55,7 @@ public class dataSalida implements Serializable {
         return this.lugarSalida;
     }
 
-	public List<actividad> getActividades() {
+	public List<dataActividad> getActividades() {
 		return actividades;
 	}
 }
