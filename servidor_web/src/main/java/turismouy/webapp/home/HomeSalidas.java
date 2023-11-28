@@ -31,6 +31,7 @@ import jakarta.servlet.http.HttpServletResponse;
 // import turismouy.svcentral.entidades.categoria;
 // import turismouy.svcentral.datatypes.dataSalida;
 // import turismouy.svcentral.datatypes.dataDepartamento;
+//import turismouy.webapp.utils.log;
 import turismouy.webapp.utils.log;
 import turismouy.svcentral.middlewares.DataActividad;
 import turismouy.svcentral.middlewares.DataCategoria;
@@ -75,6 +76,8 @@ public class HomeSalidas extends HttpServlet {
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/homeSalidas.jsp");
         dispatcher.forward(request, response);
     }
+    
+    
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Gson gson = new Gson();
