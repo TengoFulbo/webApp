@@ -11,8 +11,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import turismouy.svcentral.Fabrica;
-import turismouy.svcentral.interfaces.IUsuarioController;
+//import turismouy.svcentral.Fabrica;
+//import turismouy.svcentral.interfaces.IUsuarioController;
+import turismouy.svcentral.middlewares.Publicador;
+import turismouy.svcentral.middlewares.PublicadorService;
 
 @WebServlet("/registerTurista")
 public class RegisterTuristaServlet extends HttpServlet {
@@ -71,11 +73,12 @@ public class RegisterTuristaServlet extends HttpServlet {
         System.out.println("apellido: " + apellido);
         System.out.println("nacionalidad: " + nacionalidad);
 
-        IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
-
+        //IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+        Publicador API = new PublicadorService().getPublicadorPort();
+        
         try {
-            IUC.registrarTurista(nickname, nombre, apellido, email, nacionalidad, fecha, password);
-
+            //IUC.registrarTurista(nickname, nombre, apellido, email, nacionalidad, fecha, password);
+        	API.usuarioRegistrarTuristaPassword(nickname, nombre, apellido, email, nacionalidad, fecha.toString(), password);
             session.setAttribute("errorLogin", "Usuario registrado. Ahora puedes iniciar sesión");
             response.sendRedirect(request.getContextPath() + "/login");
             return;
