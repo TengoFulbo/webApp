@@ -11,10 +11,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import turismouy.svcentral.Fabrica;
-import turismouy.svcentral.interfaces.IUsuarioController;
-import turismouy.svcentral.datatypes.dataUsuario;
+// import turismouy.svcentral.Fabrica;
+// import turismouy.svcentral.interfaces.IUsuarioController;
+// import turismouy.svcentral.datatypes.dataUsuario;
+// import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
+import turismouy.svcentral.middlewares.Publicador;
+import turismouy.svcentral.middlewares.PublicadorService;
 import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
+import turismouy.svcentral.middlewares.DataUsuario;
+import turismouy.svcentral.middlewares.NoExisteExcepcion_Exception;
+
+
 
 @WebServlet("/validarNickname")
 public class ValidarNicknameServlet extends HttpServlet {
@@ -26,14 +33,16 @@ public class ValidarNicknameServlet extends HttpServlet {
 
         System.out.println("Valor recibido desde la solicitud AJAX: " + valorInput);
 
-        IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
-
-        dataUsuario tmp;
+        // IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+        Publicador API = new PublicadorService().getPublicadorPort();
+        
+        DataUsuario tmp = null;
         try {
-            tmp = IUC.mostrarInfo(valorInput);
-        } catch (UsuarioNoExisteExcepcion e) {
-            tmp = null;
-        }
+        	tmp = API.usuarioMostrarInfo(valorInput);
+        } catch (NoExisteExcepcion_Exception e) {
+			// TODO Bloque catch generado automáticamente
+			e.printStackTrace();
+		}
 
         // Crear una clase para la respuesta
         RespuestaValidacion respuesta = new RespuestaValidacion();
