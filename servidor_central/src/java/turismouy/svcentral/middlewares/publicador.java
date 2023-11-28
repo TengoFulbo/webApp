@@ -300,8 +300,8 @@ public class publicador {
 	public void SalidaCrearSalida(
 			@WebParam(name = "nombre")			String nombre,
 			@WebParam(name = "capacidad")		int capacidad,
-			@WebParam(name = "fechaAlta")		LocalDate fechaAlta,
-			@WebParam(name = "fechaSalida")		LocalDate fechaSalida,
+			@WebParam(name = "fechaAlta") 	@XmlJavaTypeAdapter(LocalDateAdapter.class)		LocalDate fechaAlta,
+			@WebParam(name = "fechaSalida")	@XmlJavaTypeAdapter(LocalDateAdapter.class) 	LocalDate fechaSalida,
 			@WebParam(name = "lugarSalida")		String lugarSalida,
 			@WebParam(name = "nombreActividad")	String nombreActividad
 	) throws ParametrosInvalidosExcepcion, YaExisteExcepcion, NoExisteExcepcion {
