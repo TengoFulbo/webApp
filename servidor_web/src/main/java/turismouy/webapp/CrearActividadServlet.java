@@ -20,11 +20,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import turismouy.svcentral.Fabrica;
-import turismouy.svcentral.datatypes.dataActividad;
-import turismouy.svcentral.datatypes.dataCategoria;
-import turismouy.svcentral.datatypes.dataUsuario;
-import turismouy.svcentral.interfaces.IActividadController;
-import turismouy.svcentral.interfaces.ICategoriaController;
+import turismouy.svcentral.middlewares.DataActividad;
+import turismouy.svcentral.middlewares.DataCategoria;
+import turismouy.svcentral.middlewares.DataUsuario;
+//import turismouy.svcentral.datatypes.dataActividad;
+//import turismouy.svcentral.datatypes.dataCategoria;
+//import turismouy.svcentral.datatypes.dataUsuario;
+//import turismouy.svcentral.interfaces.IActividadController;
+//import turismouy.svcentral.interfaces.ICategoriaController;
+import turismouy.svcentral.middlewares.Publicador;
+import turismouy.svcentral.middlewares.PublicadorService;
 import turismouy.webapp.utils.LocalDateAdapter;
 
 @WebServlet("/crearActividad")
@@ -32,14 +37,13 @@ public class CrearActividadServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
         String departamento = request.getParameter("departamento");
-
-        IActividadController IAC = Fabrica.getInstance().getIActividadController();
-        ICategoriaController ICC = Fabrica.getInstance().getICategoriaController();
-
-        List<dataActividad> actividadesList = null;
+        
+        Publicador API = new PublicadorService().getPublicadorPort();
+        
+        List<DataActividad> actividadesList = null;
 
         if (departamento != null) {
-            actividadesList = IAC.getAllActividadesDepartamento(departamento);
+            actividadesList = API.actividadGetAllActividadesDepartamento(departamento);
             if (actividadesList == null) {
                 System.out.println("[crearActividades] No hay actividades");
                 // response.getWriter().write("");
@@ -47,7 +51,7 @@ public class CrearActividadServlet extends HttpServlet {
                 return;
             }
         }
-        List<dataCategoria> categorias = ICC.listarCategorias();
+        List<DataCategoria> categorias = API.categoriaListarCategorias();
 
         JsonObject respuesta = new JsonObject();
         respuesta.add("actividades", gson.toJsonTree(actividadesList));
@@ -75,7 +79,7 @@ public class CrearActividadServlet extends HttpServlet {
 
         JsonObject jsonObject = JsonParser.parseString(jsonInput.toString()).getAsJsonObject();
 
-        dataUsuario usuario = (dataUsuario) session.getAttribute("dataUsuario");
+        DataUsuario usuario = (DataUsuario) session.getAttribute("dataUsuario");
         String proveedor            = usuario.getNickname();
         String ciudad               = jsonObject.get("ciudad").getAsString();
         String url               	= jsonObject.get("urlVid").getAsString();
@@ -106,15 +110,15 @@ public class CrearActividadServlet extends HttpServlet {
         }
 
         try {
-            IActividadController IAC = Fabrica.getInstance().getIActividadController();
+            Publicador API = new PublicadorService().getPublicadorPort();
             System.out.println("Valor de url antes de la evaluación del if: " + url);
 
             if (url == null || url.trim().isEmpty()) {
                 System.out.println("Entre a sin URL");
-                IAC.crearActividad(departamento, proveedor, nombre, desc, duracion, precio, ciudad, LocalDate.now(), categorias);
+                API.actividadCrearActividad(departamento, proveedor, nombre, desc, duracion, precio, ciudad, LocalDate.now().toString(), categorias);
             } else {
                 System.out.println("Entre a con URL");
-                IAC.crearActividadUrl(departamento, proveedor, nombre, desc, duracion, precio, ciudad, url, LocalDate.now(), categorias);
+                API.actividadCrearActividadUrl(departamento, proveedor, nombre, desc, duracion, precio, ciudad, url, LocalDate.now().toString(), categorias);
             }
         } catch (Exception e) {
             System.out.println("Error crearActividad");

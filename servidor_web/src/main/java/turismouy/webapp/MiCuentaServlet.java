@@ -15,12 +15,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
-import turismouy.svcentral.Fabrica;
-import turismouy.svcentral.datatypes.dataUsuario;
-import turismouy.svcentral.entidades.imagen;
-import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
-import turismouy.svcentral.interfaces.IUsuarioController;
-import turismouy.svcentral.utilidades.log;
+import turismouy.svcentral.middlewares.DataUsuario;
+import turismouy.svcentral.middlewares.Imagen;
+import turismouy.svcentral.middlewares.Publicador;
+//import turismouy.svcentral.Fabrica;
+//import turismouy.svcentral.datatypes.dataUsuario;
+//import turismouy.svcentral.entidades.imagen;
+//import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
+//import turismouy.svcentral.interfaces.IUsuarioController;
+//import turismouy.svcentral.utilidades.log;
+import turismouy.webapp.utils.log;
+import turismouy.svcentral.middlewares.PublicadorService;
 
 @WebServlet("/miCuenta")
 @MultipartConfig
@@ -30,13 +35,15 @@ public class MiCuentaServlet extends HttpServlet {
         String nickname = request.getParameter("nickname");
 
         request.setAttribute("pageTitle", "Cuenta - TurismoUY");
+       
 
         if (nickname != null) {
-            IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+            // Llamamos al web service.
+            Publicador API = new PublicadorService().getPublicadorPort();
 
-            dataUsuario usuario = null;
+            DataUsuario usuario = null;
             try {
-                usuario = IUC.mostrarInfo(nickname);
+                usuario = API.usuarioMostrarInfo(nickname);
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
             }
@@ -61,7 +68,7 @@ public class MiCuentaServlet extends HttpServlet {
             input.read(imageData);
         }
 
-        imagen imagen = new imagen();
+        Imagen imagen = new Imagen();
         imagen.setData(imageData);
 
         String nickname                 = request.getParameter("nickname");
@@ -89,18 +96,19 @@ public class MiCuentaServlet extends HttpServlet {
 
         LocalDate fechaLocalDate = LocalDate.parse(nacimiento, formatter);
 
-        IUsuarioController IUC = Fabrica.getInstance().getIUsuarioController();
+        // Llamamos al web service.
+        Publicador API = new PublicadorService().getPublicadorPort();
         
         if (nacionalidad != null){
             try {
-                IUC.modificarUsuario(nickname, nombre, apellido, fechaLocalDate, imageData);
+                API.usuarioModificarUsuarioImagen(nickname, nombre, apellido, fechaLocalDate.toString(), imageData);
                 log.info("  -> Usuario Modificado <-");
             } catch(Exception e) {
                 log.warning("[ERROR AL MODIFICAR TURISTA]");
             }
         } else if (descripcion != null || url != null) {
             try {
-                IUC.modificarUsuario(nickname, nombre, apellido, fechaLocalDate);
+                API.usuarioModificarUsuario(nickname, nombre, apellido, fechaLocalDate.toString());
                 log.info("  -> Usuario Modificado <-");
             } catch(Exception e) {
                 log.warning("[ERROR AL MODIFICAR PROVEEDOR]");

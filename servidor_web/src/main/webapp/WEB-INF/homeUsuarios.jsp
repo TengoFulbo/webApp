@@ -43,7 +43,7 @@
                   <img id="imagen" src="data:image/png;base64, <%= user.getImagenBase64() %>" class="circle" alt="Imagen de usuario">
                 <% }%>
                 <span class="title"><%= user.getNombre() %> <%= user.getApellido() %>
-                  <span class="new badge <%= (user.isIsProveedor()) ? "pink darken-3" : "indigo darken-3" %>" data-badge-caption=""><%= (user.isIsProveedor()) ? "Proveedor" : "Turista" %></span>
+				<span class="new badge <%= (user.isIsProveedor()) ? "pink darken-3" : "indigo darken-3" %>" data-badge-caption=""><%= (user.isIsProveedor()) ? "Proveedor" : "Turista" %></span>
                 </span>
                 <p>@<%= user.getNickname() %><br>
                 </p>
