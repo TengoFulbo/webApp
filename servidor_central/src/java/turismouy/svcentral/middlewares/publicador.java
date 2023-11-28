@@ -186,7 +186,6 @@ public class publicador {
 		List<dataActividad> actividades = new ArrayList<dataActividad>();
 		if (debug) log.info("[Publicador] Recibiendo ActividadGetAllActividades");
 
-
 		try {
 			actividades = IAC.getAllActividades();
 		} catch (Exception e) {
@@ -389,7 +388,7 @@ public class publicador {
 	public void inscripcionCrearInscripcion(@WebParam(name = "fecha") @XmlJavaTypeAdapter(LocalDateAdapter.class) LocalDate fecha,
 											@WebParam(name = "cantInsc") int cantInsc,
 											@WebParam(name = "nickName") String nickName,
-											@WebParam(name = "nSalida") int nSalida,
+											@WebParam(name = "nSalida") String nSalida,
 											@WebParam(name = "actividadNombre") String actividadNombre) throws ParametrosInvalidosExcepcion, YaExisteExcepcion, NoExisteExcepcion{
 		
 		try {

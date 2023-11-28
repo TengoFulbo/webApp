@@ -11,6 +11,9 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import turismouy.svcentral.middlewares.DataUsuario;
+import turismouy.svcentral.middlewares.Publicador;
+import turismouy.svcentral.middlewares.PublicadorService;
 
 // Ejemplo:
 // @WebFilter(urlPatterns = {"/pagina1.jsp", "/pagina2.jsp", "/pagina3.jsp", "/pagina4.jsp"})
@@ -25,7 +28,7 @@ public class AuthFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         HttpSession session = httpRequest.getSession(false);
-
+        
         if (session != null && session.getAttribute("username") != null) {
             // Usuario autenticado, permite el acceso a las páginas protegidas
             chain.doFilter(request, response);

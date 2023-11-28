@@ -17,9 +17,12 @@ import java.util.List;
 import turismouy.svcentral.middlewares.DataActividad;
 import turismouy.svcentral.middlewares.DataSalida;
 import turismouy.svcentral.middlewares.DataUsuario;
+import turismouy.svcentral.middlewares.NoExisteExcepcion_Exception;
+import turismouy.svcentral.middlewares.ParametrosInvalidosExcepcion_Exception;
 import turismouy.svcentral.middlewares.Publicador;
 import turismouy.svcentral.middlewares.PublicadorService;
 import turismouy.svcentral.middlewares.YaExisteExcepcion;
+import turismouy.svcentral.middlewares.YaExisteExcepcion_Exception;
 //import turismouy.svcentral.interfaces.IUsuarioController;
 //import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
 //import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
@@ -83,29 +86,29 @@ public class InscripcionSalidaServlet extends HttpServlet {
         Publicador API = new PublicadorService().getPublicadorPort();
         LocalDate fecha = LocalDate.now();
         
-        //DataSalida salida = API.salidaMostrarDatosSalida(nSalida);
-        //List<DataActividad> listActividad = salida.getActividades();
+        DataSalida salida = API.salidaMostrarDatosSalida(nSalida);
+        List<DataActividad> listActividad = salida.getActividades();
         
         String actividadNombre = "";
         
-//        if(listActividad != null) {
-//        	for(DataActividad act : listActividad) {
-//        		actividadNombre = act.getNombre();
-//        	}
-//        }
+        if(listActividad != null) {
+        	for(DataActividad act : listActividad) {
+        		actividadNombre = act.getNombre();
+        	}
+        }
 
-//        try {
-//			//API.inscripcionCrearInscripcion(fecha.toString(), cantidadIns, usuario.getNickname(), nSalida, actividadNombre);
-//		} catch (ParametrosInvalidosExcepcion e) {
-//			// TODO Bloque catch generado automáticamente
-//			e.printStackTrace();
-//		} catch (UsuarioYaExisteExcepcion e) {
-//			// TODO Bloque catch generado automáticamente
-//			e.printStackTrace();
-//		} catch (UsuarioNoExisteExcepcion e) {
-//			// TODO Bloque catch generado automáticamente
-//			e.printStackTrace();
-//		}
+			try {
+				API.inscripcionCrearInscripcion(fecha.toString(), cantidadIns, usuario.getNickname(), nSalida, actividadNombre);
+			} catch (NoExisteExcepcion_Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ParametrosInvalidosExcepcion_Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (YaExisteExcepcion_Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 
 

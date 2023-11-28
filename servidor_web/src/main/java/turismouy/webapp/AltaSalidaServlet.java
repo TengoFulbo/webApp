@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import turismouy.svcentral.middlewares.DataUsuario;
 import turismouy.svcentral.middlewares.Publicador;
 import turismouy.svcentral.middlewares.PublicadorService;
 //import turismouy.svcentral.interfaces.IUsuarioController;
@@ -63,10 +64,17 @@ public class AltaSalidaServlet extends HttpServlet {
         try {
             // void crearSalida(String nombre, int capacidad, LocalDate fechaAlta, LocalDate fechaSalida, String lugarSalida, String nombreActividad)
         	//ISC.crearSalida(nombreSalida, capacidad, LocalDate.now(), fechaSalida, lugarSalida, nombreActividad);
-        	//API.salidaCrearSalida(nombreSalida, capacidad, LocalDate.now().toString(), fechaSalida.toString(), lugarSalida, nombreActividad);
+        	API.salidaCrearSalida(nombreSalida, capacidad, LocalDate.now().toString(), fechaSalida.toString(), lugarSalida, nombreActividad);
         }catch (Exception e){
             log.error("[AltaSalidaServlet] Error al crear salida");
         }
+        
+        HttpSession session = request.getSession();
+    	String username = (String) session.getAttribute("username");
+    	try {
+    		DataUsuario usuario = API.usuarioMostrarInfo(username);
+    		session.setAttribute("dataUsuario", usuario);		
+    	} catch (Exception e) {}
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/misSalidas.jsp");
         dispatcher.forward(request, response);

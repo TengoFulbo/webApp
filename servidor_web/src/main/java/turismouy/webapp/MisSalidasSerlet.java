@@ -29,6 +29,7 @@ import turismouy.svcentral.middlewares.DataCategoria;
 import turismouy.svcentral.middlewares.DataDepartamento;
 import turismouy.svcentral.middlewares.DataSalida;
 import turismouy.svcentral.middlewares.DataUsuario;
+import turismouy.svcentral.middlewares.EstadoActividad;
 import turismouy.svcentral.middlewares.Publicador;
 import turismouy.svcentral.middlewares.PublicadorService;
 import turismouy.webapp.utils.log;
@@ -49,16 +50,34 @@ public class MisSalidasSerlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setAttribute("pageTitle", "Mis Salidas - TurismoUY");
+        HttpSession session = request.getSession();
 
         Publicador API = new PublicadorService().getPublicadorPort();
 
-        List<DataActividad> actividadesList = API.actividadGetAllActividades();
+        DataUsuario usuario = (DataUsuario) session.getAttribute("dataUsuario");
+        
+        List<DataActividad> actividades = null;
+        try {
+        	DataUsuario proveedor = API.usuarioMostrarInfo(usuario.getNickname()); 			
+        	actividades = proveedor.getActividades();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	List<DataActividad> listActividad = new ArrayList <DataActividad>();
+        if(actividades != null) {
+        	for(DataActividad dtAct:actividades) {
+        		if(dtAct.getEstado().equals(EstadoActividad.CONFIRMADA)) {
+        			listActividad.add(dtAct);
+        		}
+        	}
+        }
+        
         List<DataDepartamento> departamentos = API.departamentoListarDepartamentos();
         List<DataCategoria> categorias = API.categoriaListarCategorias();
         List<DataSalida> salidas = API.salidaGetAllSalidas();
 
 
-        request.setAttribute("actividades", actividadesList);
+        request.setAttribute("actividades", listActividad);
         request.setAttribute("departamentos", departamentos);
         request.setAttribute("categorias", categorias);
         request.setAttribute("salidas", salidas);
