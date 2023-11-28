@@ -331,6 +331,14 @@ public class publicador {
             log.error("[Publicador] Error: SalidaCrearSalida");
 		}
 	}
+	
+	@WebMethod
+	public List<dataSalida> SalidaListarSalidas() {
+		if (debug) log.info("[Publicador] Recibiendo SalidaListarSalidas");
+		List<dataSalida> salidas = ISC.getAllSalidas();
+		
+		return salidas;
+	};
 
 	@WebMethod
 	public List<dataSalida> SalidaGetAllSalidas() {
