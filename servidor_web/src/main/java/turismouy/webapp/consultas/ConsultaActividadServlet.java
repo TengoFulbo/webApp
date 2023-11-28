@@ -25,8 +25,14 @@ public class ConsultaActividadServlet extends HttpServlet {
 
         // Llamamos al web service.
         Publicador API = new PublicadorService().getPublicadorPort();
-
-        DataActividad actividad = API.actividadGetActividad(nombreActividad);
+        
+        DataActividad actividad = null;
+        try {
+            actividad = API.actividadGetActividad(nombreActividad);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // TODO: handle exception
+        }
 
         if (debug) log.info("-------------------------------");
         if (debug) log.info("Actividad: " + actividad.getNombre());

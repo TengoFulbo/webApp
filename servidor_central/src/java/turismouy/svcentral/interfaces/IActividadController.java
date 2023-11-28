@@ -84,6 +84,8 @@ public interface IActividadController {
     @WebMethod
     public abstract void modificarEstadoActividad(String nombre, estadoActividad estado) throws NoExisteExcepcion, ParametrosInvalidosExcepcion, YaExisteExcepcion;;
 
+    public abstract void aumentarVisita(String nombreAct) throws NoExisteExcepcion;
+
     /**
      * Lista todas las actividades.
      * @return Lista de dataActividad

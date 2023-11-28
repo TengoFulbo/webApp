@@ -572,6 +572,19 @@ public class ActividadController implements IActividadController {
     	act.setEstado(estadoActividad.FINALIZADA);
     	am.updateActividad(act);
     }
+
+    public void aumentarVisita(String nombreAct) throws NoExisteExcepcion {
+    	ActividadManejador am = ActividadManejador.getinstance();
+    	actividad actividad = am.getActividad(nombreAct);
+
+        if(actividad == null) {
+        	log.error("La actividad '" + nombreAct + "' no existe.");
+        	throw new NoExisteExcepcion("La actividad " + nombreAct + " no existe");
+    	}
+
+        actividad.getVisita().aumentarVisita();
+        VisitaManejador.getinstance().updateVisita(actividad.getVisita());
+    };
 	
     private static boolean validarTexto(String texto, int nivel) {
         switch (nivel) {

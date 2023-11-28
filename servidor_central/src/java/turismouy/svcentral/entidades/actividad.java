@@ -6,6 +6,7 @@ import turismouy.svcentral.EMFactory;
 import turismouy.svcentral.datatypes.dataActividad;
 import turismouy.svcentral.datatypes.dataPaquete;
 import turismouy.svcentral.datatypes.dataSalida;
+import turismouy.svcentral.datatypes.dataVisita;
 import turismouy.svcentral.manejadores.ActividadManejador;
 import turismouy.svcentral.utilidades.estadoActividad;
 
@@ -193,6 +194,8 @@ public class actividad {
 			// log.info("[actividad toDataType] categoria: " + categoria.getNombre());
 			dtCategorias.add(categoria.getNombre());
 		}
+		
+		dataVisita dtVisita = this.visita.toDataType();
 
 		dataActividad dt = new dataActividad(
 			this.nombreA,
@@ -207,7 +210,8 @@ public class actividad {
 			this.proveedor.toDataTypeWithoutCollections(),
 			DtSalidas,
 			DtPaquetes,
-			dtCategorias);
+			dtCategorias,
+			dtVisita);
 
 		return dt;
 		

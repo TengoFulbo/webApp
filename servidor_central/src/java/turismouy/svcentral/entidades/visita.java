@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import turismouy.svcentral.datatypes.dataVisita;
+
 @Entity
 public class visita {
     @Id
@@ -77,4 +79,16 @@ public class visita {
         this.cantidad = cantidad + 1;
         this.fechaUltima = LocalDateTime.now();
     };
+
+    public dataVisita toDataType() {
+        dataVisita visita = null;
+
+        if (this.actividad != null) {
+            visita = new dataVisita(this.id, this.cantidad, this.actividad, this.fechaUltima);
+        } else if (this.salida != null) {
+            visita = new dataVisita(this.id, this.cantidad, this.salida, this.fechaUltima);
+        }
+
+        return visita;
+    }
 }

@@ -16,6 +16,7 @@ import turismouy.svcentral.datatypes.dataDepartamento;
 import turismouy.svcentral.datatypes.dataPaquete;
 import turismouy.svcentral.datatypes.dataSalida;
 import turismouy.svcentral.datatypes.dataUsuario;
+import turismouy.svcentral.excepciones.NoExisteExcepcion;
 import turismouy.svcentral.interfaces.IActividadController;
 import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.interfaces.IDepartamentoController;
@@ -197,6 +198,20 @@ public class publicador {
 
 		return actividad;
 	}
+
+	@WebMethod
+	public void ActividadAumentarVisita(@WebParam(name = "nombreActividad") String nombreActividad) throws NoExisteExcepcion {
+		log.info("[Publicador] Recibiendo ActividadAumentarVisita");
+		
+		try {
+			IAC.aumentarVisita(nombreActividad);
+		} catch (NoExisteExcepcion e) {
+			log.error("[Publicador] Error: ActividadAumentarVisita");
+			throw new NoExisteExcepcion(e.getMessage());
+		} catch (Exception e) {
+			log.error("[Publicador] Error: ActividadAumentarVisita");
+		}
+	}; 
 
 	@WebMethod
 	public List<dataActividad> ActividadGetAllActividadesDepartamento(@WebParam(name = "nombreDep") String nombreDep) {
