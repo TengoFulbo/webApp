@@ -20,6 +20,7 @@ import turismouy.svcentral.datatypes.dataUsuario;
 import turismouy.svcentral.excepciones.NoExisteExcepcion;
 import turismouy.svcentral.excepciones.ParametrosInvalidosExcepcion;
 import turismouy.svcentral.excepciones.UsuarioNoExisteExcepcion;
+import turismouy.svcentral.excepciones.UsuarioYaExisteExcepcion;
 import turismouy.svcentral.excepciones.YaExisteExcepcion;
 import turismouy.svcentral.interfaces.IActividadController;
 import turismouy.svcentral.interfaces.ICategoriaController;
@@ -220,6 +221,51 @@ public class publicador {
 		}
 
 		return actividades;
+	}
+	
+	@WebMethod
+	public void actividadCrearActividad(@WebParam(name = "nombreDepto") String nombreDepto,
+										@WebParam(name = "nombreProv") String nombreProv,
+										@WebParam(name = "nombre") String nombre,
+										@WebParam(name = "desc") String desc,
+										@WebParam(name = "duracion") int duracion,
+										@WebParam(name = "costoUni") int costoUni,
+										@WebParam(name = "ciudad") String ciudad,
+										@WebParam(name = "fechaCrea") @XmlJavaTypeAdapter(LocalDateAdapter.class) LocalDate fechaCrea,
+										@WebParam(name = "categorias") List<String> categorias) throws ParametrosInvalidosExcepcion, YaExisteExcepcion, NoExisteExcepcion {
+		
+		try {
+			IAC.crearActividad(nombreDepto, nombreProv, nombre, desc, duracion, costoUni, ciudad, fechaCrea, categorias);
+		} catch (ParametrosInvalidosExcepcion e) {
+			throw new ParametrosInvalidosExcepcion();
+		} catch (UsuarioYaExisteExcepcion e) {
+			throw new YaExisteExcepcion(e.getMessage());
+		} catch (UsuarioNoExisteExcepcion e) {
+			throw new NoExisteExcepcion(e.getMessage());
+		}
+	}
+	
+	@WebMethod
+	public void actividadCrearActividadUrl(@WebParam(name = "nombreDepto") String nombreDepto,
+										@WebParam(name = "nombreProv") String nombreProv,
+										@WebParam(name = "nombre") String nombre,
+										@WebParam(name = "desc") String desc,
+										@WebParam(name = "duracion") int duracion,
+										@WebParam(name = "costoUni") int costoUni,
+										@WebParam(name = "ciudad") String ciudad,
+										@WebParam(name = "url") String url,
+										@WebParam(name = "fechaCrea") @XmlJavaTypeAdapter(LocalDateAdapter.class) LocalDate fechaCrea,
+										@WebParam(name = "categorias") List<String> categorias) throws ParametrosInvalidosExcepcion, YaExisteExcepcion, NoExisteExcepcion {
+		
+		try {
+			IAC.crearActividadUrl(nombreDepto, nombreProv, nombre, desc, duracion, costoUni, ciudad, url, fechaCrea, categorias);
+		} catch (ParametrosInvalidosExcepcion e) {
+			throw new ParametrosInvalidosExcepcion();
+		} catch (UsuarioYaExisteExcepcion e) {
+			throw new YaExisteExcepcion(e.getMessage());
+		} catch (UsuarioNoExisteExcepcion e) {
+			throw new NoExisteExcepcion(e.getMessage());
+		}
 	}
 
 	@WebMethod

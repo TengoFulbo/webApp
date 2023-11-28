@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
-<% List<dataUsuario> usuarios = (List<dataUsuario>) request.getAttribute("usuarios"); %>
+<%@ page import="turismouy.svcentral.middlewares.DataUsuario" %>
+<% List<DataUsuario> usuarios = (List<DataUsuario>) request.getAttribute("usuarios"); %>
 <head>
   <link rel="stylesheet" href="./src/css/homeMulti.css" />
 </head>
@@ -33,7 +34,7 @@
           <ul class="collection usuariosCollection">
             <%
                 if (usuarios != null) {
-                    for (dataUsuario user : usuarios) {
+                    for (DataUsuario user : usuarios) {
             %>
             <li class="collection-item avatar">
                 <% if (user.getImagenBase64() == "") { %>
@@ -42,7 +43,7 @@
                   <img id="imagen" src="data:image/png;base64, <%= user.getImagenBase64() %>" class="circle" alt="Imagen de usuario">
                 <% }%>
                 <span class="title"><%= user.getNombre() %> <%= user.getApellido() %>
-                  <span class="new badge <%= (user.getisProveedor()) ? "pink darken-3" : "indigo darken-3" %>" data-badge-caption=""><%= (user.getisProveedor()) ? "Proveedor" : "Turista" %></span>
+				<span class="new badge <%= (user.isIsProveedor()) ? "pink darken-3" : "indigo darken-3" %>" data-badge-caption=""><%= (user.isIsProveedor()) ? "Proveedor" : "Turista" %></span>
                 </span>
                 <p>@<%= user.getNickname() %><br>
                 </p>

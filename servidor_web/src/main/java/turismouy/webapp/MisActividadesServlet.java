@@ -19,12 +19,19 @@ import jakarta.servlet.http.HttpSession;
 import turismouy.svcentral.interfaces.IActividadController;
 import turismouy.svcentral.interfaces.ICategoriaController;
 import turismouy.svcentral.interfaces.IDepartamentoController;
+import turismouy.svcentral.middlewares.DataActividad;
+import turismouy.svcentral.middlewares.DataCategoria;
+import turismouy.svcentral.middlewares.DataDepartamento;
+import turismouy.svcentral.middlewares.DataUsuario;
+import turismouy.svcentral.middlewares.Publicador;
+import turismouy.svcentral.middlewares.PublicadorService;
 import turismouy.svcentral.Fabrica;
-import turismouy.svcentral.datatypes.dataActividad;
-import turismouy.svcentral.datatypes.dataCategoria;
-import turismouy.svcentral.datatypes.dataDepartamento;
-import turismouy.svcentral.datatypes.dataUsuario;
-import turismouy.svcentral.utilidades.log;
+import turismouy.webapp.utils.log;
+//import turismouy.svcentral.datatypes.dataActividad;
+//import turismouy.svcentral.datatypes.dataCategoria;
+//import turismouy.svcentral.datatypes.dataDepartamento;
+//import turismouy.svcentral.datatypes.dataUsuario;
+//import turismouy.svcentral.utilidades.log;
 import turismouy.webapp.utils.LocalDateAdapter;
 
 @WebServlet("/misActividades")
@@ -32,15 +39,13 @@ public class MisActividadesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("pageTitle", "Mis Actividades - TurismoUY");
 
-        IActividadController IAC = Fabrica.getInstance().getIActividadController();
-        IDepartamentoController IAD = Fabrica.getInstance().getIDepartamentoController();
-        ICategoriaController ICC = Fabrica.getInstance().getICategoriaController();
+        Publicador API = new PublicadorService().getPublicadorPort();
 
-        List<dataActividad> actividadesList = IAC.getAllActividades();
+        List<DataActividad> actividadesList = API.actividadGetAllActividades();
 
-        List<dataDepartamento> departamentos = IAD.listarDepartamentos();
+        List<DataDepartamento> departamentos = API.departamentoListarDepartamentos();
 
-        List<dataCategoria> categorias = ICC.listarCategorias();
+        List<DataCategoria> categorias = API.categoriaListarCategorias();
 
         request.setAttribute("actividades", actividadesList);
         request.setAttribute("departamentos", departamentos);
@@ -59,17 +64,16 @@ public class MisActividadesServlet extends HttpServlet {
         String categoria    = request.getParameter("categoria");
         String departamento = request.getParameter("departamento");
         
-        dataUsuario usuario = (dataUsuario) session.getAttribute("dataUsuario");
+        DataUsuario usuario = (DataUsuario) session.getAttribute("dataUsuario");
 
         String nickname = usuario.getNickname();
 
         log.info("[misActividades] Accedemos");
 
-        // Traemos la interfaz de actividades.
-        IActividadController IAC = Fabrica.getInstance().getIActividadController();
+        Publicador API = new PublicadorService().getPublicadorPort();
         
         // Traemos las actividades.
-        List<dataActividad> actividadesList = IAC.getAllActividades();
+        List<DataActividad> actividadesList = API.actividadGetAllActividades();
 
         if (actividadesList == null) {
             System.out.println("[misActividades] No hay actividades");
@@ -79,12 +83,12 @@ public class MisActividadesServlet extends HttpServlet {
         }
 
         // Creamos una lista que contendrá las actividades a eliminar
-        List<dataActividad> actEliminar = new ArrayList<dataActividad>();
+        List<DataActividad> actEliminar = new ArrayList<DataActividad>();
 
         // log.info("Nickname a filtrar: " + nickname);
 
         // Filtramos para mostrar solo las pertenecientes al proveedor.
-        for (dataActividad actividad : actividadesList) {
+        for (DataActividad actividad : actividadesList) {
             log.info("Proveedor: " + nickname + " | Actividad: '" + actividad.getNombre() + "'");
             if (!actividad.getProveedor().getNickname().equals(nickname)) {
                 actEliminar.add(actividad);
@@ -94,7 +98,7 @@ public class MisActividadesServlet extends HttpServlet {
 
         // Filtramos departamento
         if (!departamento.equals("")) {
-            for (dataActividad actividad : actividadesList) {
+            for (DataActividad actividad : actividadesList) {
                 if (!actividad.getDepartamento().getNombre().equals(departamento)) {
                     actEliminar.add(actividad);
                     // log.info("[misActividades] Actividad: " + actividad.getNombre() + " se elimina por el filtro departamento");
@@ -104,7 +108,7 @@ public class MisActividadesServlet extends HttpServlet {
 
         // Filtramos por categoria
         if (!categoria.equals("")) {
-            for(dataActividad actividad : actividadesList) {
+            for(DataActividad actividad : actividadesList) {
                 if (!actividad.getDtCategorias().contains(categoria)) {
                     actEliminar.add(actividad);
                     // log.info("[misActividades] Actividad: " + actividad.getNombre() + " se elimina por el filtro categoria");

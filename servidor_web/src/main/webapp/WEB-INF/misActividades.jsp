@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ page import="java.util.List" %>
-    <%@ page import="turismouy.svcentral.datatypes.dataActividad" %>
-    <%@ page import="turismouy.svcentral.datatypes.dataDepartamento" %>
-    <%@ page import="turismouy.svcentral.datatypes.dataCategoria" %>
+    <%@ page import="turismouy.svcentral.middlewares.DataActividad" %>
+    <%@ page import="turismouy.svcentral.middlewares.DataDepartamento" %>
+    <%@ page import="turismouy.svcentral.middlewares.DataCategoria" %>
 
     <%@ include file="./utils/head.jsp" %>
 
@@ -59,12 +59,12 @@
                             <div class="input-field col s12">
                                 <select id="categorias">
                                     <option value="" disabled selected>No seleccionado</option>
-                                    <% List<dataCategoria> categorias = (List<dataCategoria>) request.getAttribute("categorias"); %>
+                                    <% List<DataCategoria> categorias = (List<DataCategoria>) request.getAttribute("categorias"); %>
                                         <%
                                         int value = 1;
                                         if (categorias != null) {
                                             if (!categorias.isEmpty()) {
-                                                for (dataCategoria categoria : categorias) {
+                                                for (DataCategoria categoria : categorias) {
                                         %>
                                                     <option value="<%= categoria.getNombre() %>"><%= value %> - <%= categoria.getNombre() %></option>
                                         <%
@@ -81,12 +81,12 @@
                             <div class="input-field col s12">
                                 <select id="departamentos">
                                     <option value="" disabled selected>No seleccionado</option>
-                                    <% List<dataDepartamento> departamentos = (List<dataDepartamento>) request.getAttribute("departamentos"); %>
+                                    <% List<DataDepartamento> departamentos = (List<DataDepartamento>) request.getAttribute("departamentos"); %>
                                     <%
                                     int value2 = 1;
                                     if (departamentos != null) {
                                         if (!departamentos.isEmpty()) {
-                                            for (dataDepartamento departamento : departamentos) {
+                                            for (DataDepartamento departamento : departamentos) {
                                     %>
                                                 <option value="<%= departamento.getNombre() %>"> <%= value2 %> - <%= departamento.getNombre() %></option>
                                     <%
@@ -168,7 +168,7 @@
                         int value3 = 1;
                         if (departamentos != null) {
                             if (!departamentos.isEmpty()) {
-                                for (dataDepartamento departamento : departamentos) {
+                                for (DataDepartamento departamento : departamentos) {
                         %>
                                     <option value="<%= departamento.getNombre() %>"> <%= value3 %> - <%= departamento.getNombre() %></option>
                         <%
@@ -265,12 +265,14 @@
                     contCat.appendChild(cat);
                 });
 
-                salidasList.forEach(salida => {
-                    let sal = document.createElement("li");
-                    sal.className = "collection-item";
-                    sal.textContent = salida.nombre + " - " + salida.fechaSalida;
-                    contSal.appendChild(sal);
-                });
+                if(salidasList !== undefined){
+                	salidasList.forEach(salida => {
+                        let sal = document.createElement("li");
+                        sal.className = "collection-item";
+                        sal.textContent = salida.nombre + " - " + salida.fechaSalida;
+                        contSal.appendChild(sal);
+                    });	
+                }
             
                 // Abre el modal
                 var modal = M.Modal.init(document.getElementById("consultaModal"));
@@ -358,6 +360,7 @@
                 dataType: "json",
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                 error: function () {
+                    console.log("[AJAX] Error");
                     var lista = document.getElementById("actividades");
 
                     // Limpia la lista antes de agregar nuevos elementos.
@@ -378,7 +381,7 @@
                 success: function (actividades) {
                     // Procesa la respuesta del Servlet y llena la lista.
                     var lista = document.getElementById("actividades");
-                                        
+                    console.log("[AJAX] Success");
                     // Limpia la lista antes de agregar nuevos elementos.
                     lista.innerHTML = "";
 
@@ -395,7 +398,9 @@
                         lista.appendChild(row);
                         return;
                     }
-
+                    
+                    console.log(actividades);
+	
                     actividades.forEach(actividad => {
 
                         // Creamos los elementos HTML.
