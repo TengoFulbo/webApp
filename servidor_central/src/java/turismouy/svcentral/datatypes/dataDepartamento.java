@@ -10,7 +10,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "dataDepartamento")
 public class dataDepartamento implements Serializable {
-    private String nombre;    private String descripcion;
+    private String nombre;
+    private String descripcion;
     private String url;
     private List<dataActividad> actividades;
 
