@@ -1,14 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ page import="java.util.List" %>
-<%@ page import="turismouy.svcentral.datatypes.dataActividad" %>
-<%@ page import="turismouy.svcentral.datatypes.dataDepartamento" %>
-<%@ page import="turismouy.svcentral.datatypes.dataCategoria" %>
-<%@ page import="turismouy.svcentral.datatypes.dataSalida" %>
-<%@ page import="turismouy.svcentral.interfaces.IActividadController" %>
-<%@ page import="turismouy.svcentral.interfaces.ISalidaController" %>
-<%@ page import="turismouy.svcentral.interfaces.IDepartamentoController" %>
-<%@ page import="turismouy.svcentral.interfaces.ICategoriaController" %>
+<%@ page import="turismouy.svcentral.middlewares.DataActividad" %>
+<%@ page import="turismouy.svcentral.middlewares.DataDepartamento" %>
+<%@ page import="turismouy.svcentral.middlewares.DataCategoria" %>
+<%@ page import="turismouy.svcentral.middlewares.DataSalida" %>
 
 <%@ include file="./utils/head.jsp" %>
 
@@ -49,12 +45,12 @@
               <div class="input-field col s12">
                 <select id="categorias" >
                   <option value="" disabled selected>No seleccionado</option>
-                  <% List<dataCategoria> categorias = (List<dataCategoria>) request.getAttribute("categorias"); %>
+                  <% List<DataCategoria> categorias = (List<DataCategoria>) request.getAttribute("categorias"); %>
                   <%
                   int value = 1;
                   if (categorias != null) {
                       if (!categorias.isEmpty()) {
-                          for (dataCategoria categoria : categorias) {
+                          for (DataCategoria categoria : categorias) {
                   %>
                               <option value="<%= categoria.getNombre() %>"><%= value %> - <%= categoria.getNombre() %></option>
                   <%
@@ -71,12 +67,12 @@
               <div class="input-field col s12">
                 <select id="departamentos">
                   <option value="" disabled selected>No seleccionado</option>
-                  <% List<dataDepartamento> departamentos = (List<dataDepartamento>) request.getAttribute("departamentos"); %>
+                  <% List<DataDepartamento> departamentos = (List<DataDepartamento>) request.getAttribute("departamentos"); %>
                   <%
                   int value2 = 1;
                   if (departamentos != null) {
                       if (!departamentos.isEmpty()) {
-                          for (dataDepartamento departamento : departamentos) {
+                          for (DataDepartamento departamento : departamentos) {
                   %>
                               <option value="<%= departamento.getNombre() %>"> <%= value2 %> - <%= departamento.getNombre() %></option>
                   <%
@@ -94,12 +90,12 @@
               <div class="input-field col s12">
                 <select id="actividades">
                   <option value="" disabled selected>No seleccionado</option>
-                  <% List<dataActividad> listActividades = (List<dataActividad>) request.getAttribute("actividades"); %>
+                  <% List<DataActividad> listActividades = (List<DataActividad>) request.getAttribute("actividades"); %>
                   <%
                   int value3 = 1;
                   if (listActividades != null) {
                       if (!listActividades.isEmpty()) {
-                          for (dataActividad act : listActividades) {
+                          for (DataActividad act : listActividades) {
                   %>
                               <option value="<%= act.getNombre() %>"> <%= value3 %> - <%= act.getNombre() %></option>
                   <%

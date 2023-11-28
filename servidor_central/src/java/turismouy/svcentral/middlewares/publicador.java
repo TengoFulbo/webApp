@@ -267,6 +267,18 @@ public class publicador {
 			throw new NoExisteExcepcion(e.getMessage());
 		}
 	}
+	
+	@WebMethod
+	public void actividadFinalizarActividad(@WebParam(name = "nombre") String nombre) throws NoExisteExcepcion, ParametrosInvalidosExcepcion {
+		
+		try {
+			IAC.finalizarActividad(nombre);
+		} catch (NoExisteExcepcion e) {
+			throw new NoExisteExcepcion(e.getMessage());
+		} catch (ParametrosInvalidosExcepcion e) {
+			throw new ParametrosInvalidosExcepcion();
+		}
+	}
 
 	@WebMethod
 	public List<dataDepartamento> DepartamentoListarDepartamentos() {
