@@ -344,6 +344,7 @@ public class publicador {
 		return salidas;
 	}
 	
+	@WebMethod
 	public List<dataSalida> SalidaListarSalidas() {
 		if (debug) log.info("[Publicador] Recibiendo SalidaListarSalidas");
 		List<dataSalida> salidas = ISC.getAllSalidas();
